@@ -2,6 +2,11 @@ module.exports = {
   env: {
     es2020: true,
   },
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   extends: [
     "eslint:recommended",
     "airbnb-base",
