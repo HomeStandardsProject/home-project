@@ -1,0 +1,23 @@
+name: typecheck
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./
+    steps:
+      - uses: actions/checkout@v2
+      - name: "install dependencies"
+        working-directory: ${{ env.working-directory }}
+        run: npm install
+      - name: "run type"
+        working-directory: ${{ env.working-directory }}
+        run: npm run type
