@@ -1,0 +1,23 @@
+name: lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  lint-typescript:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./
+    steps:
+      - uses: actions/checkout@v2
+      - name: "install dependencies"
+        working-directory: ${{ env.working-directory }}
+        run: npm install
+      - name: "run lint"
+        working-directory: ${{ env.working-directory }}
+        run: "npm run lint"
