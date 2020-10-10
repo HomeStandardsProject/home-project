@@ -1,7 +1,8 @@
+export const ROOM_TYPES = ["WASH", "BED", "LIVING"] as const;
 export type Room = {
   id: string;
   name?: string;
-  type: "WASH" | "BED" | "LIVING";
+  type: typeof ROOM_TYPES[number];
 };
 
 export function transformRoomTypeToLabel(type: Room["type"]) {
@@ -18,5 +19,6 @@ export function transformRoomTypeToLabel(type: Room["type"]) {
 }
 
 export type HomeAssessmentData = {
+  selectedRoomId: string;
   rooms: Room[];
 };

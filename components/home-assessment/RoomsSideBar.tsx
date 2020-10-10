@@ -20,7 +20,9 @@ type Room = {
 
 type Props = {
   rooms: Room[];
+  selectedRoomId: string;
   addRoom: () => void;
+  deleteRoom: (id: string) => void;
   changedSelectedRoom: (id: string) => void;
 };
 
@@ -28,6 +30,8 @@ export const RoomsSideBar: React.FC<Props> = ({
   rooms,
   changedSelectedRoom,
   addRoom,
+  deleteRoom,
+  selectedRoomId,
 }) => {
   const preventDeletionOfFirstRoom = React.useMemo(() => rooms.length === 1, [
     rooms.length,
@@ -43,7 +47,9 @@ export const RoomsSideBar: React.FC<Props> = ({
           <RoomComponent
             key={room.name}
             room={room}
+            roomDeleted={deleteRoom}
             roomSelected={changedSelectedRoom}
+            isSelected={room.id === selectedRoomId}
             isDisabled={i === 0 ? preventDeletionOfFirstRoom : false}
           />
         ))}
@@ -65,32 +71,52 @@ export const RoomsSideBar: React.FC<Props> = ({
 
 const RoomComponent: React.FC<{
   room: Room;
+  isSelected: boolean;
   isDisabled: boolean;
   roomSelected: (id: string) => void;
-}> = ({ room, isDisabled, roomSelected }) => (
-  <PseudoBox
-    borderRadius="2pt"
-    _hover={{ bg: BRAND700, cursor: "pointer" }}
-    _focus={{ boxShadow: "outline" }}
-  >
-    <Flex padding="4pt" alignItems="center">
-      <Stack spacing={0} flexBasis="100%">
-        <Heading as="h4" fontSize="md" color="gray.600">
-          {room.name}
-        </Heading>
-        <Text fontSize="xs">{transformRoomTypeToLabel(room.type)} </Text>
-      </Stack>
-      <IconButton
-        variantColor="gray"
-        aria-label="delete"
-        size="sm"
-        opacity={0.8}
-        icon="delete"
-        variant="ghost"
-        onClick={() => roomSelected(room.id)}
-        isDisabled={isDisabled}
-        isRound
-      />
-    </Flex>
-  </PseudoBox>
-);
+  roomDeleted: (id: string) => void;
+}> = ({ room, isDisabled, isSelected, roomSelected, roomDeleted }) => {
+  const handleRoomSelect = React.useCallback(() => roomSelected(room.id), [
+    roomSelected,
+    room.id,
+  ]);
+
+  const handleRoomDelete = React.useCallback(
+    (event: React.MouseEvent) => {
+      event.stopPropagation();
+      roomDeleted(room.id);
+    },
+    [roomDeleted, room.id]
+  );
+
+  return (
+    <PseudoBox
+      borderRadius="2pt"
+      bg={isSelected ? BRAND700 : null}
+      marginBottom="4pt"
+      _hover={{ bg: BRAND700, cursor: "pointer" }}
+      _focus={{ boxShadow: "outline" }}
+      onClick={handleRoomSelect}
+    >
+      <Flex padding="4pt" alignItems="center">
+        <Stack spacing={0} flexBasis="100%">
+          <Heading as="h4" fontSize="md" color="gray.600">
+            {room.name}
+          </Heading>
+          <Text fontSize="xs">{transformRoomTypeToLabel(room.type)} </Text>
+        </Stack>
+        <IconButton
+          variantColor="gray"
+          aria-label="delete"
+          size="sm"
+          opacity={0.8}
+          icon="delete"
+          variant="ghost"
+          onClick={handleRoomDelete}
+          isDisabled={isDisabled}
+          isRound
+        />
+      </Flex>
+    </PseudoBox>
+  );
+};
