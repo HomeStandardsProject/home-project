@@ -36,6 +36,7 @@ export type HomeDetails = {
 };
 
 export type HomeAssessmentData = {
+  step: "DETAILS" | "ASSESSMENT";
   selectedRoomId: string;
   rooms: Room[];
   details: Partial<HomeDetails>;

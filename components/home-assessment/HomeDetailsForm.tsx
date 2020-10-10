@@ -1,4 +1,9 @@
 import {
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
   Heading,
   Icon,
   Input,
@@ -7,7 +12,6 @@ import {
   InputRightElement,
   Select,
   Stack,
-  Text,
 } from "@chakra-ui/core";
 import * as React from "react";
 import {
@@ -17,6 +21,8 @@ import {
   RentalType,
   RENTAL_TYPES,
 } from "../../interfaces/home-assessment";
+import { validateHomeDetailsForm } from "./helpers/validateHomeDetailsForm";
+import { validatePrice } from "./helpers/validatePrice";
 
 type Props = {
   details: Partial<HomeDetailsType>;
@@ -25,12 +31,16 @@ type Props = {
       oldDetails: Partial<HomeDetailsType>
     ) => Partial<HomeDetailsType>
   ) => void;
+  formHasBeenCompleted: () => void;
 };
 
 export const HomeDetailsForm: React.FC<Props> = ({
   details,
   detailsChanged,
+  formHasBeenCompleted,
 }) => {
+  const [showValidationErrors, setShowValidationErrors] = React.useState(false);
+
   const handleAddressChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const {
@@ -99,33 +109,46 @@ export const HomeDetailsForm: React.FC<Props> = ({
     [detailsChanged]
   );
 
+  const handleNextButtonClick = React.useCallback(() => {
+    if (validateHomeDetailsForm(details)) {
+      formHasBeenCompleted();
+    } else {
+      setShowValidationErrors(true);
+    }
+  }, [details, formHasBeenCompleted]);
+
   const isTotalRentValid = React.useMemo(() => {
     if (details.totalRent) {
-      // price validator
-      const regex = /^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/;
-      return regex.test(details.totalRent);
+      return validatePrice(details.totalRent);
     }
-    return true;
-  }, [details.totalRent]);
+    // When the user first launches the form, the field should not be in an error state
+    // unless showValidationErrors is enabled
+    return !showValidationErrors;
+  }, [showValidationErrors, details.totalRent]);
 
   const otherLandlordField = React.useMemo(
     () =>
       details.landlord === "Other" ? (
-        <Stack spacing={0} flexBasis={"40%"}>
-          <Text as="label" fontSize="sm">
-            Other (please specify)
-          </Text>
+        <FormControl
+          flexBasis={"40%"}
+          isRequired={true}
+          isInvalid={!details.landlordOther && showValidationErrors}
+        >
+          <FormLabel fontSize="sm">Other (please specify)</FormLabel>
           <Input
             placeholder={"Tina's Properties"}
-            aria-describedby="property management company name"
-            isRequired={true}
             size="md"
             value={details.landlordOther}
             onChange={handleLandlordOtherChange}
           />
-        </Stack>
+        </FormControl>
       ) : null,
-    [details.landlord, details.landlordOther, handleLandlordOtherChange]
+    [
+      details.landlord,
+      details.landlordOther,
+      handleLandlordOtherChange,
+      showValidationErrors,
+    ]
   );
 
   return (
@@ -134,27 +157,30 @@ export const HomeDetailsForm: React.FC<Props> = ({
         Details
       </Heading>
       <Stack isInline>
-        <Stack spacing={0} flexBasis={"100%"}>
-          <Text as="label" fontSize="sm">
-            Address
-          </Text>
+        <FormControl
+          flexBasis={"100%"}
+          isInvalid={!details.address && showValidationErrors}
+          isRequired={true}
+        >
+          <FormLabel fontSize="sm">Address</FormLabel>
           <Input
             placeholder={"100 University Av."}
-            aria-describedby="home address"
-            isRequired={true}
+            aria-describedby="address"
             size="md"
             value={details.address ?? ""}
             onChange={handleAddressChange}
           />
-        </Stack>
-        <Stack spacing={0} minW={"150px"}>
-          <Text as="label" fontSize="sm">
-            Rental Type
-          </Text>
+          <FormErrorMessage>Please enter a valid address</FormErrorMessage>
+        </FormControl>
+        <FormControl
+          minW={"150px"}
+          isInvalid={!details.rentalType && showValidationErrors}
+          isRequired={true}
+        >
+          <FormLabel fontSize="sm">Rental Type</FormLabel>
           <Select
             placeholder="Select option"
             size="md"
-            isRequired={true}
             value={details.rentalType}
             onChange={handleRentalTypeChange}
           >
@@ -164,21 +190,17 @@ export const HomeDetailsForm: React.FC<Props> = ({
               </option>
             ))}
           </Select>
-        </Stack>
+        </FormControl>
       </Stack>
       <Stack isInline>
-        <Stack spacing={0}>
-          <Text as="label" fontSize="sm">
-            Rent cost (including utilities)
-          </Text>
+        <FormControl isInvalid={!isTotalRentValid} isRequired={true}>
+          <FormLabel fontSize="sm">Total Rent cost</FormLabel>
           <InputGroup>
             <InputLeftElement color="gray.300">$</InputLeftElement>
             <Input
               placeholder="Enter amount"
               value={details.totalRent ?? ""}
               onChange={handleRentPriceChange}
-              isRequired={true}
-              isInvalid={!isTotalRentValid}
             />
             <InputRightElement>
               {details.totalRent && isTotalRentValid ? (
@@ -187,20 +209,20 @@ export const HomeDetailsForm: React.FC<Props> = ({
               {details.totalRent && !isTotalRentValid ? (
                 <Icon name="not-allowed" color="red.500" />
               ) : null}
-              {/* <Icon name="not" color="green.500" /> */}
             </InputRightElement>
           </InputGroup>
-        </Stack>
-        <Stack spacing={0} flexBasis={"40%"}>
-          <Text as="label" fontSize="sm">
-            Landlord
-          </Text>
+        </FormControl>
+        <FormControl
+          flexBasis={"40%"}
+          isRequired={true}
+          isInvalid={!details.landlord && showValidationErrors}
+        >
+          <FormLabel fontSize="sm">Landlord</FormLabel>
           <Select
             placeholder="Select option"
             size="md"
             value={details.landlord}
             onChange={handleLandlordChange}
-            isRequired={true}
           >
             {LANDLORDS.map((landlord) => (
               <option key={landlord} value={landlord}>
@@ -208,9 +230,19 @@ export const HomeDetailsForm: React.FC<Props> = ({
               </option>
             ))}
           </Select>
-        </Stack>
+        </FormControl>
         {otherLandlordField}
       </Stack>
+      <Box>
+        <Button
+          variantColor="green"
+          size="sm"
+          marginTop={"16pt"}
+          onClick={handleNextButtonClick}
+        >
+          Next
+        </Button>
+      </Box>
     </Stack>
   );
 };

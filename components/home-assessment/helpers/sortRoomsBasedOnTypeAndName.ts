@@ -1,4 +1,4 @@
-import { Room } from "../../interfaces/home-assessment";
+import { Room } from "../../../interfaces/home-assessment";
 
 export function sortRoomsBasedOnTypeAndName(rooms: Room[]) {
   return [...rooms].sort((A, B) => {

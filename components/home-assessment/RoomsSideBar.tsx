@@ -9,7 +9,6 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/core";
-import { BRAND600, BRAND700 } from "../../utils/colors";
 import { transformRoomTypeToLabel } from "../../interfaces/home-assessment";
 
 type Room = {
@@ -38,7 +37,7 @@ export const RoomsSideBar: React.FC<Props> = ({
   ]);
 
   return (
-    <Box bg={BRAND600} margin="2pt" padding="4pt" borderRadius="2pt">
+    <Box bg="gray.100" margin="2pt" padding="4pt" rounded="md">
       <Heading as="h3" size="xs" textTransform="uppercase">
         Rooms
       </Heading>
@@ -91,10 +90,11 @@ const RoomComponent: React.FC<{
 
   return (
     <PseudoBox
-      borderRadius="2pt"
-      bg={isSelected ? BRAND700 : null}
+      rounded="md"
+      borderWidth={"1pt"}
+      borderColor={isSelected ? "gray.300" : "gray.100"}
       marginBottom="4pt"
-      _hover={{ bg: BRAND700, cursor: "pointer" }}
+      _hover={{ bg: "gray.300", cursor: "pointer" }}
       _focus={{ boxShadow: "outline" }}
       onClick={handleRoomSelect}
     >

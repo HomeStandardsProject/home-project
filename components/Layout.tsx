@@ -14,7 +14,6 @@ const Container = styled.div`
   max-width: 1400px;
   box-sizing: border-box;
   padding: 24pt;
-  background-color: rgba(253, 249, 241, 1);
 `;
 
 const Layout = ({ children, title = "This is the default title" }: Props) => (

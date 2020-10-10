@@ -1,4 +1,4 @@
-import { Room } from "../../interfaces/home-assessment";
+import { Room } from "../../../interfaces/home-assessment";
 import { sortRoomsBasedOnTypeAndName } from "./sortRoomsBasedOnTypeAndName";
 
 describe("sortRoomsBasedOnTypeAndName", () => {

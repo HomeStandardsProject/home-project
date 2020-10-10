@@ -7,19 +7,22 @@ import {
   HomeDetails as HomeDetailsType,
   Room,
 } from "../../interfaces/home-assessment";
-import { sortRoomsBasedOnTypeAndName } from "../../utils/helpers/sortRoomsBasedOnTypeAndName";
-import { normalizeRoomNames } from "../../utils/helpers/normalizeRooms";
+import { sortRoomsBasedOnTypeAndName } from "./helpers/sortRoomsBasedOnTypeAndName";
+import { normalizeRoomNames } from "./helpers/normalizeRooms";
 import { RoomAssessment } from "./RoomAssessment";
 import { HomeDetailsForm } from "./HomeDetailsForm";
+import { HomeDetailsSummary } from "./HomeDetailsSummary";
 
 const generateRoom = (): Room => ({ id: uuidv4(), type: "LIVING" });
 
 export const HomeAssessment: React.FC = () => {
-  const [{ rooms, selectedRoomId, details }, setAssessment] = React.useState<
-    HomeAssessmentData
-  >(() => {
+  const [
+    { rooms, selectedRoomId, details, step },
+    setAssessment,
+  ] = React.useState<HomeAssessmentData>(() => {
     const initialRoom = generateRoom();
     return {
+      step: "DETAILS",
       selectedRoomId: initialRoom.id,
       rooms: [initialRoom],
       details: {},
@@ -98,20 +101,36 @@ export const HomeAssessment: React.FC = () => {
     []
   );
 
+  const handleFormHasBeenCompleted = React.useCallback(() => {
+    setAssessment((assessment) => ({ ...assessment, step: "ASSESSMENT" }));
+  }, []);
+
+  const handleDetailsSummarySwitchToDetails = React.useCallback(() => {
+    setAssessment((assessment) => ({ ...assessment, step: "DETAILS" }));
+  }, []);
+
   const selectedRoom: Room = React.useMemo(() => {
     const matchingRoom = rooms.find((room) => room.id === selectedRoomId);
     if (matchingRoom) return matchingRoom;
     throw new Error("selected room id is not valid");
   }, [rooms, selectedRoomId]);
 
-  return (
-    <Stack width="100%" marginTop="16pt" marginBottom="48pt">
-      <Box>
-        <HomeDetailsForm
-          details={details}
-          detailsChanged={handleDetailsChanged}
-        />
-      </Box>
+  const detailsStepContent = (
+    <Box>
+      <HomeDetailsForm
+        details={details}
+        detailsChanged={handleDetailsChanged}
+        formHasBeenCompleted={handleFormHasBeenCompleted}
+      />
+    </Box>
+  );
+
+  const assessmentStepContent = (
+    <Box>
+      <HomeDetailsSummary
+        details={details}
+        switchToDetails={handleDetailsSummarySwitchToDetails}
+      />
       <br />
       <Heading
         as="h3"
@@ -136,6 +155,12 @@ export const HomeAssessment: React.FC = () => {
           <RoomAssessment room={selectedRoom} dataChanged={updateRoomChanged} />
         </Box>
       </Stack>
+    </Box>
+  );
+
+  return (
+    <Stack width="100%" marginTop="16pt" marginBottom="48pt">
+      {step === "DETAILS" ? detailsStepContent : assessmentStepContent}
     </Stack>
   );
 };
