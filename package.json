@@ -1,5 +1,5 @@
 {
-  "name": "QBACC Home Project",
+  "name": "qbacc-home-project",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
