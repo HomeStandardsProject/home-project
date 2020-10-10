@@ -1,5 +1,3 @@
-import { HomeAssessment } from "../components/home-assessment/HomeAssessment";
-
 export type Room = {
   id: string;
   name?: string;
