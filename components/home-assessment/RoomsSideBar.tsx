@@ -10,6 +10,7 @@ import {
   Text,
 } from "@chakra-ui/core";
 import { BRAND600, BRAND700 } from "../../utils/colors";
+import { transformRoomTypeToLabel } from "../../interfaces/home-assessment";
 
 type Room = {
   id: string;
@@ -26,6 +27,7 @@ type Props = {
 export const RoomsSideBar: React.FC<Props> = ({
   rooms,
   changedSelectedRoom,
+  addRoom,
 }) => {
   const preventDeletionOfFirstRoom = React.useMemo(() => rooms.length === 1, [
     rooms.length,
@@ -53,6 +55,7 @@ export const RoomsSideBar: React.FC<Props> = ({
         leftIcon="add"
         size="sm"
         width="100%"
+        onClick={addRoom}
       >
         Add room
       </Button>
@@ -91,16 +94,3 @@ const RoomComponent: React.FC<{
     </Flex>
   </PseudoBox>
 );
-
-function transformRoomTypeToLabel(type: Room["type"]) {
-  switch (type) {
-    case "BED":
-      return "Bedroom";
-    case "LIVING":
-      return "Living Room";
-    case "WASH":
-      return "Washroom";
-    default:
-      throw new Error("unknown room type");
-  }
-}
