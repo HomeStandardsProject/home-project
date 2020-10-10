@@ -1,5 +1,5 @@
 {
-  "name": "with-typescript",
+  "name": "qbacc-home-project",
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
@@ -10,6 +10,10 @@
     "lint:fix": "./node_modules/.bin/eslint --fix ./"
   },
   "dependencies": {
+    "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.35",
+    "@emotion/styled": "^10.0.27",
+    "emotion-theming": "^10.0.27",
     "next": "latest",
     "prettier": "^2.1.2",
     "react": "^16.12.0",
