@@ -12,6 +12,8 @@ import { normalizeRoomNames } from "./helpers/normalizeRooms";
 import { RoomAssessment } from "./RoomAssessment";
 import { HomeDetailsForm } from "./HomeDetailsForm";
 import { HomeDetailsSummary } from "./HomeDetailsSummary";
+import { deleteRoomAction } from "./actions/deleteRoomAction";
+import { updateRoomAction } from "./actions/updateRoomAction";
 
 const generateRoom = (): Room => ({ id: uuidv4(), type: "LIVING" });
 
@@ -42,50 +44,18 @@ export const HomeAssessment: React.FC = () => {
   }, []);
 
   const updateRoomChanged = React.useCallback((newRoom: Room) => {
-    setAssessment((assessment) => {
-      const newRooms = assessment.rooms.map((room) =>
-        room.id === newRoom.id ? newRoom : room
-      );
-
-      return {
-        ...assessment,
-        rooms: newRooms,
-      };
-    });
+    setAssessment((assessment) => updateRoomAction(assessment, newRoom));
   }, []);
 
   const updateSelectedRoom = React.useCallback((id: string) => {
-    setAssessment((assessment) => {
-      return {
-        ...assessment,
-        selectedRoomId: id,
-      };
-    });
+    setAssessment((assessment) => ({ ...assessment, selectedRoomId: id }));
   }, []);
 
-  const handleDeleteRoom = React.useCallback((idToDelete: string) => {
-    setAssessment((assessment) => {
-      if (assessment.rooms.length <= 1) {
-        console.error("invalid state. unable to delete only remaining room");
-        return assessment;
-      }
-
-      const newRooms = assessment.rooms.filter(
-        (room) => room.id !== idToDelete
-      );
-
-      const newSelectedRoomId =
-        assessment.selectedRoomId === idToDelete
-          ? newRooms[0].id
-          : assessment.selectedRoomId;
-
-      return {
-        ...assessment,
-        selectedRoomId: newSelectedRoomId,
-        rooms: newRooms,
-      };
-    });
-  }, []);
+  const handleDeleteRoom = React.useCallback(
+    (idToDelete: string) =>
+      setAssessment((assessment) => deleteRoomAction(assessment, idToDelete)),
+    []
+  );
 
   const handleDetailsChanged = React.useCallback(
     (
