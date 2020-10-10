@@ -4,7 +4,7 @@ import { RoomsSideBar } from "./RoomsSideBar";
 import { HomeAssessmentData } from "../../interfaces/home-assessment";
 
 export const HomeAssessment: React.FC = () => {
-  const [assessment, setAssessment] = React.useState<HomeAssessmentData>({
+  const [assessment] = React.useState<HomeAssessmentData>({
     rooms: [{ id: "1", type: "LIVING" }],
   });
 
