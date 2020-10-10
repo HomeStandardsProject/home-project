@@ -18,7 +18,25 @@ export function transformRoomTypeToLabel(type: Room["type"]) {
   }
 }
 
+export const LANDLORDS = [
+  "Highpoint Properties",
+  "Frontenac Property Management",
+  "Other",
+] as const;
+export type Landlords = typeof LANDLORDS[number];
+
+export const RENTAL_TYPES = ["Full-house", "Rental Unit", "Condo"] as const;
+export type RentalType = typeof RENTAL_TYPES[number];
+export type HomeDetails = {
+  address: string;
+  rentalType: RentalType;
+  totalRent: string;
+  landlord: Landlords;
+  landlordOther?: string;
+};
+
 export type HomeAssessmentData = {
   selectedRoomId: string;
   rooms: Room[];
+  details: Partial<HomeDetails>;
 };

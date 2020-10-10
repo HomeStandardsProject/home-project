@@ -48,7 +48,7 @@ export const RoomAssessment: React.FC<Props> = ({ room, dataChanged }) => {
   return (
     <Box padding="4pt">
       <Stack isInline>
-        <Stack flexBasis="80%">
+        <Stack flexBasis="80%" spacing={2}>
           <Text as="label" fontSize="sm">
             Room name (optional)
           </Text>
@@ -60,7 +60,7 @@ export const RoomAssessment: React.FC<Props> = ({ room, dataChanged }) => {
             onChange={updateRoomName}
           />
         </Stack>
-        <Stack>
+        <Stack spacing={2}>
           <Text as="label" fontSize="sm">
             Room type
           </Text>
@@ -79,7 +79,7 @@ export const RoomAssessment: React.FC<Props> = ({ room, dataChanged }) => {
           </Select>
         </Stack>
       </Stack>
-      <Box marginTop="8pt">
+      <Box marginTop="16pt">
         <Heading as="h3" size="sm" marginBottom="4pt">
           Are all of the appliances and equipment provided by the landlord
           installed and in good repair and working order?

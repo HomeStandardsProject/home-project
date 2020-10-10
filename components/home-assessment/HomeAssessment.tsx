@@ -1,22 +1,28 @@
 import * as React from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Box, Flex } from "@chakra-ui/core";
+import { Box, Heading, Stack } from "@chakra-ui/core";
 import { RoomsSideBar } from "./RoomsSideBar";
-import { HomeAssessmentData, Room } from "../../interfaces/home-assessment";
+import {
+  HomeAssessmentData,
+  HomeDetails as HomeDetailsType,
+  Room,
+} from "../../interfaces/home-assessment";
 import { sortRoomsBasedOnTypeAndName } from "../../utils/helpers/sortRoomsBasedOnTypeAndName";
 import { normalizeRoomNames } from "../../utils/helpers/normalizeRooms";
 import { RoomAssessment } from "./RoomAssessment";
+import { HomeDetailsForm } from "./HomeDetailsForm";
 
 const generateRoom = (): Room => ({ id: uuidv4(), type: "LIVING" });
 
 export const HomeAssessment: React.FC = () => {
-  const [{ rooms, selectedRoomId }, setAssessment] = React.useState<
+  const [{ rooms, selectedRoomId, details }, setAssessment] = React.useState<
     HomeAssessmentData
   >(() => {
     const initialRoom = generateRoom();
     return {
       selectedRoomId: initialRoom.id,
       rooms: [initialRoom],
+      details: {},
     };
   });
 
@@ -78,6 +84,20 @@ export const HomeAssessment: React.FC = () => {
     });
   }, []);
 
+  const handleDetailsChanged = React.useCallback(
+    (
+      updatedDetails: (
+        oldDetails: Partial<HomeDetailsType>
+      ) => Partial<HomeDetailsType>
+    ) => {
+      setAssessment((assessment) => ({
+        ...assessment,
+        details: updatedDetails(assessment.details),
+      }));
+    },
+    []
+  );
+
   const selectedRoom: Room = React.useMemo(() => {
     const matchingRoom = rooms.find((room) => room.id === selectedRoomId);
     if (matchingRoom) return matchingRoom;
@@ -85,19 +105,37 @@ export const HomeAssessment: React.FC = () => {
   }, [rooms, selectedRoomId]);
 
   return (
-    <Flex width="100%" marginTop="16pt" marginBottom="16pt">
-      <Box minW="300px">
-        <RoomsSideBar
-          rooms={normalizeAndSortRooms}
-          selectedRoomId={selectedRoomId}
-          addRoom={handleAddNewRoom}
-          deleteRoom={handleDeleteRoom}
-          changedSelectedRoom={updateSelectedRoom}
+    <Stack width="100%" marginTop="16pt" marginBottom="48pt">
+      <Box>
+        <HomeDetailsForm
+          details={details}
+          detailsChanged={handleDetailsChanged}
         />
       </Box>
-      <Box flexBasis={"100%"}>
-        <RoomAssessment room={selectedRoom} dataChanged={updateRoomChanged} />
-      </Box>
-    </Flex>
+      <br />
+      <Heading
+        as="h3"
+        size="xs"
+        textTransform="uppercase"
+        marginBottom="8pt"
+        padding="4pt"
+      >
+        Assessment
+      </Heading>
+      <Stack isInline spacing={4}>
+        <Box minW="300px">
+          <RoomsSideBar
+            rooms={normalizeAndSortRooms}
+            selectedRoomId={selectedRoomId}
+            addRoom={handleAddNewRoom}
+            deleteRoom={handleDeleteRoom}
+            changedSelectedRoom={updateSelectedRoom}
+          />
+        </Box>
+        <Box flexBasis={"100%"}>
+          <RoomAssessment room={selectedRoom} dataChanged={updateRoomChanged} />
+        </Box>
+      </Stack>
+    </Stack>
   );
 };
