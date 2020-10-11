@@ -21,6 +21,7 @@ import {
   RentalType,
   RENTAL_TYPES,
 } from "../../interfaces/home-assessment";
+import { setAsUndefinedInsteadOfEmptyString } from "./helpers/setAsUndefinedInsteadOfEmptyString";
 import { validateHomeDetailsForm } from "./helpers/validateHomeDetailsForm";
 import { validatePrice } from "./helpers/validatePrice";
 
@@ -101,9 +102,13 @@ export const HomeDetailsForm: React.FC<Props> = ({
 
   const handleLandlordOtherChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      const {
+        target: { value },
+      } = event;
+
       detailsChanged((details) => ({
         ...details,
-        landlordOther: setAsUndefinedInsteadOfEmptyString(event.target.value),
+        landlordOther: setAsUndefinedInsteadOfEmptyString(value),
       }));
     },
     [detailsChanged]
@@ -138,7 +143,7 @@ export const HomeDetailsForm: React.FC<Props> = ({
           <Input
             placeholder={"Tina's Properties"}
             size="md"
-            value={details.landlordOther}
+            value={details.landlordOther ?? ""}
             onChange={handleLandlordOtherChange}
           />
         </FormControl>
@@ -246,8 +251,3 @@ export const HomeDetailsForm: React.FC<Props> = ({
     </Stack>
   );
 };
-
-// generic preserves the type inference of union types
-function setAsUndefinedInsteadOfEmptyString<T extends string>(value: T) {
-  return value === "" ? undefined : value;
-}

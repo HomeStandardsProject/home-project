@@ -6,6 +6,8 @@ import {
   HomeAssessmentData,
   HomeDetails as HomeDetailsType,
   Room,
+  RoomAssessmentQuestion,
+  RoomTypes,
 } from "../../interfaces/home-assessment";
 import { sortRoomsBasedOnTypeAndName } from "./helpers/sortRoomsBasedOnTypeAndName";
 import { normalizeRoomNames } from "./helpers/normalizeRooms";
@@ -13,16 +15,27 @@ import { RoomAssessment } from "./RoomAssessment";
 import { HomeDetailsForm } from "./HomeDetailsForm";
 import { HomeDetailsSummary } from "./HomeDetailsSummary";
 import { deleteRoomAction } from "./actions/deleteRoomAction";
-import { updateRoomAction } from "./actions/updateRoomAction";
+import {
+  updateRoomType,
+  updateRoomName,
+  updateRoomQuestionAnswer,
+} from "./actions/updateRoomActions";
 
-const generateRoom = (): Room => ({ id: uuidv4(), type: "LIVING" });
+type Props = {
+  questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
+};
 
-export const HomeAssessment: React.FC = () => {
+export const HomeAssessment: React.FC<Props> = ({ questions }) => {
+  const generateDefaultRoom = React.useCallback(
+    (): Room => ({ id: uuidv4(), type: "LIVING", questions: questions.LIVING }),
+    [questions]
+  );
+
   const [
     { rooms, selectedRoomId, details, step },
     setAssessment,
   ] = React.useState<HomeAssessmentData>(() => {
-    const initialRoom = generateRoom();
+    const initialRoom = generateDefaultRoom();
     return {
       step: "DETAILS",
       selectedRoomId: initialRoom.id,
@@ -39,13 +52,46 @@ export const HomeAssessment: React.FC = () => {
   const handleAddNewRoom = React.useCallback(() => {
     setAssessment((assessment) => ({
       ...assessment,
-      rooms: [...assessment.rooms, generateRoom()],
+      rooms: [...assessment.rooms, generateDefaultRoom()],
     }));
-  }, []);
+  }, [generateDefaultRoom]);
 
-  const updateRoomChanged = React.useCallback((newRoom: Room) => {
-    setAssessment((assessment) => updateRoomAction(assessment, newRoom));
-  }, []);
+  const handleUpdateRoomName = React.useCallback(
+    (newName: string | undefined) => {
+      setAssessment((assessment) =>
+        updateRoomName(assessment, selectedRoomId, newName)
+      );
+    },
+    [selectedRoomId]
+  );
+
+  const handleUpdateRoomType = React.useCallback(
+    (type: RoomTypes) => {
+      setAssessment((assessment) =>
+        updateRoomType(assessment, selectedRoomId, type, questions[type])
+      );
+    },
+    [selectedRoomId, questions]
+  );
+
+  const handleUpdateRoomQuestion = React.useCallback(
+    (
+      questionId: string,
+      answer: "YES" | "NO" | undefined,
+      description: string | undefined
+    ) => {
+      setAssessment((assessment) =>
+        updateRoomQuestionAnswer(
+          assessment,
+          selectedRoomId,
+          questionId,
+          answer,
+          description
+        )
+      );
+    },
+    [selectedRoomId]
+  );
 
   const updateSelectedRoom = React.useCallback((id: string) => {
     setAssessment((assessment) => ({ ...assessment, selectedRoomId: id }));
@@ -95,6 +141,8 @@ export const HomeAssessment: React.FC = () => {
     </Box>
   );
 
+  console.log(selectedRoom);
+
   const assessmentStepContent = (
     <Box>
       <HomeDetailsSummary
@@ -122,7 +170,13 @@ export const HomeAssessment: React.FC = () => {
           />
         </Box>
         <Box flexBasis={"100%"}>
-          <RoomAssessment room={selectedRoom} dataChanged={updateRoomChanged} />
+          <RoomAssessment
+            key={selectedRoomId}
+            room={selectedRoom}
+            updateRoomName={handleUpdateRoomName}
+            updateRoomType={handleUpdateRoomType}
+            updateQuestion={handleUpdateRoomQuestion}
+          />
         </Box>
       </Stack>
     </Box>

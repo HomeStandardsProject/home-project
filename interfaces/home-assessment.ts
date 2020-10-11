@@ -1,8 +1,19 @@
+export type RoomAssessmentQuestion = {
+  id: string;
+  question: string;
+  type: "YES/NO";
+  answer?: ("YES" | "NO") | undefined;
+  promptForDescriptionOn: "YES" | "NO";
+  description?: string;
+};
+
 export const ROOM_TYPES = ["WASH", "BED", "LIVING"] as const;
+export type RoomTypes = typeof ROOM_TYPES[number];
 export type Room = {
   id: string;
   name?: string;
-  type: typeof ROOM_TYPES[number];
+  type: RoomTypes;
+  questions: RoomAssessmentQuestion[];
 };
 
 export function transformRoomTypeToLabel(type: Room["type"]) {
