@@ -18,9 +18,11 @@ const IndexPage = () => (
       <Heading as="h2" size="lg" textAlign="center">
         Subtitle
       </Heading>
-      <Button marginTop={"20pt"} variantColor="green">
-        <Link href="/home-assessment">Start your home assessment</Link>
-      </Button>
+      <Link href="/home-assessment">
+        <Button marginTop={"20pt"} variantColor="green">
+          Start your home assessment
+        </Button>
+      </Link>
     </Flex>
   </Layout>
 );

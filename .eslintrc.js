@@ -2,10 +2,12 @@ module.exports = {
   env: {
     es2020: true,
   },
+  parser: "@typescript-eslint/parser",
   settings: {
     react: {
       version: "detect",
     },
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
   },
   extends: [
     "eslint:recommended",
@@ -15,9 +17,18 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
   ],
-  parser: "@typescript-eslint/parser",
-  plugins: ["react", "@typescript-eslint", "prettier", "unused-imports"],
+  plugins: [
+    "react",
+    "@typescript-eslint",
+    "prettier",
+    "unused-imports",
+    "import",
+  ],
   rules: {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/ban-ts-comment": "off",
