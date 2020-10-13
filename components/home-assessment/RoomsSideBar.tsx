@@ -38,9 +38,20 @@ export const RoomsSideBar: React.FC<Props> = ({
 
   return (
     <Box bg="gray.100" margin="2pt" padding="4pt" rounded="md">
-      <Heading as="h3" size="xs" textTransform="uppercase">
-        Rooms
-      </Heading>
+      <Stack isInline align="center" justifyContent="space-between">
+        <Heading as="h3" size="xs" textTransform="uppercase">
+          Rooms
+        </Heading>
+        <Button
+          variant="outline"
+          variantColor="green"
+          leftIcon="add"
+          size="xs"
+          onClick={addRoom}
+        >
+          Add room
+        </Button>
+      </Stack>
       <Box marginTop="8pt">
         {rooms.map((room, i) => (
           <RoomComponent
@@ -53,16 +64,8 @@ export const RoomsSideBar: React.FC<Props> = ({
           />
         ))}
       </Box>
-      <Button
-        marginTop={"16pt"}
-        variant="outline"
-        variantColor="green"
-        leftIcon="add"
-        size="sm"
-        width="100%"
-        onClick={addRoom}
-      >
-        Add room
+      <Button marginTop={"16pt"} variantColor="blue" size="sm" width="100%">
+        Generate report
       </Button>
     </Box>
   );
