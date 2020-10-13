@@ -9,6 +9,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/core";
+import Link from "next/link";
 import { transformRoomTypeToLabel } from "../../interfaces/home-assessment";
 
 type Room = {
@@ -64,9 +65,11 @@ export const RoomsSideBar: React.FC<Props> = ({
           />
         ))}
       </Box>
-      <Button marginTop={"16pt"} variantColor="blue" size="sm" width="100%">
-        Generate report
-      </Button>
+      <Link href="/result">
+        <Button marginTop={"16pt"} variantColor="blue" size="sm" width="100%">
+          Generate report
+        </Button>
+      </Link>
     </Box>
   );
 };
