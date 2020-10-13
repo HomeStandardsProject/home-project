@@ -2,8 +2,11 @@ export type RoomAssessmentQuestion = {
   id: string;
   question: string;
   type: "YES/NO";
-  answer?: ("YES" | "NO") | undefined;
   promptForDescriptionOn: "YES" | "NO";
+};
+
+export type RoomAssessmentQuestionResponse = {
+  answer?: ("YES" | "NO") | undefined;
   description?: string;
 };
 
@@ -13,7 +16,7 @@ export type Room = {
   id: string;
   name?: string;
   type: RoomTypes;
-  questions: RoomAssessmentQuestion[];
+  responses: { [id: string]: RoomAssessmentQuestionResponse };
 };
 
 export function transformRoomTypeToLabel(type: Room["type"]) {

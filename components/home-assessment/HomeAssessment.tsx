@@ -20,17 +20,19 @@ import {
   updateRoomName,
   updateRoomQuestionAnswer,
 } from "./actions/updateRoomActions";
+import { RoomAssessmentQuestionsContext } from "./hooks/useRoomAssessmentQuestions";
 
 type Props = {
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
 };
 
-export const HomeAssessment: React.FC<Props> = ({ questions }) => {
-  const generateDefaultRoom = React.useCallback(
-    (): Room => ({ id: uuidv4(), type: "LIVING", questions: questions.LIVING }),
-    [questions]
-  );
+const generateDefaultRoom = (): Room => ({
+  id: uuidv4(),
+  type: "LIVING",
+  responses: {},
+});
 
+export const HomeAssessment: React.FC<Props> = ({ questions }) => {
   const [
     { rooms, selectedRoomId, details, step },
     setAssessment,
@@ -54,7 +56,7 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
       ...assessment,
       rooms: [...assessment.rooms, generateDefaultRoom()],
     }));
-  }, [generateDefaultRoom]);
+  }, []);
 
   const handleUpdateRoomName = React.useCallback(
     (newName: string | undefined) => {
@@ -68,10 +70,10 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
   const handleUpdateRoomType = React.useCallback(
     (type: RoomTypes) => {
       setAssessment((assessment) =>
-        updateRoomType(assessment, selectedRoomId, type, questions[type])
+        updateRoomType(assessment, selectedRoomId, type)
       );
     },
-    [selectedRoomId, questions]
+    [selectedRoomId]
   );
 
   const handleUpdateRoomQuestion = React.useCallback(
@@ -141,8 +143,6 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
     </Box>
   );
 
-  console.log(selectedRoom);
-
   const assessmentStepContent = (
     <Box>
       <HomeDetailsSummary
@@ -183,8 +183,10 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
   );
 
   return (
-    <Stack width="100%" marginTop="16pt" marginBottom="48pt">
-      {step === "DETAILS" ? detailsStepContent : assessmentStepContent}
-    </Stack>
+    <RoomAssessmentQuestionsContext.Provider value={questions}>
+      <Stack width="100%" marginTop="16pt" marginBottom="48pt">
+        {step === "DETAILS" ? detailsStepContent : assessmentStepContent}
+      </Stack>
+    </RoomAssessmentQuestionsContext.Provider>
   );
 };

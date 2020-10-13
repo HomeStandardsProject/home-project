@@ -1,6 +1,5 @@
 import {
   HomeAssessmentData,
-  RoomAssessmentQuestion,
   RoomTypes,
 } from "../../../interfaces/home-assessment";
 
@@ -19,11 +18,10 @@ export function updateRoomName(
 export function updateRoomType(
   assessment: HomeAssessmentData,
   selectedRoomId: string,
-  newType: RoomTypes,
-  questions: RoomAssessmentQuestion[]
+  newType: RoomTypes
 ) {
   const newRooms = assessment.rooms.map((room) =>
-    room.id === selectedRoomId ? { ...room, type: newType, questions } : room
+    room.id === selectedRoomId ? { ...room, type: newType } : room
   );
 
   return { ...assessment, rooms: newRooms };
@@ -38,17 +36,9 @@ export function updateRoomQuestionAnswer(
 ) {
   const newRooms = assessment.rooms.map((room) => {
     if (room.id === selectedRoomId) {
-      const newQuestions = room.questions.map((question) => {
-        if (question.id === questionId) {
-          return {
-            ...question,
-            answer,
-            description,
-          };
-        }
-        return question;
-      });
-      return { ...room, questions: newQuestions };
+      const newResponses = { ...room.responses };
+      newResponses[questionId] = { answer, description };
+      return { ...room, responses: newResponses };
     }
     return room;
   });

@@ -14,11 +14,13 @@ import * as React from "react";
 import {
   Room,
   RoomAssessmentQuestion,
+  RoomAssessmentQuestionResponse,
   RoomTypes,
   ROOM_TYPES,
   transformRoomTypeToLabel,
 } from "../../interfaces/home-assessment";
 import { setAsUndefinedInsteadOfEmptyString } from "./helpers/setAsUndefinedInsteadOfEmptyString";
+import { useRoomAssessmentQuestions } from "./hooks/useRoomAssessmentQuestions";
 
 type Props = {
   room: Room;
@@ -31,12 +33,24 @@ type Props = {
   ) => void;
 };
 
+const DEFAULT_RESPONSE: RoomAssessmentQuestionResponse = {
+  answer: undefined,
+  description: undefined,
+};
+
 export const RoomAssessment: React.FC<Props> = ({
   room,
   updateRoomName,
   updateRoomType,
   updateQuestion,
 }) => {
+  const questions = useRoomAssessmentQuestions();
+
+  const questionsForType = React.useMemo(() => questions[room.type], [
+    questions,
+    room.type,
+  ]);
+
   const handleUpdateRoomName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const targetValue = event.target.value;
@@ -90,10 +104,11 @@ export const RoomAssessment: React.FC<Props> = ({
         </FormControl>
       </Stack>
       <Box marginTop="16pt">
-        {room.questions.map((question) => (
+        {questionsForType.map((question) => (
           <RoomQuestion
             key={question.id}
             prompt={question}
+            response={room.responses[question.id] ?? DEFAULT_RESPONSE}
             answerChanged={updateQuestion}
           />
         ))}
@@ -104,12 +119,13 @@ export const RoomAssessment: React.FC<Props> = ({
 
 const RoomQuestion: React.FC<{
   prompt: RoomAssessmentQuestion;
+  response: RoomAssessmentQuestionResponse;
   answerChanged: (
     id: string,
     answer: "YES" | "NO" | undefined,
     description: string | undefined
   ) => void;
-}> = ({ prompt, answerChanged }) => {
+}> = ({ prompt, response, answerChanged }) => {
   const handleRadioGroupValueChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
@@ -125,23 +141,23 @@ const RoomQuestion: React.FC<{
   const handleDescriptionChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = setAsUndefinedInsteadOfEmptyString(event.target.value);
-      answerChanged(prompt.id, prompt.answer, newValue);
+      answerChanged(prompt.id, response.answer, newValue);
     },
-    [answerChanged, prompt.answer, prompt.id]
+    [answerChanged, response.answer, prompt.id]
   );
 
   const optionalTextbox = React.useMemo(
     () =>
-      prompt.answer === prompt.promptForDescriptionOn ? (
+      response.answer === prompt.promptForDescriptionOn ? (
         <Textarea
           placeholder="(Optional) describe the issue..."
-          value={prompt.description}
+          value={response.description}
           onChange={handleDescriptionChange}
         />
       ) : null,
     [
-      prompt.answer,
-      prompt.description,
+      response.answer,
+      response.description,
       prompt.promptForDescriptionOn,
       handleDescriptionChange,
     ]
@@ -152,7 +168,10 @@ const RoomQuestion: React.FC<{
       <Heading as="h5" size="sm" marginBottom="4pt">
         {prompt.question}
       </Heading>
-      <RadioGroup onChange={handleRadioGroupValueChange} value={prompt.answer}>
+      <RadioGroup
+        onChange={handleRadioGroupValueChange}
+        value={response.answer}
+      >
         <Radio value="YES">Yes</Radio>
         <Radio value="NO">No</Radio>
       </RadioGroup>
