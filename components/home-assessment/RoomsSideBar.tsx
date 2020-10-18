@@ -11,14 +11,11 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/core";
-import { transformRoomTypeToLabel } from "../../interfaces/home-assessment";
+import {
+  Room,
+  transformRoomTypeToLabel,
+} from "../../interfaces/home-assessment";
 import { useIsAssessmentValid } from "./hooks/useIsAssessmentValid";
-
-type Room = {
-  id: string;
-  name: string;
-  type: "LIVING" | "BED" | "WASH";
-};
 
 type Props = {
   rooms: Room[];
@@ -56,7 +53,7 @@ export const RoomsSideBar: React.FC<Props> = ({
         position: "top-right",
       });
     }
-  }, [isAssessmentValid, toast]);
+  }, [isAssessmentValid, toast, generateReport]);
 
   return (
     <Box bg="gray.100" margin="2pt" padding="4pt" rounded="md">
