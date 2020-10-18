@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  lint-typescript:
+  unit-tests:
     runs-on: ubuntu-latest
     env:
       working-directory: ./

@@ -119,6 +119,10 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
     []
   );
 
+  const handleGenerateReport = React.useCallback(() => {
+    console.log("Implement save to localstorage...");
+  }, []);
+
   const handleFormHasBeenCompleted = React.useCallback(() => {
     setAssessment((assessment) => ({ ...assessment, step: "ASSESSMENT" }));
   }, []);
@@ -167,6 +171,7 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
             addRoom={handleAddNewRoom}
             deleteRoom={handleDeleteRoom}
             changedSelectedRoom={updateSelectedRoom}
+            generateReport={handleGenerateReport}
           />
         </Box>
         <Box flexBasis={"100%"}>

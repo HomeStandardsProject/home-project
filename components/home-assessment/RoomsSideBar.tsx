@@ -4,19 +4,18 @@ import {
   Button,
   Flex,
   Heading,
+  Icon,
   IconButton,
   PseudoBox,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/core";
-import Link from "next/link";
-import { transformRoomTypeToLabel } from "../../interfaces/home-assessment";
-
-type Room = {
-  id: string;
-  name: string;
-  type: "LIVING" | "BED" | "WASH";
-};
+import {
+  Room,
+  transformRoomTypeToLabel,
+} from "../../interfaces/home-assessment";
+import { useIsAssessmentValid } from "./hooks/useIsAssessmentValid";
 
 type Props = {
   rooms: Room[];
@@ -24,6 +23,7 @@ type Props = {
   addRoom: () => void;
   deleteRoom: (id: string) => void;
   changedSelectedRoom: (id: string) => void;
+  generateReport: () => void;
 };
 
 export const RoomsSideBar: React.FC<Props> = ({
@@ -31,11 +31,29 @@ export const RoomsSideBar: React.FC<Props> = ({
   changedSelectedRoom,
   addRoom,
   deleteRoom,
+  generateReport,
   selectedRoomId,
 }) => {
+  const toast = useToast();
+  // only show error state after the user first tries to generate a report
+  const [showErrors, setShowErrors] = React.useState(false);
+  const [isAssessmentValid, invalidRoomIds] = useIsAssessmentValid(rooms);
   const preventDeletionOfFirstRoom = React.useMemo(() => rooms.length === 1, [
     rooms.length,
   ]);
+
+  const handleGenerateReport = React.useCallback(() => {
+    if (isAssessmentValid) {
+      generateReport();
+    } else {
+      setShowErrors(true);
+      toast({
+        description: "Please complete all prompts before proceeding",
+        status: "error",
+        position: "top-right",
+      });
+    }
+  }, [isAssessmentValid, toast, generateReport]);
 
   return (
     <Box bg="gray.100" margin="2pt" padding="4pt" rounded="md">
@@ -61,15 +79,20 @@ export const RoomsSideBar: React.FC<Props> = ({
             roomDeleted={deleteRoom}
             roomSelected={changedSelectedRoom}
             isSelected={room.id === selectedRoomId}
+            isInvalid={showErrors && invalidRoomIds.includes(room.id)}
             isDisabled={i === 0 ? preventDeletionOfFirstRoom : false}
           />
         ))}
       </Box>
-      <Link href="/result">
-        <Button marginTop={"16pt"} variantColor="blue" size="sm" width="100%">
-          Generate report
-        </Button>
-      </Link>
+      <Button
+        marginTop={"16pt"}
+        variantColor="blue"
+        size="sm"
+        width="100%"
+        onClick={handleGenerateReport}
+      >
+        Generate report
+      </Button>
     </Box>
   );
 };
@@ -78,9 +101,17 @@ const RoomComponent: React.FC<{
   room: Room;
   isSelected: boolean;
   isDisabled: boolean;
+  isInvalid: boolean;
   roomSelected: (id: string) => void;
   roomDeleted: (id: string) => void;
-}> = ({ room, isDisabled, isSelected, roomSelected, roomDeleted }) => {
+}> = ({
+  room,
+  isDisabled,
+  isSelected,
+  isInvalid,
+  roomSelected,
+  roomDeleted,
+}) => {
   const handleRoomSelect = React.useCallback(() => roomSelected(room.id), [
     roomSelected,
     room.id,
@@ -106,9 +137,12 @@ const RoomComponent: React.FC<{
     >
       <Flex padding="4pt" alignItems="center">
         <Stack spacing={0} flexBasis="100%">
-          <Heading as="h4" fontSize="md" color="gray.600">
-            {room.name}
-          </Heading>
+          <Stack isInline>
+            {isInvalid && <Icon name="warning" color="red.500" />}
+            <Heading as="h4" fontSize="md" color="gray.600">
+              {room.name}
+            </Heading>
+          </Stack>
           <Text fontSize="xs">{transformRoomTypeToLabel(room.type)} </Text>
         </Stack>
         <IconButton
