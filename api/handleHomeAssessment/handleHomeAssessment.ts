@@ -11,8 +11,11 @@ import { validateMiddleware } from "../utils/validation";
 import {
   ApiBylawMultiplexer,
   ApiHomeAssessmentInput,
+  ApiHomeAssessmentResult,
   ApiRoomAssessmentQuestionResponse,
+  ApiRoomAssessmentResult,
 } from "../../interfaces/api-home-assessment";
+import { calculateBylawViolationsForRoom } from "./calculateBylawViolationsForRoom";
 
 const validateSchema = validateMiddleware(
   [
@@ -23,6 +26,8 @@ const validateSchema = validateMiddleware(
     check("details.landlord").isIn(LANDLORDS.map((i) => i)),
     check("details.landlordOther").optional({ nullable: true }).isString(),
 
+    check("rooms.*.id").isString(),
+    check("rooms.*.name").isString(),
     check("rooms.*.type").isIn(ROOM_TYPES.map((i) => i)),
     check("rooms.*.responses").exists(),
     check("rooms.*.responses.*.answer").isIn(["YES", "NO"]),
@@ -33,28 +38,10 @@ const validateSchema = validateMiddleware(
   validationResult
 );
 
-function validateAllPromptsAreAnswered(
-  type: RoomTypes,
-  responses: { [questionId: string]: ApiRoomAssessmentQuestionResponse },
-  questions: AllRoomAssessmentQuestion
-) {
-  const validationErrors = [];
-  const questionsForType = questions[type];
-  for (const question of questionsForType) {
-    if (!responses[question.id]) {
-      validationErrors.push({
-        msg: `question with id ${question.id} is left unanswered for type ${type}`,
-      });
-    }
-  }
-
-  return validationErrors.length === 0 ? null : validationErrors;
-}
-
 export async function handleHomeAssessment(
   req: NextApiRequest,
   res: NextApiResponse,
-  _: ApiBylawMultiplexer,
+  bylawMultiplexer: ApiBylawMultiplexer,
   questions: AllRoomAssessmentQuestion
 ) {
   try {
@@ -75,8 +62,42 @@ export async function handleHomeAssessment(
       return res.status(400).json({ errors: promptValidationErrors });
     }
 
-    return res.status(200).json({ hello: true });
+    const rooms = inputs.rooms.map(
+      (room): ApiRoomAssessmentResult => {
+        const violations = calculateBylawViolationsForRoom(
+          room.responses,
+          bylawMultiplexer
+        );
+        return { id: room.id, name: room.name, violations };
+      }
+    );
+
+    const result: ApiHomeAssessmentResult = {
+      rooms,
+      details: inputs.details,
+      generatedDate: new Date(),
+    };
+
+    return res.status(200).json(result);
   } catch (err) {
     return res.status(500).json({ statusCode: 500, message: err.message });
   }
+}
+
+function validateAllPromptsAreAnswered(
+  type: RoomTypes,
+  responses: { [questionId: string]: ApiRoomAssessmentQuestionResponse },
+  questions: AllRoomAssessmentQuestion
+) {
+  const validationErrors = [];
+  const questionsForType = questions[type];
+  for (const question of questionsForType) {
+    if (!responses[question.id]) {
+      validationErrors.push({
+        msg: `question with id ${question.id} is left unanswered for type ${type}`,
+      });
+    }
+  }
+
+  return validationErrors.length === 0 ? null : validationErrors;
 }

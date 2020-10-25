@@ -6,6 +6,8 @@ export type ApiRoomAssessmentQuestionResponse = {
 };
 
 export type ApiRoom = {
+  id: string;
+  name: string;
   type: Room["type"];
   responses: { [questionId: string]: ApiRoomAssessmentQuestionResponse };
 };
@@ -24,20 +26,18 @@ export type ApiHomeAssessmentResult = {
 export type ApiBylawViolation = {
   name: string;
   description: string;
-};
-
-export type ApiRoomViolation = {
-  infractions: ApiBylawViolation[];
-  userProvidedDescription: string;
+  userProvidedDescriptions: string[];
 };
 
 export type ApiRoomAssessmentResult = {
   id: string;
   name: string;
-  violations: ApiRoomViolation[];
+  violations: ApiBylawViolation[];
 };
 
 export type ApiBylawMultiplexer = {
   rules: { bylawId: string; mustBeTrue: string[]; mustBeFalse: string[] }[];
-  bylaws: { [bylawId: string]: ApiBylawViolation };
+  bylaws: {
+    [bylawId: string]: Pick<ApiBylawViolation, "name" | "description">;
+  };
 };

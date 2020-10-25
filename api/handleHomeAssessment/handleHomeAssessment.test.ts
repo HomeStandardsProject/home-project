@@ -3,6 +3,8 @@ import { createMocks } from "node-mocks-http";
 import {
   ApiBylawMultiplexer,
   ApiHomeAssessmentInput,
+  ApiHomeAssessmentResult,
+  ApiRoom,
 } from "../../interfaces/api-home-assessment";
 import { AllRoomAssessmentQuestion } from "../../interfaces/home-assessment";
 import { generateSetOfNullifiedFields } from "../utils/generateSetOfNullifiedFields";
@@ -45,12 +47,19 @@ const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
 const MOCK_BYLAW_MULTIPLEXER: ApiBylawMultiplexer = {
   rules: [
     { bylawId: "id1", mustBeTrue: ["1"], mustBeFalse: [] },
-    { bylawId: "id2", mustBeTrue: ["2"], mustBeFalse: [] },
+    { bylawId: "id2", mustBeTrue: ["4"], mustBeFalse: [] },
   ],
   bylaws: {
     id1: { name: "1.0 Violation", description: "Test 1 description" },
     id2: { name: "2.0 Violation", description: "Test 1 description" },
   },
+};
+
+const MOCK_ROOM: ApiRoom = {
+  id: "1",
+  type: "BED",
+  name: "Bedroom 1",
+  responses: {},
 };
 
 const MOCK_DETAILS: ApiHomeAssessmentInput["details"] = {
@@ -64,6 +73,8 @@ const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput>
   details: MOCK_DETAILS,
   rooms: [
     {
+      id: "1",
+      name: "Living Room 1",
       type: "LIVING",
       responses: {
         questionId1: {
@@ -78,6 +89,9 @@ const testHandleHomeAssessment = (req: NextApiRequest, res: NextApiResponse) =>
   handleHomeAssessment(req, res, MOCK_BYLAW_MULTIPLEXER, MOCK_QUESTIONS);
 
 describe("/api/home-assessment", () => {
+  // ensures that all properties defined in ONLY_REQUIRED_MOCK_INPUTS have a corresponding
+  // express-validator at the api level. This helps with forgetting to add a validator when
+  // adding a new property to an object
   it("implements basic existence validation for all parameters", async () => {
     const nullifiedFields = generateSetOfNullifiedFields(
       ONLY_REQUIRED_MOCK_INPUTS
@@ -110,7 +124,7 @@ describe("/api/home-assessment", () => {
         details: MOCK_DETAILS,
         rooms: [
           {
-            type: "BED",
+            ...MOCK_ROOM,
             responses: {},
           },
         ],
@@ -135,14 +149,10 @@ describe("/api/home-assessment", () => {
         details: MOCK_DETAILS,
         rooms: [
           {
-            type: "BED",
+            ...MOCK_ROOM,
             responses: {
-              invalidQuestionId: {
-                answer: "YES",
-              },
-              "4": {
-                answer: "YES",
-              },
+              invalidQuestionId: { answer: "YES" },
+              "4": { answer: "YES" },
             },
           },
         ],
@@ -155,5 +165,71 @@ describe("/api/home-assessment", () => {
     expect(JSON.parse(res._getData())).toEqual({
       errors: [{ msg: "question with id 3 is left unanswered for type BED" }],
     });
+  });
+
+  it("returns 200 when providing valid inputs", async () => {
+    const { req, res } = createMocks({
+      method: "POST",
+      body: {
+        details: MOCK_DETAILS,
+        rooms: [
+          {
+            ...MOCK_ROOM,
+            responses: {
+              "3": { answer: "NO" },
+              "4": { answer: "NO" },
+            },
+          },
+        ],
+      },
+    });
+
+    await testHandleHomeAssessment(req, res);
+
+    expect(res._getStatusCode()).toEqual(200);
+    const result = JSON.parse(res._getData()) as ApiHomeAssessmentResult;
+    expect(result.details).toEqual(MOCK_DETAILS);
+    expect(result.generatedDate).toBeDefined();
+    expect(result.rooms).toEqual([
+      { id: "1", name: "Bedroom 1", violations: [] },
+    ]);
+  });
+
+  it("returns violations when conditions are met", async () => {
+    const { req, res } = createMocks({
+      method: "POST",
+      body: {
+        details: MOCK_DETAILS,
+        rooms: [
+          {
+            ...MOCK_ROOM,
+            responses: {
+              "3": { answer: "NO" },
+              "4": { answer: "YES" },
+            },
+          },
+        ],
+      },
+    });
+
+    await testHandleHomeAssessment(req, res);
+
+    expect(res._getStatusCode()).toEqual(200);
+    const result = JSON.parse(res._getData()) as ApiHomeAssessmentResult;
+    expect(result.details).toEqual(MOCK_DETAILS);
+    expect(result.generatedDate).toBeDefined();
+    expect(result.rooms).toEqual([
+      {
+        id: "1",
+        name: "Bedroom 1",
+        violations: [
+          {
+            description: "Test 1 description",
+            name: "2.0 Violation",
+            userProvidedDescriptions: [],
+          },
+        ],
+      },
+    ]);
   });
 });
