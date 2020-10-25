@@ -3,11 +3,11 @@ import { createMocks } from "node-mocks-http";
 import {
   ApiBylawMultiplexer,
   ApiHomeAssessmentInput,
-} from "../../../interfaces/api-home-assessment";
-import { AllRoomAssessmentQuestion } from "../../../interfaces/home-assessment";
-import { generateSetOfNullifiedFields } from "../../../util/api/generateSetOfNullifiedFields";
-import { RecursiveRequiredObject } from "../../../util/RecursiveRequiredObject";
-import { handler as handleHomeAssessment } from "../home-assessment";
+} from "../../interfaces/api-home-assessment";
+import { AllRoomAssessmentQuestion } from "../../interfaces/home-assessment";
+import { generateSetOfNullifiedFields } from "../utils/generateSetOfNullifiedFields";
+import { RecursiveRequiredObject } from "../utils/RecursiveRequiredObject";
+import { handleHomeAssessment } from "./handleHomeAssessment";
 
 const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
   LIVING: [
@@ -43,9 +43,13 @@ const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
 };
 
 const MOCK_BYLAW_MULTIPLEXER: ApiBylawMultiplexer = {
-  rules: [{ bylawId: "bylaw1", mustBeTrue: ["1"], mustBeFalse: [""] }],
+  rules: [
+    { bylawId: "id1", mustBeTrue: ["1"], mustBeFalse: [] },
+    { bylawId: "id2", mustBeTrue: ["2"], mustBeFalse: [] },
+  ],
   bylaws: {
-    bylaw1: { name: "1.0 Bylaw", description: "Description for 1.0 Bylaw" },
+    id1: { name: "1.0 Violation", description: "Test 1 description" },
+    id2: { name: "2.0 Violation", description: "Test 1 description" },
   },
 };
 
