@@ -1,17 +1,63 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
-import { ApiHomeAssessmentInput } from "../../../interfaces/api-home-assessment";
+import {
+  ApiBylawMultiplexer,
+  ApiHomeAssessmentInput,
+} from "../../../interfaces/api-home-assessment";
+import { AllRoomAssessmentQuestion } from "../../../interfaces/home-assessment";
 import { generateSetOfNullifiedFields } from "../../../util/api/generateSetOfNullifiedFields";
 import { RecursiveRequiredObject } from "../../../util/RecursiveRequiredObject";
+import { handler as handleHomeAssessment } from "../home-assessment";
 
-import handleHomeAssessment from "../home-assessment";
+const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
+  LIVING: [
+    {
+      id: "1",
+      question: "Living room Question 1",
+      type: "YES/NO",
+      promptForDescriptionOn: "NO",
+    },
+  ],
+  WASH: [
+    {
+      id: "2",
+      question: "Washroom Question 2",
+      type: "YES/NO",
+      promptForDescriptionOn: "NO",
+    },
+  ],
+  BED: [
+    {
+      id: "3",
+      question: "Bedroom Question 3",
+      type: "YES/NO",
+      promptForDescriptionOn: "NO",
+    },
+    {
+      id: "4",
+      question: "Bedroom Question 3",
+      type: "YES/NO",
+      promptForDescriptionOn: "NO",
+    },
+  ],
+};
+
+const MOCK_BYLAW_MULTIPLEXER: ApiBylawMultiplexer = {
+  rules: [{ bylawId: "bylaw1", mustBeTrue: ["1"], mustBeFalse: [""] }],
+  bylaws: {
+    bylaw1: { name: "1.0 Bylaw", description: "Description for 1.0 Bylaw" },
+  },
+};
+
+const MOCK_DETAILS: ApiHomeAssessmentInput["details"] = {
+  landlord: "Frontenac Property Management",
+  rentalType: "Full-house",
+  totalRent: "499.99",
+  address: "99 University Ave, Kingston, ON",
+};
 
 const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput> = {
-  details: {
-    landlord: "Frontenac Property Management",
-    rentalType: "Full-house",
-    totalRent: "499.99",
-    address: "99 University Ave, Kingston, ON",
-  },
+  details: MOCK_DETAILS,
   rooms: [
     {
       type: "LIVING",
@@ -24,22 +70,26 @@ const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput>
   ],
 };
 
-const validationError = (param: string) => ({
-  errors: [{ location: "body", msg: "Invalid value", param }],
-});
+const testHandleHomeAssessment = (req: NextApiRequest, res: NextApiResponse) =>
+  handleHomeAssessment(req, res, MOCK_BYLAW_MULTIPLEXER, MOCK_QUESTIONS);
 
 describe("/api/home-assessment", () => {
   it("implements basic existence validation for all parameters", async () => {
     const nullifiedFields = generateSetOfNullifiedFields(
       ONLY_REQUIRED_MOCK_INPUTS
     );
+
+    const validationError = (param: string) => ({
+      errors: [{ location: "body", msg: "Invalid value", param }],
+    });
+
     for (const nullCase of nullifiedFields) {
       const { req, res } = createMocks({
         method: "POST",
         body: nullCase.case,
       });
 
-      await handleHomeAssessment(req, res);
+      await testHandleHomeAssessment(req, res);
 
       const statusCode = res._getStatusCode();
       const response = JSON.parse(res._getData());
@@ -47,5 +97,59 @@ describe("/api/home-assessment", () => {
         fail(`Unimplemented existence validator for property ${nullCase.name}`);
       }
     }
+  });
+
+  it("returns 400 when all questions are unanswered", async () => {
+    const { req, res } = createMocks({
+      method: "POST",
+      body: {
+        details: MOCK_DETAILS,
+        rooms: [
+          {
+            type: "BED",
+            responses: {},
+          },
+        ],
+      },
+    });
+
+    await testHandleHomeAssessment(req, res);
+
+    expect(res._getStatusCode()).toEqual(400);
+    expect(JSON.parse(res._getData())).toEqual({
+      errors: [
+        { msg: "question with id 3 is left unanswered for type BED" },
+        { msg: "question with id 4 is left unanswered for type BED" },
+      ],
+    });
+  });
+
+  it("returns 400 when not all questions are answered", async () => {
+    const { req, res } = createMocks({
+      method: "POST",
+      body: {
+        details: MOCK_DETAILS,
+        rooms: [
+          {
+            type: "BED",
+            responses: {
+              invalidQuestionId: {
+                answer: "YES",
+              },
+              "4": {
+                answer: "YES",
+              },
+            },
+          },
+        ],
+      },
+    });
+
+    await testHandleHomeAssessment(req, res);
+
+    expect(res._getStatusCode()).toEqual(400);
+    expect(JSON.parse(res._getData())).toEqual({
+      errors: [{ msg: "question with id 3 is left unanswered for type BED" }],
+    });
   });
 });

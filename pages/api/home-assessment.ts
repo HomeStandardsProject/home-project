@@ -4,8 +4,16 @@ import {
   ROOM_TYPES,
   RENTAL_TYPES,
   LANDLORDS,
+  AllRoomAssessmentQuestion,
+  RoomTypes,
 } from "../../interfaces/home-assessment";
 import { validateMiddleware } from "../../util/api/validation";
+import {
+  ApiBylawMultiplexer,
+  ApiHomeAssessmentInput,
+  ApiRoomAssessmentQuestionResponse,
+} from "../../interfaces/api-home-assessment";
+import QuestionsData from "../../data/kingston/questions.json";
 
 const validateSchema = validateMiddleware(
   [
@@ -26,11 +34,58 @@ const validateSchema = validateMiddleware(
   validationResult
 );
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+const TestMultiPlexer: ApiBylawMultiplexer = {
+  rules: [
+    { bylawId: "id1", mustBeTrue: ["1"], mustBeFalse: [] },
+    { bylawId: "id2", mustBeTrue: ["2"], mustBeFalse: [] },
+  ],
+  bylaws: {
+    id1: { name: "1.0 Violation", description: "Test 1 description" },
+    id2: { name: "2.0 Violation", description: "Test 1 description" },
+  },
+};
+
+function validateAllPromptsAreAnswered(
+  type: RoomTypes,
+  responses: { [questionId: string]: ApiRoomAssessmentQuestionResponse },
+  questions: AllRoomAssessmentQuestion
+) {
+  const validationErrors = [];
+  const questionsForType = questions[type];
+  for (const question of questionsForType) {
+    if (!responses[question.id]) {
+      validationErrors.push({
+        msg: `question with id ${question.id} is left unanswered for type ${type}`,
+      });
+    }
+  }
+
+  return validationErrors.length === 0 ? null : validationErrors;
+}
+
+export async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+  _: ApiBylawMultiplexer,
+  questions: AllRoomAssessmentQuestion
+) {
   try {
     const validationErrors = await validateSchema(req);
     if (validationErrors)
       return res.status(400).json({ errors: validationErrors.array() });
+
+    const inputs = req.body as ApiHomeAssessmentInput;
+
+    const promptValidationErrors = inputs.rooms
+      .map((room) =>
+        validateAllPromptsAreAnswered(room.type, room.responses, questions)
+      )
+      .flat()
+      .filter((vals) => vals);
+
+    if (promptValidationErrors.length > 0) {
+      return res.status(400).json({ errors: promptValidationErrors });
+    }
 
     return res.status(200).json({ hello: true });
   } catch (err) {
@@ -38,4 +93,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default handler;
+function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
+  const questions = QuestionsData as AllRoomAssessmentQuestion;
+  return handler(req, res, TestMultiPlexer, questions);
+}
+
+export default curriedHandler;

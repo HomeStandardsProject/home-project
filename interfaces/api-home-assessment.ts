@@ -21,13 +21,13 @@ export type ApiHomeAssessmentResult = {
   rooms: ApiRoomAssessmentResult[];
 };
 
-export type ApiRoomInfraction = {
-  bylawId: string;
-  bylawDescription: string;
+export type ApiBylawViolation = {
+  name: string;
+  description: string;
 };
 
 export type ApiRoomViolation = {
-  infractions: ApiRoomInfraction[];
+  infractions: ApiBylawViolation[];
   userProvidedDescription: string;
 };
 
@@ -35,4 +35,9 @@ export type ApiRoomAssessmentResult = {
   id: string;
   name: string;
   violations: ApiRoomViolation[];
+};
+
+export type ApiBylawMultiplexer = {
+  rules: { bylawId: string; mustBeTrue: string[]; mustBeFalse: string[] }[];
+  bylaws: { [bylawId: string]: ApiBylawViolation };
 };
