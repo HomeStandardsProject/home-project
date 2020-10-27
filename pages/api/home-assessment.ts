@@ -7,6 +7,7 @@ import { handleHomeAssessment } from "../../api/handleHomeAssessment/handleHomeA
 import { ApiBylawMultiplexer } from "../../interfaces/api-home-assessment";
 
 function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
+  console.log("api");
   const questions = QuestionsData as AllRoomAssessmentQuestion;
   const multiplexer = KingstonBylawMultiplexer as ApiBylawMultiplexer;
   return handleHomeAssessment(req, res, multiplexer, questions);

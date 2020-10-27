@@ -3,7 +3,7 @@ import {
   transformRoomTypeToLabel,
 } from "../../../interfaces/home-assessment";
 
-type NormalizedRoom = Exclude<Room, "name"> & { name: string };
+export type NormalizedRoom = Exclude<Room, "name"> & { name: string };
 
 export function normalizeRoomNames(sortedRooms: Room[]): NormalizedRoom[] {
   const normalizedRooms: NormalizedRoom[] = [];

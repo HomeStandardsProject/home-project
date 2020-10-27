@@ -1,6 +1,7 @@
 import * as React from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Box, Heading, Stack } from "@chakra-ui/core";
+import { Box, Heading, Stack, useToast } from "@chakra-ui/core";
+import { useRouter } from "next/router";
 import { RoomsSideBar } from "./RoomsSideBar";
 import {
   HomeAssessmentData,
@@ -21,6 +22,7 @@ import {
   updateRoomQuestionAnswer,
 } from "./actions/updateRoomActions";
 import { RoomAssessmentQuestionsContext } from "./hooks/useRoomAssessmentQuestions";
+import { useAssessmentCalculatorApi } from "./hooks/useAssessmentCalculatorApi";
 
 type Props = {
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
@@ -45,8 +47,14 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
       details: {},
     };
   });
+  const {
+    generatingAssessment,
+    generateAssessment,
+  } = useAssessmentCalculatorApi();
+  const toast = useToast();
+  const router = useRouter();
 
-  const normalizeAndSortRooms = React.useMemo(() => {
+  const normalizedAndSortedRooms = React.useMemo(() => {
     const sortedRooms = sortRoomsBasedOnTypeAndName(rooms);
     return normalizeRoomNames(sortedRooms);
   }, [rooms]);
@@ -119,9 +127,18 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
     []
   );
 
-  const handleGenerateReport = React.useCallback(() => {
-    console.log("Implement save to localstorage...");
-  }, []);
+  const handleGenerateReport = React.useCallback(async () => {
+    const { successful, errors } = await generateAssessment(
+      normalizedAndSortedRooms,
+      details
+    );
+
+    if (successful) {
+      router.push("/results");
+    } else {
+      errors.map((error) => toast({ description: error.msg, status: "error" }));
+    }
+  }, [router, toast, generateAssessment, normalizedAndSortedRooms, details]);
 
   const handleFormHasBeenCompleted = React.useCallback(() => {
     setAssessment((assessment) => ({ ...assessment, step: "ASSESSMENT" }));
@@ -166,7 +183,8 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
       <Stack isInline spacing={4}>
         <Box minW="300px">
           <RoomsSideBar
-            rooms={normalizeAndSortRooms}
+            generatingAssessment={generatingAssessment}
+            rooms={normalizedAndSortedRooms}
             selectedRoomId={selectedRoomId}
             addRoom={handleAddNewRoom}
             deleteRoom={handleDeleteRoom}
