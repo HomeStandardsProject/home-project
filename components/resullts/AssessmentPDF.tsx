@@ -20,9 +20,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#edf2f7",
     borderRadius: 4,
   },
-  h1: {
-    fontSize: "15pt",
-  },
   h2: {
     fontSize: "13pt",
     fontWeight: "bold",
@@ -48,7 +45,10 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   violation: {
-    marginTop: 8,
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  roomContainer: {
     marginBottom: 8,
   },
 });
@@ -70,17 +70,14 @@ export const AssessmentPDF = ({
           <Text style={styles.h2}>{result.details.address}</Text>
           <Text style={styles.bodyCommentText}>{landlord}</Text>
         </View>
-        <View style={styles.section}>
-          <Text style={styles.h1}>Rooms</Text>
-          {result.rooms.map(roomRenderer)}
-        </View>
+        <View style={styles.section}>{result.rooms.map(roomRenderer)}</View>
       </Page>
     </Document>
   );
 };
 
 const roomRenderer = (room: ApiRoomAssessmentResult) => (
-  <View key={room.id}>
+  <View key={room.id} style={styles.roomContainer}>
     <Text style={styles.h2}>{room.name}</Text>
 
     {room.violations.map((violation, i) => (
@@ -96,5 +93,10 @@ const roomRenderer = (room: ApiRoomAssessmentResult) => (
         </View>
       </View>
     ))}
+    {room.violations.length === 0 && (
+      <View style={styles.violation}>
+        <Text style={styles.bodyText}>No violations for this room</Text>
+      </View>
+    )}
   </View>
 );
