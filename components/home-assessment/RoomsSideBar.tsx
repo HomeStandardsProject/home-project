@@ -20,6 +20,7 @@ import { useIsAssessmentValid } from "./hooks/useIsAssessmentValid";
 type Props = {
   rooms: Room[];
   selectedRoomId: string;
+  generatingAssessment: boolean;
   addRoom: () => void;
   deleteRoom: (id: string) => void;
   changedSelectedRoom: (id: string) => void;
@@ -28,6 +29,7 @@ type Props = {
 
 export const RoomsSideBar: React.FC<Props> = ({
   rooms,
+  generatingAssessment,
   changedSelectedRoom,
   addRoom,
   deleteRoom,
@@ -90,8 +92,9 @@ export const RoomsSideBar: React.FC<Props> = ({
         size="sm"
         width="100%"
         onClick={handleGenerateReport}
+        isLoading={generatingAssessment}
       >
-        Generate report
+        {generatingAssessment ? `Generating report...` : "Generate report"}
       </Button>
     </Box>
   );

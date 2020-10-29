@@ -5,6 +5,10 @@ export type RoomAssessmentQuestion = {
   promptForDescriptionOn: "YES" | "NO";
 };
 
+export type AllRoomAssessmentQuestion = {
+  [type in RoomTypes]: RoomAssessmentQuestion[];
+};
+
 export type RoomAssessmentQuestionResponse = {
   answer?: ("YES" | "NO") | undefined;
   description?: string;

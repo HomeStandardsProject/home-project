@@ -1,12 +1,13 @@
 import { GetStaticProps } from "next";
 import * as React from "react";
+
 import { HomeAssessment } from "../components/home-assessment/HomeAssessment";
 import Layout from "../components/Layout";
 import {
   RoomAssessmentQuestion,
   RoomTypes,
 } from "../interfaces/home-assessment";
-import QuestionsData from "../data/questions.json";
+import QuestionsData from "../data/kingston/questions.json";
 
 type Props = {
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
