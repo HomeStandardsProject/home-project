@@ -60,9 +60,11 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
   }, [rooms]);
 
   const handleAddNewRoom = React.useCallback(() => {
+    const newRoom = generateDefaultRoom();
     setAssessment((assessment) => ({
       ...assessment,
-      rooms: [...assessment.rooms, generateDefaultRoom()],
+      rooms: [...assessment.rooms, newRoom],
+      selectedRoomId: newRoom.id,
     }));
   }, []);
 
