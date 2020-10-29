@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
-import { Stack, Text } from "@chakra-ui/core";
+import { Button, Stack, Text } from "@chakra-ui/core";
 
 type Props = {
   children?: ReactNode;
@@ -42,17 +42,10 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
     <header>
       <nav>
         <Link href="/">
-          <a>Home</a>
-        </Link>{" "}
-        |{" "}
-        <Link href="/about">
-          <a>About</a>
-        </Link>{" "}
-        |{" "}
-        <Link href="/users">
-          <a>Users List</a>
-        </Link>{" "}
-        | <a href="/api/users">Users API</a>
+          <Button leftIcon="sun" size="sm" variant="ghost" variantColor="gray">
+            Home
+          </Button>
+        </Link>
       </nav>
     </header>
     <Content>{children}</Content>
