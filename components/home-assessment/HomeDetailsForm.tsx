@@ -24,6 +24,7 @@ import {
 import { setAsUndefinedInsteadOfEmptyString } from "./helpers/setAsUndefinedInsteadOfEmptyString";
 import { validateHomeDetailsForm } from "./helpers/validateHomeDetailsForm";
 import { validatePrice } from "./helpers/validatePrice";
+import { useLayoutType } from "./hooks/useLayoutType";
 
 type Props = {
   details: Partial<HomeDetailsType>;
@@ -41,6 +42,7 @@ export const HomeDetailsForm: React.FC<Props> = ({
   formHasBeenCompleted,
 }) => {
   const [showValidationErrors, setShowValidationErrors] = React.useState(false);
+  const layoutType = useLayoutType();
 
   const handleAddressChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,12 +158,16 @@ export const HomeDetailsForm: React.FC<Props> = ({
     ]
   );
 
+  console.log("render", layoutType, layoutType === "desktop");
+
+  const isInline = layoutType === "desktop";
+
   return (
     <Stack padding="4pt">
       <Heading as="h3" size="xs" textTransform="uppercase" marginBottom="8pt">
         Details
       </Heading>
-      <Stack isInline>
+      <Stack isInline={isInline}>
         <FormControl
           flexBasis={"100%"}
           isInvalid={!details.address && showValidationErrors}
@@ -197,7 +203,7 @@ export const HomeDetailsForm: React.FC<Props> = ({
           </Select>
         </FormControl>
       </Stack>
-      <Stack isInline>
+      <Stack isInline={isInline}>
         <FormControl isInvalid={!isTotalRentValid} isRequired={true}>
           <FormLabel fontSize="sm">Total Rent cost</FormLabel>
           <InputGroup>

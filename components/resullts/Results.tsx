@@ -5,12 +5,14 @@ import {
   ApiRoomAssessmentResult,
 } from "../../interfaces/api-home-assessment";
 import { PDFDownloadButton } from "./PDFDownloadButton";
+import { useLayoutType } from "../home-assessment/hooks/useLayoutType";
 
 type Props = {
   assessment: ApiHomeAssessmentResult;
 };
 
 export const Results: React.FC<Props> = ({ assessment }) => {
+  const layoutType = useLayoutType();
   const totalViolations = React.useMemo(
     () =>
       assessment.rooms.reduce(
@@ -23,6 +25,8 @@ export const Results: React.FC<Props> = ({ assessment }) => {
   const generatedDate = new Intl.DateTimeFormat("en-US").format(
     new Date(assessment.generatedDate)
   );
+
+  const isInline = layoutType === "desktop";
 
   return (
     <Stack marginTop="16pt" marginBottom="16pt" spacing={1}>
@@ -55,17 +59,18 @@ export const Results: React.FC<Props> = ({ assessment }) => {
           Breakdown
         </Heading>
         {assessment.rooms.map((room) => (
-          <RoomViolations key={room.id} room={room} />
+          <RoomViolations key={room.id} room={room} isInline={isInline} />
         ))}
       </Box>
     </Stack>
   );
 };
 
-const RoomViolations: React.FC<{ room: ApiRoomAssessmentResult }> = ({
-  room,
-}) => (
-  <Stack marginTop="16pt" isInline>
+const RoomViolations: React.FC<{
+  room: ApiRoomAssessmentResult;
+  isInline: boolean;
+}> = ({ room, isInline }) => (
+  <Stack marginTop="16pt" isInline={isInline}>
     <Text as="b" width="30%" minW="200px">
       {room.name}
     </Text>

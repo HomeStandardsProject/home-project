@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/core";
 import * as React from "react";
 import { HomeDetails } from "../../interfaces/home-assessment";
+import { useLayoutType } from "./hooks/useLayoutType";
 
 type Props = {
   details: Partial<HomeDetails>;
@@ -26,6 +27,9 @@ export const HomeDetailsSummary: React.FC<Props> = ({
         : details.landlord,
     [details.landlord, details.landlordOther]
   );
+  const layoutType = useLayoutType();
+
+  const isDesktop = React.useMemo(() => layoutType === "desktop", [layoutType]);
 
   return (
     <Stack padding="4pt">
@@ -41,8 +45,8 @@ export const HomeDetailsSummary: React.FC<Props> = ({
         onClick={switchToDetails}
       >
         <Stack isInline align="center">
-          <Stack spacing={0} flexBasis="100%">
-            <Stack isInline spacing={4}>
+          <Stack spacing={isDesktop ? 0 : 2} flexBasis="100%">
+            <Stack isInline={isDesktop} spacing={isDesktop ? 4 : 0}>
               <Text as="b" color="gray.800">
                 {details.address}
               </Text>
