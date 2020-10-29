@@ -1,5 +1,6 @@
 import { GetStaticProps } from "next";
 import * as React from "react";
+
 import { HomeAssessment } from "../components/home-assessment/HomeAssessment";
 import Layout from "../components/Layout";
 import {

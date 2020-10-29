@@ -1,22 +1,10 @@
 import * as React from "react";
-import {
-  Box,
-  Button,
-  Divider,
-  Heading,
-  Icon,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Stack,
-  Tag,
-  Text,
-} from "@chakra-ui/core";
+import { Box, Divider, Heading, Icon, Stack, Tag, Text } from "@chakra-ui/core";
 import {
   ApiHomeAssessmentResult,
   ApiRoomAssessmentResult,
 } from "../../interfaces/api-home-assessment";
+import { PDFDownloadButton } from "./PDFDownloadButton";
 
 type Props = {
   assessment: ApiHomeAssessmentResult;
@@ -52,31 +40,15 @@ export const Results: React.FC<Props> = ({ assessment }) => {
           {assessment.details.landlordOther ?? assessment.details.landlord}
         </Tag>
       </Stack>
+      <Box marginTop="8pt">
+        <PDFDownloadButton result={assessment} />
+      </Box>
       <Divider />
       <Box marginTop="16pt">
         <Heading as="h3" size="xl">
           {totalViolations} Violations
         </Heading>
         <Text color="gray.400">{generatedDate}</Text>
-        <Box marginTop="8pt">
-          <Menu>
-            <MenuButton
-              as={Button}
-              color="green"
-              size="sm"
-              // @ts-ignore: icon is supported
-              rightIcon="chevron-down"
-            >
-              Export
-            </MenuButton>
-            <MenuList>
-              <MenuItem>Download</MenuItem>
-              <MenuItem>Create a Copy</MenuItem>
-              <MenuItem>Mark as Draft</MenuItem>
-              <MenuItem>Delete</MenuItem>
-            </MenuList>
-          </Menu>
-        </Box>
       </Box>
       <Box marginTop="16pt">
         <Heading as="h4" size="md">
