@@ -14,18 +14,14 @@ import { NormalizedRoom } from "../helpers/normalizeRooms";
 
 export const API_HOME_ASSESSMENT_PATH = "/api/home-assessment";
 
-async function generateAssessmentPostRequest(inputs: ApiHomeAssessmentInput) {
-  console.log("bonjour");
-  const result = await fetch(API_HOME_ASSESSMENT_PATH, {
+function generateAssessmentPostRequest(inputs: ApiHomeAssessmentInput) {
+  return fetch(API_HOME_ASSESSMENT_PATH, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(inputs),
   });
-  console.log("sup");
-  console.log(await result.json());
-  return result;
 }
 
 type ResponseError = { msg: string };
@@ -55,31 +51,33 @@ export function useAssessmentCalculatorApi() {
       const errors: ResponseError[] = [];
       let successful = false;
       try {
-        console.log("me");
         const response = await generateAssessmentPostRequest({
           rooms: apiRooms,
           details: apiDetails,
         });
-        const responseBody = await response.json();
+        const responseBody = (await response.json()) as {
+          [key: string]: unknown;
+        };
+
         if (response.status === 200) {
           localStorage.setItem("assessment", JSON.stringify(responseBody));
           successful = true;
-        } else {
-          const parsedBody = JSON.parse(responseBody);
-          if ("errors" in parsedBody && Array.isArray(parsedBody.errors)) {
-            const validatedErrors: ResponseError[] = [];
-            for (const error of parsedBody) {
-              if (error && typeof error === "object" && "msg" in error) {
-                validatedErrors.push(error);
-              } else {
-                console.error("Unable to parse error", error);
-              }
+        } else if (
+          "errors" in responseBody &&
+          Array.isArray(responseBody.errors)
+        ) {
+          const validatedErrors: ResponseError[] = [];
+          for (const error of responseBody.errors) {
+            if (error && typeof error === "object" && "msg" in error) {
+              validatedErrors.push(error);
+            } else {
+              console.error("Unable to parse error", error);
             }
-            errors.push(...validatedErrors);
-          } else {
-            console.error(parsedBody);
-            errors.push({ msg: "An unknown error occurred..." });
           }
+          errors.push(...validatedErrors);
+        } else {
+          console.error(responseBody);
+          errors.push({ msg: "An unknown error occurred..." });
         }
       } catch (error) {
         console.error(error);
