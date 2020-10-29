@@ -13,6 +13,7 @@ import {
 import { NormalizedRoom } from "../helpers/normalizeRooms";
 
 export const API_HOME_ASSESSMENT_PATH = "/api/home-assessment";
+export const LOCAL_STORAGE_ASSESSMENT_KEY = "assessment";
 
 function generateAssessmentPostRequest(inputs: ApiHomeAssessmentInput) {
   return fetch(API_HOME_ASSESSMENT_PATH, {
@@ -60,7 +61,10 @@ export function useAssessmentCalculatorApi() {
         };
 
         if (response.status === 200) {
-          localStorage.setItem("assessment", JSON.stringify(responseBody));
+          localStorage.setItem(
+            LOCAL_STORAGE_ASSESSMENT_KEY,
+            JSON.stringify(responseBody)
+          );
           successful = true;
         } else if (
           "errors" in responseBody &&

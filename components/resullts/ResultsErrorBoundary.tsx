@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Box, Button, Flex, Heading, Icon, Stack, Text } from "@chakra-ui/core";
 import { NextRouter, withRouter } from "next/router";
+import { LOCAL_STORAGE_ASSESSMENT_KEY } from "../home-assessment/hooks/useAssessmentCalculatorApi";
 
 interface Props {
   children: React.ReactNode;
@@ -29,7 +30,7 @@ class ResultsErrorBoundary extends React.Component<Props, State> {
   }
 
   private handleStartAssessmentClick() {
-    localStorage.removeItem("assessment");
+    localStorage.removeItem(LOCAL_STORAGE_ASSESSMENT_KEY);
     this.props.router.push("/");
   }
 
