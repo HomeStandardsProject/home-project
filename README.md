@@ -1,5 +1,13 @@
 # Home Project
 
+### Getting Started
+
+```
+npm install
+npx vercel link
+npx vercel env pull .env.local
+```
+
 ### Commands
 
 `npm run dev`: hot refresh with local server

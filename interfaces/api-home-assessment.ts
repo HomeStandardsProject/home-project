@@ -6,16 +6,20 @@ export type ApiRoomAssessmentQuestionResponse = {
 };
 
 export type ApiRoom = {
-  id: string;
   name: string;
   type: Room["type"];
   responses: { [questionId: string]: ApiRoomAssessmentQuestionResponse };
 };
 
-export type ApiHomeAssessmentInput = {
+export interface ApiHomeAssessmentInput {
   details: HomeDetails;
   rooms: ApiRoom[];
-};
+}
+
+export interface ApiHomeAssessmentInputWithRoomIds
+  extends ApiHomeAssessmentInput {
+  rooms: (ApiRoom & { id: string })[];
+}
 
 export type ApiHomeAssessmentResult = {
   details: HomeDetails;
@@ -24,6 +28,7 @@ export type ApiHomeAssessmentResult = {
 };
 
 export type ApiBylawViolation = {
+  id: string;
   name: string;
   description: string;
   userProvidedDescriptions: string[];

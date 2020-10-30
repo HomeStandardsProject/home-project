@@ -27,6 +27,7 @@ export function calculateBylawViolationsForRoom(
 
     violations.push({
       ...bylaw,
+      id: rule.bylawId,
       userProvidedDescriptions: userProvidedDescriptions as string[],
     });
   }

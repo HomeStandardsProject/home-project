@@ -158,8 +158,6 @@ export const HomeDetailsForm: React.FC<Props> = ({
     ]
   );
 
-  console.log("render", layoutType, layoutType === "desktop");
-
   const isInline = layoutType === "desktop";
 
   return (
