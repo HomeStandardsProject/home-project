@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { v4 as uuidv4 } from "uuid";
 import { createMocks } from "node-mocks-http";
 import {
   ApiBylawMultiplexer,
@@ -7,9 +8,13 @@ import {
   ApiRoom,
 } from "../../interfaces/api-home-assessment";
 import { AllRoomAssessmentQuestion } from "../../interfaces/home-assessment";
+import { MockDatastore } from "../datastore/MockDatastore";
 import { generateSetOfNullifiedFields } from "../utils/generateSetOfNullifiedFields";
 import { RecursiveRequiredObject } from "../utils/RecursiveRequiredObject";
 import { handleHomeAssessment } from "./handleHomeAssessment";
+import { Datastore } from "../datastore/Datastore";
+
+jest.mock("uuid");
 
 const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
   LIVING: [
@@ -56,7 +61,6 @@ const MOCK_BYLAW_MULTIPLEXER: ApiBylawMultiplexer = {
 };
 
 const MOCK_ROOM: ApiRoom = {
-  id: "1",
   type: "BED",
   name: "Bedroom 1",
   responses: {},
@@ -73,7 +77,6 @@ const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput>
   details: MOCK_DETAILS,
   rooms: [
     {
-      id: "1",
       name: "Living Room 1",
       type: "LIVING",
       responses: {
@@ -85,10 +88,24 @@ const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput>
   ],
 };
 
-const testHandleHomeAssessment = (req: NextApiRequest, res: NextApiResponse) =>
-  handleHomeAssessment(req, res, MOCK_BYLAW_MULTIPLEXER, MOCK_QUESTIONS);
+const testHandleHomeAssessment = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  datastore: Datastore = new MockDatastore()
+) =>
+  handleHomeAssessment(
+    req,
+    res,
+    MOCK_BYLAW_MULTIPLEXER,
+    MOCK_QUESTIONS,
+    datastore
+  );
 
 describe("/api/home-assessment", () => {
+  beforeAll(() => {
+    // @ts-expect-error type error due to mocking
+    uuidv4.mockImplementation(() => "randomId");
+  });
   // ensures that all properties defined in ONLY_REQUIRED_MOCK_INPUTS have a corresponding
   // express-validator at the api level. This helps with forgetting to add a validator when
   // adding a new property to an object
@@ -191,7 +208,7 @@ describe("/api/home-assessment", () => {
     expect(result.details).toEqual(MOCK_DETAILS);
     expect(result.generatedDate).toBeDefined();
     expect(result.rooms).toEqual([
-      { id: "1", name: "Bedroom 1", violations: [] },
+      { id: "randomId", name: "Bedroom 1", violations: [] },
     ]);
   });
 
@@ -220,10 +237,11 @@ describe("/api/home-assessment", () => {
     expect(result.generatedDate).toBeDefined();
     expect(result.rooms).toEqual([
       {
-        id: "1",
+        id: "randomId",
         name: "Bedroom 1",
         violations: [
           {
+            id: "id2",
             description: "Test 1 description",
             name: "2.0 Violation",
             userProvidedDescriptions: [],
@@ -231,5 +249,40 @@ describe("/api/home-assessment", () => {
         ],
       },
     ]);
+  });
+
+  it("invokes datastore on validated inputs", async () => {
+    const { req, res } = createMocks({
+      method: "POST",
+      body: {
+        details: MOCK_DETAILS,
+        rooms: [
+          {
+            ...MOCK_ROOM,
+            responses: {
+              "3": { answer: "NO" },
+              "4": { answer: "YES" },
+            },
+          },
+        ],
+      },
+    });
+
+    const moockedSaveHomeAssessmentInput = jest.fn(
+      () => new Promise<[true, null]>((resolve) => resolve([true, null]))
+    );
+    const mockedSaveHomeAssessmentResult = jest.fn(
+      () => new Promise<[true, null]>((resolve) => resolve([true, null]))
+    );
+
+    const store: Datastore = {
+      saveHomeAssessmentInput: moockedSaveHomeAssessmentInput,
+      saveHomeAssessmentResult: mockedSaveHomeAssessmentResult,
+    };
+
+    await testHandleHomeAssessment(req, res, store);
+    expect(res._getStatusCode()).toEqual(200);
+    expect(moockedSaveHomeAssessmentInput).toBeCalled();
+    expect(mockedSaveHomeAssessmentResult).toBeCalled();
   });
 });
