@@ -17,8 +17,8 @@ const server = setupServer(
 
 const DEFAULT_ROOM: NormalizedRoom = {
   id: "0",
-  name: "Living room 1",
-  type: "LIVING",
+  name: "Kitchen",
+  type: "BED",
   responses: {},
 };
 

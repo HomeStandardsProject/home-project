@@ -5,6 +5,11 @@ import {
   ApiHomeAssessmentInputWithRoomIds,
   ApiHomeAssessmentResult,
 } from "../../interfaces/api-home-assessment";
+import {
+  isRoomAssessmentQuestion,
+  RoomAssessmentQuestion,
+  RoomTypes,
+} from "../../interfaces/home-assessment";
 import { Datastore } from "./Datastore";
 
 type AirtableSubmissionRow = {
@@ -77,6 +82,32 @@ export class AirtableStore implements Datastore {
     } catch (error) {
       return [false, error];
     }
+  }
+
+  async fetchQuestions() {
+    const unvalidatedRecords = await this._base("questions").select().all();
+    const questions: { [type in RoomTypes]: RoomAssessmentQuestion[] } = {
+      BED: [],
+      WASH: [],
+      KITCHEN: [],
+    };
+    const ids: string[] = [];
+
+    for (const { fields, id } of unvalidatedRecords) {
+      if (isRoomAssessmentQuestion(fields)) {
+        if (!ids.includes(fields.id)) {
+          questions[fields.roomType].push(fields);
+        } else {
+          console.error(
+            `Record ${id}, and id ${fields.id} has a duplicate id with another record`
+          );
+        }
+      } else {
+        console.error(`Record ${id} has an invalid set of fields`, fields);
+      }
+    }
+
+    return questions;
   }
 }
 

@@ -7,7 +7,7 @@ import {
   RoomAssessmentQuestion,
   RoomTypes,
 } from "../interfaces/home-assessment";
-import QuestionsData from "../data/kingston/questions.json";
+import { fetchQuestionsBasedOnEnv } from "../api/utils/fetchQuestionsBasedOnEnv";
 
 type Props = {
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
@@ -20,9 +20,7 @@ const HomeAssessmentPage: React.FC<Props> = ({ questions }) => (
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const questions = QuestionsData as {
-    [type in RoomTypes]: RoomAssessmentQuestion[];
-  };
+  const questions = await fetchQuestionsBasedOnEnv();
   return { props: { questions } };
 };
 

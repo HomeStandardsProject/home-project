@@ -1,14 +1,16 @@
 {
-  "LIVING": [
+  "KITCHEN": [
     {
       "id": "1",
-      "question": "LIVING 1",
+      "roomType": "KITCHEN",
+      "question": "KITCHEN 1",
       "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     },
     {
       "id": "2",
-      "question": "LIVING 2",
+      "roomType": "KITCHEN",
+      "question": "KITCHEN 2",
       "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     }
@@ -16,12 +18,14 @@
   "WASH": [
     {
       "id": "3",
+      "roomType": "WASH",
       "question": "WASH 1",
       "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     },
     {
       "id": "4",
+      "roomType": "WASH",
       "question": "WASH 2",
       "type": "YES/NO",
       "promptForDescriptionOn": "NO"
@@ -30,12 +34,14 @@
   "BED": [
     {
       "id": "5",
+      "roomType": "BED",
       "question": "BED 1",
       "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     },
     {
       "id": "6",
+      "roomType": "BED",
       "question": "BED 2",
       "type": "YES/NO",
       "promptForDescriptionOn": "NO"

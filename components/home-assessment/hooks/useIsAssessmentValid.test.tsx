@@ -9,10 +9,11 @@ import {
 import { Room } from "../../../interfaces/home-assessment";
 
 const DEFAULT_QUESTIONS: RoomAssessmentQuestions = {
-  LIVING: [
+  KITCHEN: [
     {
       id: "1",
-      question: "LIVING 1",
+      question: "KITCHEN 1",
+      roomType: "KITCHEN",
       type: "YES/NO",
       promptForDescriptionOn: "YES",
     },
@@ -21,6 +22,7 @@ const DEFAULT_QUESTIONS: RoomAssessmentQuestions = {
     {
       id: "2",
       question: "WASH 1",
+      roomType: "WASH",
       type: "YES/NO",
       promptForDescriptionOn: "YES",
     },
@@ -29,13 +31,14 @@ const DEFAULT_QUESTIONS: RoomAssessmentQuestions = {
     {
       id: "3",
       question: "BED 1",
+      roomType: "BED",
       type: "YES/NO",
       promptForDescriptionOn: "YES",
     },
   ],
 };
 
-const DEFAULT_ROOM: Room = { id: "0", type: "LIVING", responses: {} };
+const DEFAULT_ROOM: Room = { id: "0", type: "BED", responses: {} };
 
 const Component: React.FC<{ rooms: Room[] }> = ({ rooms }) => {
   const [isValid, invalidRoomIds] = useIsAssessmentValid(rooms);

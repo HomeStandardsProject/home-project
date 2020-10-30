@@ -184,8 +184,8 @@ function placeholderBasedOnType(type: Room["type"]) {
   switch (type) {
     case "BED":
       return "Finley's Room";
-    case "LIVING":
-      return "Upstairs living room";
+    case "KITCHEN":
+      return "Kitchen";
     case "WASH":
       return "Upstairs bathroom";
     default:

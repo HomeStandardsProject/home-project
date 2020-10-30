@@ -30,7 +30,7 @@ type Props = {
 
 const generateDefaultRoom = (): Room => ({
   id: uuidv4(),
-  type: "LIVING",
+  type: "BED",
   responses: {},
 });
 

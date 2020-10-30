@@ -1,9 +1,34 @@
 export type RoomAssessmentQuestion = {
   id: string;
+  roomType: RoomTypes;
   question: string;
   type: "YES/NO";
   promptForDescriptionOn: "YES" | "NO";
 };
+
+export function isRoomAssessmentQuestion(data: {
+  [key: string]: unknown;
+}): data is RoomAssessmentQuestion {
+  if (
+    "id" in data &&
+    "question" in data &&
+    "type" in data &&
+    "promptForDescriptionOn" in data &&
+    "roomType" in data
+  ) {
+    if (
+      data.promptForDescriptionOn === "YES" ||
+      data.promptForDescriptionOn === "NO"
+    ) {
+      if (data.type === "YES/NO") {
+        if (ROOM_TYPES.includes(data.roomType as RoomTypes)) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
 
 export type AllRoomAssessmentQuestion = {
   [type in RoomTypes]: RoomAssessmentQuestion[];
@@ -14,7 +39,7 @@ export type RoomAssessmentQuestionResponse = {
   description?: string;
 };
 
-export const ROOM_TYPES = ["WASH", "BED", "LIVING"] as const;
+export const ROOM_TYPES = ["WASH", "BED", "KITCHEN"] as const;
 export type RoomTypes = typeof ROOM_TYPES[number];
 export type Room = {
   id: string;
@@ -27,8 +52,8 @@ export function transformRoomTypeToLabel(type: Room["type"]) {
   switch (type) {
     case "BED":
       return "Bedroom";
-    case "LIVING":
-      return "Living Room";
+    case "KITCHEN":
+      return "Kitchen";
     case "WASH":
       return "Washroom";
     default:

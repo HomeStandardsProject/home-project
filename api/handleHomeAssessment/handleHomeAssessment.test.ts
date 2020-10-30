@@ -17,9 +17,10 @@ import { Datastore } from "../datastore/Datastore";
 jest.mock("uuid");
 
 const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
-  LIVING: [
+  KITCHEN: [
     {
       id: "1",
+      roomType: "KITCHEN",
       question: "Living room Question 1",
       type: "YES/NO",
       promptForDescriptionOn: "NO",
@@ -28,6 +29,7 @@ const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
   WASH: [
     {
       id: "2",
+      roomType: "WASH",
       question: "Washroom Question 2",
       type: "YES/NO",
       promptForDescriptionOn: "NO",
@@ -36,12 +38,14 @@ const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
   BED: [
     {
       id: "3",
+      roomType: "BED",
       question: "Bedroom Question 3",
       type: "YES/NO",
       promptForDescriptionOn: "NO",
     },
     {
       id: "4",
+      roomType: "BED",
       question: "Bedroom Question 3",
       type: "YES/NO",
       promptForDescriptionOn: "NO",
@@ -78,7 +82,7 @@ const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput>
   rooms: [
     {
       name: "Living Room 1",
-      type: "LIVING",
+      type: "BED",
       responses: {
         questionId1: {
           answer: "YES",
