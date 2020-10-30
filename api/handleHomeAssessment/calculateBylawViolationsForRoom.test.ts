@@ -45,6 +45,7 @@ describe("calculateBylawViolationsForRoom", () => {
 
     expect(violations).toEqual([
       {
+        id: "id1",
         name: "1.0 Violation",
         description: "1.0 description",
         userProvidedDescriptions: [],
@@ -67,6 +68,7 @@ describe("calculateBylawViolationsForRoom", () => {
 
     expect(violations).toEqual([
       {
+        id: "id2",
         name: "2.0 Violation",
         description: "2.0 description",
         userProvidedDescriptions: [],
@@ -89,6 +91,7 @@ describe("calculateBylawViolationsForRoom", () => {
 
     expect(violations).toEqual([
       {
+        id: "id3",
         name: "3.0 Violation",
         description: "3.0 description",
         userProvidedDescriptions: [
