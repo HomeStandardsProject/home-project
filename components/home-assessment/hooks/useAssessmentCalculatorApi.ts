@@ -33,7 +33,6 @@ export function useAssessmentCalculatorApi() {
     async (rooms: NormalizedRoom[], details: HomeAssessmentData["details"]) => {
       const apiRooms = rooms.map(
         (room): ApiRoom => ({
-          id: room.id,
           name: room.name,
           responses: transformResponseToTypesafeDefined(room.responses),
           type: room.type,
