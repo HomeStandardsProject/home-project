@@ -21,11 +21,11 @@ const Container = styled.div`
 const Footer = styled.footer`
   position: absolute;
   bottom: 0;
-  height: 2.5rem;
+  height: 2rem;
 `;
 
 const Content = styled.div`
-  padding-bottom: 2.5rem;
+  padding-bottom: 2rem;
 `;
 
 const VERCEL_SPONSORED_LINK =
@@ -56,9 +56,9 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
           isInline
           alignItems="center"
         >
-          <Text>Powered By</Text>
+          <Text fontSize="xs">Powered By</Text>
           <svg
-            height="16"
+            height="9pt"
             viewBox="0 0 283 64"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
