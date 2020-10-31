@@ -65,6 +65,14 @@ export function useAssessmentCalculatorApi() {
             JSON.stringify(responseBody)
           );
           successful = true;
+        } else if (response.status === 404 && "generatedDate" in responseBody) {
+          // temporary branch... Only here because when deployed the api route is returning 404's for some
+          // reason, but the api response is being returned correctly.
+          localStorage.setItem(
+            LOCAL_STORAGE_ASSESSMENT_KEY,
+            JSON.stringify(responseBody)
+          );
+          successful = true;
         } else if (
           "errors" in responseBody &&
           Array.isArray(responseBody.errors)

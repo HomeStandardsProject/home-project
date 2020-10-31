@@ -4,7 +4,10 @@ import { Box, Button, Flex, Heading, Text } from "@chakra-ui/core";
 import Layout from "../components/Layout";
 
 const IndexPage = () => (
-  <Layout title="QBACC Home Project">
+  <Layout
+    title="QBACC's Home Project"
+    description="Free home assessment: see if your Kingston student housing situation is in breach of any housing bylaws."
+  >
     <Flex
       justifyContent={"center"}
       minH={`500px`}
