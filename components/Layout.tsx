@@ -2,11 +2,12 @@ import React, { ReactNode } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
-import { Button, Stack, Text } from "@chakra-ui/core";
+import { Stack, Text } from "@chakra-ui/core";
 
 type Props = {
   children?: ReactNode;
-  title?: string;
+  title: string;
+  description: string;
 };
 
 const Container = styled.div`
@@ -31,19 +32,22 @@ const Content = styled.div`
 const VERCEL_SPONSORED_LINK =
   "https://vercel.com?utm_source=qbacc-home-project&utm_campaign=oss";
 
-const Layout = ({ children, title = "This is the default title" }: Props) => (
+const Layout = ({ children, title, description }: Props) => (
   <Container>
     <Head>
       <title>{title}</title>
+      <meta name="description" content={description} />
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <header>
       <nav>
         <Link href="/">
-          <Button leftIcon="sun" size="sm" variant="ghost" variantColor="gray">
-            Home
-          </Button>
+          <img
+            src="/logo.svg"
+            style={{ height: "42px", cursor: "pointer" }}
+            alt="QBACC's Home Project"
+          />
         </Link>
       </nav>
     </header>
