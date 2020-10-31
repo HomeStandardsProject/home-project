@@ -14,7 +14,10 @@ type Props = {
 };
 
 const HomeAssessmentPage: React.FC<Props> = ({ questions }) => (
-  <Layout title="Home Assessment">
+  <Layout
+    title="Assessment"
+    description="Free home assessment: see if your Kingston student housing situation is in breach of any housing bylaws."
+  >
     <HomeAssessment questions={questions} />
   </Layout>
 );
