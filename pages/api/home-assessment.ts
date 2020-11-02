@@ -4,11 +4,11 @@ import { AllRoomAssessmentQuestion } from "../../interfaces/home-assessment";
 
 import QuestionsData from "../../data/kingston/questions.json";
 import KingstonBylawMultiplexer from "../../data/kingston/bylawMultiplexer.json";
-import { handleHomeAssessment } from "../../api/handleHomeAssessment/handleHomeAssessment";
+import { handleHomeAssessment } from "../../api-functions/handleHomeAssessment/handleHomeAssessment";
 import { ApiBylawMultiplexer } from "../../interfaces/api-home-assessment";
-import { AirtableStore } from "../../api/datastore/Airtable";
-import { Datastore } from "../../api/datastore/Datastore";
-import { MockDatastore } from "../../api/datastore/MockDatastore";
+import { AirtableStore } from "../../api-functions/datastore/Airtable";
+import { Datastore } from "../../api-functions/datastore/Datastore";
+import { MockDatastore } from "../../api-functions/datastore/MockDatastore";
 
 Airtable.configure({
   apiKey: process.env.AIRTABLE_API_KEY,
