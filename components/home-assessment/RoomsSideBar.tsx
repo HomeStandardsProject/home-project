@@ -11,6 +11,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/core";
+import { Flipped, Flipper } from "react-flip-toolkit";
 import {
   Room,
   transformRoomTypeToLabel,
@@ -57,6 +58,11 @@ export const RoomsSideBar: React.FC<Props> = ({
     }
   }, [isAssessmentValid, toast, generateReport]);
 
+  const flipKey = React.useMemo((): string => {
+    if (rooms.length === 0) return "fallback";
+    return rooms[0].id;
+  }, [rooms]);
+
   return (
     <Box bg="gray.100" margin="2pt" padding="4pt" rounded="md">
       <Stack isInline align="center" justifyContent="space-between">
@@ -74,17 +80,22 @@ export const RoomsSideBar: React.FC<Props> = ({
         </Button>
       </Stack>
       <Box marginTop="8pt">
-        {rooms.map((room, i) => (
-          <RoomComponent
-            key={room.name}
-            room={room}
-            roomDeleted={deleteRoom}
-            roomSelected={changedSelectedRoom}
-            isSelected={room.id === selectedRoomId}
-            isInvalid={showErrors && invalidRoomIds.includes(room.id)}
-            isDisabled={i === 0 ? preventDeletionOfFirstRoom : false}
-          />
-        ))}
+        <Flipper flipKey={flipKey}>
+          {rooms.map((room, i) => (
+            <Flipped key={room.id} flipId={room.id}>
+              <div>
+                <RoomComponent
+                  room={room}
+                  roomDeleted={deleteRoom}
+                  roomSelected={changedSelectedRoom}
+                  isSelected={room.id === selectedRoomId}
+                  isInvalid={showErrors && invalidRoomIds.includes(room.id)}
+                  isDisabled={i === 0 ? preventDeletionOfFirstRoom : false}
+                />
+              </div>
+            </Flipped>
+          ))}
+        </Flipper>
       </Box>
       <Button
         marginTop={"16pt"}
