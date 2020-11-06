@@ -54,8 +54,15 @@ export const RoomAssessment: React.FC<Props> = ({
   const handleUpdateRoomName = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const targetValue = event.target.value;
-      const newName = targetValue === "" ? undefined : targetValue;
-      updateRoomName(newName);
+      updateRoomName(targetValue);
+    },
+    [updateRoomName]
+  );
+
+  const handleBlur = React.useCallback(
+    (event: React.FocusEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+      if (value === "") updateRoomName(undefined);
     },
     [updateRoomName]
   );
@@ -77,12 +84,16 @@ export const RoomAssessment: React.FC<Props> = ({
     <Box padding="4pt">
       <Stack isInline>
         <FormControl flexBasis="80%">
-          <FormLabel fontSize="sm">Room name</FormLabel>
+          <FormLabel fontSize="sm" htmlFor="room-name">
+            Room name
+          </FormLabel>
           <Input
+            id="room-name"
             placeholder={placeholderBasedOnType(room.type)}
             aria-describedby="room name"
             size="md"
             value={room.name ?? ""}
+            onBlur={handleBlur}
             onChange={handleUpdateRoomName}
           />
         </FormControl>
