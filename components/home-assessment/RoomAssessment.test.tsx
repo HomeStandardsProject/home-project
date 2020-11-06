@@ -51,4 +51,21 @@ describe("RoomAssessment", () => {
     fireEvent.blur(input);
     expect(isRoomNameDefined.innerHTML).toEqual("room name is undefined");
   });
+
+  it("does not set room name to undefined if the room name is defined", () => {
+    const { getByLabelText, getByTestId } = render(
+      <ControlledRoomAssessment />
+    );
+
+    const input = getByLabelText("Room name") as HTMLInputElement;
+    const isRoomNameDefined = getByTestId("room-name");
+
+    expect(isRoomNameDefined.innerHTML).toEqual("room name is defined");
+
+    fireEvent.change(input, { target: { value: "new name" } });
+    expect(input.value).toBe("new name");
+
+    fireEvent.blur(input);
+    expect(isRoomNameDefined.innerHTML).toEqual("room name is defined");
+  });
 });
