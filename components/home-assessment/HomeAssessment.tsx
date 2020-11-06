@@ -1,7 +1,8 @@
 import * as React from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Box, Stack } from "@chakra-ui/core";
+import { Box } from "@chakra-ui/core";
 
+import { animated } from "react-spring";
 import {
   HomeAssessmentData,
   HomeDetails as HomeDetailsType,
@@ -23,6 +24,7 @@ import {
 import { RoomAssessmentQuestionsContext } from "./hooks/useRoomAssessmentQuestions";
 
 import { HomeRoomsStep } from "./HomeRoomsStep";
+import { useSlideTransition } from "./hooks/useSlideTransition";
 
 type Props = {
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
@@ -131,6 +133,8 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
     setAssessment((assessment) => ({ ...assessment, step: "DETAILS" }));
   }, []);
 
+  const transitions = useSlideTransition(step === "DETAILS" ? "in" : "out");
+
   const detailsStepContent = (
     <Box>
       <HomeDetailsForm
@@ -160,9 +164,20 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
 
   return (
     <RoomAssessmentQuestionsContext.Provider value={questions}>
-      <Stack width="100%" marginTop="16pt" marginBottom="48pt">
-        {step === "DETAILS" ? detailsStepContent : assessmentStepContent}
-      </Stack>
+      <Box
+        width="100%"
+        marginTop="16pt"
+        marginBottom="48pt"
+        position="relative"
+      >
+        {transitions.map(({ props, key }) => {
+          return (
+            <animated.div key={key} style={props}>
+              {step === "DETAILS" ? detailsStepContent : assessmentStepContent}
+            </animated.div>
+          );
+        })}
+      </Box>
     </RoomAssessmentQuestionsContext.Provider>
   );
 };
