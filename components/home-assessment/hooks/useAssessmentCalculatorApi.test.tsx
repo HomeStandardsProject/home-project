@@ -133,6 +133,9 @@ describe("useAssessmentCalculatorApi", () => {
   });
 
   it("returns an unknown error message when in the wrong format", async () => {
+    // less then ideal, I know...
+    const spy = jest.spyOn(global.console, "error").mockImplementation();
+
     server.use(
       rest.post(API_HOME_ASSESSMENT_PATH, (_, res, ctx) => {
         return res(
@@ -155,5 +158,7 @@ describe("useAssessmentCalculatorApi", () => {
     const errorsContainer = getByTestId("errors");
     expect(errorsContainer.children.length).toBe(1);
     expect(getByText("An unknown error occurred...")).toBeDefined();
+
+    spy.mockRestore();
   });
 });
