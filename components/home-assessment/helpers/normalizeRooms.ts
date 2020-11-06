@@ -10,7 +10,7 @@ export function normalizeRoomNames(sortedRooms: Room[]): NormalizedRoom[] {
   let rollingRoom: { count: number; type: Room["type"] } | null = null;
 
   for (const room of sortedRooms) {
-    if (!room.name) {
+    if (room.name === undefined) {
       if (rollingRoom && rollingRoom.type === room.type) {
         // an active rolling room count
         // same type, thus increment count and set name
