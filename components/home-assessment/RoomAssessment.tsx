@@ -28,7 +28,7 @@ type Props = {
   updateRoomType: (type: RoomTypes) => void;
   updateQuestion: (
     id: string,
-    answer: "YES" | "NO" | undefined,
+    answer: "YES" | "NO" | "UNSURE" | undefined,
     description: string | undefined
   ) => void;
 };
@@ -133,14 +133,14 @@ const RoomQuestion: React.FC<{
   response: RoomAssessmentQuestionResponse;
   answerChanged: (
     id: string,
-    answer: "YES" | "NO" | undefined,
+    answer: "YES" | "NO" | "UNSURE" | undefined,
     description: string | undefined
   ) => void;
 }> = ({ prompt, response, answerChanged }) => {
   const handleRadioGroupValueChange = React.useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const newValue = event.target.value;
-      if (newValue === "YES" || newValue === "NO") {
+      if (newValue === "YES" || newValue === "NO" || newValue === "UNSURE") {
         answerChanged(prompt.id, newValue, undefined);
         return;
       }
@@ -185,6 +185,7 @@ const RoomQuestion: React.FC<{
       >
         <Radio value="YES">Yes</Radio>
         <Radio value="NO">No</Radio>
+        <Radio value="UNSURE">Unsure</Radio>
       </RadioGroup>
       {optionalTextbox}
     </Box>

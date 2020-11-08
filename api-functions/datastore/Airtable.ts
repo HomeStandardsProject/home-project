@@ -21,7 +21,7 @@ type AirtableRoomRow = {
   submissionId: string;
   id: string;
   type: string;
-} & { [questionID: string]: "YES" | "NO" };
+} & { [questionID: string]: "YES" | "NO" | "UNSURE" };
 
 type AirtableRoomViolationRow = {
   id: string;
@@ -108,7 +108,7 @@ function transformInputToRoomRows(
   return input.rooms.map(
     (room): AirtableRoomRow => {
       const prefixedQuestionIds: {
-        [prefixedQuestionId: string]: "YES" | "NO";
+        [prefixedQuestionId: string]: "YES" | "NO" | "UNSURE";
       } = {};
       for (const questionId of Object.keys(room.responses)) {
         prefixedQuestionIds[`q${questionId}`] =

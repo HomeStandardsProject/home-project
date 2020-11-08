@@ -1,7 +1,7 @@
 import { HomeDetails, Room } from "./home-assessment";
 
 export type ApiRoomAssessmentQuestionResponse = {
-  answer: "YES" | "NO";
+  answer: "YES" | "NO" | "UNSURE";
   description?: string;
 };
 

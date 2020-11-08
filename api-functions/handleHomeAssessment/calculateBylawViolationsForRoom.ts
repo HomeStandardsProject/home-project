@@ -41,7 +41,12 @@ const responsesMeetBooleanGuidelines = (
 ) => {
   for (const questionId of questionsIds) {
     if (responses[questionId]) {
-      if (responses[questionId].answer !== answer) return false;
+      const questionRespsonse = responses[questionId];
+      if (
+        questionRespsonse.answer !== answer &&
+        questionRespsonse.answer !== "UNSURE"
+      )
+        return false;
     } else {
       return false;
     }

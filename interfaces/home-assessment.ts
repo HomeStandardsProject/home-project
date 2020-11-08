@@ -10,7 +10,7 @@ export type AllRoomAssessmentQuestion = {
 };
 
 export type RoomAssessmentQuestionResponse = {
-  answer?: ("YES" | "NO") | undefined;
+  answer?: ("YES" | "NO" | "UNSURE") | undefined;
   description?: string;
 };
 
