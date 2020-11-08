@@ -71,11 +71,11 @@ export async function handleHomeAssessment(
 
     const rooms = inputRoomsWithId.map(
       (room): ApiRoomAssessmentResult => {
-        const violations = calculateBylawViolationsForRoom(
+        const result = calculateBylawViolationsForRoom(
           room.responses,
           bylawMultiplexer
         );
-        return { id: room.id, name: room.name, violations };
+        return { id: room.id, name: room.name, ...result };
       }
     );
 

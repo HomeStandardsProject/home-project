@@ -38,6 +38,8 @@ export type ApiRoomAssessmentResult = {
   id: string;
   name: string;
   violations: ApiBylawViolation[];
+  /// violations that contain a prompt that was answered as unsure
+  possibleViolations: ApiBylawViolation[];
 };
 
 export type ApiBylawMultiplexer = {
