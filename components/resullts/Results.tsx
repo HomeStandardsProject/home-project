@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Box, Divider, Heading, Icon, Stack, Tag, Text } from "@chakra-ui/core";
 import {
+  ApiBylawViolation,
   ApiHomeAssessmentResult,
   ApiRoomAssessmentResult,
 } from "../../interfaces/api-home-assessment";
@@ -56,7 +57,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
       </Box>
       <Box marginTop="16pt">
         <Heading as="h4" size="md">
-          Breakdown
+          Rooms
         </Heading>
         {assessment.rooms.map((room) => (
           <RoomViolations key={room.id} room={room} isInline={isInline} />
@@ -69,52 +70,87 @@ export const Results: React.FC<Props> = ({ assessment }) => {
 const RoomViolations: React.FC<{
   room: ApiRoomAssessmentResult;
   isInline: boolean;
-}> = ({ room, isInline }) => (
-  <Stack marginTop="16pt" isInline={isInline}>
-    <Text as="b" width="30%" minW="200px">
-      {room.name}
-    </Text>
-    <Stack flexBasis="100%" spacing={4}>
-      {room.violations.map((violation) => (
-        <Box key={violation.name}>
-          <Text as="i">{violation.name}</Text>
-          <Text>{violation.description}</Text>
-          {violation.userProvidedDescriptions.map((description, i) => (
-            <Stack
-              key={i}
-              bg="blue.100"
-              padding="4pt"
-              isInline
-              align="center"
-              marginTop="8pt"
-            >
-              <Icon name="info-outline" />
-              <Text>{description}</Text>
-            </Stack>
-          ))}
-        </Box>
-      ))}
-      {room.violations.length === 0 && (
-        <Stack
-          padding="8pt"
-          isInline
-          align="center"
-          marginTop="8pt"
-          bg="blue.100"
-          rounded="4pt"
-        >
-          <Box
-            bg="blue.200"
-            rounded="full"
-            width="2em"
-            height="2em"
-            textAlign="center"
-          >
-            <Icon color="blue.500" name="check" marginTop="4pt" />
-          </Box>
-          <Text>No violations detected for this room</Text>
+}> = ({ room, isInline }) => {
+  const hasViolationOrPossibleOnes = React.useMemo(
+    () => room.possibleViolations.length > 0 || room.violations.length > 0,
+    [room.possibleViolations.length, room.violations.length]
+  );
+
+  return (
+    <Stack marginTop="16pt" isInline={isInline}>
+      <Text as="b" width="30%" minW="200px">
+        {room.name}
+      </Text>
+      <Stack flexBasis="100%" spacing={4}>
+        <Stack alignItems="center" isInline>
+          <Icon name="warning" color="red.600" />
+          <Text fontSize="lg" as="b" color="red.600">
+            Violations
+          </Text>
         </Stack>
-      )}
+        {room.violations.map((violation) => (
+          <RoomViolation key={violation.id} violation={violation} />
+        ))}
+
+        {room.possibleViolations.length > 0 && (
+          <>
+            <Stack alignItems="center" isInline>
+              <Icon name="question" color="blue.600" />
+              <Text fontSize="lg" as="b" color="blue.600">
+                Possible Violations
+              </Text>
+            </Stack>
+            {room.possibleViolations.map((violation) => (
+              <RoomViolation key={violation.id} violation={violation} />
+            ))}
+          </>
+        )}
+
+        {!hasViolationOrPossibleOnes && (
+          <Stack
+            padding="8pt"
+            isInline
+            align="center"
+            marginTop="8pt"
+            bg="blue.100"
+            rounded="4pt"
+          >
+            <Box
+              bg="blue.200"
+              rounded="full"
+              width="2em"
+              height="2em"
+              textAlign="center"
+            >
+              <Icon color="blue.500" name="check" marginTop="4pt" />
+            </Box>
+            <Text>No violations detected for this room</Text>
+          </Stack>
+        )}
+        <Divider />
+      </Stack>
     </Stack>
-  </Stack>
+  );
+};
+
+const RoomViolation: React.FC<{ violation: ApiBylawViolation }> = ({
+  violation,
+}) => (
+  <Box>
+    <Text as="i">{violation.name}</Text>
+    <Text>{violation.description}</Text>
+    {violation.userProvidedDescriptions.map((description, i) => (
+      <Stack
+        key={i}
+        bg="blue.100"
+        padding="4pt"
+        isInline
+        align="center"
+        marginTop="8pt"
+      >
+        <Icon name="info-outline" />
+        <Text>{description}</Text>
+      </Stack>
+    ))}
+  </Box>
 );
