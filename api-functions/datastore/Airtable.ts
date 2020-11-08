@@ -17,11 +17,17 @@ type AirtableSubmissionRow = {
 };
 
 type AirtableRoomRow = {
-  // Needs to be an array of strings, but typescript breaks when declared as such
-  submissionId: string;
+  submissionId: string[];
   id: string;
   type: string;
-} & { [questionID: string]: "YES" | "NO" | "UNSURE" };
+};
+
+type AirtableRoomResponsesRow = {
+  submissionId: string;
+  roomId: string;
+  questionId: string;
+  answer: "YES" | "NO" | "UNSURE";
+};
 
 type AirtableRoomViolationRow = {
   id: string;
@@ -49,6 +55,14 @@ export class AirtableStore implements Datastore {
       // save room data
       await this._base("raw_rooms").create(
         transformInputToRoomRows(submissionId, input).map((row) => ({
+          fields: row,
+        })),
+        { typecast: true }
+      );
+
+      // save room responses
+      await this._base("raw_room_responses").create(
+        transformInputToRoomResponses(submissionId, input).map((row) => ({
           fields: row,
         })),
         { typecast: true }
@@ -107,20 +121,10 @@ function transformInputToRoomRows(
 ) {
   return input.rooms.map(
     (room): AirtableRoomRow => {
-      const prefixedQuestionIds: {
-        [prefixedQuestionId: string]: "YES" | "NO" | "UNSURE";
-      } = {};
-      for (const questionId of Object.keys(room.responses)) {
-        prefixedQuestionIds[`q${questionId}`] =
-          room.responses[questionId].answer;
-      }
-
       return {
-        // @ts-expect-error TS throws error when trying to declare the type as an array of strings
         submissionId: [submissionId],
         id: room.id,
         type: room.type,
-        ...prefixedQuestionIds,
       };
     }
   );
@@ -138,4 +142,22 @@ function transformInputToSubmissionRow(
     landlord: input.details.landlord,
     landlordOther: input.details.landlordOther,
   };
+}
+
+function transformInputToRoomResponses(
+  submissionId: string,
+  input: ApiHomeAssessmentInputWithRoomIds
+): AirtableRoomResponsesRow[] {
+  const responsesUnflattened = input.rooms.map((room) =>
+    Object.entries(room.responses).map(([questionId, response]) => ({
+      submissionId,
+      roomId: room.id,
+      questionId,
+      answer: response.answer,
+    }))
+  );
+
+  // flatten the array from 2D array to 1d
+  const emptyArray = new Array<AirtableRoomResponsesRow>();
+  return emptyArray.concat(...responsesUnflattened);
 }
