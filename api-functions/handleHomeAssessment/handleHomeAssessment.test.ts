@@ -21,7 +21,6 @@ const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
     {
       id: "1",
       question: "Living room Question 1",
-      type: "YES/NO",
       promptForDescriptionOn: "NO",
     },
   ],
@@ -29,7 +28,6 @@ const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
     {
       id: "2",
       question: "Washroom Question 2",
-      type: "YES/NO",
       promptForDescriptionOn: "NO",
     },
   ],
@@ -37,13 +35,11 @@ const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
     {
       id: "3",
       question: "Bedroom Question 3",
-      type: "YES/NO",
       promptForDescriptionOn: "NO",
     },
     {
       id: "4",
       question: "Bedroom Question 3",
-      type: "YES/NO",
       promptForDescriptionOn: "NO",
     },
   ],

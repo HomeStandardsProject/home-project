@@ -1,7 +1,6 @@
 export type RoomAssessmentQuestion = {
   id: string;
   question: string;
-  type: "YES/NO";
   promptForDescriptionOn: "YES" | "NO";
 };
 

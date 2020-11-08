@@ -1,5 +1,5 @@
 import Airtable from "airtable";
-import { v4 as uuidv4 } from "uuid";
+
 import {
   ApiHomeAssessmentInput,
   ApiHomeAssessmentInputWithRoomIds,
@@ -17,18 +17,24 @@ type AirtableSubmissionRow = {
 };
 
 type AirtableRoomRow = {
-  // Needs to be an array of strings, but typescript breaks when declared as such
-  submissionId: string;
+  submissionId: string[];
   id: string;
   type: string;
-} & { [questionID: string]: "YES" | "NO" | "UNSURE" };
+};
+
+type AirtableRoomResponsesRow = {
+  submissionId: string[];
+  roomId: string;
+  questionId: string;
+  answer: "YES" | "NO" | "UNSURE";
+};
 
 type AirtableRoomViolationRow = {
-  id: string;
-  // Needs to be an array of strings, but typescript breaks when declared as such
-  submissionId: string;
+  submissionId: string[];
+  bylawId: string;
   roomId: string;
-} & { [bylawId: string]: string };
+  status: "violation" | "possible";
+};
 
 export class AirtableStore implements Datastore {
   private _base: ReturnType<typeof Airtable.base>;
@@ -54,6 +60,14 @@ export class AirtableStore implements Datastore {
         { typecast: true }
       );
 
+      // save room responses
+      await this._base("raw_room_responses").create(
+        transformInputToRoomResponses(submissionId, input).map((row) => ({
+          fields: row,
+        })),
+        { typecast: true }
+      );
+
       return [true, null];
     } catch (error) {
       return [false, error];
@@ -65,13 +79,23 @@ export class AirtableStore implements Datastore {
     result: ApiHomeAssessmentResult
   ): Promise<[boolean, Error | null]> {
     try {
-      // save violations
-      await this._base("submissions_room_violations").create(
-        transformResultToViolationRows(submissionId, result).map((row) => ({
-          fields: row,
-        })),
-        { typecast: true }
-      );
+      let hasViolation = false;
+      for (const room of result.rooms) {
+        if (room.violations.length > 0 || room.possibleViolations.length > 0) {
+          hasViolation = true;
+          break;
+        }
+      }
+
+      if (hasViolation) {
+        // save violations
+        await this._base("submissions_room_violations").create(
+          transformResultToViolationRows(submissionId, result).map((row) => ({
+            fields: row,
+          })),
+          { typecast: true }
+        );
+      }
 
       return [true, null];
     } catch (error) {
@@ -83,22 +107,34 @@ export class AirtableStore implements Datastore {
 function transformResultToViolationRows(
   submissionId: string,
   result: ApiHomeAssessmentResult
-) {
-  return result.rooms.map(
-    (room): AirtableRoomViolationRow => {
-      const flattenedViolationsForRoom: { [bylawId: string]: boolean } = {};
-      for (const violation of room.violations) {
-        flattenedViolationsForRoom[violation.id] = true;
-      }
-      return {
-        id: uuidv4(),
-        // @ts-expect-error TS throws error when trying to declare the type as an array of strings
-        submissionId: [submissionId],
-        roomId: room.id,
-        ...flattenedViolationsForRoom,
-      };
+): AirtableRoomViolationRow[] {
+  const unflattenedViolations = result.rooms.map(
+    (room): AirtableRoomViolationRow[] => {
+      const violations = room.violations.map(
+        (violation): AirtableRoomViolationRow => ({
+          submissionId: [submissionId],
+          roomId: room.id,
+          bylawId: violation.id,
+          status: "violation",
+        })
+      );
+
+      const possibleViolations = room.possibleViolations.map(
+        (violation): AirtableRoomViolationRow => ({
+          submissionId: [submissionId],
+          roomId: room.id,
+          bylawId: violation.id,
+          status: "possible",
+        })
+      );
+
+      return [...violations, ...possibleViolations];
     }
   );
+
+  const emptyArray = new Array<AirtableRoomViolationRow>();
+  // flatten 2D array to 1D array
+  return emptyArray.concat(...unflattenedViolations);
 }
 
 function transformInputToRoomRows(
@@ -107,20 +143,10 @@ function transformInputToRoomRows(
 ) {
   return input.rooms.map(
     (room): AirtableRoomRow => {
-      const prefixedQuestionIds: {
-        [prefixedQuestionId: string]: "YES" | "NO" | "UNSURE";
-      } = {};
-      for (const questionId of Object.keys(room.responses)) {
-        prefixedQuestionIds[`q${questionId}`] =
-          room.responses[questionId].answer;
-      }
-
       return {
-        // @ts-expect-error TS throws error when trying to declare the type as an array of strings
         submissionId: [submissionId],
         id: room.id,
         type: room.type,
-        ...prefixedQuestionIds,
       };
     }
   );
@@ -138,4 +164,22 @@ function transformInputToSubmissionRow(
     landlord: input.details.landlord,
     landlordOther: input.details.landlordOther,
   };
+}
+
+function transformInputToRoomResponses(
+  submissionId: string,
+  input: ApiHomeAssessmentInputWithRoomIds
+): AirtableRoomResponsesRow[] {
+  const responsesUnflattened = input.rooms.map((room) =>
+    Object.entries(room.responses).map(([questionId, response]) => ({
+      submissionId: [submissionId],
+      roomId: room.id,
+      questionId,
+      answer: response.answer,
+    }))
+  );
+
+  // flatten the array from 2D array to 1d
+  const emptyArray = new Array<AirtableRoomResponsesRow>();
+  return emptyArray.concat(...responsesUnflattened);
 }
