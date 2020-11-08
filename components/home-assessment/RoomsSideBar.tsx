@@ -17,6 +17,7 @@ import {
   transformRoomTypeToLabel,
 } from "../../interfaces/home-assessment";
 import { useIsAssessmentValid } from "./hooks/useIsAssessmentValid";
+import { logGenerateAssessmentButtonClick } from "../../utils/analyticsEvent";
 
 type Props = {
   rooms: Room[];
@@ -48,6 +49,7 @@ export const RoomsSideBar: React.FC<Props> = ({
   const handleGenerateReport = React.useCallback(() => {
     if (isAssessmentValid) {
       generateReport();
+      logGenerateAssessmentButtonClick();
     } else {
       setShowErrors(true);
       toast({
