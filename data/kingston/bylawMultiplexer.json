@@ -1,9 +1,9 @@
 {
   "rules": [
-    { "bylawId": "bylaw1", "mustBeTrue": ["1"], "mustBeFalse": [] }
+    { "bylawId": "1", "mustBeTrue": ["1"], "mustBeFalse": [] }
   ],
   "bylaws": {
-    "bylaw1": {
+    "1": {
       "name": "5.9 Doors, Windows, and Skylights",
       "description": "No room shall be used for sleeping purposes unless it has a minimum area of at least 7 square metres (75 square feet), where built in cabinets/closets are not provided, and no less than 6 square meters (65 square feet) where built in cabinets/closets are provided and no less than that required by the Ontario Building Code as amended."
     }
