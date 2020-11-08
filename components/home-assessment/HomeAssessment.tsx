@@ -85,7 +85,7 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
   const handleUpdateRoomQuestion = React.useCallback(
     (
       questionId: string,
-      answer: "YES" | "NO" | undefined,
+      answer: "YES" | "NO" | "UNSURE" | undefined,
       description: string | undefined
     ) => {
       setAssessment((assessment) =>

@@ -208,7 +208,12 @@ describe("/api/home-assessment", () => {
     expect(result.details).toEqual(MOCK_DETAILS);
     expect(result.generatedDate).toBeDefined();
     expect(result.rooms).toEqual([
-      { id: "randomId", name: "Bedroom 1", violations: [] },
+      {
+        id: "randomId",
+        name: "Bedroom 1",
+        violations: [],
+        possibleViolations: [],
+      },
     ]);
   });
 
@@ -239,6 +244,7 @@ describe("/api/home-assessment", () => {
       {
         id: "randomId",
         name: "Bedroom 1",
+        possibleViolations: [],
         violations: [
           {
             id: "id2",

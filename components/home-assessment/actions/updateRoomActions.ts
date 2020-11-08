@@ -31,7 +31,7 @@ export function updateRoomQuestionAnswer(
   assessment: HomeAssessmentData,
   selectedRoomId: string,
   questionId: string,
-  answer: "YES" | "NO" | undefined,
+  answer: "YES" | "NO" | "UNSURE" | undefined,
   description: string | undefined
 ) {
   const newRooms = assessment.rooms.map((room) => {

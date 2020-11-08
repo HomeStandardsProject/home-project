@@ -7,15 +7,27 @@ import {
 export function calculateBylawViolationsForRoom(
   responses: { [questionId: string]: ApiRoomAssessmentQuestionResponse },
   bylawMultiplexer: ApiBylawMultiplexer
-): ApiBylawViolation[] {
+): {
+  violations: ApiBylawViolation[];
+  possibleViolations: ApiBylawViolation[];
+} {
   const violations: ApiBylawViolation[] = [];
+  const possibleViolations: ApiBylawViolation[] = [];
 
   for (const rule of bylawMultiplexer.rules) {
-    if (!responsesMeetBooleanGuidelines("YES", rule.mustBeTrue, responses)) {
-      continue;
-    }
+    const meetsYesCriteria = responsesMeetBooleanGuidelines(
+      "YES",
+      rule.mustBeTrue,
+      responses
+    );
+    const meetsNoCriteria = responsesMeetBooleanGuidelines(
+      "NO",
+      rule.mustBeFalse,
+      responses
+    );
 
-    if (!responsesMeetBooleanGuidelines("NO", rule.mustBeFalse, responses)) {
+    if (meetsYesCriteria === "NO" || meetsNoCriteria === "NO") {
+      // Rule criteria is not met
       continue;
     }
 
@@ -25,26 +37,48 @@ export function calculateBylawViolationsForRoom(
       .map((id) => responses[id] && responses[id].description)
       .filter((val) => val);
 
-    violations.push({
-      ...bylaw,
-      id: rule.bylawId,
-      userProvidedDescriptions: userProvidedDescriptions as string[],
-    });
+    if ([meetsNoCriteria, meetsYesCriteria].includes("POSSIBLE-YES")) {
+      // the criteria includes an prompt that was answered with unsure
+      possibleViolations.push({
+        ...bylaw,
+        id: rule.bylawId,
+        userProvidedDescriptions: userProvidedDescriptions as string[],
+      });
+    } else {
+      violations.push({
+        ...bylaw,
+        id: rule.bylawId,
+        userProvidedDescriptions: userProvidedDescriptions as string[],
+      });
+    }
   }
-  return violations;
+
+  return { violations, possibleViolations };
 }
 
 const responsesMeetBooleanGuidelines = (
-  answer: "YES" | "NO",
-  questionsIds: string[],
+  desiredAnswer: "YES" | "NO",
+  questionsIdsForRule: string[],
   responses: { [questionId: string]: ApiRoomAssessmentQuestionResponse }
-) => {
-  for (const questionId of questionsIds) {
+): "NO" | "POSSIBLE-YES" | "YES" => {
+  let containsUnsureAnswer = false;
+  for (const questionId of questionsIdsForRule) {
     if (responses[questionId]) {
-      if (responses[questionId].answer !== answer) return false;
+      const questionAnswer = responses[questionId].answer;
+      if (questionAnswer !== desiredAnswer) {
+        // but wait, is the answer unsure?
+        if (questionAnswer === "UNSURE") {
+          containsUnsureAnswer = true;
+        } else {
+          return "NO";
+        }
+      }
     } else {
-      return false;
+      return "NO";
     }
   }
-  return true;
+  if (containsUnsureAnswer) {
+    return "POSSIBLE-YES";
+  }
+  return "YES";
 };

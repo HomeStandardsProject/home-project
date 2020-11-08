@@ -1,7 +1,7 @@
 import { HomeDetails, Room } from "./home-assessment";
 
 export type ApiRoomAssessmentQuestionResponse = {
-  answer: "YES" | "NO";
+  answer: "YES" | "NO" | "UNSURE";
   description?: string;
 };
 
@@ -38,6 +38,8 @@ export type ApiRoomAssessmentResult = {
   id: string;
   name: string;
   violations: ApiBylawViolation[];
+  /// violations that contain a prompt that was answered as unsure
+  possibleViolations: ApiBylawViolation[];
 };
 
 export type ApiBylawMultiplexer = {

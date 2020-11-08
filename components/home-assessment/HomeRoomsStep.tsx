@@ -18,7 +18,7 @@ type Props = {
   updateRoomType: (type: RoomTypes) => void;
   updateRoomQuestion: (
     questionId: string,
-    answer: "YES" | "NO" | undefined,
+    answer: "YES" | "NO" | "UNSURE" | undefined,
     description: string | undefined
   ) => void;
   updateSelectedRoom: (id: string) => void;
