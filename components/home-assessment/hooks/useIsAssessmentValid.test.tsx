@@ -13,7 +13,6 @@ const DEFAULT_QUESTIONS: RoomAssessmentQuestions = {
     {
       id: "1",
       question: "LIVING 1",
-      type: "YES/NO",
       promptForDescriptionOn: "YES",
     },
   ],
@@ -21,7 +20,6 @@ const DEFAULT_QUESTIONS: RoomAssessmentQuestions = {
     {
       id: "2",
       question: "WASH 1",
-      type: "YES/NO",
       promptForDescriptionOn: "YES",
     },
   ],
@@ -29,7 +27,6 @@ const DEFAULT_QUESTIONS: RoomAssessmentQuestions = {
     {
       id: "3",
       question: "BED 1",
-      type: "YES/NO",
       promptForDescriptionOn: "YES",
     },
   ],

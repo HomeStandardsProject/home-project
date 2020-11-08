@@ -3,13 +3,11 @@
     {
       "id": "1",
       "question": "LIVING 1",
-      "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     },
     {
       "id": "2",
       "question": "LIVING 2",
-      "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     }
   ],
@@ -17,13 +15,11 @@
     {
       "id": "3",
       "question": "WASH 1",
-      "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     },
     {
       "id": "4",
       "question": "WASH 2",
-      "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     }
   ],
@@ -31,13 +27,11 @@
     {
       "id": "5",
       "question": "BED 1",
-      "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     },
     {
       "id": "6",
       "question": "BED 2",
-      "type": "YES/NO",
       "promptForDescriptionOn": "NO"
     }
   ]
