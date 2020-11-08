@@ -2,6 +2,7 @@ import { Button, useToast } from "@chakra-ui/core";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import * as React from "react";
 import { ApiHomeAssessmentResult } from "../../interfaces/api-home-assessment";
+import { logDownloadButtonClick } from "../../utils/analyticsEvent";
 import { AssessmentPDF } from "./AssessmentPDF";
 
 export const PDFDownloadButton: React.FC<{
@@ -46,7 +47,12 @@ const DownloadButton: React.FC<{
   }, [error, toast]);
 
   return (
-    <Button leftIcon="download" isLoading={loading} size="sm">
+    <Button
+      leftIcon="download"
+      isLoading={loading}
+      size="sm"
+      onClick={logDownloadButtonClick}
+    >
       {loading ? "Rendering document..." : "Download PDF"}
     </Button>
   );
