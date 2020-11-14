@@ -1,14 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Airtable from "airtable";
-import { AllRoomAssessmentQuestion } from "../../interfaces/home-assessment";
 
-import QuestionsData from "../../data/kingston/questions.json";
 import KingstonBylawMultiplexer from "../../data/kingston/bylawMultiplexer.json";
 import { handleHomeAssessment } from "../../api-functions/handleHomeAssessment/handleHomeAssessment";
 import { ApiBylawMultiplexer } from "../../interfaces/api-home-assessment";
 import { AirtableStore } from "../../api-functions/datastore/Airtable";
 import { Datastore } from "../../api-functions/datastore/Datastore";
 import { MockDatastore } from "../../api-functions/datastore/MockDatastore";
+import { loadQuestions } from "../../utils/loadQuestions";
 
 Airtable.configure({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -18,7 +17,7 @@ Airtable.configure({
 });
 
 function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
-  const questions = QuestionsData as AllRoomAssessmentQuestion;
+  const questions = loadQuestions();
   const multiplexer = KingstonBylawMultiplexer as ApiBylawMultiplexer;
   let datastore: Datastore;
   if (process.env.AIRTABLE_SUBMISSIONS_BASE && process.env.AIRTABLE_API_KEY) {
