@@ -1,6 +1,6 @@
 import * as React from "react";
 import { fireEvent, render } from "@testing-library/react";
-import { ThemeProvider } from "@chakra-ui/core";
+import { ThemeProvider } from "@chakra-ui/react";
 
 import { Room } from "../../interfaces/home-assessment";
 import { RoomAssessment } from "./RoomAssessment";

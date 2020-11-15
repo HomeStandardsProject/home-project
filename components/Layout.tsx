@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
-import { Stack, Text } from "@chakra-ui/core";
+import { Stack, Text } from "@chakra-ui/react";
 
 type Props = {
   children?: ReactNode;

@@ -1,4 +1,4 @@
-import { Button, useToast } from "@chakra-ui/core";
+import { Button, useToast } from "@chakra-ui/react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import * as React from "react";
 import { ApiHomeAssessmentResult } from "../../interfaces/api-home-assessment";

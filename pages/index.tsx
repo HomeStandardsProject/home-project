@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/core";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import Layout from "../components/Layout";
 import { logStartButtonClick } from "../utils/analyticsEvent";
 

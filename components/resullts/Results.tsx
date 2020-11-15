@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Box, Divider, Heading, Icon, Stack, Tag, Text } from "@chakra-ui/core";
+import {
+  Box,
+  Divider,
+  Heading,
+  Icon,
+  Stack,
+  Tag,
+  Text,
+} from "@chakra-ui/react";
 import {
   ApiBylawViolation,
   ApiHomeAssessmentResult,
@@ -81,7 +89,7 @@ const RoomViolations: React.FC<{
       <Text as="b" width="30%" minW="200px">
         {room.name}
       </Text>
-      <Stack flexBasis="100%" spacing={4}>
+      <Stack flexBasis="100%" spacing={2}>
         <Stack alignItems="center" isInline>
           <Icon name="warning" color="red.600" />
           <Text fontSize="lg" as="b" color="red.600">
@@ -136,7 +144,7 @@ const RoomViolations: React.FC<{
 const RoomViolation: React.FC<{ violation: ApiBylawViolation }> = ({
   violation,
 }) => (
-  <Box>
+  <Box marginBottom={"8pt"}>
     <Text as="i">{violation.name}</Text>
     <Text>{violation.description}</Text>
     {violation.userProvidedDescriptions.map((description, i) => (

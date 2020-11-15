@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useToast } from "@chakra-ui/core";
+import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ApiHomeAssessmentResult } from "../../interfaces/api-home-assessment";
 import { Results } from "./Results";

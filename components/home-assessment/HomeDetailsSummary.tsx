@@ -6,7 +6,7 @@ import {
   Tag,
   Text,
   Tooltip,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 import * as React from "react";
 import { HomeDetails } from "../../interfaces/home-assessment";
 import { useLayoutType } from "./hooks/useLayoutType";

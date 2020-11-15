@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Box, Button, Flex, Heading, Icon, Stack, Text } from "@chakra-ui/core";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Icon,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { NextRouter, withRouter } from "next/router";
 import { LOCAL_STORAGE_ASSESSMENT_KEY } from "../home-assessment/hooks/useAssessmentCalculatorApi";
 

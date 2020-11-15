@@ -1,9 +1,10 @@
 import React from "react";
-import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+
 import { AppProps } from "next/app";
-import { css, Global } from "@emotion/core";
+import { css, Global } from "@emotion/react";
 import { Router } from "next/router";
 import Head from "next/head";
+import { ChakraProvider } from "@chakra-ui/react";
 import { Analytics, GA_TRACKING_ID } from "../utils/googleAnalytics";
 import { isProduction } from "../utils/constants";
 
@@ -18,7 +19,7 @@ Router.events.on("routeChangeComplete", (url) => Analytics.pageview(url));
 
 function App({ Component, pageProps }: AppProps): React.ReactNode {
   return (
-    <ThemeProvider>
+    <ChakraProvider>
       <Head>
         {isProduction && (
           <>
@@ -43,9 +44,8 @@ function App({ Component, pageProps }: AppProps): React.ReactNode {
         )}
       </Head>
       <Global styles={globalStyles} />
-      <CSSReset />
       <Component {...pageProps} />
-    </ThemeProvider>
+    </ChakraProvider>
   );
 }
 

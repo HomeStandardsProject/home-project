@@ -10,7 +10,7 @@ import {
   Stack,
   Text,
   useToast,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 import { Flipped, Flipper } from "react-flip-toolkit";
 import {
   Room,
