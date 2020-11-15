@@ -122,31 +122,31 @@
   {
     "id": 30,
     "question": "Are your windows weather tight and reasonably draft-free?",
-    "roomType": "living room",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 31,
-    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
     "roomType": "WASH",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 32,
-    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
     "roomType": "KITCHEN",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 33,
-    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
     "roomType": "BED",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 36,
-    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
-    "roomType": "living room",
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
   {
@@ -170,7 +170,7 @@
   {
     "id": 40,
     "question": "Can your windows be opened with normally applied pressure?",
-    "roomType": "living room",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
   {
@@ -194,7 +194,7 @@
   {
     "id": 44,
     "question": "Do all of your windows that open have undamaged, well-secured screens?",
-    "roomType": "living room",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
   {
@@ -218,7 +218,7 @@
   {
     "id": 48,
     "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
-    "roomType": "living room",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
   {
@@ -242,103 +242,103 @@
   {
     "id": 52,
     "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
-    "roomType": "living room",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 53,
     "question": "Is your heating system able to keep your unit at a minimum temperature of 21.1°C (70°F)?",
-    "roomType": "Heating",
+    "roomType": "HEATING",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 54,
     "question": "Is a portable heater your unit's primary source of heat?",
-    "roomType": "Heating",
+    "roomType": "HEATING",
     "promptForDescriptionOn": "YES"
   },
   {
     "id": 55,
     "question": "Are any exposed heating pipes sufficiently protected to prevent a safety hazard?",
-    "roomType": "Heating",
+    "roomType": "HEATING",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 56,
     "question": "Are your windows weather tight and reasonably draft-free?",
-    "roomType": "Entrance",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 57,
     "question": "Do all of your windows that open have undamaged, well-secured screens?",
-    "roomType": "Entrance",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 58,
-    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
-    "roomType": "Entrance",
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 59,
     "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
-    "roomType": "Entrance",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 60,
     "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
-    "roomType": "Entrance",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 61,
-    "question": "Do you have at least one entrance door that can be locked from inside and outside the unit?",
-    "roomType": "Entrance",
+    "question": "Do you have at least one ENTRANCE door that can be locked from inside and outside the unit?",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 62,
     "question": "Do your stairs, porches, decks, or balconies have holes, cracks, or other defects?",
-    "roomType": "Exterior",
+    "roomType": "EXTERIOR",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 63,
     "question": "Are your stairs warped or significantly deteriorating?",
-    "roomType": "Exterior",
+    "roomType": "EXTERIOR",
     "promptForDescriptionOn": "YES"
   },
   {
     "id": 64,
     "question": "Does your roof have leaks in it?  Does it have loose or unsecured material that could come off?",
-    "roomType": "Exterior",
+    "roomType": "EXTERIOR",
     "promptForDescriptionOn": "YES"
   },
   {
     "id": 65,
     "question": "Are the eaves troughs, roof gutters and/or down pipes securely fastened to the building?",
-    "roomType": "Exterior",
+    "roomType": "EXTERIOR",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 66,
     "question": "Does your yard have rubbish, heavy overgrowth of weeds, grass longer than 20cm, dead or damaged branches, deep ruts or holes, abandoned recreation equipment, interior furniture, or appliances?",
-    "roomType": "Exterior",
+    "roomType": "EXTERIOR",
     "promptForDescriptionOn": "YES"
   },
   {
     "id": 67,
     "question": "Are the steps into your house adequately lit?",
-    "roomType": "Exterior",
+    "roomType": "EXTERIOR",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 68,
     "question": "Do all of the outlets and lights work?",
-    "roomType": "Exterior",
+    "roomType": "EXTERIOR",
     "promptForDescriptionOn": "NO"
   },
   {
@@ -410,31 +410,31 @@
   {
     "id": 80,
     "question": "Are there any holes or cracks in the walls, ceilings, or floors?",
-    "roomType": "Entrance",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "YES"
   },
   {
     "id": 81,
     "question": "Do all of the outlets and lights work?",
-    "roomType": "Entrance",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 82,
     "question": "Is there a window, skylight, or door with a glass window?",
-    "roomType": "living room",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 83,
     "question": "Are there any holes or cracks in the walls, ceilings, or floors?",
-    "roomType": "living room",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "YES"
   },
   {
     "id": 84,
     "question": "Do all of the outlets and lights work?",
-    "roomType": "living room",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
   {
@@ -458,19 +458,19 @@
   {
     "id": 88,
     "question": "Is there at least one duplex outlet?",
-    "roomType": "living room",
+    "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 89,
     "question": "Can your windows be opened with normally applied pressure?",
-    "roomType": "Entrance",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 91,
     "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
-    "roomType": "Entrance",
+    "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   }
 ]

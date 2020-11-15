@@ -13,7 +13,15 @@ export type RoomAssessmentQuestionResponse = {
   description?: string;
 };
 
-export const ROOM_TYPES = ["WASH", "BED", "LIVING"] as const;
+export const ROOM_TYPES = [
+  "WASH",
+  "BED",
+  "LIVING",
+  "KITCHEN",
+  "ENTRANCE",
+  "EXTERIOR",
+  "HEATING",
+] as const;
 export type RoomTypes = typeof ROOM_TYPES[number];
 export type Room = {
   id: string;
@@ -30,6 +38,14 @@ export function transformRoomTypeToLabel(type: Room["type"]) {
       return "Living Room";
     case "WASH":
       return "Washroom";
+    case "KITCHEN":
+      return "Kitchen";
+    case "ENTRANCE":
+      return "Entrance";
+    case "EXTERIOR":
+      return "Exteriror";
+    case "HEATING":
+      return "Heating";
     default:
       throw new Error("unknown room type");
   }
