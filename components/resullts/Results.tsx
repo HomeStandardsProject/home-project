@@ -36,38 +36,40 @@ export const Results: React.FC<Props> = ({ assessment }) => {
   const isInline = layoutType === "desktop";
 
   return (
-    <Stack marginTop="16pt" marginBottom="16pt" spacing={1}>
-      <Heading as="h4" color="gray.700" size="md">
-        {assessment.details.address}
-      </Heading>
-      <Stack isInline spacing={2}>
-        <Tag size="sm" colorScheme="green">
-          ${assessment.details.totalRent}
-        </Tag>
-        <Tag size="sm" colorScheme="green">
-          {assessment.details.rentalType}
-        </Tag>
-        <Tag size="sm" colorScheme="green">
-          {assessment.details.landlordOther ?? assessment.details.landlord}
-        </Tag>
-      </Stack>
-      <Box marginTop="8pt">
-        <PDFDownloadButton result={assessment} />
+    <Stack marginTop="16pt" marginBottom="16pt" spacing={4}>
+      <Box>
+        <Heading as="h4" color="gray.700" size="md">
+          {assessment.details.address}
+        </Heading>
+        <Stack isInline spacing={2}>
+          <Tag size="sm" colorScheme="green">
+            ${assessment.details.totalRent}
+          </Tag>
+          <Tag size="sm" colorScheme="green">
+            {assessment.details.rentalType}
+          </Tag>
+          <Tag size="sm" colorScheme="green">
+            {assessment.details.landlordOther ?? assessment.details.landlord}
+          </Tag>
+        </Stack>
+        <Box marginTop="8pt">
+          <PDFDownloadButton result={assessment} />
+        </Box>
       </Box>
       <Divider />
-      <Box marginTop="16pt">
+      <Box>
         <Heading as="h3" size="xl">
           {totalViolations} Violations
         </Heading>
         <Text color="gray.400">{generatedDate}</Text>
-      </Box>
-      <Box marginTop="16pt">
-        <Heading as="h4" size="md">
-          Rooms
-        </Heading>
-        {assessment.rooms.map((room) => (
-          <RoomViolations key={room.id} room={room} isInline={isInline} />
-        ))}
+        <Box marginTop="16pt">
+          <Heading as="h4" size="md">
+            Rooms
+          </Heading>
+          {assessment.rooms.map((room) => (
+            <RoomViolations key={room.id} room={room} isInline={isInline} />
+          ))}
+        </Box>
       </Box>
     </Stack>
   );

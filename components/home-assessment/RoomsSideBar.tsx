@@ -154,9 +154,9 @@ const RoomComponent: React.FC<{
         <Stack spacing={0} flexBasis="100%">
           <Stack isInline>
             {isInvalid && <WarningIcon color="red.500" />}
-            <Heading as="h4" fontSize="md" color="gray.600">
+            <Text as="b" fontSize="sm" color="gray.600">
               {room.name}
-            </Heading>
+            </Text>
           </Stack>
           <Text fontSize="xs">{transformRoomTypeToLabel(room.type)} </Text>
         </Stack>

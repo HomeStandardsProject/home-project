@@ -17,6 +17,7 @@ const Container = styled.div`
   position: relative;
   box-sizing: border-box;
   padding: 24pt;
+  margin: 0 auto;
 `;
 
 const Footer = styled.footer`
