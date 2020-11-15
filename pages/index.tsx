@@ -29,7 +29,7 @@ function IndexPage() {
           <Link href="/home-assessment">
             <Button
               marginTop={"20pt"}
-              variantColor="green"
+              colorScheme="green"
               onClick={logStartButtonClick}
             >
               Start now

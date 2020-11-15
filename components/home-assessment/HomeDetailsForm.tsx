@@ -1,3 +1,4 @@
+import { CheckIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -5,7 +6,6 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  Icon,
   Input,
   InputGroup,
   InputLeftElement,
@@ -213,10 +213,10 @@ export const HomeDetailsForm: React.FC<Props> = ({
             />
             <InputRightElement>
               {details.totalRent && isTotalRentValid ? (
-                <Icon name="check" color="green.500" />
+                <CheckIcon color="green.500" />
               ) : null}
               {details.totalRent && !isTotalRentValid ? (
-                <Icon name="not-allowed" color="red.500" />
+                <NotAllowedIcon color="red.500" />
               ) : null}
             </InputRightElement>
           </InputGroup>
@@ -244,7 +244,7 @@ export const HomeDetailsForm: React.FC<Props> = ({
       </Stack>
       <Box>
         <Button
-          variantColor="green"
+          colorScheme="green"
           size="sm"
           marginTop={"16pt"}
           onClick={handleNextButtonClick}

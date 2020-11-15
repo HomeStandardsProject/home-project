@@ -1,14 +1,7 @@
 import * as React from "react";
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Icon,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import { NextRouter, withRouter } from "next/router";
+import { WarningIcon } from "@chakra-ui/icons";
 import { LOCAL_STORAGE_ASSESSMENT_KEY } from "../home-assessment/hooks/useAssessmentCalculatorApi";
 
 interface Props {
@@ -48,7 +41,7 @@ class ResultsErrorBoundary extends React.Component<Props, State> {
         <Flex minH="400px" justifyContent="center" alignItems="center">
           <Stack textAlign="center">
             <Flex justifyContent="center">
-              <Icon name="warning" size="50px" />
+              <WarningIcon size="50px" />
             </Flex>
             <Heading size="lg">Unable to view this assessment</Heading>
             <Text>
@@ -58,7 +51,7 @@ class ResultsErrorBoundary extends React.Component<Props, State> {
               <Button
                 marginTop="16pt"
                 size="sm"
-                variantColor="red"
+                colorScheme="red"
                 onClick={() => this.handleStartAssessmentClick()}
               >
                 Start a new assessment

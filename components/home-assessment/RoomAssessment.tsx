@@ -138,8 +138,7 @@ const RoomQuestion: React.FC<{
   ) => void;
 }> = ({ prompt, response, answerChanged }) => {
   const handleRadioGroupValueChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const newValue = event.target.value;
+    (newValue: string) => {
       if (newValue === "YES" || newValue === "NO" || newValue === "UNSURE") {
         answerChanged(prompt.id, newValue, undefined);
         return;
@@ -150,7 +149,7 @@ const RoomQuestion: React.FC<{
   );
 
   const handleDescriptionChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = setAsUndefinedInsteadOfEmptyString(event.target.value);
       answerChanged(prompt.id, response.answer, newValue);
     },
@@ -183,9 +182,11 @@ const RoomQuestion: React.FC<{
         onChange={handleRadioGroupValueChange}
         value={response.answer}
       >
-        <Radio value="YES">Yes</Radio>
-        <Radio value="NO">No</Radio>
-        <Radio value="UNSURE">Unsure</Radio>
+        <Stack>
+          <Radio value="YES">Yes</Radio>
+          <Radio value="NO">No</Radio>
+          <Radio value="UNSURE">Unsure</Radio>
+        </Stack>
       </RadioGroup>
       {optionalTextbox}
     </Box>

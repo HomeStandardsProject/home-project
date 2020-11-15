@@ -1,13 +1,11 @@
 import * as React from "react";
+import { Box, Divider, Heading, Stack, Tag, Text } from "@chakra-ui/react";
 import {
-  Box,
-  Divider,
-  Heading,
-  Icon,
-  Stack,
-  Tag,
-  Text,
-} from "@chakra-ui/react";
+  CheckIcon,
+  InfoOutlineIcon,
+  QuestionIcon,
+  WarningIcon,
+} from "@chakra-ui/icons";
 import {
   ApiBylawViolation,
   ApiHomeAssessmentResult,
@@ -43,13 +41,13 @@ export const Results: React.FC<Props> = ({ assessment }) => {
         {assessment.details.address}
       </Heading>
       <Stack isInline spacing={2}>
-        <Tag size="sm" variantColor="green">
+        <Tag size="sm" colorScheme="green">
           ${assessment.details.totalRent}
         </Tag>
-        <Tag size="sm" variantColor="green">
+        <Tag size="sm" colorScheme="green">
           {assessment.details.rentalType}
         </Tag>
-        <Tag size="sm" variantColor="green">
+        <Tag size="sm" colorScheme="green">
           {assessment.details.landlordOther ?? assessment.details.landlord}
         </Tag>
       </Stack>
@@ -91,7 +89,7 @@ const RoomViolations: React.FC<{
       </Text>
       <Stack flexBasis="100%" spacing={2}>
         <Stack alignItems="center" isInline>
-          <Icon name="warning" color="red.600" />
+          <WarningIcon color="red.600" />
           <Text fontSize="lg" as="b" color="red.600">
             Violations
           </Text>
@@ -103,7 +101,7 @@ const RoomViolations: React.FC<{
         {room.possibleViolations.length > 0 && (
           <>
             <Stack alignItems="center" isInline>
-              <Icon name="question" color="blue.600" />
+              <QuestionIcon color="blue.600" />
               <Text fontSize="lg" as="b" color="blue.600">
                 Possible Violations
               </Text>
@@ -130,7 +128,7 @@ const RoomViolations: React.FC<{
               height="2em"
               textAlign="center"
             >
-              <Icon color="blue.500" name="check" marginTop="4pt" />
+              <CheckIcon color="blue.500" marginTop="4pt" />
             </Box>
             <Text>No violations detected for this room</Text>
           </Stack>
@@ -156,7 +154,7 @@ const RoomViolation: React.FC<{ violation: ApiBylawViolation }> = ({
         align="center"
         marginTop="8pt"
       >
-        <Icon name="info-outline" />
+        <InfoOutlineIcon />
         <Text>{description}</Text>
       </Stack>
     ))}
