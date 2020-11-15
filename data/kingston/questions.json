@@ -1,38 +1,476 @@
-{
-  "LIVING": [
-    {
-      "id": "1",
-      "question": "LIVING 1",
-      "promptForDescriptionOn": "NO"
-    },
-    {
-      "id": "2",
-      "question": "LIVING 2",
-      "promptForDescriptionOn": "NO"
-    }
-  ],
-  "WASH": [
-    {
-      "id": "3",
-      "question": "WASH 1",
-      "promptForDescriptionOn": "NO"
-    },
-    {
-      "id": "4",
-      "question": "WASH 2",
-      "promptForDescriptionOn": "NO"
-    }
-  ],
-  "BED": [
-    {
-      "id": "5",
-      "question": "BED 1",
-      "promptForDescriptionOn": "NO"
-    },
-    {
-      "id": "6",
-      "question": "BED 2",
-      "promptForDescriptionOn": "NO"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "question": "Are there any known leaks in your pipes or plumbing fixtures?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 2,
+    "question": "Is your plumbing connected with water seal traps? (Can you smell sewage?)",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 4,
+    "question": "Does your unit have hot and cold running water?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 5,
+    "question": "Does your shower have an adequate supply of hot and cold water?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 6,
+    "question": "Does your house have at least one toilet, sink, and bathtub or shower?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 7,
+    "question": "Is your bathroom inside your unit? Or if there are two units, each not with more than two rooms, is there a bathroom that is accessible without having to go through the other unit or outside?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 14,
+    "question": "Is your bathroom fully enclosed?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 15,
+    "question": "Is there a sink in the bathroom, or in an immediately joining room?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 16,
+    "question": "Are the walls and floors surrounding your shower waterproof or water resistant?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 17,
+    "question": "Is there working ventilation? This may include an electric fan or a window that opens.",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 18,
+    "question": "Are all of the appliances and equipment provided by the landlord installed and working?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 19,
+    "question": "Is there a cupboard or shelving unit with at least 0.226 cubic metres (8 cubic feet) of space for storing food?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 20,
+    "question": "Are there appliances for cooking and refrigeration?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 21,
+    "question": "Is your countertop space at least 1.2 metres (4 feet) in length x 60 centimetres (2 feet) in width, exclusive of the sink?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 23,
+    "question": "Does your sink have hot and cold running water?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 25,
+    "question": "Are there any known leaks in your pipes or plumbing fixtures?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 26,
+    "question": "If you don't have a built in cabinets/closets, is the bedroom at least 7 square metres?  If you do have built in closets, is the bedroom at least 6 square metres?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 27,
+    "question": "Are your windows weather tight and reasonably draft-free?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 28,
+    "question": "Are your windows weather tight and reasonably draft-free?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 29,
+    "question": "Are your windows weather tight and reasonably draft-free?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 30,
+    "question": "Are your windows weather tight and reasonably draft-free?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 31,
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 32,
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 33,
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 36,
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 37,
+    "question": "Can your windows be opened with normally applied pressure?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 38,
+    "question": "Can your windows be opened with normally applied pressure?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 39,
+    "question": "Can your windows be opened with normally applied pressure?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 40,
+    "question": "Can your windows be opened with normally applied pressure?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 41,
+    "question": "Do all of your windows that open have undamaged, well-secured screens?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 42,
+    "question": "Do all of your windows that open have undamaged, well-secured screens?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 43,
+    "question": "Do all of your windows that open have undamaged, well-secured screens?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 44,
+    "question": "Do all of your windows that open have undamaged, well-secured screens?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 45,
+    "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 46,
+    "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 47,
+    "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 48,
+    "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 49,
+    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 50,
+    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 51,
+    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 52,
+    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 53,
+    "question": "Is your heating system able to keep your unit at a minimum temperature of 21.1°C (70°F)?",
+    "roomType": "HEATING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 54,
+    "question": "Is a portable heater your unit's primary source of heat?",
+    "roomType": "HEATING",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 55,
+    "question": "Are any exposed heating pipes sufficiently protected to prevent a safety hazard?",
+    "roomType": "HEATING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 56,
+    "question": "Are your windows weather tight and reasonably draft-free?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 57,
+    "question": "Do all of your windows that open have undamaged, well-secured screens?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 58,
+    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 59,
+    "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 60,
+    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 61,
+    "question": "Do you have at least one ENTRANCE door that can be locked from inside and outside the unit?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 62,
+    "question": "Do your stairs, porches, decks, or balconies have holes, cracks, or other defects?",
+    "roomType": "EXTERIOR",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 63,
+    "question": "Are your stairs warped or significantly deteriorating?",
+    "roomType": "EXTERIOR",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 64,
+    "question": "Does your roof have leaks in it?  Does it have loose or unsecured material that could come off?",
+    "roomType": "EXTERIOR",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 65,
+    "question": "Are the eaves troughs, roof gutters and/or down pipes securely fastened to the building?",
+    "roomType": "EXTERIOR",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 66,
+    "question": "Does your yard have rubbish, heavy overgrowth of weeds, grass longer than 20cm, dead or damaged branches, deep ruts or holes, abandoned recreation equipment, interior furniture, or appliances?",
+    "roomType": "EXTERIOR",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 67,
+    "question": "Are the steps into your house adequately lit?",
+    "roomType": "EXTERIOR",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 68,
+    "question": "Do all of the outlets and lights work?",
+    "roomType": "EXTERIOR",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 69,
+    "question": "Is there a permanent light fixture? (As opposed to just a lamp, for example.)",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 70,
+    "question": "Are there any holes or cracks in the walls, ceilings, or floors?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 71,
+    "question": "Do all of the outlets and lights work?",
+    "roomType": "WASH",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 72,
+    "question": "Are there at least two separate outlets, which are on different circuits? (Although not foolproof, a way to check this is can you run multiple appliances at a time from different outlets, without losing power.)",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 73,
+    "question": "Is there a permanent light fixture? (As opposed to just a lamp, for example.)",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 74,
+    "question": "Are there any holes or cracks in the walls, ceilings, or floors?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 75,
+    "question": "Do all of the outlets and lights work?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 76,
+    "question": "Is there a vent?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 77,
+    "question": "Are there any holes or cracks in the walls, ceilings, or floors?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 78,
+    "question": "Do all of the outlets and lights work?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 79,
+    "question": "Is there a window, skylight, or door with a glass window?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 80,
+    "question": "Are there any holes or cracks in the walls, ceilings, or floors?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 81,
+    "question": "Do all of the outlets and lights work?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 82,
+    "question": "Is there a window, skylight, or door with a glass window?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 83,
+    "question": "Are there any holes or cracks in the walls, ceilings, or floors?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "YES"
+  },
+  {
+    "id": 84,
+    "question": "Do all of the outlets and lights work?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 85,
+    "question": "Is your countertop made of a material that is repellent to water and grease?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 86,
+    "question": "Is there at least one duplex outlet?",
+    "roomType": "BED",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 87,
+    "question": "Is there at least one duplex outlet?",
+    "roomType": "KITCHEN",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 88,
+    "question": "Is there at least one duplex outlet?",
+    "roomType": "LIVING",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 89,
+    "question": "Can your windows be opened with normally applied pressure?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO"
+  },
+  {
+    "id": 91,
+    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO"
+  }
+]

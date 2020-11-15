@@ -7,7 +7,8 @@ import {
   RoomAssessmentQuestion,
   RoomTypes,
 } from "../interfaces/home-assessment";
-import QuestionsData from "../data/kingston/questions.json";
+import { loadBylawMultiplexer } from "../utils/loadBylawMultiplexer";
+import { loadQuestions } from "../utils/loadQuestions";
 
 type Props = {
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
@@ -23,9 +24,10 @@ const HomeAssessmentPage: React.FC<Props> = ({ questions }) => (
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const questions = QuestionsData as {
-    [type in RoomTypes]: RoomAssessmentQuestion[];
-  };
+  const questions = loadQuestions();
+  // Unsused return value, however this is to make sure that the bylaw multiplexer
+  // is validated at build time rather then at execution time
+  loadBylawMultiplexer(questions);
   return { props: { questions } };
 };
 

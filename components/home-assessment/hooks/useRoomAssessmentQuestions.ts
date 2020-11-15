@@ -10,7 +10,7 @@ export type RoomAssessmentQuestions = {
 };
 
 // initialize a map of empty questions as the initial value
-const initialValues: RoomAssessmentQuestions = ROOM_TYPES.reduce(
+export const INITIAL_VALUES: RoomAssessmentQuestions = ROOM_TYPES.reduce(
   (result, newValue) => {
     const newResult = result;
     newResult[newValue] = [];
@@ -21,7 +21,7 @@ const initialValues: RoomAssessmentQuestions = ROOM_TYPES.reduce(
 
 export const RoomAssessmentQuestionsContext = React.createContext<
   RoomAssessmentQuestions
->(initialValues);
+>(INITIAL_VALUES);
 
 export const useRoomAssessmentQuestions = () => {
   const questions = React.useContext(RoomAssessmentQuestionsContext);

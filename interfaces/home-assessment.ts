@@ -13,7 +13,15 @@ export type RoomAssessmentQuestionResponse = {
   description?: string;
 };
 
-export const ROOM_TYPES = ["WASH", "BED", "LIVING"] as const;
+export const ROOM_TYPES = [
+  "WASH",
+  "BED",
+  "LIVING",
+  "KITCHEN",
+  "ENTRANCE",
+  "EXTERIOR",
+  "HEATING",
+] as const;
 export type RoomTypes = typeof ROOM_TYPES[number];
 export type Room = {
   id: string;
@@ -30,19 +38,40 @@ export function transformRoomTypeToLabel(type: Room["type"]) {
       return "Living Room";
     case "WASH":
       return "Washroom";
+    case "KITCHEN":
+      return "Kitchen";
+    case "ENTRANCE":
+      return "Entrance";
+    case "EXTERIOR":
+      return "Exteriror";
+    case "HEATING":
+      return "Heating";
     default:
       throw new Error("unknown room type");
   }
 }
 
-export const LANDLORDS = [
-  "Highpoint Properties",
+const SORTED_LANDLORDS = [
   "Frontenac Property Management",
-  "Other",
-] as const;
+  "Highpoint Properties",
+  "Keystone Property Management",
+  "Limestone Property Management",
+  "MacKinnon Development Corporation",
+  "Morris Property Management",
+  "Panadew Property Management",
+  "Queen’s Community Housing",
+  "Varsity Communities",
+].sort();
+
+export const LANDLORDS = [...SORTED_LANDLORDS, "Other"] as const;
 export type Landlords = typeof LANDLORDS[number];
 
-export const RENTAL_TYPES = ["Full-house", "Rental Unit", "Condo"] as const;
+export const RENTAL_TYPES = [
+  "Full house",
+  "Divided house (multiple units)",
+  "Apartment",
+  "Apartment building/complex",
+] as const;
 export type RentalType = typeof RENTAL_TYPES[number];
 export type HomeDetails = {
   address: string;
