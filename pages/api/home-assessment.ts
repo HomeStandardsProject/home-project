@@ -16,10 +16,10 @@ Airtable.configure({
   noRetryIfRateLimited: undefined,
 });
 
-function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
-  const questions = loadQuestions();
-  const multiplexer = loadBylawMultiplexer(questions);
+const questions = loadQuestions();
+const multiplexer = loadBylawMultiplexer(questions);
 
+function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
   let datastore: Datastore;
   if (process.env.AIRTABLE_SUBMISSIONS_BASE && process.env.AIRTABLE_API_KEY) {
     datastore = new AirtableStore(process.env.AIRTABLE_SUBMISSIONS_BASE);
