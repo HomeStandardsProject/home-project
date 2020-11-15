@@ -24,7 +24,7 @@ const DEFAULT_ROOM: NormalizedRoom = {
 
 const DEFAULT_DETAIL: HomeDetails = {
   landlord: "Frontenac Property Management",
-  rentalType: "Full-house",
+  rentalType: "Full house",
   totalRent: "499.99",
   address: "99 University Ave, Kingston, ON",
 };

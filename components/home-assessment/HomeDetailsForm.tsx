@@ -143,7 +143,7 @@ export const HomeDetailsForm: React.FC<Props> = ({
         >
           <FormLabel fontSize="sm">Other (please specify)</FormLabel>
           <Input
-            placeholder={"Tina's Properties"}
+            placeholder={"Tina Smith"}
             size="md"
             value={details.landlordOther ?? ""}
             onChange={handleLandlordOtherChange}
@@ -173,7 +173,7 @@ export const HomeDetailsForm: React.FC<Props> = ({
         >
           <FormLabel fontSize="sm">Address</FormLabel>
           <Input
-            placeholder={"100 University Av."}
+            placeholder={"100 University Avenue"}
             aria-describedby="address"
             size="md"
             value={details.address ?? ""}

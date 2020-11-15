@@ -66,7 +66,7 @@ const MOCK_ROOM: ApiRoom = {
 
 const MOCK_DETAILS: ApiHomeAssessmentInput["details"] = {
   landlord: "Frontenac Property Management",
-  rentalType: "Full-house",
+  rentalType: "Full house",
   totalRent: "499.99",
   address: "99 University Ave, Kingston, ON",
 };
