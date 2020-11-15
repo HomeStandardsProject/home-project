@@ -13,10 +13,12 @@ import { generateSetOfNullifiedFields } from "../utils/generateSetOfNullifiedFie
 import { RecursiveRequiredObject } from "../utils/RecursiveRequiredObject";
 import { handleHomeAssessment } from "./handleHomeAssessment";
 import { Datastore } from "../datastore/Datastore";
+import { INITIAL_VALUES } from "../../components/home-assessment/hooks/useRoomAssessmentQuestions";
 
 jest.mock("uuid");
 
 const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
+  ...INITIAL_VALUES,
   LIVING: [
     {
       id: "1",

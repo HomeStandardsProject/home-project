@@ -3,12 +3,14 @@ import { render } from "@testing-library/react";
 
 import { useIsAssessmentValid } from "./useIsAssessmentValid";
 import {
+  INITIAL_VALUES,
   RoomAssessmentQuestions,
   RoomAssessmentQuestionsContext,
 } from "./useRoomAssessmentQuestions";
 import { Room } from "../../../interfaces/home-assessment";
 
 const DEFAULT_QUESTIONS: RoomAssessmentQuestions = {
+  ...INITIAL_VALUES,
   LIVING: [
     {
       id: "1",
