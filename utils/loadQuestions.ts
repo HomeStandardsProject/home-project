@@ -1,3 +1,4 @@
+import { INITIAL_VALUES as INITIAL_ROOMS_VALUES } from "../components/home-assessment/hooks/useRoomAssessmentQuestions";
 import QuestionsData from "../data/kingston/questions.json";
 import {
   AllRoomAssessmentQuestion,
@@ -22,49 +23,39 @@ export const ERRORS = {
 };
 
 export function loadQuestionsFromData(questions: QuestionInput[]) {
-  // initialize a map of empty map where each room type is a "bucket"
-  // and we'll fill them up based on the input questions.
-  const roomBuckets: AllRoomAssessmentQuestion = ROOM_TYPES.reduce(
-    (result, newValue) => {
-      const newResult = result;
-      newResult[newValue] = [];
-      return newResult;
-    },
-    {} as AllRoomAssessmentQuestion
-  );
+  // Empty map where each room type is a "bucket" and we'll fill them
+  // up based on the input questions.
+  const roomBuckets: AllRoomAssessmentQuestion = { ...INITIAL_ROOMS_VALUES };
   // array to ensure there are no duplicate ids
   const pastQuestionIds: number[] = [];
 
   for (const inputQuestion of questions) {
     // is the roomType a known room type?
-    if (ROOM_TYPES.includes(inputQuestion.roomType as RoomTypes)) {
-      const { id, roomType, question, promptForDescriptionOn } = inputQuestion;
-
-      // has a question with this id already been added?
-      if (!pastQuestionIds.includes(id)) {
-        // is promptForDescriptionOn have a valid type?
-        if (["YES", "NO"].includes(promptForDescriptionOn)) {
-          roomBuckets[roomType as RoomTypes].push({
-            id: `${id}`,
-            question,
-            promptForDescriptionOn: promptForDescriptionOn as "YES" | "NO",
-          });
-          pastQuestionIds.push(id);
-        } else {
-          throw ERRORS.INVALID_TYPE(
-            `${id}`,
-            "promptForDescriptionOn",
-            "YES or NO"
-          );
-        }
-      } else {
-        throw ERRORS.DUPLICATE_QUESTION_ID(id);
-      }
-    } else {
+    if (!ROOM_TYPES.includes(inputQuestion.roomType as RoomTypes)) {
       console.warn(
         `skipping question ${inputQuestion.id} since the type ${inputQuestion.roomType} is unknown`
       );
+      continue;
     }
+
+    const { id, roomType, question, promptForDescriptionOn } = inputQuestion;
+
+    // has a question with this id already been added?
+    if (pastQuestionIds.includes(id)) {
+      throw ERRORS.DUPLICATE_QUESTION_ID(id);
+    }
+
+    // is promptForDescriptionOn have a valid type?
+    if (!["YES", "NO"].includes(promptForDescriptionOn)) {
+      throw ERRORS.INVALID_TYPE(`${id}`, "promptForDescriptionOn", "YES or NO");
+    }
+
+    roomBuckets[roomType as RoomTypes].push({
+      id: `${id}`,
+      question,
+      promptForDescriptionOn: promptForDescriptionOn as "YES" | "NO",
+    });
+    pastQuestionIds.push(id);
   }
 
   return roomBuckets;
