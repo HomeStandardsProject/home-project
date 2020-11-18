@@ -5,11 +5,13 @@ import {
   ApiHomeAssessmentInputWithRoomIds,
   ApiHomeAssessmentResult,
 } from "../../interfaces/api-home-assessment";
+import { chunk } from "../../utils/chunkArray";
 import { Datastore } from "./Datastore";
 
 type AirtableSubmissionRow = {
   id: string;
   address: string;
+  unitNumber?: string;
   rentalType: string;
   totalRent: number;
   landlord: string;
@@ -53,19 +55,25 @@ export class AirtableStore implements Datastore {
         transformInputToSubmissionRow(submissionId, input)
       );
       // save room data
-      await this._base("raw_rooms").create(
-        transformInputToRoomRows(submissionId, input).map((row) => ({
-          fields: row,
-        })),
-        { typecast: true }
-      );
+      const transfomredRoomRows = transformInputToRoomRows(
+        submissionId,
+        input
+      ).map((row) => ({
+        fields: row,
+      }));
+      await this._createRecordsInChunks("raw_rooms", transfomredRoomRows);
 
       // save room responses
-      await this._base("raw_room_responses").create(
-        transformInputToRoomResponses(submissionId, input).map((row) => ({
-          fields: row,
-        })),
-        { typecast: true }
+      const transformedRoomResponses = transformInputToRoomResponses(
+        submissionId,
+        input
+      ).map((row) => ({
+        fields: row,
+      }));
+
+      await this._createRecordsInChunks(
+        "raw_room_responses",
+        transformedRoomResponses
       );
 
       return [true, null];
@@ -89,17 +97,33 @@ export class AirtableStore implements Datastore {
 
       if (hasViolation) {
         // save violations
-        await this._base("submissions_room_violations").create(
-          transformResultToViolationRows(submissionId, result).map((row) => ({
-            fields: row,
-          })),
-          { typecast: true }
+        const transformedViolationRows = transformResultToViolationRows(
+          submissionId,
+          result
+        ).map((row) => ({
+          fields: row,
+        }));
+
+        await this._createRecordsInChunks(
+          "submissions_room_violations",
+          transformedViolationRows
         );
       }
 
       return [true, null];
     } catch (error) {
       return [false, error];
+    }
+  }
+
+  // Airtable can only save 10 requests at a time
+  async _createRecordsInChunks<T>(baseName: string, arr: T[]) {
+    const chunkedArr = chunk(arr, 10);
+
+    for (const chunkedRow of chunkedArr) {
+      await this._base(baseName).create(chunkedRow, {
+        typecast: true,
+      });
     }
   }
 }
@@ -159,6 +183,7 @@ function transformInputToSubmissionRow(
   return {
     id,
     address: input.details.address,
+    unitNumber: input.details.unitNumber,
     rentalType: input.details.rentalType,
     totalRent: parseFloat(input.details.totalRent),
     landlord: input.details.landlord,
