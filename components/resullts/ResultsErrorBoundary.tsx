@@ -41,7 +41,7 @@ class ResultsErrorBoundary extends React.Component<Props, State> {
         <Flex minH="400px" justifyContent="center" alignItems="center">
           <Stack textAlign="center">
             <Flex justifyContent="center">
-              <WarningIcon size="50px" />
+              <WarningIcon w="50px" h="50px" />
             </Flex>
             <Heading size="lg">Unable to view this assessment</Heading>
             <Text>
