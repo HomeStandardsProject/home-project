@@ -3,8 +3,9 @@ import * as React from "react";
 type LayoutType = "mobile" | "desktop";
 
 export const useLayoutType = () => {
+  const { isMobile } = useMobileDetect();
   const [windowWidth, setWindowWidth] = React.useState(() => {
-    if (typeof window === "undefined") return 0;
+    if (typeof window === "undefined") return undefined;
     return window.innerWidth;
   });
 
@@ -21,11 +22,36 @@ export const useLayoutType = () => {
   }, []);
 
   const layoutType = React.useMemo((): LayoutType => {
+    if (!windowWidth) return isMobile() ? "mobile" : "desktop";
     if (windowWidth < 800) {
       return "mobile";
     }
     return "desktop";
-  }, [windowWidth]);
+  }, [windowWidth, isMobile]);
 
   return layoutType;
+};
+
+const getMobileDetect = (userAgent: NavigatorID["userAgent"]) => {
+  const isAndroid = () => Boolean(userAgent.match(/Android/i));
+  const isIos = () => Boolean(userAgent.match(/iPhone|iPad|iPod/i));
+  const isOpera = () => Boolean(userAgent.match(/Opera Mini/i));
+  const isWindows = () => Boolean(userAgent.match(/IEMobile/i));
+  const isSSR = () => Boolean(userAgent.match(/SSR/i));
+  const isMobile = () =>
+    Boolean(isAndroid() || isIos() || isOpera() || isWindows());
+  const isDesktop = () => Boolean(!isMobile() && !isSSR());
+  return {
+    isMobile,
+    isDesktop,
+    isAndroid,
+    isIos,
+    isSSR,
+  };
+};
+const useMobileDetect = () => {
+  React.useEffect(() => {}, []);
+  const userAgent =
+    typeof navigator === "undefined" ? "SSR" : navigator.userAgent;
+  return getMobileDetect(userAgent);
 };
