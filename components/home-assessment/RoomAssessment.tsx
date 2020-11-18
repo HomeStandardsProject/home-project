@@ -194,14 +194,15 @@ const RoomQuestion: React.FC<{
 };
 
 function placeholderBasedOnType(type: Room["type"]) {
-  switch (type) {
-    case "BED":
-      return "Finley's Room";
-    case "LIVING":
-      return "Upstairs living room";
-    case "WASH":
-      return "Upstairs bathroom";
-    default:
-      throw new Error("unimplemented room type");
-  }
+  const label: { [key in Room["type"]]: string } = {
+    BED: "Finley's Room",
+    LIVING: "Upstairs living room",
+    WASH: "Main washroom",
+    KITCHEN: "Kitchen",
+    ENTRANCE: "Main Entrance",
+    EXTERIOR: "Exterior",
+    HEATING: "Heating",
+  };
+
+  return label[type];
 }
