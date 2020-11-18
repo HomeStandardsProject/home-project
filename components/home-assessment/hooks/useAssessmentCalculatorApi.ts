@@ -41,6 +41,7 @@ export function useAssessmentCalculatorApi() {
 
       const apiDetails: HomeDetails = {
         address: returnValueOrThrowError({ address: details.address }),
+        unitNumber: details.unitNumber,
         rentalType: returnValueOrThrowError({ rentalType: details.rentalType }),
         totalRent: returnValueOrThrowError({ totalRent: details.totalRent }),
         landlord: returnValueOrThrowError({ landlord: details.landlord }),

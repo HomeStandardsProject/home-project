@@ -67,7 +67,12 @@ export const AssessmentPDF = ({
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.detailsSection}>
-          <Text style={styles.h2}>{result.details.address}</Text>
+          <Text style={styles.h2}>
+            {result.details.address}{" "}
+            {result.details.unitNumber
+              ? `(Unit ${result.details.unitNumber})`
+              : ``}
+          </Text>
           <Text style={styles.bodyCommentText}>{landlord}</Text>
         </View>
         <View style={styles.section}>{result.rooms.map(roomRenderer)}</View>

@@ -51,6 +51,11 @@ export const Results: React.FC<Props> = ({ assessment }) => {
           <Tag size="sm" colorScheme="green">
             {assessment.details.landlordOther ?? assessment.details.landlord}
           </Tag>
+          {assessment.details.unitNumber && (
+            <Tag size="sm" colorScheme="green">
+              Unit {assessment.details.unitNumber}
+            </Tag>
+          )}
         </Stack>
         <Box marginTop="8pt">
           <PDFDownloadButton result={assessment} />

@@ -75,6 +75,7 @@ export const RENTAL_TYPES = [
 export type RentalType = typeof RENTAL_TYPES[number];
 export type HomeDetails = {
   address: string;
+  unitNumber?: string;
   rentalType: RentalType;
   totalRent: string;
   landlord: Landlords;

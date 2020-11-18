@@ -116,6 +116,20 @@ export const HomeDetailsForm: React.FC<Props> = ({
     [detailsChanged]
   );
 
+  const handleUnitNumberChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const {
+        target: { value },
+      } = event;
+
+      detailsChanged((details) => ({
+        ...details,
+        unitNumber: setAsUndefinedInsteadOfEmptyString(value),
+      }));
+    },
+    [detailsChanged]
+  );
+
   const handleNextButtonClick = React.useCallback(() => {
     if (validateHomeDetailsForm(details)) {
       formHasBeenCompleted();
@@ -181,8 +195,19 @@ export const HomeDetailsForm: React.FC<Props> = ({
           />
           <FormErrorMessage>Please enter a valid address</FormErrorMessage>
         </FormControl>
+        <FormControl flexBasis={"10%"}>
+          <FormLabel fontSize="sm">Unit #</FormLabel>
+          <Input
+            placeholder={"3"}
+            aria-describedby="unit number"
+            size="md"
+            value={details.unitNumber ?? ""}
+            onChange={handleUnitNumberChange}
+          />
+        </FormControl>
         <FormControl
-          minW={"150px"}
+          flexBasis="30%"
+          minW={"265px"}
           isInvalid={!details.rentalType && showValidationErrors}
           isRequired={true}
         >
