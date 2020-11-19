@@ -1,10 +1,20 @@
 import * as React from "react";
-import { Box, Divider, Heading, Stack, Tag, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Heading,
+  Link,
+  Stack,
+  Tag,
+  Text,
+} from "@chakra-ui/react";
 import {
   CheckIcon,
+  ExternalLinkIcon,
   InfoOutlineIcon,
   QuestionIcon,
   WarningIcon,
+  WarningTwoIcon,
 } from "@chakra-ui/icons";
 import {
   ApiBylawViolation,
@@ -61,6 +71,40 @@ export const Results: React.FC<Props> = ({ assessment }) => {
           <PDFDownloadButton result={assessment} />
         </Box>
       </Box>
+      <Stack
+        borderWidth="1px"
+        borderRadius="md"
+        borderColor="gray.200"
+        padding="8pt"
+        bg="gray.100"
+      >
+        <Stack align="center" isInline>
+          <WarningTwoIcon color="gray.700" />
+          <Text fontWeight="bold" textColor="gray.700">
+            Disclaimer
+          </Text>
+        </Stack>
+        <Stack>
+          <Text>
+            Please note, while The Home Project and QBACC do their best to
+            provide you with accurate home assessments, we do not assume any
+            liability for inaccurate home assessments. Be sure to check your
+            leases for any further stipulations.
+          </Text>
+          <Text>
+            For further information on{" "}
+            <Link
+              href="www.cityofkingston.ca/resident/property-standards"
+              color="blue.700"
+              isExternal
+            >
+              Kingston property standards
+              <ExternalLinkIcon />
+            </Link>
+            .
+          </Text>
+        </Stack>
+      </Stack>
       <Divider />
       <Box>
         <Heading as="h3" size="xl">
