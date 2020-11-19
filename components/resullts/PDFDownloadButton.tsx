@@ -52,6 +52,7 @@ const DownloadButton: React.FC<{
       leftIcon={<DownloadIcon />}
       isLoading={loading}
       size="sm"
+      colorScheme="blue"
       onClick={logDownloadButtonClick}
     >
       {loading ? "Rendering document..." : "Download PDF"}

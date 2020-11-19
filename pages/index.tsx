@@ -8,7 +8,7 @@ function IndexPage() {
   return (
     <Layout
       title="QBACC's Home Project"
-      description="Free home assessment: see if your Kingston student housing situation is in breach of any housing bylaws."
+      description="Does your student housing meet Kingston’s required property standards? Complete your free home assessment."
     >
       <Flex
         justifyContent={"center"}
@@ -19,7 +19,7 @@ function IndexPage() {
         margin={"0 auto"}
       >
         <Heading as="h1" size="xl" textAlign="left" width="80%">
-          Start a free home assessment
+          Start your free home assessment
         </Heading>
         <Text textAlign="left">
           See if your student housing situation is in breach of any housing
