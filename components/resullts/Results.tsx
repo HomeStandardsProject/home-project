@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   Box,
+  Button,
   Divider,
   Heading,
   Link,
@@ -8,7 +9,9 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import {
+  ArrowForwardIcon,
   CheckIcon,
   ExternalLinkIcon,
   InfoOutlineIcon,
@@ -21,8 +24,9 @@ import {
   ApiHomeAssessmentResult,
   ApiRoomAssessmentResult,
 } from "../../interfaces/api-home-assessment";
-import { PDFDownloadButton } from "./PDFDownloadButton";
+
 import { useLayoutType } from "../home-assessment/hooks/useLayoutType";
+import { PDFDownloadButton } from "./PDFDownloadButton";
 
 type Props = {
   assessment: ApiHomeAssessmentResult;
@@ -67,9 +71,6 @@ export const Results: React.FC<Props> = ({ assessment }) => {
             </Tag>
           )}
         </Stack>
-        <Box marginTop="8pt">
-          <PDFDownloadButton result={assessment} />
-        </Box>
       </Box>
       <Stack
         borderWidth="1px"
@@ -92,7 +93,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
             leases for any further stipulations.
           </Text>
           <Text>
-            For further information on{" "}
+            For more information on{" "}
             <Link
               href="www.cityofkingston.ca/resident/property-standards"
               color="blue.700"
@@ -107,10 +108,31 @@ export const Results: React.FC<Props> = ({ assessment }) => {
       </Stack>
       <Divider />
       <Box>
-        <Heading as="h3" size="xl">
-          {totalViolations} Violations
-        </Heading>
-        <Text color="gray.400">{generatedDate}</Text>
+        <Stack
+          isInline={layoutType === "desktop"}
+          justify="space-between"
+          align="center"
+        >
+          <Box>
+            <Heading as="h3" size="xl">
+              {totalViolations} Violations
+            </Heading>
+            <Text color="gray.400">{generatedDate}</Text>
+          </Box>
+          <Stack isInline spacing="4">
+            <PDFDownloadButton result={assessment} />
+            <NextLink href="next-steps">
+              <Button
+                varient="outline"
+                colorScheme="orange"
+                size="sm"
+                rightIcon={<ArrowForwardIcon />}
+              >
+                Next Steps
+              </Button>
+            </NextLink>
+          </Stack>
+        </Stack>
         <Box marginTop="16pt">
           <Heading as="h4" size="md">
             Rooms
