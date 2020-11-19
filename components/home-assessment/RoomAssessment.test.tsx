@@ -1,6 +1,6 @@
 import * as React from "react";
 import { fireEvent, render } from "@testing-library/react";
-import { ThemeProvider } from "@chakra-ui/core";
+import { ChakraProvider } from "@chakra-ui/react";
 
 import { Room } from "../../interfaces/home-assessment";
 import { RoomAssessment } from "./RoomAssessment";
@@ -20,7 +20,7 @@ const ControlledRoomAssessment: React.FC = () => {
   }, []);
 
   return (
-    <ThemeProvider>
+    <ChakraProvider>
       <div data-testid="room-name">
         room name is {room.name === undefined ? "undefined" : "defined"}
       </div>
@@ -30,7 +30,7 @@ const ControlledRoomAssessment: React.FC = () => {
         updateRoomType={jest.fn()}
         updateQuestion={jest.fn()}
       />
-    </ThemeProvider>
+    </ChakraProvider>
   );
 };
 

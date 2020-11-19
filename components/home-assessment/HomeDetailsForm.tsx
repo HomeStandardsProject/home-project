@@ -1,3 +1,4 @@
+import { CheckIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -5,14 +6,13 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  Icon,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
   Select,
   Stack,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 import * as React from "react";
 import {
   Landlords,
@@ -116,6 +116,20 @@ export const HomeDetailsForm: React.FC<Props> = ({
     [detailsChanged]
   );
 
+  const handleUnitNumberChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const {
+        target: { value },
+      } = event;
+
+      detailsChanged((details) => ({
+        ...details,
+        unitNumber: setAsUndefinedInsteadOfEmptyString(value),
+      }));
+    },
+    [detailsChanged]
+  );
+
   const handleNextButtonClick = React.useCallback(() => {
     if (validateHomeDetailsForm(details)) {
       formHasBeenCompleted();
@@ -181,8 +195,19 @@ export const HomeDetailsForm: React.FC<Props> = ({
           />
           <FormErrorMessage>Please enter a valid address</FormErrorMessage>
         </FormControl>
+        <FormControl flexBasis={"10%"}>
+          <FormLabel fontSize="sm">Unit #</FormLabel>
+          <Input
+            placeholder={"3"}
+            aria-describedby="unit number"
+            size="md"
+            value={details.unitNumber ?? ""}
+            onChange={handleUnitNumberChange}
+          />
+        </FormControl>
         <FormControl
-          minW={"150px"}
+          flexBasis="30%"
+          minW={"265px"}
           isInvalid={!details.rentalType && showValidationErrors}
           isRequired={true}
         >
@@ -213,10 +238,10 @@ export const HomeDetailsForm: React.FC<Props> = ({
             />
             <InputRightElement>
               {details.totalRent && isTotalRentValid ? (
-                <Icon name="check" color="green.500" />
+                <CheckIcon color="green.500" />
               ) : null}
               {details.totalRent && !isTotalRentValid ? (
-                <Icon name="not-allowed" color="red.500" />
+                <NotAllowedIcon color="red.500" />
               ) : null}
             </InputRightElement>
           </InputGroup>
@@ -244,7 +269,7 @@ export const HomeDetailsForm: React.FC<Props> = ({
       </Stack>
       <Box>
         <Button
-          variantColor="green"
+          colorScheme="green"
           size="sm"
           marginTop={"16pt"}
           onClick={handleNextButtonClick}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/core";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import Layout from "../components/Layout";
 import { logStartButtonClick } from "../utils/analyticsEvent";
 
@@ -8,7 +8,7 @@ function IndexPage() {
   return (
     <Layout
       title="QBACC's Home Project"
-      description="Free home assessment: see if your Kingston student housing situation is in breach of any housing bylaws."
+      description="Does your student housing meet Kingston’s required property standards? Complete your free home assessment."
     >
       <Flex
         justifyContent={"center"}
@@ -19,7 +19,7 @@ function IndexPage() {
         margin={"0 auto"}
       >
         <Heading as="h1" size="xl" textAlign="left" width="80%">
-          Start a free home assessment
+          Start your free home assessment
         </Heading>
         <Text textAlign="left">
           See if your student housing situation is in breach of any housing
@@ -29,7 +29,7 @@ function IndexPage() {
           <Link href="/home-assessment">
             <Button
               marginTop={"20pt"}
-              variantColor="green"
+              colorScheme="green"
               onClick={logStartButtonClick}
             >
               Start now

@@ -1,17 +1,16 @@
 import * as React from "react";
 import {
-  Box,
   Button,
   Flex,
   Heading,
-  Icon,
   IconButton,
-  PseudoBox,
+  Box,
   Stack,
   Text,
   useToast,
-} from "@chakra-ui/core";
+} from "@chakra-ui/react";
 import { Flipped, Flipper } from "react-flip-toolkit";
+import { AddIcon, DeleteIcon, WarningIcon } from "@chakra-ui/icons";
 import {
   Room,
   transformRoomTypeToLabel,
@@ -73,8 +72,8 @@ export const RoomsSideBar: React.FC<Props> = ({
         </Heading>
         <Button
           variant="outline"
-          variantColor="green"
-          leftIcon="add"
+          colorScheme="green"
+          leftIcon={<AddIcon />}
           size="xs"
           onClick={addRoom}
         >
@@ -101,7 +100,7 @@ export const RoomsSideBar: React.FC<Props> = ({
       </Box>
       <Button
         marginTop={"16pt"}
-        variantColor="blue"
+        colorScheme="blue"
         size="sm"
         width="100%"
         onClick={handleGenerateReport}
@@ -142,7 +141,7 @@ const RoomComponent: React.FC<{
   );
 
   return (
-    <PseudoBox
+    <Box
       rounded="md"
       borderWidth={"1pt"}
       borderColor={isSelected ? "gray.300" : "gray.100"}
@@ -154,25 +153,25 @@ const RoomComponent: React.FC<{
       <Flex padding="4pt" alignItems="center">
         <Stack spacing={0} flexBasis="100%">
           <Stack isInline>
-            {isInvalid && <Icon name="warning" color="red.500" />}
-            <Heading as="h4" fontSize="md" color="gray.600">
+            {isInvalid && <WarningIcon color="red.500" />}
+            <Text as="b" fontSize="sm" color="gray.600">
               {room.name}
-            </Heading>
+            </Text>
           </Stack>
           <Text fontSize="xs">{transformRoomTypeToLabel(room.type)} </Text>
         </Stack>
         <IconButton
-          variantColor="gray"
+          colorScheme="gray"
           aria-label="delete"
           size="sm"
           opacity={0.8}
-          icon="delete"
+          icon={<DeleteIcon />}
           variant="ghost"
           onClick={handleRoomDelete}
           isDisabled={isDisabled}
           isRound
         />
       </Flex>
-    </PseudoBox>
+    </Box>
   );
 };

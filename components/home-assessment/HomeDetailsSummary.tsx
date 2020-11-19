@@ -1,12 +1,5 @@
-import {
-  Heading,
-  Icon,
-  PseudoBox,
-  Stack,
-  Tag,
-  Text,
-  Tooltip,
-} from "@chakra-ui/core";
+import { SettingsIcon } from "@chakra-ui/icons";
+import { Heading, Box, Stack, Tag, Text, Tooltip } from "@chakra-ui/react";
 import * as React from "react";
 import { HomeDetails } from "../../interfaces/home-assessment";
 import { useLayoutType } from "./hooks/useLayoutType";
@@ -36,7 +29,7 @@ export const HomeDetailsSummary: React.FC<Props> = ({
       <Heading as="h3" size="xs" textTransform="uppercase" marginBottom="8pt">
         Details
       </Heading>
-      <PseudoBox
+      <Box
         padding="8pt"
         rounded="lg"
         bg="gray.100"
@@ -51,10 +44,10 @@ export const HomeDetailsSummary: React.FC<Props> = ({
                 {details.address}
               </Text>
               <Stack spacing={2} isInline>
-                <Tag size="sm" variantColor="green" variant="outline">
+                <Tag size="sm" colorScheme="green" variant="outline">
                   ${details.totalRent}
                 </Tag>
-                <Tag size="sm" variantColor="green" variant="outline">
+                <Tag size="sm" colorScheme="green" variant="outline">
                   {details.rentalType}
                 </Tag>
               </Stack>
@@ -66,10 +59,10 @@ export const HomeDetailsSummary: React.FC<Props> = ({
             label="Click to edit"
             placement="bottom"
           >
-            <Icon name="settings" color="gray.500" />
+            <SettingsIcon color="gray.500" />
           </Tooltip>
         </Stack>
-      </PseudoBox>
+      </Box>
     </Stack>
   );
 };

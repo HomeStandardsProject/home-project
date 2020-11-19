@@ -51,6 +51,12 @@ const styles = StyleSheet.create({
   roomContainer: {
     marginBottom: 8,
   },
+  generatedDate: {
+    textAlign: "right",
+    fontSize: "8pt",
+    margin: 10,
+    marginBottom: 0,
+  },
 });
 
 export const AssessmentPDF = ({
@@ -63,11 +69,21 @@ export const AssessmentPDF = ({
       ? `Other (${result.details.landlordOther})`
       : result.details.landlord;
 
+  const generatedDate = new Intl.DateTimeFormat("en-US").format(
+    new Date(result.generatedDate)
+  );
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        <Text style={styles.generatedDate}>{generatedDate}</Text>
         <View style={styles.detailsSection}>
-          <Text style={styles.h2}>{result.details.address}</Text>
+          <Text style={styles.h2}>
+            {result.details.address}{" "}
+            {result.details.unitNumber
+              ? `(Unit ${result.details.unitNumber})`
+              : ``}
+          </Text>
           <Text style={styles.bodyCommentText}>{landlord}</Text>
         </View>
         <View style={styles.section}>{result.rooms.map(roomRenderer)}</View>

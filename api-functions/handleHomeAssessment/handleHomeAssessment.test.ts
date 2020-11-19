@@ -157,6 +157,54 @@ describe("/api/home-assessment", () => {
     });
   });
 
+  it("returns 400 when rent price is negative", async () => {
+    const { req, res } = createMocks({
+      method: "POST",
+      body: {
+        details: { ...MOCK_DETAILS, totalRent: "-9.99" },
+        rooms: [],
+      },
+    });
+
+    await testHandleHomeAssessment(req, res);
+
+    expect(res._getStatusCode()).toEqual(400);
+    expect(JSON.parse(res._getData())).toEqual({
+      errors: [
+        {
+          location: "body",
+          msg: "Invalid value",
+          param: "details.totalRent",
+          value: "-9.99",
+        },
+      ],
+    });
+  });
+
+  it("returns 400 when landlord other is not defined", async () => {
+    const { req, res } = createMocks({
+      method: "POST",
+      body: {
+        details: { ...MOCK_DETAILS, landlord: "Other", landlordOther: null },
+        rooms: [],
+      },
+    });
+
+    await testHandleHomeAssessment(req, res);
+
+    expect(res._getStatusCode()).toEqual(400);
+    expect(JSON.parse(res._getData())).toEqual({
+      errors: [
+        {
+          location: "body",
+          msg: "landlordOther must be defined when landlord is set to 'Other'",
+          param: "details.landlordOther",
+          value: null,
+        },
+      ],
+    });
+  });
+
   it("returns 400 when not all questions are answered", async () => {
     const { req, res } = createMocks({
       method: "POST",
