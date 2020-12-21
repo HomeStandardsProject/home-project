@@ -2,12 +2,16 @@ import * as React from "react";
 import { Box, Heading, Stack, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { HomeDetailsSummary } from "./HomeDetailsSummary";
-import { HomeDetails, Room, RoomTypes } from "../../interfaces/home-assessment";
+import {
+  HomeDetails,
+  Room,
+  RoomTypes,
+} from "../../../interfaces/home-assessment";
 import { useAssessmentCalculatorApi } from "./hooks/useAssessmentCalculatorApi";
 import { NormalizedRoom } from "./helpers/normalizeRooms";
 import { RoomAssessment } from "./RoomAssessment";
 import { RoomsSideBar } from "./RoomsSideBar";
-import { useLayoutType } from "./hooks/useLayoutType";
+import { useLayoutType } from "../hooks/useLayoutType";
 
 type Props = {
   details: Partial<HomeDetails>;
@@ -23,7 +27,6 @@ type Props = {
   ) => void;
   updateSelectedRoom: (id: string) => void;
   deleteRoom: (idToDelete: string) => void;
-  switchToDetailStep: () => void;
 };
 
 export const HomeRoomsStep: React.FC<Props> = ({
@@ -36,7 +39,6 @@ export const HomeRoomsStep: React.FC<Props> = ({
   updateRoomQuestion,
   updateSelectedRoom,
   deleteRoom,
-  switchToDetailStep,
 }) => {
   const {
     generatingAssessment,
@@ -66,10 +68,7 @@ export const HomeRoomsStep: React.FC<Props> = ({
 
   return (
     <Box>
-      <HomeDetailsSummary
-        details={details}
-        switchToDetails={switchToDetailStep}
-      />
+      <HomeDetailsSummary details={details} />
       <br />
       <Heading
         as="h3"

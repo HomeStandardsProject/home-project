@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { Flipped, Flipper } from "react-flip-toolkit";
 import { AddIcon, DeleteIcon, WarningIcon } from "@chakra-ui/icons";
+import { logGenerateAssessmentButtonClick } from "../../../utils/analyticsEvent";
 import {
   Room,
   transformRoomTypeToLabel,
-} from "../../interfaces/home-assessment";
+} from "../../../interfaces/home-assessment";
 import { useIsAssessmentValid } from "./hooks/useIsAssessmentValid";
-import { logGenerateAssessmentButtonClick } from "../../utils/analyticsEvent";
 
 type Props = {
   rooms: Room[];

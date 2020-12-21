@@ -1,3 +1,4 @@
+import * as React from "react";
 import { CheckIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import {
   Box,
@@ -13,7 +14,6 @@ import {
   Select,
   Stack,
 } from "@chakra-ui/react";
-import * as React from "react";
 import {
   Landlords,
   LANDLORDS,
@@ -27,20 +27,15 @@ import { validatePrice } from "./helpers/validatePrice";
 import { useLayoutType } from "./hooks/useLayoutType";
 
 type Props = {
-  details: Partial<HomeDetailsType>;
-  detailsChanged: (
-    newDetails: (
-      oldDetails: Partial<HomeDetailsType>
-    ) => Partial<HomeDetailsType>
-  ) => void;
-  formHasBeenCompleted: () => void;
+  loading: boolean;
+  submitDetails: (details: HomeDetailsType) => void;
 };
 
-export const HomeDetailsForm: React.FC<Props> = ({
-  details,
-  detailsChanged,
-  formHasBeenCompleted,
+export const HomeAssessmentDetails: React.FC<Props> = ({
+  submitDetails,
+  loading,
 }) => {
+  const [details, setDetails] = React.useState<Partial<HomeDetailsType>>({});
   const [showValidationErrors, setShowValidationErrors] = React.useState(false);
   const layoutType = useLayoutType();
 
@@ -49,12 +44,12 @@ export const HomeDetailsForm: React.FC<Props> = ({
       const {
         target: { value },
       } = event;
-      detailsChanged((details) => ({
+      setDetails((details) => ({
         ...details,
         address: setAsUndefinedInsteadOfEmptyString(value),
       }));
     },
-    [detailsChanged]
+    []
   );
 
   const handleRentPriceChange = React.useCallback(
@@ -62,12 +57,12 @@ export const HomeDetailsForm: React.FC<Props> = ({
       const {
         target: { value },
       } = event;
-      detailsChanged((details) => ({
+      setDetails((details) => ({
         ...details,
         totalRent: setAsUndefinedInsteadOfEmptyString(value),
       }));
     },
-    [detailsChanged]
+    []
   );
 
   const handleRentalTypeChange = React.useCallback(
@@ -78,12 +73,12 @@ export const HomeDetailsForm: React.FC<Props> = ({
       if (newValue && !RENTAL_TYPES.includes(newValue))
         throw new Error("invalid rental type");
 
-      detailsChanged((details) => ({
+      setDetails((details) => ({
         ...details,
         rentalType: setAsUndefinedInsteadOfEmptyString(newValue),
       }));
     },
-    [detailsChanged]
+    []
   );
 
   const handleLandlordChange = React.useCallback(
@@ -94,12 +89,12 @@ export const HomeDetailsForm: React.FC<Props> = ({
       if (newValue && !LANDLORDS.includes(newValue))
         throw new Error("invalid rental type");
 
-      detailsChanged((details) => ({
+      setDetails((details) => ({
         ...details,
         landlord: setAsUndefinedInsteadOfEmptyString(newValue),
       }));
     },
-    [detailsChanged]
+    []
   );
 
   const handleLandlordOtherChange = React.useCallback(
@@ -108,12 +103,12 @@ export const HomeDetailsForm: React.FC<Props> = ({
         target: { value },
       } = event;
 
-      detailsChanged((details) => ({
+      setDetails((details) => ({
         ...details,
         landlordOther: setAsUndefinedInsteadOfEmptyString(value),
       }));
     },
-    [detailsChanged]
+    []
   );
 
   const handleUnitNumberChange = React.useCallback(
@@ -122,21 +117,22 @@ export const HomeDetailsForm: React.FC<Props> = ({
         target: { value },
       } = event;
 
-      detailsChanged((details) => ({
+      setDetails((details) => ({
         ...details,
         unitNumber: setAsUndefinedInsteadOfEmptyString(value),
       }));
     },
-    [detailsChanged]
+    []
   );
 
   const handleNextButtonClick = React.useCallback(() => {
     if (validateHomeDetailsForm(details)) {
-      formHasBeenCompleted();
+      // this should not be risky since we are validating beforehand
+      submitDetails(details as HomeDetailsType);
     } else {
       setShowValidationErrors(true);
     }
-  }, [details, formHasBeenCompleted]);
+  }, [details, submitDetails]);
 
   const isTotalRentValid = React.useMemo(() => {
     if (details.totalRent) {
@@ -175,7 +171,7 @@ export const HomeDetailsForm: React.FC<Props> = ({
   const isInline = layoutType === "desktop";
 
   return (
-    <Stack padding="4pt">
+    <Stack padding="4pt" marginTop="16pt">
       <Heading as="h3" size="xs" textTransform="uppercase" marginBottom="8pt">
         Details
       </Heading>
@@ -273,6 +269,7 @@ export const HomeDetailsForm: React.FC<Props> = ({
           size="sm"
           marginTop={"16pt"}
           onClick={handleNextButtonClick}
+          isLoading={loading}
         >
           Next
         </Button>

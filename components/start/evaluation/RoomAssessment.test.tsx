@@ -2,7 +2,7 @@ import * as React from "react";
 import { fireEvent, render } from "@testing-library/react";
 import { ChakraProvider } from "@chakra-ui/react";
 
-import { Room } from "../../interfaces/home-assessment";
+import { Room } from "../../../interfaces/home-assessment";
 import { RoomAssessment } from "./RoomAssessment";
 
 const DEFAULT_ROOM: Room = {

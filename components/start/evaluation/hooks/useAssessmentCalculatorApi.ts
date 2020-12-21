@@ -4,12 +4,11 @@ import {
   ApiHomeAssessmentInput,
   ApiRoom,
   ApiRoomAssessmentQuestionResponse,
-} from "../../../interfaces/api-home-assessment";
+} from "../../../../interfaces/api-home-assessment";
 import {
-  HomeAssessmentData,
   HomeDetails,
   RoomAssessmentQuestionResponse,
-} from "../../../interfaces/home-assessment";
+} from "../../../../interfaces/home-assessment";
 import { NormalizedRoom } from "../helpers/normalizeRooms";
 
 export const API_HOME_ASSESSMENT_PATH = "/api/home-assessment";
@@ -30,7 +29,7 @@ export function useAssessmentCalculatorApi() {
   const [loading, setLoading] = React.useState(false);
 
   const generateAssessment = React.useCallback(
-    async (rooms: NormalizedRoom[], details: HomeAssessmentData["details"]) => {
+    async (rooms: NormalizedRoom[], details: Partial<HomeDetails>) => {
       const apiRooms = rooms.map(
         (room): ApiRoom => ({
           name: room.name,

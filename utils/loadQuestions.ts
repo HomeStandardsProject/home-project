@@ -1,4 +1,4 @@
-import { INITIAL_VALUES as INITIAL_ROOMS_VALUES } from "../components/home-assessment/hooks/useRoomAssessmentQuestions";
+import { INITIAL_VALUES as INITIAL_ROOMS_VALUES } from "../components/start/evaluation/hooks/useRoomAssessmentQuestions";
 import QuestionsData from "../data/kingston/questions.json";
 import {
   AllRoomAssessmentQuestion,

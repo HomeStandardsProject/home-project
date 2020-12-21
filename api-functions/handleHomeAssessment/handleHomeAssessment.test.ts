@@ -13,7 +13,7 @@ import { generateSetOfNullifiedFields } from "../utils/generateSetOfNullifiedFie
 import { RecursiveRequiredObject } from "../utils/RecursiveRequiredObject";
 import { handleHomeAssessment } from "./handleHomeAssessment";
 import { Datastore } from "../datastore/Datastore";
-import { INITIAL_VALUES } from "../../components/home-assessment/hooks/useRoomAssessmentQuestions";
+import { INITIAL_VALUES } from "../../components/start/evaluation/hooks/useRoomAssessmentQuestions";
 
 jest.mock("uuid");
 
@@ -327,10 +327,9 @@ describe("/api/home-assessment", () => {
       () => new Promise<[true, null]>((resolve) => resolve([true, null]))
     );
 
-    const store: Datastore = {
-      saveHomeAssessmentInput: moockedSaveHomeAssessmentInput,
-      saveHomeAssessmentResult: mockedSaveHomeAssessmentResult,
-    };
+    const store: Datastore = new MockDatastore();
+    store.saveHomeAssessmentInput = moockedSaveHomeAssessmentInput;
+    store.saveHomeAssessmentResult = mockedSaveHomeAssessmentResult;
 
     await testHandleHomeAssessment(req, res, store);
     expect(res._getStatusCode()).toEqual(200);

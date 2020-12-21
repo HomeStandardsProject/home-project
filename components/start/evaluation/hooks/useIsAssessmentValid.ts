@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Room } from "../../../interfaces/home-assessment";
+import { Room } from "../../../../interfaces/home-assessment";
 import { useRoomAssessmentQuestions } from "./useRoomAssessmentQuestions";
 
 export const useIsAssessmentValid = (rooms: Room[]): [boolean, string[]] => {

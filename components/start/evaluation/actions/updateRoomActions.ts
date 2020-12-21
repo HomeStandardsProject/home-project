@@ -1,7 +1,7 @@
 import {
   HomeAssessmentData,
   RoomTypes,
-} from "../../../interfaces/home-assessment";
+} from "../../../../interfaces/home-assessment";
 
 export function updateRoomName(
   assessment: HomeAssessmentData,

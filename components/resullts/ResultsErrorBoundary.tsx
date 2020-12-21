@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box, Button, Flex, Heading, Stack, Text } from "@chakra-ui/react";
 import { NextRouter, withRouter } from "next/router";
 import { WarningIcon } from "@chakra-ui/icons";
-import { LOCAL_STORAGE_ASSESSMENT_KEY } from "../home-assessment/hooks/useAssessmentCalculatorApi";
+import { LOCAL_STORAGE_ASSESSMENT_KEY } from "../start/evaluation/hooks/useAssessmentCalculatorApi";
 
 interface Props {
   children: React.ReactNode;

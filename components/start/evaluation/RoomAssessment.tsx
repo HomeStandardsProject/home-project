@@ -18,8 +18,8 @@ import {
   RoomTypes,
   ROOM_TYPES,
   transformRoomTypeToLabel,
-} from "../../interfaces/home-assessment";
-import { setAsUndefinedInsteadOfEmptyString } from "./helpers/setAsUndefinedInsteadOfEmptyString";
+} from "../../../interfaces/home-assessment";
+import { setAsUndefinedInsteadOfEmptyString } from "../helpers/setAsUndefinedInsteadOfEmptyString";
 import { useRoomAssessmentQuestions } from "./hooks/useRoomAssessmentQuestions";
 
 type Props = {

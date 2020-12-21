@@ -3,7 +3,7 @@ import {
   RoomAssessmentQuestion,
   RoomTypes,
   ROOM_TYPES,
-} from "../../../interfaces/home-assessment";
+} from "../../../../interfaces/home-assessment";
 
 export type RoomAssessmentQuestions = {
   [type in RoomTypes]: RoomAssessmentQuestion[];

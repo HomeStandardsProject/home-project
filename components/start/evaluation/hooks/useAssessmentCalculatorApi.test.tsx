@@ -2,7 +2,7 @@ import * as React from "react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { render, act, fireEvent, waitFor } from "@testing-library/react";
-import { HomeDetails } from "../../../interfaces/home-assessment";
+import { HomeDetails } from "../../../../interfaces/home-assessment";
 import { NormalizedRoom } from "../helpers/normalizeRooms";
 import {
   API_HOME_ASSESSMENT_PATH,

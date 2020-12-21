@@ -1,10 +1,11 @@
 import Airtable from "airtable";
 
 import {
-  ApiHomeAssessmentInput,
   ApiHomeAssessmentInputWithRoomIds,
   ApiHomeAssessmentResult,
 } from "../../interfaces/api-home-assessment";
+import { HomeDetails } from "../../interfaces/home-assessment";
+import { UNKNOWN_ERROR } from "../../utils/apiErrors";
 import { chunk } from "../../utils/chunkArray";
 import { Datastore } from "./Datastore";
 
@@ -45,15 +46,46 @@ export class AirtableStore implements Datastore {
     this._base = Airtable.base(baseId);
   }
 
+  async fetchHomeDetailsById(
+    submissionId: string
+  ): Promise<[HomeDetails | null, Error | null]> {
+    try {
+      const val = await this._base("raw_submissions")
+        .select({
+          maxRecords: 1,
+          filterByFormula: `id = "${submissionId}"`,
+        })
+        .all();
+
+      if (val.length > 0) {
+        return [val[0].fields, null];
+      }
+      return [null, new Error("submission id does not exist")];
+    } catch (error) {
+      console.error(error);
+      return [null, UNKNOWN_ERROR];
+    }
+  }
+
+  async saveHomeDetails(
+    submissionId: string,
+    details: HomeDetails
+  ): Promise<[boolean, Error | null]> {
+    try {
+      await this._base("raw_submissions").create(
+        transformHomeDetailsToRow(submissionId, details)
+      );
+      return [true, null];
+    } catch (error) {
+      return [false, error];
+    }
+  }
+
   async saveHomeAssessmentInput(
     submissionId: string,
     input: ApiHomeAssessmentInputWithRoomIds
   ): Promise<[boolean, Error | null]> {
     try {
-      // save details
-      await this._base("raw_submissions").create(
-        transformInputToSubmissionRow(submissionId, input)
-      );
       // save room data
       const transfomredRoomRows = transformInputToRoomRows(
         submissionId,
@@ -176,18 +208,18 @@ function transformInputToRoomRows(
   );
 }
 
-function transformInputToSubmissionRow(
+function transformHomeDetailsToRow(
   id: string,
-  input: ApiHomeAssessmentInput
+  details: HomeDetails
 ): AirtableSubmissionRow {
   return {
     id,
-    address: input.details.address,
-    unitNumber: input.details.unitNumber,
-    rentalType: input.details.rentalType,
-    totalRent: parseFloat(input.details.totalRent),
-    landlord: input.details.landlord,
-    landlordOther: input.details.landlordOther,
+    address: details.address,
+    unitNumber: details.unitNumber,
+    rentalType: details.rentalType,
+    totalRent: parseFloat(details.totalRent),
+    landlord: details.landlord,
+    landlordOther: details.landlordOther,
   };
 }
 

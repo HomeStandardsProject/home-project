@@ -26,7 +26,7 @@ function IndexPage() {
           bylaws.
         </Text>
         <Box>
-          <Link href="/home-assessment">
+          <Link href="/start">
             <Button
               marginTop={"20pt"}
               colorScheme="green"

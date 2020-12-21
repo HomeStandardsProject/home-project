@@ -2,18 +2,15 @@ import * as React from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Box } from "@chakra-ui/react";
 
-import { animated } from "react-spring";
 import {
   HomeAssessmentData,
-  HomeDetails as HomeDetailsType,
+  HomeDetails,
   Room,
   RoomAssessmentQuestion,
   RoomTypes,
-} from "../../interfaces/home-assessment";
+} from "../../../interfaces/home-assessment";
 import { sortRoomsBasedOnTypeAndName } from "./helpers/sortRoomsBasedOnTypeAndName";
 import { normalizeRoomNames } from "./helpers/normalizeRooms";
-
-import { HomeDetailsForm } from "./HomeDetailsForm";
 
 import { deleteRoomAction } from "./actions/deleteRoomAction";
 import {
@@ -24,9 +21,9 @@ import {
 import { RoomAssessmentQuestionsContext } from "./hooks/useRoomAssessmentQuestions";
 
 import { HomeRoomsStep } from "./HomeRoomsStep";
-import { useSlideTransition } from "./hooks/useSlideTransition";
 
 type Props = {
+  details: HomeDetails;
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
 };
 
@@ -36,17 +33,14 @@ const generateDefaultRoom = (): Room => ({
   responses: {},
 });
 
-export const HomeAssessment: React.FC<Props> = ({ questions }) => {
-  const [
-    { rooms, selectedRoomId, details, step },
-    setAssessment,
-  ] = React.useState<HomeAssessmentData>(() => {
+export const HomeAssessment: React.FC<Props> = ({ questions, details }) => {
+  const [{ rooms, selectedRoomId }, setAssessment] = React.useState<
+    HomeAssessmentData
+  >(() => {
     const initialRoom = generateDefaultRoom();
     return {
-      step: "DETAILS",
       selectedRoomId: initialRoom.id,
       rooms: [initialRoom],
-      details: {},
     };
   });
 
@@ -111,40 +105,6 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
     []
   );
 
-  const handleDetailsChanged = React.useCallback(
-    (
-      updatedDetails: (
-        oldDetails: Partial<HomeDetailsType>
-      ) => Partial<HomeDetailsType>
-    ) => {
-      setAssessment((assessment) => ({
-        ...assessment,
-        details: updatedDetails(assessment.details),
-      }));
-    },
-    []
-  );
-
-  const handleFormHasBeenCompleted = React.useCallback(() => {
-    setAssessment((assessment) => ({ ...assessment, step: "ASSESSMENT" }));
-  }, []);
-
-  const handleDetailsSummarySwitchToDetails = React.useCallback(() => {
-    setAssessment((assessment) => ({ ...assessment, step: "DETAILS" }));
-  }, []);
-
-  const transitions = useSlideTransition(step === "DETAILS" ? "in" : "out");
-
-  const detailsStepContent = (
-    <Box>
-      <HomeDetailsForm
-        details={details}
-        detailsChanged={handleDetailsChanged}
-        formHasBeenCompleted={handleFormHasBeenCompleted}
-      />
-    </Box>
-  );
-
   const assessmentStepContent = (
     <Box>
       <HomeRoomsStep
@@ -157,7 +117,6 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
         updateRoomQuestion={handleUpdateRoomQuestion}
         updateSelectedRoom={handleUpdateSelectedRoom}
         deleteRoom={handleDeleteRoom}
-        switchToDetailStep={handleDetailsSummarySwitchToDetails}
       />
     </Box>
   );
@@ -170,13 +129,7 @@ export const HomeAssessment: React.FC<Props> = ({ questions }) => {
         marginBottom="48pt"
         position="relative"
       >
-        {transitions.map(({ props, key }) => {
-          return (
-            <animated.div key={key} style={props}>
-              {step === "DETAILS" ? detailsStepContent : assessmentStepContent}
-            </animated.div>
-          );
-        })}
+        {assessmentStepContent}
       </Box>
     </RoomAssessmentQuestionsContext.Provider>
   );

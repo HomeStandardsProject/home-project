@@ -1,7 +1,7 @@
 import {
   Room,
   transformRoomTypeToLabel,
-} from "../../../interfaces/home-assessment";
+} from "../../../../interfaces/home-assessment";
 
 export type NormalizedRoom = Exclude<Room, "name"> & { name: string };
 

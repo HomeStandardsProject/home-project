@@ -7,7 +7,7 @@ import {
   RoomAssessmentQuestions,
   RoomAssessmentQuestionsContext,
 } from "./useRoomAssessmentQuestions";
-import { Room } from "../../../interfaces/home-assessment";
+import { Room } from "../../../../interfaces/home-assessment";
 
 const DEFAULT_QUESTIONS: RoomAssessmentQuestions = {
   ...INITIAL_VALUES,

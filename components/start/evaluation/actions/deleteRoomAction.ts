@@ -1,4 +1,4 @@
-import { HomeAssessmentData } from "../../../interfaces/home-assessment";
+import { HomeAssessmentData } from "../../../../interfaces/home-assessment";
 
 export function deleteRoomAction(
   assessment: HomeAssessmentData,
