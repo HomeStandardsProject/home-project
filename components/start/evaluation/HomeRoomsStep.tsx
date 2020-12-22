@@ -14,6 +14,7 @@ import { RoomsSideBar } from "./RoomsSideBar";
 import { useLayoutType } from "../hooks/useLayoutType";
 
 type Props = {
+  submissionId: string;
   details: Partial<HomeDetails>;
   rooms: NormalizedRoom[];
   selectedRoomId: string;
@@ -30,6 +31,7 @@ type Props = {
 };
 
 export const HomeRoomsStep: React.FC<Props> = ({
+  submissionId,
   details,
   rooms,
   selectedRoomId,
@@ -49,14 +51,17 @@ export const HomeRoomsStep: React.FC<Props> = ({
   const layoutType = useLayoutType();
 
   const handleGenerateReport = React.useCallback(async () => {
-    const { successful, errors } = await generateAssessment(rooms, details);
+    const { successful, errors } = await generateAssessment(
+      rooms,
+      submissionId
+    );
 
     if (successful) {
       router.push("/results");
     } else {
       errors.map((error) => toast({ description: error.msg, status: "error" }));
     }
-  }, [router, toast, generateAssessment, rooms, details]);
+  }, [router, toast, generateAssessment, rooms, submissionId]);
 
   const selectedRoom: Room = React.useMemo(() => {
     const matchingRoom = rooms.find((room) => room.id === selectedRoomId);

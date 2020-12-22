@@ -85,13 +85,12 @@ export class AirtableStore implements Datastore {
   }
 
   async saveHomeAssessmentInput(
-    submissionId: string,
     input: ApiHomeAssessmentInputWithRoomIds
   ): Promise<[boolean, Error | null]> {
     try {
       // save room data
       const transfomredRoomRows = transformInputToRoomRows(
-        submissionId,
+        input.submissionId,
         input
       ).map((row) => ({
         fields: row,
@@ -100,7 +99,7 @@ export class AirtableStore implements Datastore {
 
       // save room responses
       const transformedRoomResponses = transformInputToRoomResponses(
-        submissionId,
+        input.submissionId,
         input
       ).map((row) => ({
         fields: row,

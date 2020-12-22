@@ -2,7 +2,7 @@ import * as React from "react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { render, act, fireEvent, waitFor } from "@testing-library/react";
-import { HomeDetails } from "../../../../interfaces/home-assessment";
+
 import { NormalizedRoom } from "../helpers/normalizeRooms";
 import {
   API_HOME_ASSESSMENT_PATH,
@@ -22,22 +22,9 @@ const DEFAULT_ROOM: NormalizedRoom = {
   responses: {},
 };
 
-const DEFAULT_DETAIL: HomeDetails = {
-  landlord: "Frontenac Property Management",
-  rentalType: "Full house",
-  totalRent: "499.99",
-  address: {
-    userProvided: "99 University",
-    formatted: "99 University, Kingston, Ontario",
-    long: "0.00",
-    lat: "0.00",
-  },
-};
-
 const Component: React.FC<{
   rooms: NormalizedRoom[];
-  details: Partial<HomeDetails>;
-}> = ({ rooms, details }) => {
+}> = ({ rooms }) => {
   const {
     generatingAssessment,
     generateAssessment,
@@ -45,7 +32,7 @@ const Component: React.FC<{
   const [errors, setErrors] = React.useState<string[]>([]);
 
   const handleClick = async () => {
-    const { errors } = await generateAssessment(rooms, details);
+    const { errors } = await generateAssessment(rooms, "randomId");
     setErrors(errors.map((error) => error.msg));
   };
 
@@ -68,9 +55,7 @@ describe("useAssessmentCalculatorApi", () => {
   afterAll(() => server.close());
 
   it("transitions the loading state on generation", async () => {
-    const { getByText } = render(
-      <Component rooms={[DEFAULT_ROOM]} details={DEFAULT_DETAIL} />
-    );
+    const { getByText } = render(<Component rooms={[DEFAULT_ROOM]} />);
 
     expect(getByText("it is not loading")).toBeDefined();
     const button = getByText("Generate");
@@ -83,7 +68,7 @@ describe("useAssessmentCalculatorApi", () => {
 
   it("does not return any errors on 200", async () => {
     const { getByText, getByTestId } = render(
-      <Component rooms={[DEFAULT_ROOM]} details={DEFAULT_DETAIL} />
+      <Component rooms={[DEFAULT_ROOM]} />
     );
 
     expect(getByText("it is not loading")).toBeDefined();
@@ -98,9 +83,7 @@ describe("useAssessmentCalculatorApi", () => {
   });
 
   it("stores result in local storage on success", async () => {
-    const { getByText } = render(
-      <Component rooms={[DEFAULT_ROOM]} details={DEFAULT_DETAIL} />
-    );
+    const { getByText } = render(<Component rooms={[DEFAULT_ROOM]} />);
 
     const button = getByText("Generate");
     act(() => {
@@ -122,7 +105,7 @@ describe("useAssessmentCalculatorApi", () => {
     );
 
     const { getByText, getByTestId } = render(
-      <Component rooms={[DEFAULT_ROOM]} details={DEFAULT_DETAIL} />
+      <Component rooms={[DEFAULT_ROOM]} />
     );
 
     const button = getByText("Generate");
@@ -151,7 +134,7 @@ describe("useAssessmentCalculatorApi", () => {
     );
 
     const { getByText, getByTestId } = render(
-      <Component rooms={[DEFAULT_ROOM]} details={DEFAULT_DETAIL} />
+      <Component rooms={[DEFAULT_ROOM]} />
     );
 
     const button = getByText("Generate");

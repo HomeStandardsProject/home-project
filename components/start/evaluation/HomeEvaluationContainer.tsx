@@ -56,8 +56,14 @@ function HomeEvaluationContainer({ questions }: Props) {
     }
   }, [toast, error]);
 
-  if (data) {
-    return <HomeAssessment questions={questions} details={data} />;
+  if (data && submissionId) {
+    return (
+      <HomeAssessment
+        questions={questions}
+        details={data}
+        submissionId={submissionId}
+      />
+    );
   }
   return (
     <Stack padding="8pt" rounded="lg" bg="gray.100" marginTop="16pt">

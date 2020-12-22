@@ -12,7 +12,7 @@ export type ApiRoom = {
 };
 
 export interface ApiHomeAssessmentInput {
-  details: HomeDetails;
+  submissionId: string;
   rooms: ApiRoom[];
 }
 

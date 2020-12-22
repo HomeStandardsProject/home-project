@@ -23,6 +23,7 @@ import { RoomAssessmentQuestionsContext } from "./hooks/useRoomAssessmentQuestio
 import { HomeRoomsStep } from "./HomeRoomsStep";
 
 type Props = {
+  submissionId: string;
   details: HomeDetails;
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
 };
@@ -33,7 +34,11 @@ const generateDefaultRoom = (): Room => ({
   responses: {},
 });
 
-export const HomeAssessment: React.FC<Props> = ({ questions, details }) => {
+export const HomeAssessment: React.FC<Props> = ({
+  questions,
+  details,
+  submissionId,
+}) => {
   const [{ rooms, selectedRoomId }, setAssessment] = React.useState<
     HomeAssessmentData
   >(() => {
@@ -108,6 +113,7 @@ export const HomeAssessment: React.FC<Props> = ({ questions, details }) => {
   const assessmentStepContent = (
     <Box>
       <HomeRoomsStep
+        submissionId={submissionId}
         details={details}
         rooms={normalizedAndSortedRooms}
         selectedRoomId={selectedRoomId}

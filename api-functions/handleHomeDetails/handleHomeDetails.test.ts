@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
 import { createMocks } from "node-mocks-http";
-import { ApiHomeAssessmentInput } from "../../interfaces/api-home-assessment";
 
 import { MockDatastore } from "../datastore/MockDatastore";
 import { generateSetOfNullifiedFields } from "../utils/generateSetOfNullifiedFields";
@@ -15,7 +14,7 @@ import {
 
 jest.mock("uuid");
 
-const MOCK_DETAILS: ApiHomeAssessmentInput["details"] = {
+const MOCK_DETAILS: ApiHomeDetailsInput["details"] = {
   landlord: "Frontenac Property Management",
   rentalType: "Full house",
   totalRent: "499.99",

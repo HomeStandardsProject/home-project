@@ -48,12 +48,12 @@ export const Results: React.FC<Props> = ({ assessment }) => {
   );
 
   const isInline = layoutType === "desktop";
-
+  console.log(assessment);
   return (
     <Stack marginTop="16pt" marginBottom="16pt" spacing={4}>
       <Box>
         <Heading as="h4" color="gray.700" size="md">
-          {assessment.details.address}
+          {assessment.details.address.formatted}
         </Heading>
         <Stack isInline spacing={2}>
           <Tag size="sm" colorScheme="green">

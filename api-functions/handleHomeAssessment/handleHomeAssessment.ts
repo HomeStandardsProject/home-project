@@ -20,6 +20,7 @@ import { Datastore } from "../datastore/Datastore";
 
 const validateSchema = validateMiddleware(
   [
+    check("submissionId").isString(),
     check("rooms.*.name").isString(),
     check("rooms.*.type").isIn(ROOM_TYPES.map((i) => i)),
     check("rooms.*.responses").exists(),
@@ -44,6 +45,14 @@ export async function handleHomeAssessment(
       return res.status(400).json({ errors: validationErrors.array() });
 
     const input = req.body as ApiHomeAssessmentInput;
+
+    const [details, error] = await datastore.fetchHomeDetailsById(
+      input.submissionId
+    );
+    if (!details || error)
+      return res
+        .status(400)
+        .send({ errors: [{ msg: "invalid submission id" }] });
 
     const promptValidationErrors = input.rooms
       .map((room) =>
@@ -70,12 +79,11 @@ export async function handleHomeAssessment(
       }
     );
 
-    const submissionId = uuidv4();
     const [
       inputSaveResult,
       inputSaveError,
-    ] = await datastore.saveHomeAssessmentInput(submissionId, {
-      details: input.details,
+    ] = await datastore.saveHomeAssessmentInput({
+      submissionId: input.submissionId,
       rooms: inputRoomsWithId,
     });
 
@@ -88,14 +96,15 @@ export async function handleHomeAssessment(
 
     const result: ApiHomeAssessmentResult = {
       rooms,
-      details: input.details,
+      details,
       generatedDate: new Date(),
     };
 
     const [
       violationsSaveResult,
       violationsSaveError,
-    ] = await datastore.saveHomeAssessmentResult(submissionId, result);
+    ] = await datastore.saveHomeAssessmentResult(input.submissionId, result);
+
     if (violationsSaveResult === false) {
       console.error(violationsSaveError);
       return res

@@ -6,7 +6,6 @@ import { HomeDetails } from "../../interfaces/home-assessment";
 
 export interface Datastore {
   saveHomeAssessmentInput: (
-    submissionId: string,
     input: ApiHomeAssessmentInputWithRoomIds
   ) => Promise<[boolean, Error | null]>;
   saveHomeDetails: (

@@ -79,7 +79,7 @@ export const AssessmentPDF = ({
         <Text style={styles.generatedDate}>{generatedDate}</Text>
         <View style={styles.detailsSection}>
           <Text style={styles.h2}>
-            {result.details.address}{" "}
+            {result.details.address.formatted}{" "}
             {result.details.unitNumber
               ? `(Unit ${result.details.unitNumber})`
               : ``}

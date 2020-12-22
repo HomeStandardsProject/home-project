@@ -5,10 +5,7 @@ import {
   ApiRoom,
   ApiRoomAssessmentQuestionResponse,
 } from "../../../../interfaces/api-home-assessment";
-import {
-  HomeDetails,
-  RoomAssessmentQuestionResponse,
-} from "../../../../interfaces/home-assessment";
+import { RoomAssessmentQuestionResponse } from "../../../../interfaces/home-assessment";
 import { LOCAL_STORAGE_SUBMISSION_ID_KEY } from "../../hooks/useHomeDetailsApi";
 import { NormalizedRoom } from "../helpers/normalizeRooms";
 
@@ -30,7 +27,7 @@ export function useAssessmentCalculatorApi() {
   const [loading, setLoading] = React.useState(false);
 
   const generateAssessment = React.useCallback(
-    async (rooms: NormalizedRoom[], details: Partial<HomeDetails>) => {
+    async (rooms: NormalizedRoom[], submissionId: string) => {
       const apiRooms = rooms.map(
         (room): ApiRoom => ({
           name: room.name,
@@ -39,22 +36,13 @@ export function useAssessmentCalculatorApi() {
         })
       );
 
-      const apiDetails: HomeDetails = {
-        address: returnValueOrThrowError({ address: details.address }),
-        unitNumber: details.unitNumber,
-        rentalType: returnValueOrThrowError({ rentalType: details.rentalType }),
-        totalRent: returnValueOrThrowError({ totalRent: details.totalRent }),
-        landlord: returnValueOrThrowError({ landlord: details.landlord }),
-        landlordOther: details.landlordOther,
-      };
-
       setLoading(true);
       const errors: ResponseError[] = [];
       let successful = false;
       try {
         const response = await generateAssessmentPostRequest({
+          submissionId,
           rooms: apiRooms,
-          details: apiDetails,
         });
         const responseBody = (await response.json()) as {
           [key: string]: unknown;
