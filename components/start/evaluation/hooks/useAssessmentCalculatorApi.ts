@@ -9,6 +9,7 @@ import {
   HomeDetails,
   RoomAssessmentQuestionResponse,
 } from "../../../../interfaces/home-assessment";
+import { LOCAL_STORAGE_SUBMISSION_ID_KEY } from "../../hooks/useHomeDetailsApi";
 import { NormalizedRoom } from "../helpers/normalizeRooms";
 
 export const API_HOME_ASSESSMENT_PATH = "/api/home-assessment";
@@ -60,6 +61,7 @@ export function useAssessmentCalculatorApi() {
         };
 
         if (response.status === 200) {
+          localStorage.removeItem(LOCAL_STORAGE_SUBMISSION_ID_KEY);
           localStorage.setItem(
             LOCAL_STORAGE_ASSESSMENT_KEY,
             JSON.stringify(responseBody)

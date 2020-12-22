@@ -4,7 +4,8 @@ import Airtable from "airtable";
 import { AirtableStore } from "../../../api-functions/datastore/Airtable";
 import { Datastore } from "../../../api-functions/datastore/Datastore";
 import { MockDatastore } from "../../../api-functions/datastore/MockDatastore";
-import { UNKNOWN_ERROR } from "../../../utils/apiErrors";
+
+import handleHomeDetailsBySubmissionId from "../../../api-functions/handleHomeDetailsBySubmissionId/handleHomeDetailsBySubmissionId";
 
 Airtable.configure({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -24,28 +25,7 @@ async function homeDetailsBySubmisionId(
     console.warn("Airtable base not provided, defaulting to mock datastore");
     datastore = new MockDatastore();
   }
-  const { submissionId } = req.query;
-  if (!submissionId || typeof submissionId !== "string") {
-    return res.status(400).end();
-  }
-
-  const [retrievedHomeDetails, error] = await datastore.fetchHomeDetailsById(
-    submissionId
-  );
-
-  // 5 minute cache
-  res.setHeader("Cache-Control", "max-age=1, stale-while-revalidate=300");
-
-  if (retrievedHomeDetails) {
-    return res.status(200).json(retrievedHomeDetails);
-  }
-
-  if (error === UNKNOWN_ERROR) {
-    res.status(500);
-  } else {
-    res.status(400);
-  }
-  return res.json({ errors: [{ msg: error?.message }] });
+  return handleHomeDetailsBySubmissionId(req, res, datastore);
 }
 
 export default homeDetailsBySubmisionId;

@@ -6,15 +6,13 @@ import {
   RoomAssessmentQuestion,
   RoomTypes,
 } from "../../../interfaces/home-assessment";
+import { fetcher } from "../../../utils/fetcher";
 import { LOCAL_STORAGE_SUBMISSION_ID_KEY } from "../hooks/useHomeDetailsApi";
 import { HomeAssessment } from "./HomeAssessment";
 
 type Props = {
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
 };
-
-// @ts-ignore argument spreading isn't playing nice with fetch
-const fetcher = (...args: any[]) => fetch(...args).then((res) => res.json());
 
 function HomeEvaluationContainer({ questions }: Props) {
   const [submissionId, setSubmissionId] = React.useState<

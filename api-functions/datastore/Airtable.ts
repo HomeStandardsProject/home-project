@@ -11,7 +11,10 @@ import { Datastore } from "./Datastore";
 
 type AirtableSubmissionRow = {
   id: string;
-  address: string;
+  userProvidedAddress: string;
+  formattedAddress: string;
+  long: string;
+  lat: string;
   unitNumber?: string;
   rentalType: string;
   totalRent: number;
@@ -58,7 +61,7 @@ export class AirtableStore implements Datastore {
         .all();
 
       if (val.length > 0) {
-        return [val[0].fields, null];
+        return [transformHomeDetailsAirtableRow(val[0].fields), null];
       }
       return [null, new Error("submission id does not exist")];
     } catch (error) {
@@ -214,12 +217,33 @@ function transformHomeDetailsToRow(
 ): AirtableSubmissionRow {
   return {
     id,
-    address: details.address,
+    userProvidedAddress: details.address.userProvided,
+    formattedAddress: details.address.formatted,
+    long: details.address.long,
+    lat: details.address.lat,
     unitNumber: details.unitNumber,
     rentalType: details.rentalType,
     totalRent: parseFloat(details.totalRent),
     landlord: details.landlord,
     landlordOther: details.landlordOther,
+  };
+}
+
+function transformHomeDetailsAirtableRow(
+  row: AirtableSubmissionRow
+): HomeDetails {
+  return {
+    address: {
+      userProvided: row.userProvidedAddress,
+      formatted: row.formattedAddress,
+      long: row.long,
+      lat: row.lat,
+    },
+    unitNumber: row.unitNumber,
+    rentalType: row.rentalType as HomeDetails["rentalType"],
+    totalRent: `${row.totalRent}`,
+    landlord: row.landlord,
+    landlordOther: row.landlordOther,
   };
 }
 

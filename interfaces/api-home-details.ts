@@ -7,3 +7,15 @@ export type ApiHomeDetailsInput = {
 export type ApiHomeDetailsResult = {
   submissionId: string;
 };
+
+export type ApiHomeDetailsLocationInput = {
+  query: string;
+};
+
+export type ApiHomeDetailsLocationResult = {
+  matches: {
+    address: string;
+    long: string;
+    lat: string;
+  }[];
+};

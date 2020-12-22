@@ -22,6 +22,7 @@ function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
     console.warn("Airtable base not provided, defaulting to mock datastore");
     datastore = new MockDatastore();
   }
+
   return handleHomeDetails(req, res, datastore);
 }
 

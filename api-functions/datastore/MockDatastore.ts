@@ -28,7 +28,12 @@ export class MockDatastore implements Datastore {
     return new Promise((resolve) => {
       resolve([
         {
-          address: "Fake Address",
+          address: {
+            userProvided: "Fake Address",
+            formatted: "Fake Address, Kingston, ON",
+            long: "0.00",
+            lat: "0.00",
+          },
           rentalType: "Apartment",
           landlord: "Frontenac Property Management",
           totalRent: "900.0",

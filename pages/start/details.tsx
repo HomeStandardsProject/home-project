@@ -1,7 +1,8 @@
+import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import Layout from "../../components/Layout";
-import { HomeAssessmentDetails } from "../../components/start/HomeAssessmentDetails";
+import { HomeAssessmentDetails } from "../../components/start/details/HomeAssessmentDetails";
 
 import { useHomeDetailsApi } from "../../components/start/hooks/useHomeDetailsApi";
 import { HomeDetails } from "../../interfaces/home-assessment";
@@ -9,12 +10,20 @@ import { HomeDetails } from "../../interfaces/home-assessment";
 function AssessmentDetails() {
   const { loading, submitHomeDetails } = useHomeDetailsApi();
   const router = useRouter();
+  const toast = useToast();
 
   const handleSubmitDetails = async (details: HomeDetails) => {
-    const { successful } = await submitHomeDetails(details);
+    const { successful, errors } = await submitHomeDetails(details);
     if (successful) {
       router.push("/start/evaluation");
     }
+
+    errors.forEach((error) =>
+      toast({
+        status: "error",
+        description: error.msg,
+      })
+    );
   };
 
   return (

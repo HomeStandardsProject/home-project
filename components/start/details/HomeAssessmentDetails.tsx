@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -20,11 +19,12 @@ import {
   HomeDetails as HomeDetailsType,
   RentalType,
   RENTAL_TYPES,
-} from "../../interfaces/home-assessment";
-import { setAsUndefinedInsteadOfEmptyString } from "./helpers/setAsUndefinedInsteadOfEmptyString";
-import { validateHomeDetailsForm } from "./helpers/validateHomeDetailsForm";
-import { validatePrice } from "./helpers/validatePrice";
-import { useLayoutType } from "./hooks/useLayoutType";
+} from "../../../interfaces/home-assessment";
+import { setAsUndefinedInsteadOfEmptyString } from "../helpers/setAsUndefinedInsteadOfEmptyString";
+import { validateHomeDetailsForm } from "../helpers/validateHomeDetailsForm";
+import { validatePrice } from "../helpers/validatePrice";
+
+import { AddressSelector } from "./AddressSelector";
 
 type Props = {
   loading: boolean;
@@ -37,16 +37,12 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
 }) => {
   const [details, setDetails] = React.useState<Partial<HomeDetailsType>>({});
   const [showValidationErrors, setShowValidationErrors] = React.useState(false);
-  const layoutType = useLayoutType();
 
   const handleAddressChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const {
-        target: { value },
-      } = event;
+    (newAddress: HomeDetailsType["address"] | undefined) => {
       setDetails((details) => ({
         ...details,
-        address: setAsUndefinedInsteadOfEmptyString(value),
+        address: newAddress,
       }));
     },
     []
@@ -168,112 +164,100 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
     ]
   );
 
-  const isInline = layoutType === "desktop";
-
   return (
-    <Stack padding="4pt" marginTop="16pt">
-      <Heading as="h3" size="xs" textTransform="uppercase" marginBottom="8pt">
-        Details
-      </Heading>
-      <Stack isInline={isInline}>
-        <FormControl
-          flexBasis={"100%"}
-          isInvalid={!details.address && showValidationErrors}
-          isRequired={true}
-        >
-          <FormLabel fontSize="sm">Address</FormLabel>
-          <Input
-            placeholder={"100 University Avenue"}
-            aria-describedby="address"
-            size="md"
-            value={details.address ?? ""}
-            onChange={handleAddressChange}
+    <Box width="100%" alignItems="center">
+      <Stack padding="4pt" marginTop="16pt" maxWidth="800px">
+        <Heading as="h3" size="xs" textTransform="uppercase" marginBottom="8pt">
+          Details
+        </Heading>
+        <Stack>
+          <AddressSelector
+            validatedAddress={details.address?.formatted}
+            setValidatedAddress={handleAddressChange}
+            showValidationErrors={showValidationErrors}
           />
-          <FormErrorMessage>Please enter a valid address</FormErrorMessage>
-        </FormControl>
-        <FormControl flexBasis={"10%"}>
-          <FormLabel fontSize="sm">Unit #</FormLabel>
-          <Input
-            placeholder={"3"}
-            aria-describedby="unit number"
-            size="md"
-            value={details.unitNumber ?? ""}
-            onChange={handleUnitNumberChange}
-          />
-        </FormControl>
-        <FormControl
-          flexBasis="30%"
-          minW={"265px"}
-          isInvalid={!details.rentalType && showValidationErrors}
-          isRequired={true}
-        >
-          <FormLabel fontSize="sm">Rental Type</FormLabel>
-          <Select
-            placeholder="Select option"
-            size="md"
-            value={details.rentalType}
-            onChange={handleRentalTypeChange}
-          >
-            {RENTAL_TYPES.map((houseType) => (
-              <option key={houseType} value={houseType}>
-                {houseType}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
-      </Stack>
-      <Stack isInline={isInline}>
-        <FormControl isInvalid={!isTotalRentValid} isRequired={true}>
-          <FormLabel fontSize="sm">Total Rent cost</FormLabel>
-          <InputGroup>
-            <InputLeftElement color="gray.300">$</InputLeftElement>
+          <FormControl flexBasis={"10%"}>
+            <FormLabel fontSize="sm">Unit #</FormLabel>
             <Input
-              placeholder="Enter amount"
-              value={details.totalRent ?? ""}
-              onChange={handleRentPriceChange}
+              placeholder={"3"}
+              aria-describedby="unit number"
+              size="md"
+              value={details.unitNumber ?? ""}
+              onChange={handleUnitNumberChange}
             />
-            <InputRightElement>
-              {details.totalRent && isTotalRentValid ? (
-                <CheckIcon color="green.500" />
-              ) : null}
-              {details.totalRent && !isTotalRentValid ? (
-                <NotAllowedIcon color="red.500" />
-              ) : null}
-            </InputRightElement>
-          </InputGroup>
-        </FormControl>
-        <FormControl
-          flexBasis={"40%"}
-          isRequired={true}
-          isInvalid={!details.landlord && showValidationErrors}
-        >
-          <FormLabel fontSize="sm">Landlord</FormLabel>
-          <Select
-            placeholder="Select option"
-            size="md"
-            value={details.landlord}
-            onChange={handleLandlordChange}
+          </FormControl>
+          <FormControl
+            flexBasis="30%"
+            minW={"265px"}
+            isInvalid={!details.rentalType && showValidationErrors}
+            isRequired={true}
           >
-            {LANDLORDS.map((landlord) => (
-              <option key={landlord} value={landlord}>
-                {landlord}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
-        {otherLandlordField}
+            <FormLabel fontSize="sm">Rental Type</FormLabel>
+            <Select
+              placeholder="Select option"
+              size="md"
+              value={details.rentalType}
+              onChange={handleRentalTypeChange}
+            >
+              {RENTAL_TYPES.map((houseType) => (
+                <option key={houseType} value={houseType}>
+                  {houseType}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl isInvalid={!isTotalRentValid} isRequired={true}>
+            <FormLabel fontSize="sm">Total Rent cost</FormLabel>
+            <InputGroup>
+              <InputLeftElement color="gray.300">$</InputLeftElement>
+              <Input
+                placeholder="Enter amount"
+                value={details.totalRent ?? ""}
+                onChange={handleRentPriceChange}
+              />
+              <InputRightElement>
+                {details.totalRent && isTotalRentValid ? (
+                  <CheckIcon color="green.500" />
+                ) : null}
+                {details.totalRent && !isTotalRentValid ? (
+                  <NotAllowedIcon color="red.500" />
+                ) : null}
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
+          <FormControl
+            flexBasis={"40%"}
+            isRequired={true}
+            isInvalid={!details.landlord && showValidationErrors}
+          >
+            <FormLabel fontSize="sm">Landlord</FormLabel>
+            <Select
+              placeholder="Select option"
+              size="md"
+              value={details.landlord}
+              onChange={handleLandlordChange}
+            >
+              {LANDLORDS.map((landlord) => (
+                <option key={landlord} value={landlord}>
+                  {landlord}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          {otherLandlordField}
+        </Stack>
+        <Box>
+          <Button
+            colorScheme="green"
+            size="sm"
+            marginTop={"16pt"}
+            onClick={handleNextButtonClick}
+            isLoading={loading}
+          >
+            Next
+          </Button>
+        </Box>
       </Stack>
-      <Box>
-        <Button
-          colorScheme="green"
-          size="sm"
-          marginTop={"16pt"}
-          onClick={handleNextButtonClick}
-          isLoading={loading}
-        >
-          Next
-        </Button>
-      </Box>
-    </Stack>
+    </Box>
   );
 };

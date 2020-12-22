@@ -19,7 +19,12 @@ const MOCK_DETAILS: ApiHomeAssessmentInput["details"] = {
   landlord: "Frontenac Property Management",
   rentalType: "Full house",
   totalRent: "499.99",
-  address: "99 University Ave, Kingston, ON",
+  address: {
+    userProvided: "99 University",
+    formatted: "99 University, Kingston, Ontario",
+    long: "0.00",
+    lat: "0.00",
+  },
 };
 
 const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeDetailsInput> = {

@@ -3,8 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import { check, validationResult } from "express-validator";
 import {
   ROOM_TYPES,
-  RENTAL_TYPES,
-  LANDLORDS,
   AllRoomAssessmentQuestion,
   RoomTypes,
 } from "../../interfaces/home-assessment";
@@ -22,24 +20,6 @@ import { Datastore } from "../datastore/Datastore";
 
 const validateSchema = validateMiddleware(
   [
-    check("details.address").isString(),
-    // .map is a workaround to a typescript readonly issue
-    check("details.rentalType").isIn(RENTAL_TYPES.map((i) => i)),
-    check("details.totalRent").isCurrency({ allow_negatives: false }),
-    check("details.landlord").isIn(LANDLORDS.map((i) => i)),
-    check("details.landlordOther")
-      // if the landlord is set to other, then the value for this field must be defined
-      .custom((value, { req }) => {
-        if (req.body.details.landlord === "Other") {
-          if (value && typeof value === "string") {
-            return true;
-          }
-          throw new Error(
-            "landlordOther must be defined when landlord is set to 'Other'"
-          );
-        }
-        return true;
-      }),
     check("rooms.*.name").isString(),
     check("rooms.*.type").isIn(ROOM_TYPES.map((i) => i)),
     check("rooms.*.responses").exists(),

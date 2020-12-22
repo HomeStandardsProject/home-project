@@ -24,7 +24,7 @@ export const HomeDetailsSummary: React.FC<Props> = ({ details }) => {
       <Stack spacing={0}>
         <Stack isInline={isDesktop} spacing={isDesktop ? 4 : 0}>
           <Text as="b" color="gray.800">
-            {details.address}
+            {details.address?.formatted ?? ""}
           </Text>
           <Stack spacing={2} isInline>
             <Tag size="sm" colorScheme="green" variant="outline">

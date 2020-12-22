@@ -68,7 +68,12 @@ const MOCK_DETAILS: ApiHomeAssessmentInput["details"] = {
   landlord: "Frontenac Property Management",
   rentalType: "Full house",
   totalRent: "499.99",
-  address: "99 University Ave, Kingston, ON",
+  address: {
+    userProvided: "99 University",
+    formatted: "99 University, Kingston, Ontario",
+    long: "0.00",
+    lat: "0.00",
+  },
 };
 
 const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput> = {
@@ -153,54 +158,6 @@ describe("/api/home-assessment", () => {
       errors: [
         { msg: "question with id 3 is left unanswered for type BED" },
         { msg: "question with id 4 is left unanswered for type BED" },
-      ],
-    });
-  });
-
-  it("returns 400 when rent price is negative", async () => {
-    const { req, res } = createMocks({
-      method: "POST",
-      body: {
-        details: { ...MOCK_DETAILS, totalRent: "-9.99" },
-        rooms: [],
-      },
-    });
-
-    await testHandleHomeAssessment(req, res);
-
-    expect(res._getStatusCode()).toEqual(400);
-    expect(JSON.parse(res._getData())).toEqual({
-      errors: [
-        {
-          location: "body",
-          msg: "Invalid value",
-          param: "details.totalRent",
-          value: "-9.99",
-        },
-      ],
-    });
-  });
-
-  it("returns 400 when landlord other is not defined", async () => {
-    const { req, res } = createMocks({
-      method: "POST",
-      body: {
-        details: { ...MOCK_DETAILS, landlord: "Other", landlordOther: null },
-        rooms: [],
-      },
-    });
-
-    await testHandleHomeAssessment(req, res);
-
-    expect(res._getStatusCode()).toEqual(400);
-    expect(JSON.parse(res._getData())).toEqual({
-      errors: [
-        {
-          location: "body",
-          msg: "landlordOther must be defined when landlord is set to 'Other'",
-          param: "details.landlordOther",
-          value: null,
-        },
       ],
     });
   });

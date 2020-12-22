@@ -12,7 +12,10 @@ import { Datastore } from "../datastore/Datastore";
 
 const validateSchema = validateMiddleware(
   [
-    check("details.address").isString(),
+    check("details.address.userProvided").isString(),
+    check("details.address.formatted").isString(),
+    check("details.address.long").isString(),
+    check("details.address.lat").isString(),
     // .map is a workaround to a typescript readonly issue
     check("details.rentalType").isIn(RENTAL_TYPES.map((i) => i)),
     check("details.totalRent").isCurrency({ allow_negatives: false }),
