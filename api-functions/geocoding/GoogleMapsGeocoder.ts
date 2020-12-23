@@ -31,12 +31,11 @@ export class GoogleMapsGeocoder implements Geocoder {
     const queryParams = {
       input: query.replace(" ", "+"),
       inputtype: "textquery",
-      locationbias: `point:${biasLat},${biasLong}`,
-      radius,
+      locationbias: `circle:${radius}@${biasLat},${biasLong}`,
       fields: "geometry,formatted_address",
       key: this.apiKey,
     };
-
+    console.log(constructURL(baseUrl, queryParams));
     const response = await fetch(constructURL(baseUrl, queryParams), {
       method: "GET",
       headers: {

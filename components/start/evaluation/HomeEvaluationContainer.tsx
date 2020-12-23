@@ -1,4 +1,4 @@
-import { Skeleton, Stack, useToast } from "@chakra-ui/react";
+import { Box, Skeleton, Stack, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import * as React from "react";
 import useSWR from "swr";
@@ -8,13 +8,13 @@ import {
 } from "../../../interfaces/home-assessment";
 import { fetcher } from "../../../utils/fetcher";
 import { LOCAL_STORAGE_SUBMISSION_ID_KEY } from "../hooks/useHomeDetailsApi";
-import { HomeAssessment } from "./HomeAssessment";
+import { HomeEvaluation } from "./HomeEvaluation";
 
 type Props = {
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
 };
 
-function HomeEvaluationContainer({ questions }: Props) {
+export function HomeEvaluationContainer({ questions }: Props) {
   const [submissionId, setSubmissionId] = React.useState<
     string | undefined | null
   >(undefined);
@@ -56,21 +56,26 @@ function HomeEvaluationContainer({ questions }: Props) {
     }
   }, [toast, error]);
 
-  if (data && submissionId) {
-    return (
-      <HomeAssessment
-        questions={questions}
-        details={data}
-        submissionId={submissionId}
-      />
-    );
-  }
   return (
-    <Stack padding="8pt" rounded="lg" bg="gray.100" marginTop="16pt">
-      <Skeleton height="20px" />
-      <Skeleton height="20px" />
-    </Stack>
+    <Box
+      minHeight="100vh"
+      padding="24pt"
+      paddingTop="0pt"
+      boxSizing="border-box"
+      width="100%"
+    >
+      {data && submissionId ? (
+        <HomeEvaluation
+          questions={questions}
+          details={data}
+          submissionId={submissionId}
+        />
+      ) : (
+        <Stack paddingTop="8pt">
+          <Skeleton height="15px" />
+          <Skeleton height="15px" />
+        </Stack>
+      )}
+    </Box>
   );
 }
-
-export default HomeEvaluationContainer;

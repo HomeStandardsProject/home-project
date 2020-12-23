@@ -5,9 +5,14 @@ import {
   ApiRoom,
   ApiRoomAssessmentQuestionResponse,
 } from "../../../../interfaces/api-home-assessment";
-import { RoomAssessmentQuestionResponse } from "../../../../interfaces/home-assessment";
+import {
+  isGeneralRoomType,
+  Room,
+  RoomAssessmentQuestionResponse,
+} from "../../../../interfaces/home-assessment";
+import { normalizeRoomNames } from "../../evaluation/helpers/normalizeRooms";
+import { handleApiResponse } from "../../helpers/handleApiResponse";
 import { LOCAL_STORAGE_SUBMISSION_ID_KEY } from "../../hooks/useHomeDetailsApi";
-import { NormalizedRoom } from "../helpers/normalizeRooms";
 
 export const API_HOME_ASSESSMENT_PATH = "/api/home-assessment";
 export const LOCAL_STORAGE_ASSESSMENT_KEY = "assessment";
@@ -22,61 +27,48 @@ function generateAssessmentPostRequest(inputs: ApiHomeAssessmentInput) {
   });
 }
 
-type ResponseError = { msg: string };
 export function useAssessmentCalculatorApi() {
   const [loading, setLoading] = React.useState(false);
 
   const generateAssessment = React.useCallback(
-    async (rooms: NormalizedRoom[], submissionId: string) => {
-      const apiRooms = rooms.map(
-        (room): ApiRoom => ({
-          name: room.name,
-          responses: transformResponseToTypesafeDefined(room.responses),
-          type: room.type,
-        })
-      );
-
+    async (rooms: Room[], submissionId: string) => {
       setLoading(true);
-      const errors: ResponseError[] = [];
-      let successful = false;
-      try {
-        const response = await generateAssessmentPostRequest({
-          submissionId,
-          rooms: apiRooms,
-        });
-        const responseBody = (await response.json()) as {
-          [key: string]: unknown;
-        };
 
-        if (response.status === 200) {
-          localStorage.removeItem(LOCAL_STORAGE_SUBMISSION_ID_KEY);
-          localStorage.setItem(
-            LOCAL_STORAGE_ASSESSMENT_KEY,
-            JSON.stringify(responseBody)
-          );
-          successful = true;
-        } else if (
-          "errors" in responseBody &&
-          Array.isArray(responseBody.errors)
-        ) {
-          const validatedErrors: ResponseError[] = [];
-          for (const error of responseBody.errors) {
-            if (error && typeof error === "object" && "msg" in error) {
-              validatedErrors.push(error);
-            } else {
-              console.error("Unable to parse error", error);
+      const apiRooms = normalizeRoomNames(rooms)
+        .filter((room) => {
+          // remove general rooms that were not answered
+          if (isGeneralRoomType(room.type) && room.responses) {
+            if (Object.keys(room.responses).length === 0) {
+              return false;
             }
           }
-          errors.push(...validatedErrors);
-        } else {
-          console.error(responseBody);
-          errors.push({ msg: "An unknown error occurred..." });
-        }
-      } catch (error) {
-        console.error(error);
-        errors.push({ msg: "An unknown error occurred..." });
+          return true;
+        })
+        .map(
+          (room): ApiRoom => ({
+            name: room.name,
+            responses: transformResponseToTypesafeDefined(room.responses),
+            type: room.type,
+          })
+        );
+
+      const request = generateAssessmentPostRequest({
+        submissionId,
+        rooms: apiRooms,
+      });
+      const { errors, successful, responseBody } = await handleApiResponse(
+        request
+      );
+
+      if (successful) {
+        localStorage.removeItem(LOCAL_STORAGE_SUBMISSION_ID_KEY);
+        localStorage.setItem(
+          LOCAL_STORAGE_ASSESSMENT_KEY,
+          JSON.stringify(responseBody)
+        );
       }
       setLoading(false);
+
       return { errors, successful };
     },
     []

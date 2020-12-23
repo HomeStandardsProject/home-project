@@ -5,6 +5,7 @@ import {
   ROOM_TYPES,
   AllRoomAssessmentQuestion,
   RoomTypes,
+  isGeneralRoomType,
 } from "../../interfaces/home-assessment";
 import { validateMiddleware } from "../utils/validation";
 import {
@@ -123,6 +124,9 @@ function validateAllPromptsAreAnswered(
   responses: { [questionId: string]: ApiRoomAssessmentQuestionResponse },
   questions: AllRoomAssessmentQuestion
 ) {
+  // general room type questions are optional
+  if (isGeneralRoomType(type)) return null;
+
   const validationErrors = [];
   const questionsForType = questions[type];
   for (const question of questionsForType) {

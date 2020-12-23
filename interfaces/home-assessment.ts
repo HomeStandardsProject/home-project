@@ -22,6 +22,7 @@ export const ROOM_TYPES = [
   "EXTERIOR",
   "HEATING",
 ] as const;
+export const GENERAL_ROOM_TYPES = ["ENTRANCE", "HEATING", "EXTERIOR"] as const;
 export type RoomTypes = typeof ROOM_TYPES[number];
 export type Room = {
   id: string;
@@ -29,6 +30,18 @@ export type Room = {
   type: RoomTypes;
   responses: { [id: string]: RoomAssessmentQuestionResponse };
 };
+
+type GeneralRoomType = typeof GENERAL_ROOM_TYPES[number];
+export function isGeneralRoomType(type: RoomTypes): type is GeneralRoomType {
+  for (const generalType of GENERAL_ROOM_TYPES) {
+    if (generalType === type) return true;
+  }
+  return false;
+}
+
+export const NON_GENERAL_ROOM_TYPES = ROOM_TYPES.filter(
+  (type) => !isGeneralRoomType(type)
+);
 
 export function transformRoomTypeToLabel(type: Room["type"]) {
   switch (type) {
@@ -49,6 +62,20 @@ export function transformRoomTypeToLabel(type: Room["type"]) {
     default:
       throw new Error("unknown room type");
   }
+}
+
+export function placeholderBasedOnType(type: Room["type"]) {
+  const label: { [key in Room["type"]]: string } = {
+    BED: "Finley's Room",
+    LIVING: "Upstairs living room",
+    WASH: "Main washroom",
+    KITCHEN: "Kitchen",
+    ENTRANCE: "Main Entrance",
+    EXTERIOR: "Exterior",
+    HEATING: "Heating",
+  };
+
+  return label[type];
 }
 
 const SORTED_LANDLORDS = [
@@ -90,4 +117,10 @@ export type HomeDetails = {
 export type HomeAssessmentData = {
   selectedRoomId: string;
   rooms: Room[];
+};
+
+export type HomeEvaluationData = {
+  selectedRoomId: string;
+  rooms: Room[];
+  step: "general" | "rooms";
 };

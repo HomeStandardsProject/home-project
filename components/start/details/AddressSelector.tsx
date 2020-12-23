@@ -59,9 +59,11 @@ export function AddressSelector({
   );
 
   React.useEffect(() => {
-    fetchMachingLocations(debouncedUnvalidatedAddress).then((result) => {
-      setSearchMatches(result.locationResults.matches);
-    });
+    if (debouncedUnvalidatedAddress) {
+      fetchMachingLocations(debouncedUnvalidatedAddress).then((result) => {
+        setSearchMatches(result.locationResults.matches);
+      });
+    }
   }, [fetchMachingLocations, debouncedUnvalidatedAddress]);
 
   return (
@@ -72,7 +74,7 @@ export function AddressSelector({
       <FormLabel fontSize="sm">Address</FormLabel>
       <FormErrorMessage>Please select a valid address</FormErrorMessage>
       <Box borderColor="#E2E8F0" borderWidth="1px" borderRadius="lg">
-        <Stack isInline padding="0.5rem 1rem">
+        <Stack isInline padding="0.5rem 1rem" align="center">
           <Input
             placeholder={"100 University Avenue"}
             aria-describedby="address"

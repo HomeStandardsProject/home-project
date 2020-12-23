@@ -1,4 +1,3 @@
-import { INITIAL_VALUES as INITIAL_ROOMS_VALUES } from "../components/start/evaluation/hooks/useRoomAssessmentQuestions";
 import QuestionsData from "../data/kingston/questions.json";
 import {
   AllRoomAssessmentQuestion,
@@ -13,6 +12,15 @@ type QuestionInput = {
   promptForDescriptionOn: string;
 };
 
+export const INITIAL_VALUES_QUESTIONS_VALUES: AllRoomAssessmentQuestion = ROOM_TYPES.reduce(
+  (result, newValue) => {
+    const newResult = result;
+    newResult[newValue] = [];
+    return newResult;
+  },
+  {} as AllRoomAssessmentQuestion
+);
+
 export const ERRORS = {
   DUPLICATE_QUESTION_ID: (id: string | number) =>
     new Error(`Failed to transform, question ID ${id} already exist.`),
@@ -25,7 +33,9 @@ export const ERRORS = {
 export function loadQuestionsFromData(questions: QuestionInput[]) {
   // Empty map where each room type is a "bucket" and we'll fill them
   // up based on the input questions.
-  const roomBuckets: AllRoomAssessmentQuestion = { ...INITIAL_ROOMS_VALUES };
+  const roomBuckets: AllRoomAssessmentQuestion = {
+    ...INITIAL_VALUES_QUESTIONS_VALUES,
+  };
   // array to ensure there are no duplicate ids
   const pastQuestionIds: number[] = [];
 

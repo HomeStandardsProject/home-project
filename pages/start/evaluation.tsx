@@ -1,8 +1,7 @@
 import { GetStaticProps } from "next";
 import * as React from "react";
+import { HomeEvaluationContainer } from "../../components/start/evaluation/HomeEvaluationContainer";
 
-import Layout from "../../components/Layout";
-import HomeEvaluationContainer from "../../components/start/evaluation/HomeEvaluationContainer";
 import {
   RoomAssessmentQuestion,
   RoomTypes,
@@ -15,14 +14,7 @@ type Props = {
 };
 
 const Evaluation: React.FC<Props> = ({ questions }) => {
-  return (
-    <Layout
-      title="Evaluation"
-      description="Free home assessment: see if your Kingston student housing situation is in breach of any housing bylaws."
-    >
-      <HomeEvaluationContainer questions={questions} />
-    </Layout>
-  );
+  return <HomeEvaluationContainer questions={questions} />;
 };
 
 export const getStaticProps: GetStaticProps = async () => {
