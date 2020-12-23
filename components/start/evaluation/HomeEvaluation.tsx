@@ -102,15 +102,15 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
             marginBottom="16pt"
             borderBottom="1px solid"
             borderColor="gray.100"
-            padding="0.5rem"
             bg="#f7fafc"
-            right={"16pt"}
-            left={"16pt"}
-            position={"fixed"}
-            zIndex={"100"}
+            right="16pt"
+            left="16pt"
+            position="fixed"
+            zIndex="100"
             maxWidth="950px"
             display="block"
             margin="0 auto"
+            padding="0.5rem"
           >
             <Box width="100%">
               <Stack

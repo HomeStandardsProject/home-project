@@ -100,7 +100,7 @@ function RoomAccordionSection({
       <AccordionPanel pb={4}>
         {questions.map((prompt) => (
           <RoomQuestion
-            key={prompt.id}
+            key={`${section.name}-${prompt.id}`}
             prompt={prompt}
             response={
               room.responses[prompt.id] ?? { answer: null, description: "" }

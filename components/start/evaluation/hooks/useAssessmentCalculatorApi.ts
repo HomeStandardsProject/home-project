@@ -10,7 +10,7 @@ import {
   Room,
   RoomAssessmentQuestionResponse,
 } from "../../../../interfaces/home-assessment";
-import { normalizeRoomNames } from "../../evaluation/helpers/normalizeRooms";
+import { normalizeRoomNames } from "../helpers/normalizeRooms";
 import { handleApiResponse } from "../../helpers/handleApiResponse";
 import { LOCAL_STORAGE_SUBMISSION_ID_KEY } from "../../hooks/useHomeDetailsApi";
 

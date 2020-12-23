@@ -1,5 +1,6 @@
 import { Box, Skeleton, Stack, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import * as React from "react";
 import useSWR from "swr";
 import {
@@ -64,6 +65,9 @@ export function HomeEvaluationContainer({ questions }: Props) {
       boxSizing="border-box"
       width="100%"
     >
+      <Head>
+        <title>Evaluation</title>
+      </Head>
       {data && submissionId ? (
         <HomeEvaluation
           questions={questions}

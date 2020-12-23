@@ -15,7 +15,7 @@ function useSticky({ windowOffset }: { windowOffset: number }) {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", () => handleScroll);
-  }, []);
+  }, [windowOffset]);
 
   return { isSticky, elementToStick };
 }
