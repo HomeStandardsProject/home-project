@@ -34,6 +34,7 @@ export class MockDatastore implements Datastore {
             long: "0.00",
             lat: "0.00",
           },
+          numberOfBedrooms: 2,
           rentalType: "Apartment",
           landlord: "Frontenac Property Management",
           totalRent: "900.0",

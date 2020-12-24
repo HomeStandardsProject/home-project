@@ -18,6 +18,7 @@ const MOCK_DETAILS: ApiHomeDetailsInput["details"] = {
   landlord: "Frontenac Property Management",
   rentalType: "Full house",
   totalRent: "499.99",
+  numberOfBedrooms: 2,
   address: {
     userProvided: "99 University",
     formatted: "99 University, Kingston, Ontario",

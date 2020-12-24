@@ -86,6 +86,7 @@ const MOCK_DETAILS: HomeDetails = {
   landlord: "Frontenac Property Management",
   rentalType: "Full house",
   totalRent: "499.99",
+  numberOfBedrooms: 3,
   address: {
     userProvided: "99 University",
     formatted: "99 University, Kingston, Ontario",

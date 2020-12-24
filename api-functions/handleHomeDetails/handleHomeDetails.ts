@@ -16,6 +16,8 @@ const validateSchema = validateMiddleware(
     check("details.address.formatted").isString(),
     check("details.address.long").isString(),
     check("details.address.lat").isString(),
+    check("details.numberOfBedrooms").isInt(),
+    check("details.numberOfBedrooms").custom((val) => val > 0),
     // .map is a workaround to a typescript readonly issue
     check("details.rentalType").isIn(RENTAL_TYPES.map((i) => i)),
     check("details.totalRent").isCurrency({ allow_negatives: false }),

@@ -30,6 +30,7 @@ export function useHomeDetailsApi() {
     const apiDetails: HomeDetails = {
       address: returnValueOrThrowError({ address: details.address }),
       unitNumber: details.unitNumber,
+      numberOfBedrooms: details.numberOfBedrooms,
       rentalType: returnValueOrThrowError({ rentalType: details.rentalType }),
       totalRent: returnValueOrThrowError({ totalRent: details.totalRent }),
       landlord: returnValueOrThrowError({ landlord: details.landlord }),
