@@ -79,6 +79,7 @@ export function placeholderBasedOnType(type: Room["type"]) {
 }
 
 const SORTED_LANDLORDS = [
+  "Axon Property Management",
   "Frontenac Property Management",
   "Highpoint Properties",
   "Keystone Property Management",
