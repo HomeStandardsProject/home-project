@@ -246,7 +246,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             <FormControl isRequired={true} flexBasis={"40%"}>
               <FormLabel fontSize="sm">Number of bedrooms</FormLabel>
               <NumberInput
-                defaultValue={3}
+                value={details.numberOfBedrooms}
                 min={1}
                 onChange={handleNumberOfValueChangres}
               >
