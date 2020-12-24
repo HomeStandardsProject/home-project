@@ -75,7 +75,7 @@ export function HomeEvaluationContainer({ questions }: Props) {
           submissionId={submissionId}
         />
       ) : (
-        <Stack paddingTop="8pt">
+        <Stack paddingTop="8pt" maxWidth="950px" margin="0 auto">
           <Skeleton height="15px" />
           <Skeleton height="15px" />
         </Stack>

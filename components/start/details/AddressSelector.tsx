@@ -1,13 +1,13 @@
 import { CheckIcon } from "@chakra-ui/icons";
 import {
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Input,
   Box,
   Text,
   Stack,
   Spinner,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import * as React from "react";
 
@@ -68,13 +68,13 @@ export function AddressSelector({
 
   return (
     <FormControl
+      flexBasis="80%"
       isInvalid={!validatedAddress && showValidationErrors}
       isRequired={true}
     >
       <FormLabel fontSize="sm">Address</FormLabel>
-      <FormErrorMessage>Please select a valid address</FormErrorMessage>
       <Box borderColor="#E2E8F0" borderWidth="1px" borderRadius="lg">
-        <Stack isInline padding="0.5rem 1rem" align="center">
+        <Stack isInline padding="0.43rem 1rem" align="center">
           <Input
             placeholder={"100 University Avenue"}
             aria-describedby="address"
@@ -112,6 +112,7 @@ export function AddressSelector({
           </Box>
         )}
       </Box>
+      <FormErrorMessage>Please select a valid address</FormErrorMessage>
     </FormControl>
   );
 }

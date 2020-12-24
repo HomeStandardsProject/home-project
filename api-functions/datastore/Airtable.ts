@@ -20,6 +20,7 @@ type AirtableSubmissionRow = {
   totalRent: number;
   landlord: string;
   landlordOther?: string;
+  numberOfBedrooms: number;
 };
 
 type AirtableRoomRow = {
@@ -225,6 +226,7 @@ function transformHomeDetailsToRow(
     totalRent: parseFloat(details.totalRent),
     landlord: details.landlord,
     landlordOther: details.landlordOther,
+    numberOfBedrooms: details.numberOfBedrooms,
   };
 }
 
@@ -238,6 +240,7 @@ function transformHomeDetailsAirtableRow(
       long: row.long,
       lat: row.lat,
     },
+    numberOfBedrooms: row.numberOfBedrooms,
     unitNumber: row.unitNumber,
     rentalType: row.rentalType as HomeDetails["rentalType"],
     totalRent: `${row.totalRent}`,

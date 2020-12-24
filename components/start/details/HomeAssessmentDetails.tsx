@@ -10,6 +10,11 @@ import {
   InputGroup,
   InputLeftElement,
   InputRightElement,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Select,
   Stack,
 } from "@chakra-ui/react";
@@ -121,6 +126,12 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
     []
   );
 
+  const handleNumberOfValueChangres = React.useCallback(
+    (_, numberOfBedrooms: number) =>
+      setDetails((details) => ({ ...details, numberOfBedrooms })),
+    []
+  );
+
   const handleNextButtonClick = React.useCallback(() => {
     if (validateHomeDetailsForm(details)) {
       // this should not be risky since we are validating beforehand
@@ -171,21 +182,23 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
           Details
         </Heading>
         <Stack>
-          <AddressSelector
-            validatedAddress={details.address?.formatted}
-            setValidatedAddress={handleAddressChange}
-            showValidationErrors={showValidationErrors}
-          />
-          <FormControl flexBasis={"10%"}>
-            <FormLabel fontSize="sm">Unit #</FormLabel>
-            <Input
-              placeholder={"3"}
-              aria-describedby="unit number"
-              size="md"
-              value={details.unitNumber ?? ""}
-              onChange={handleUnitNumberChange}
+          <Stack isInline>
+            <AddressSelector
+              validatedAddress={details.address?.formatted}
+              setValidatedAddress={handleAddressChange}
+              showValidationErrors={showValidationErrors}
             />
-          </FormControl>
+            <FormControl flexBasis={"20%"}>
+              <FormLabel fontSize="sm">Unit #</FormLabel>
+              <Input
+                placeholder={"3"}
+                aria-describedby="unit number"
+                size="md"
+                value={details.unitNumber ?? ""}
+                onChange={handleUnitNumberChange}
+              />
+            </FormControl>
+          </Stack>
           <FormControl
             flexBasis="30%"
             minW={"265px"}
@@ -206,27 +219,46 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
               ))}
             </Select>
           </FormControl>
-          <FormControl isInvalid={!isTotalRentValid} isRequired={true}>
-            <FormLabel fontSize="sm">Total Rent cost</FormLabel>
-            <InputGroup>
-              <InputLeftElement color="gray.300">$</InputLeftElement>
-              <Input
-                placeholder="Enter amount"
-                value={details.totalRent ?? ""}
-                onChange={handleRentPriceChange}
-              />
-              <InputRightElement>
-                {details.totalRent && isTotalRentValid ? (
-                  <CheckIcon color="green.500" />
-                ) : null}
-                {details.totalRent && !isTotalRentValid ? (
-                  <NotAllowedIcon color="red.500" />
-                ) : null}
-              </InputRightElement>
-            </InputGroup>
-          </FormControl>
+          <Stack isInline>
+            <FormControl
+              isInvalid={!isTotalRentValid}
+              isRequired={true}
+              flexBasis="60%"
+            >
+              <FormLabel fontSize="sm">Total Rent cost</FormLabel>
+              <InputGroup>
+                <InputLeftElement color="gray.300">$</InputLeftElement>
+                <Input
+                  placeholder="Enter amount"
+                  value={details.totalRent ?? ""}
+                  onChange={handleRentPriceChange}
+                />
+                <InputRightElement>
+                  {details.totalRent && isTotalRentValid ? (
+                    <CheckIcon color="green.500" />
+                  ) : null}
+                  {details.totalRent && !isTotalRentValid ? (
+                    <NotAllowedIcon color="red.500" />
+                  ) : null}
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <FormControl isRequired={true} flexBasis={"40%"}>
+              <FormLabel fontSize="sm">Number of bedrooms</FormLabel>
+              <NumberInput
+                defaultValue={3}
+                min={1}
+                onChange={handleNumberOfValueChangres}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
+          </Stack>
           <FormControl
-            flexBasis={"40%"}
             isRequired={true}
             isInvalid={!details.landlord && showValidationErrors}
           >

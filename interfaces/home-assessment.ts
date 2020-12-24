@@ -112,6 +112,7 @@ export type HomeDetails = {
   totalRent: string;
   landlord: Landlords;
   landlordOther?: string;
+  numberOfBedrooms: number;
 };
 
 export type HomeAssessmentData = {
