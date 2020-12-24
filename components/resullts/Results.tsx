@@ -37,8 +37,11 @@ export const Results: React.FC<Props> = ({ assessment }) => {
   const totalViolations = React.useMemo(
     () =>
       assessment.rooms.reduce(
-        (count, room) => count + room.violations.length,
-        0
+        (last, room) => ({
+          normal: last.normal + room.violations.length,
+          possible: last.possible + room.possibleViolations.length,
+        }),
+        { normal: 0, possible: 0 }
       ),
     [assessment]
   );
@@ -114,9 +117,16 @@ export const Results: React.FC<Props> = ({ assessment }) => {
           align="center"
         >
           <Box>
-            <Heading as="h3" size="xl">
-              {totalViolations} Violations
-            </Heading>
+            <Stack spacing={0}>
+              <Box>
+                <Tag colorScheme="blue" size="sm">
+                  {totalViolations.possible} Possible Violations
+                </Tag>
+              </Box>
+              <Heading as="h3" size="xl">
+                {totalViolations.normal} Violations
+              </Heading>
+            </Stack>
             <Text color="gray.400">{generatedDate}</Text>
           </Box>
           <Stack isInline spacing="4">

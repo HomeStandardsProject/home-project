@@ -3,8 +3,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import Layout from "../../components/Layout";
 import { HomeAssessmentDetails } from "../../components/start/details/HomeAssessmentDetails";
+import { OverrideAlert } from "../../components/start/details/OverrideAlert";
 
 import { useHomeDetailsApi } from "../../components/start/hooks/useHomeDetailsApi";
+
 import { HomeDetails } from "../../interfaces/home-assessment";
 
 function AssessmentDetails() {
@@ -31,6 +33,7 @@ function AssessmentDetails() {
       title="Details"
       description="Free home assessment: see if your Kingston student housing situation is in breach of any housing bylaws."
     >
+      <OverrideAlert />
       <HomeAssessmentDetails
         loading={loading}
         submitDetails={handleSubmitDetails}

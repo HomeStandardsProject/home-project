@@ -194,7 +194,7 @@ export function HomeRoomEvaluation({
                   placeholder={placeholderBasedOnType(selectedRoom.type)}
                   aria-describedby="room name"
                   size="md"
-                  value={selectedRoom.name}
+                  value={selectedRoom.name ?? ""}
                   onBlur={handleBlur}
                   onChange={handleUpdateRoomName}
                 />

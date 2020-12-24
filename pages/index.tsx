@@ -6,7 +6,7 @@ import { logStartButtonClick } from "../utils/analyticsEvent";
 import { useUserStepState } from "../hooks/useUserStepState";
 
 function IndexPage() {
-  const { hasAssessmentResult, hasSubmissionId } = useUserStepState();
+  const { hasAssessmentResult } = useUserStepState();
   return (
     <Layout
       title="QBACC's Home Project"
