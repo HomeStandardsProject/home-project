@@ -98,6 +98,18 @@ const Layout = ({
                 About
               </Text>
             </Link>
+            <Link href="/resources">
+              <Text
+                as="a"
+                textColor="blue.700"
+                fontWeight="bold"
+                fontSize="sm"
+                display="block"
+                cursor="pointer"
+              >
+                Resources
+              </Text>
+            </Link>
             {showStartButton && (
               <Link href="/start">
                 <Button colorScheme="blue" size="sm">

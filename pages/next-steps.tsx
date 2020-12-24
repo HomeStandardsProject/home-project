@@ -1,6 +1,8 @@
-import { Box, Heading, Link, Text } from "@chakra-ui/react";
+import { Box, Button, Heading, Link, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
 import styled from "@emotion/styled";
 import * as React from "react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import Layout from "../components/Layout";
 
 function NextSteps() {
@@ -21,6 +23,12 @@ function NextSteps() {
               <ol style={{ listStyle: "lower-alpha", marginLeft: "16pt" }}>
                 <li>
                   <Text>
+                    It’s recommended that you attach your completed housing
+                    assessment to the correspondence.
+                  </Text>
+                </li>
+                <li>
+                  <Text>
                     This may be done through your property management
                     company&apos;s housing portal, via email, or other means.
                   </Text>
@@ -37,8 +45,12 @@ function NextSteps() {
             <li>
               <Text>
                 If your landlord fails to correct these problems, contact
-                Kingston&apos;s Property Standards office at 613-546-4291,
-                extension 3280 or via email at{" "}
+                Kingston&apos;s Property Standards office at{" "}
+                <Link href="tel:613-546-4291" textColor="blue.500">
+                  613-546-4291
+                </Link>
+                , extension <Text textColor="blue.500">3280</Text> or via email
+                at{" "}
                 <Link
                   href="mailto:bylawenforcement@cityofkingston.ca"
                   textColor="blue.500"
@@ -86,6 +98,17 @@ function NextSteps() {
           </OrderedList>
         </Box>
       </Box>
+      <NextLink href="/resources">
+        <Button
+          variant="outline"
+          colorScheme="blue"
+          marginTop="12pt"
+          marginBottom="32pt"
+          rightIcon={<ArrowForwardIcon />}
+        >
+          More Resources
+        </Button>
+      </NextLink>
     </Layout>
   );
 }
