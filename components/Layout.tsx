@@ -2,12 +2,13 @@ import React, { ReactNode } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
-import { Stack, Text, Box } from "@chakra-ui/react";
+import { Stack, Text, Box, Button } from "@chakra-ui/react";
 
 type Props = {
   children?: ReactNode;
   title: string;
   description: string;
+  showStartButton?: boolean;
 };
 
 const Container = styled.div`
@@ -24,6 +25,8 @@ const Footer = styled.footer`
   position: absolute;
   bottom: 0;
   height: 2rem;
+  left: 24pt;
+  right: 24pt;
 `;
 
 const Content = styled.div`
@@ -33,7 +36,12 @@ const Content = styled.div`
 const VERCEL_SPONSORED_LINK =
   "https://vercel.com?utm_source=qbacc-home-project&utm_campaign=oss";
 
-const Layout = ({ children, title, description }: Props) => (
+const Layout = ({
+  children,
+  title,
+  description,
+  showStartButton = false,
+}: Props) => (
   <Container>
     <Head>
       <title>{title}</title>
@@ -65,7 +73,19 @@ const Layout = ({ children, title, description }: Props) => (
               alt="QBACC's Home Project"
             />
           </Link>
-          <Box>
+          <Stack isInline spacing={4} marginTop="6pt" align="center">
+            <Link href="/privacy">
+              <Text
+                as="a"
+                textColor="blue.700"
+                fontWeight="bold"
+                fontSize="sm"
+                display="block"
+                cursor="pointer"
+              >
+                Privacy
+              </Text>
+            </Link>
             <Link href="/about">
               <Text
                 as="a"
@@ -73,13 +93,19 @@ const Layout = ({ children, title, description }: Props) => (
                 fontWeight="bold"
                 fontSize="sm"
                 display="block"
-                marginTop="12pt"
                 cursor="pointer"
               >
                 About
               </Text>
             </Link>
-          </Box>
+            {showStartButton && (
+              <Link href="/start">
+                <Button colorScheme="blue" size="sm">
+                  Start
+                </Button>
+              </Link>
+            )}
+          </Stack>
         </Box>
       </nav>
     </header>

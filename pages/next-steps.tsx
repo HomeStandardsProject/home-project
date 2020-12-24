@@ -8,6 +8,7 @@ function NextSteps() {
     <Layout
       title="Next Steps"
       description="Process for Reporting Housing Issues"
+      showStartButton={true}
     >
       <Box display="flex" justifyContent="left">
         <Box marginTop="16pt" maxWidth="900px">

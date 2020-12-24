@@ -48,7 +48,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
   );
 
   const isInline = layoutType === "desktop";
-  console.log(assessment);
+
   return (
     <Stack marginTop="16pt" marginBottom="16pt" spacing={4}>
       <Box>
@@ -95,7 +95,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
           <Text>
             For more information on{" "}
             <Link
-              href="www.cityofkingston.ca/resident/property-standards"
+              href="https://www.cityofkingston.ca/resident/property-standards"
               color="blue.700"
               isExternal
             >

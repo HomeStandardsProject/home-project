@@ -8,8 +8,9 @@ function About() {
     <Layout
       title="About"
       description="Terms of service and data collection policy"
+      showStartButton={true}
     >
-      <Box display="flex" justifyContent="center">
+      <Box display="flex">
         <Box marginTop="16pt" maxWidth="900px">
           <Heading as="h1" size="lg" marginBottom="8pt">
             About
