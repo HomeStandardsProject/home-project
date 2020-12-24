@@ -1,4 +1,10 @@
-import { ArrowBackIcon, DeleteIcon, WarningIcon } from "@chakra-ui/icons";
+import {
+  AddIcon,
+  ArrowBackIcon,
+  ArrowForwardIcon,
+  DeleteIcon,
+  WarningIcon,
+} from "@chakra-ui/icons";
 import {
   Heading,
   Stack,
@@ -26,14 +32,24 @@ import { useLayoutType } from "../hooks/useLayoutType";
 import useSticky from "../hooks/useSticky";
 
 import { useRoomFromId, useRooms } from "./hooks/useHomeEvaluation";
+import { useInvalidRoomIds } from "./hooks/useInvalidRoomIds";
 import { RoomQuestion } from "./RoomQuestion";
 
 type Props = {
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
   switchSteps: () => void;
+  generatingReport: boolean;
+  generateReport: () => void;
+  showErrors: boolean;
 };
 
-export function HomeRoomEvaluation({ questions, switchSteps }: Props) {
+export function HomeRoomEvaluation({
+  questions,
+  switchSteps,
+  showErrors,
+  generateReport,
+  generatingReport,
+}: Props) {
   const {
     rooms,
     selectedRoomId,
@@ -47,8 +63,9 @@ export function HomeRoomEvaluation({ questions, switchSteps }: Props) {
     selectedRoomId
   );
   if (!selectedRoom) throw new Error("Selected room id does not exist");
-  const { isSticky, elementToStick } = useSticky({ windowOffset: 64 });
+  const { isSticky, elementToStick } = useSticky({ windowOffset: 65 });
   const layoutType = useLayoutType();
+  const invalidRoomIds = useInvalidRoomIds(rooms, questions);
 
   const handleUpdateRoomType = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -94,15 +111,26 @@ export function HomeRoomEvaluation({ questions, switchSteps }: Props) {
   return (
     <Stack maxWidth="950px" display="block" margin="0 auto">
       <Box>
-        <Button
-          leftIcon={<ArrowBackIcon />}
-          size="xs"
-          colorScheme="blue"
-          variant="ghost"
-          onClick={switchSteps}
-        >
-          Go back
-        </Button>
+        <Stack isInline justify="space-between" align="center">
+          <Button
+            leftIcon={<ArrowBackIcon />}
+            size="sm"
+            colorScheme="blue"
+            variant="ghost"
+            onClick={switchSteps}
+          >
+            Go back
+          </Button>
+          <Button
+            size="sm"
+            colorScheme="green"
+            rightIcon={<ArrowForwardIcon />}
+            onClick={generateReport}
+            isLoading={generatingReport}
+          >
+            Generate Report
+          </Button>
+        </Stack>
         <Heading size="lg" as="h2">
           Rooms
         </Heading>
@@ -123,7 +151,7 @@ export function HomeRoomEvaluation({ questions, switchSteps }: Props) {
               rounded="md"
               minW="250px"
               position={shouldBecomeSticky ? "fixed" : "initial"}
-              top={"75px"}
+              top={"65px"}
             >
               <Flipper flipKey={flipKey}>
                 {rooms.map((room) => (
@@ -134,7 +162,9 @@ export function HomeRoomEvaluation({ questions, switchSteps }: Props) {
                         roomDeleted={deleteRoom}
                         roomSelected={changeSelectedRoom}
                         isSelected={room.id === selectedRoom.id}
-                        isInvalid={false}
+                        isInvalid={
+                          showErrors && invalidRoomIds.includes(room.id)
+                        }
                         isDisabled={rooms.length === 1}
                       />
                     </div>
@@ -144,8 +174,9 @@ export function HomeRoomEvaluation({ questions, switchSteps }: Props) {
               <Button
                 colorScheme="blue"
                 w="100%"
-                size="sm"
-                marginTop="24pt"
+                size="xs"
+                leftIcon={<AddIcon />}
+                variant="outline"
                 onClick={addRoom}
               >
                 Add Room

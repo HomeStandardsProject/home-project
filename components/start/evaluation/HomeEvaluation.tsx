@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   CircularProgress,
   CircularProgressLabel,
   Progress,
@@ -48,6 +47,7 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
   const toast = useToast();
   const router = useRouter();
   const layoutType = useLayoutType();
+  const [showErrors, setShowErrors] = React.useState(false);
 
   const handleSwitchStep = React.useCallback(() => {
     setEvaluationData((data) => ({
@@ -57,6 +57,11 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
   }, []);
 
   const handleGenerateReport = React.useCallback(async () => {
+    if (progress < 100) {
+      setShowErrors(true);
+      return;
+    }
+
     logGenerateAssessmentButtonClick();
 
     const { successful, errors } = await generateAssessment(
@@ -76,7 +81,14 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
         })
       );
     }
-  }, [router, evaluationData.rooms, toast, generateAssessment, submissionId]);
+  }, [
+    router,
+    evaluationData.rooms,
+    toast,
+    progress,
+    generateAssessment,
+    submissionId,
+  ]);
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -122,23 +134,7 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
                   <Text fontWeight="bold">{details.address.formatted}</Text>
                   <Text>{details.landlord}</Text>
                 </Stack>
-                {progress === 100 ? (
-                  <Box>
-                    <Button
-                      colorScheme="green"
-                      size="sm"
-                      width="100%"
-                      onClick={handleGenerateReport}
-                      isLoading={generatingAssessment}
-                    >
-                      {generatingAssessment
-                        ? `Generating report...`
-                        : "Generate report"}
-                    </Button>
-                  </Box>
-                ) : (
-                  progressBar
-                )}
+                {progressBar}
               </Stack>
             </Box>
           </Box>
@@ -151,8 +147,11 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
             />
           ) : (
             <HomeRoomEvaluation
+              showErrors={showErrors}
               questions={questions}
+              generatingReport={generatingAssessment}
               switchSteps={handleSwitchStep}
+              generateReport={handleGenerateReport}
             />
           )}
         </Box>
