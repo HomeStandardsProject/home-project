@@ -94,6 +94,21 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
     window.scrollTo(0, 0);
   }, [evaluationData.step]);
 
+  React.useEffect(() => {
+    const listener = (event: BeforeUnloadEvent) => {
+      if (progress > 0) {
+        // how the browser knows to not close the tab.
+        // eslint-disable-next-line no-param-reassign
+        event.returnValue = "";
+        return "";
+      }
+      return undefined;
+    };
+
+    window.addEventListener("beforeunload", listener);
+    return () => window.removeEventListener("beforeunload", listener);
+  }, [progress]);
+
   const progressBar = React.useMemo(() => {
     return layoutType === "mobile" ? (
       <Box width="100%">
