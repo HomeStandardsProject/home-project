@@ -1,8 +1,9 @@
 import React, { ReactNode } from "react";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
-import { Stack, Text, Box, Button } from "@chakra-ui/react";
+import { Stack, Text, Box, Button, IconButton } from "@chakra-ui/react";
 import { useUserStepState } from "../hooks/useUserStepState";
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
   title: string;
   description: string;
   showStartButton?: boolean;
+  showSocialIcons: boolean;
 };
 
 const Container = styled.div`
@@ -42,6 +44,7 @@ const Layout = ({
   title,
   description,
   showStartButton = false,
+  showSocialIcons = false,
 }: Props) => {
   const { hasSubmissionId, hasAssessmentResult } = useUserStepState();
   return (
@@ -76,7 +79,7 @@ const Layout = ({
                 alt="QBACC's Home Project"
               />
             </Link>
-            <Stack isInline spacing={4} marginTop="6pt" align="center">
+            <Stack isInline spacing={4} marginTop="8pt" align="center">
               <Link href="/privacy">
                 <Text
                   as="a"
@@ -113,6 +116,28 @@ const Layout = ({
                   Resources
                 </Text>
               </Link>
+              {showSocialIcons && (
+                <Stack isInline spacing={0} bg="gray.200" borderRadius="lg">
+                  <Link href="https://www.facebook.com/QueensBACC">
+                    <IconButton
+                      size="sm"
+                      color="blue.700"
+                      variant="ghost"
+                      aria-label="Link to QBACC's Facebook"
+                      icon={<FaFacebook />}
+                    />
+                  </Link>
+                  <Link href="https://www.instagram.com/qbacc">
+                    <IconButton
+                      size="sm"
+                      color="blue.700"
+                      variant="ghost"
+                      aria-label="Link to QBACC's Instagram"
+                      icon={<FaInstagram />}
+                    />
+                  </Link>
+                </Stack>
+              )}
               <Stack isInline spacing={2}>
                 {showStartButton && (
                   <Link href="/start">

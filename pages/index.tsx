@@ -11,6 +11,7 @@ function IndexPage() {
     <Layout
       title="QBACC's Home Project"
       description="Does your student housing meet Kingston’s required property standards? Complete your free home assessment."
+      showSocialIcons={true}
     >
       <Flex
         justifyContent={"center"}
