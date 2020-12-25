@@ -35,7 +35,7 @@ export class GoogleMapsGeocoder implements Geocoder {
       fields: "geometry,formatted_address",
       key: this.apiKey,
     };
-    console.log(constructURL(baseUrl, queryParams));
+
     const response = await fetch(constructURL(baseUrl, queryParams), {
       method: "GET",
       headers: {

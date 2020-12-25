@@ -27,7 +27,7 @@ import {
   INITIAL_STATE,
 } from "./hooks/useHomeEvaluation";
 import { useHomeEvaluationProgress } from "./hooks/useHomeEvaluationProgress";
-import { useLayoutType } from "../hooks/useLayoutType";
+import { useLayoutType } from "../../../hooks/useLayoutType";
 
 type Props = {
   submissionId: string;

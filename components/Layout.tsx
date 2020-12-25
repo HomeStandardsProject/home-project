@@ -11,7 +11,7 @@ type Props = {
   title: string;
   description: string;
   showStartButton?: boolean;
-  showSocialIcons: boolean;
+  showSocialIcons?: boolean;
 };
 
 const Container = styled.div`

@@ -20,6 +20,8 @@ import {
 } from "@chakra-ui/react";
 import * as React from "react";
 import { Flipped, Flipper } from "react-flip-toolkit";
+import { useLayoutType } from "../../../hooks/useLayoutType";
+import useSticky from "../../../hooks/useSticky";
 import {
   NON_GENERAL_ROOM_TYPES,
   placeholderBasedOnType,
@@ -28,8 +30,6 @@ import {
   RoomTypes,
   transformRoomTypeToLabel,
 } from "../../../interfaces/home-assessment";
-import { useLayoutType } from "../hooks/useLayoutType";
-import useSticky from "../hooks/useSticky";
 
 import { useRoomFromId, useRooms } from "./hooks/useHomeEvaluation";
 import { useInvalidRoomIds } from "./hooks/useInvalidRoomIds";

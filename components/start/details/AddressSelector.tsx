@@ -10,10 +10,10 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import * as React from "react";
+import { useDebounce } from "../../../hooks/useDebounce";
 
 import { ApiHomeDetailsLocationResult } from "../../../interfaces/api-home-details";
 import { HomeDetails } from "../../../interfaces/home-assessment";
-import { useDebounce } from "../hooks/useDebounce";
 import { useHomeDetailsLocationApi } from "./hooks/useHomeDetailsLocation";
 
 type Props = {

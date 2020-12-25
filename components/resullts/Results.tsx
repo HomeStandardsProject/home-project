@@ -25,8 +25,8 @@ import {
   ApiRoomAssessmentResult,
 } from "../../interfaces/api-home-assessment";
 
-import { useLayoutType } from "../start/hooks/useLayoutType";
 import { PDFDownloadButton } from "./PDFDownloadButton";
+import { useLayoutType } from "../../hooks/useLayoutType";
 
 type Props = {
   assessment: ApiHomeAssessmentResult;
