@@ -13,6 +13,7 @@ export function validateHomeDetailsForm(details: Partial<HomeDetails>) {
     details.landlord !== undefined,
     isLandlordOtherFieldValid,
     details.rentalType !== undefined,
+    details.numberOfBedrooms !== undefined,
   ];
 
   return !isValid.includes(false);

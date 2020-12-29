@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -243,9 +244,14 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
                 </InputRightElement>
               </InputGroup>
             </FormControl>
-            <FormControl isRequired={true} flexBasis={"40%"}>
+            <FormControl
+              isRequired={true}
+              flexBasis={"40%"}
+              isInvalid={!details.numberOfBedrooms && showValidationErrors}
+            >
               <FormLabel fontSize="sm">Number of bedrooms</FormLabel>
               <NumberInput
+                isInvalid={!details.numberOfBedrooms && showValidationErrors}
                 value={details.numberOfBedrooms}
                 min={1}
                 onChange={handleNumberOfValueChangres}
@@ -256,6 +262,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
+              <FormErrorMessage>Enter a valid number of rooms</FormErrorMessage>
             </FormControl>
           </Stack>
           <FormControl
