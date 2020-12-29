@@ -7,9 +7,9 @@
   },
   {
     "id": 2,
-    "question": "Is your plumbing connected with water seal traps? (Can you smell sewage?)",
+    "question": "Is your plumbing missing water seal traps? (Can you smell sewage?)",
     "roomType": "WASH",
-    "promptForDescriptionOn": "NO"
+    "promptForDescriptionOn": "YES"
   },
   {
     "id": 4,
@@ -26,12 +26,6 @@
   {
     "id": 6,
     "question": "Does your house have at least one toilet, sink, and bathtub or shower?",
-    "roomType": "WASH",
-    "promptForDescriptionOn": "NO"
-  },
-  {
-    "id": 7,
-    "question": "Is your bathroom inside your unit? Or if there are two units, each not with more than two rooms, is there a bathroom that is accessible without having to go through the other unit or outside?",
     "roomType": "WASH",
     "promptForDescriptionOn": "NO"
   },
@@ -127,25 +121,25 @@
   },
   {
     "id": 31,
-    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
     "roomType": "WASH",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 32,
-    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
     "roomType": "KITCHEN",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 33,
-    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
     "roomType": "BED",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 36,
-    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
     "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
@@ -201,47 +195,47 @@
     "id": 45,
     "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
     "roomType": "WASH",
-    "promptForDescriptionOn": "NO"
+    "promptForDescriptionOn": "YES"
   },
   {
     "id": 46,
     "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
     "roomType": "KITCHEN",
-    "promptForDescriptionOn": "NO"
+    "promptForDescriptionOn": "YES"
   },
   {
     "id": 47,
     "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
     "roomType": "BED",
-    "promptForDescriptionOn": "NO"
+    "promptForDescriptionOn": "YES"
   },
   {
     "id": 48,
     "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
     "roomType": "LIVING",
-    "promptForDescriptionOn": "NO"
+    "promptForDescriptionOn": "YES"
   },
   {
     "id": 49,
-    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "roomType": "WASH",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 50,
-    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "roomType": "KITCHEN",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 51,
-    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "roomType": "BED",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 52,
-    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
@@ -277,7 +271,7 @@
   },
   {
     "id": 58,
-    "question": "Are you able to lock all of your windows and EXTERIOR doors from inside the unit?",
+    "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
@@ -285,17 +279,17 @@
     "id": 59,
     "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
     "roomType": "ENTRANCE",
-    "promptForDescriptionOn": "NO"
+    "promptForDescriptionOn": "YES"
   },
   {
     "id": 60,
-    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 61,
-    "question": "Do you have at least one ENTRANCE door that can be locked from inside and outside the unit?",
+    "question": "Do you have at least one entrance door that can be locked from inside and outside the unit?",
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   },
@@ -445,19 +439,19 @@
   },
   {
     "id": 86,
-    "question": "Is there at least one duplex outlet?",
+    "question": "Is there at least one duplex outlet? (An outlet with at least two spots to plug something in.)",
     "roomType": "BED",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 87,
-    "question": "Is there at least one duplex outlet?",
+    "question": "Is there at least one duplex outlet? (An outlet with at least two spots to plug something in.)",
     "roomType": "KITCHEN",
     "promptForDescriptionOn": "NO"
   },
   {
     "id": 88,
-    "question": "Is there at least one duplex outlet?",
+    "question": "Is there at least one duplex outlet? (An outlet with at least two spots to plug something in.)",
     "roomType": "LIVING",
     "promptForDescriptionOn": "NO"
   },
@@ -469,7 +463,7 @@
   },
   {
     "id": 91,
-    "question": "Is the baseboard in your house (bottom trim) in good repair and tight fitting?  Are any sections of baseboard missing?",
+    "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO"
   }
