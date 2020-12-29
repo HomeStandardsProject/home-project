@@ -117,9 +117,11 @@ export const useRooms = () => {
   );
 
   const addRoom = React.useCallback(() => {
+    const newRoom = generateDefaultRoom();
     mutator((data) => ({
       ...data,
-      rooms: [...data.rooms, generateDefaultRoom()],
+      selectedRoomId: newRoom.id,
+      rooms: [...data.rooms, newRoom],
     }));
   }, [mutator]);
 
