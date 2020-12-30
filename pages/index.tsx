@@ -120,7 +120,7 @@ function IndexPage({ articles }: Props) {
           </Stack>
         </Stack>
       </Flex>
-      <Box marginTop={isMobile ? "64pt" : null}>
+      <Box marginTop={isMobile ? "64pt" : 0}>
         <Subheading>Why this tool?</Subheading>
         <Stack isInline={!isMobile} marginTop="16pt">
           <Box
