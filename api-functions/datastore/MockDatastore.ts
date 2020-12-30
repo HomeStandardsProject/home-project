@@ -24,6 +24,13 @@ export class MockDatastore implements Datastore {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  async saveUserInfo(): Promise<[boolean, Error | null]> {
+    return new Promise((resolve) => {
+      resolve([true, null]);
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   async fetchHomeDetailsById(): Promise<[HomeDetails | null, Error | null]> {
     return new Promise((resolve) => {
       resolve([

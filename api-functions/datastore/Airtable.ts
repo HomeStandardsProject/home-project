@@ -4,6 +4,7 @@ import {
   ApiHomeAssessmentInputWithRoomIds,
   ApiHomeAssessmentResult,
 } from "../../interfaces/api-home-assessment";
+import { ApiUserInfo } from "../../interfaces/api-user-info";
 import { HomeDetails } from "../../interfaces/home-assessment";
 import { UNKNOWN_ERROR } from "../../utils/apiErrors";
 import { chunk } from "../../utils/chunkArray";
@@ -145,6 +146,15 @@ export class AirtableStore implements Datastore {
         );
       }
 
+      return [true, null];
+    } catch (error) {
+      return [false, error];
+    }
+  }
+
+  async saveUserInfo(details: ApiUserInfo): Promise<[boolean, Error | null]> {
+    try {
+      await this._base("user_info").create(details);
       return [true, null];
     } catch (error) {
       return [false, error];

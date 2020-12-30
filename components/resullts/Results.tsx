@@ -19,6 +19,7 @@ import {
   WarningIcon,
   WarningTwoIcon,
 } from "@chakra-ui/icons";
+
 import {
   ApiBylawViolation,
   ApiHomeAssessmentResult,
@@ -129,7 +130,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
             </Stack>
             <Text color="gray.400">{generatedDate}</Text>
           </Box>
-          <Stack isInline spacing="4">
+          <Stack isInline spacing={2}>
             <PDFDownloadButton result={assessment} />
             <NextLink href="next-steps">
               <Button

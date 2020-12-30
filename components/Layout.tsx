@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaRecycle } from "react-icons/fa";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
@@ -12,6 +12,7 @@ type Props = {
   description: string;
   showStartButton?: boolean;
   showSocialIcons?: boolean;
+  displayPromotionOffering?: () => void;
 };
 
 const Container = styled.div`
@@ -45,6 +46,7 @@ const Layout = ({
   description,
   showStartButton = false,
   showSocialIcons = false,
+  displayPromotionOffering,
 }: Props) => {
   const { hasSubmissionId, hasAssessmentResult } = useUserStepState();
   return (
@@ -152,6 +154,17 @@ const Layout = ({
                       View last result
                     </Button>
                   </Link>
+                )}
+                {displayPromotionOffering && (
+                  <Button
+                    leftIcon={<FaRecycle />}
+                    colorScheme="green"
+                    variant="outline"
+                    size="sm"
+                    onClick={displayPromotionOffering}
+                  >
+                    Collect green bin
+                  </Button>
                 )}
               </Stack>
             </Stack>

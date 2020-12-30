@@ -2,6 +2,7 @@ import {
   ApiHomeAssessmentInputWithRoomIds,
   ApiHomeAssessmentResult,
 } from "../../interfaces/api-home-assessment";
+import { ApiUserInfo } from "../../interfaces/api-user-info";
 import { HomeDetails } from "../../interfaces/home-assessment";
 
 export interface Datastore {
@@ -16,6 +17,7 @@ export interface Datastore {
     submissionId: string,
     result: ApiHomeAssessmentResult
   ) => Promise<[boolean, Error | null]>;
+  saveUserInfo: (details: ApiUserInfo) => Promise<[boolean, Error | null]>;
   fetchHomeDetailsById: (
     submissionId: string
   ) => Promise<[HomeDetails | null, Error | null]>;
