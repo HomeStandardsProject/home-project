@@ -1,6 +1,7 @@
 import QuestionsData from "../data/kingston/questions.json";
 import {
   AllRoomAssessmentQuestion,
+  RoomType,
   RoomTypes,
   ROOM_TYPES,
 } from "../interfaces/home-assessment";
@@ -10,6 +11,9 @@ type QuestionInput = {
   question: string;
   roomType: string;
   promptForDescriptionOn: string;
+  order: number | string;
+  type: string;
+  multiselectValues: string;
 };
 
 export const INITIAL_VALUES_QUESTIONS_VALUES: AllRoomAssessmentQuestion = ROOM_TYPES.reduce(
@@ -48,22 +52,45 @@ export function loadQuestionsFromData(questions: QuestionInput[]) {
       continue;
     }
 
-    const { id, roomType, question, promptForDescriptionOn } = inputQuestion;
+    const {
+      id,
+      roomType,
+      question,
+      promptForDescriptionOn,
+      type,
+      multiselectValues,
+      order,
+    } = inputQuestion;
 
     // has a question with this id already been added?
     if (pastQuestionIds.includes(id)) {
       throw ERRORS.DUPLICATE_QUESTION_ID(id);
     }
 
+    // is type valid?
+    const validTypes = ["YES/NO", "MULTISELECT"];
+    if (!validTypes.includes(type)) {
+      throw ERRORS.INVALID_TYPE(`${id}`, "type", validTypes.join(", "));
+    }
     // is promptForDescriptionOn have a valid type?
     if (!["YES", "NO"].includes(promptForDescriptionOn)) {
       throw ERRORS.INVALID_TYPE(`${id}`, "promptForDescriptionOn", "YES or NO");
     }
 
+    if (type === "MULTISELECT" && !multiselectValues) {
+      throw ERRORS.INVALID_TYPE(`${id}`, "multiselectValues", "defined");
+    }
+
+    if (typeof order === "string" && order !== "") {
+      throw ERRORS.INVALID_TYPE(`${id}`, `order`, `number or empty string`);
+    }
+
     roomBuckets[roomType as RoomTypes].push({
       id: `${id}`,
       question,
+      type: type as RoomType,
       promptForDescriptionOn: promptForDescriptionOn as "YES" | "NO",
+      multiselectValues: multiselectValues?.split(","),
     });
     pastQuestionIds.push(id);
   }

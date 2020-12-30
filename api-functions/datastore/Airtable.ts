@@ -35,6 +35,7 @@ type AirtableRoomResponsesRow = {
   roomId: string;
   questionId: string;
   answer: "YES" | "NO" | "UNSURE";
+  selectedMultiselect: string;
 };
 
 type AirtableRoomViolationRow = {
@@ -269,6 +270,7 @@ function transformInputToRoomResponses(
       roomId: room.id,
       questionId,
       answer: response.answer,
+      selectedMultiselect: response.selectedMultiselect ?? "",
     }))
   );
 

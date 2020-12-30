@@ -1,7 +1,10 @@
+export type RoomType = "YES/NO" | "MULTISELECT";
 export type RoomAssessmentQuestion = {
   id: string;
+  type: RoomType;
   question: string;
   promptForDescriptionOn: "YES" | "NO";
+  multiselectValues?: string[];
 };
 
 export type AllRoomAssessmentQuestion = {
@@ -10,6 +13,7 @@ export type AllRoomAssessmentQuestion = {
 
 export type RoomAssessmentQuestionResponse = {
   answer?: ("YES" | "NO" | "UNSURE") | undefined;
+  selectedMultiselect?: string[];
   description?: string;
 };
 

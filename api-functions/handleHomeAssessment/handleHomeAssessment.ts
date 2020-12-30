@@ -29,6 +29,9 @@ const validateSchema = validateMiddleware(
     check("rooms.*.responses.*.description")
       .optional({ nullable: true })
       .isString(),
+    check("rooms.*.responses.*.selectedMultiselect")
+      .optional({ nullable: true })
+      .isString(),
   ],
   validationResult
 );

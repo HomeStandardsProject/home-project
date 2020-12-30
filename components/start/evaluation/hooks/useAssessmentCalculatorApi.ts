@@ -89,6 +89,7 @@ function transformResponseToTypesafeDefined(response: {
       answer: returnValueOrThrowError({
         [questionId]: response[questionId].answer,
       }),
+      selectedMultiselect: response[questionId].selectedMultiselect?.join(","),
       description: response[questionId].description,
     };
   }

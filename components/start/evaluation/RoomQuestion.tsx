@@ -1,9 +1,11 @@
 import {
   Box,
+  Checkbox,
   Heading,
   Radio,
   RadioGroup,
   Stack,
+  Text,
   Textarea,
 } from "@chakra-ui/react";
 import * as React from "react";
@@ -46,22 +48,37 @@ export const RoomQuestion: React.FC<Props> = ({
     [answerChanged, response.answer, prompt.id]
   );
 
-  const optionalTextbox = React.useMemo(
-    () =>
-      response.answer === prompt.promptForDescriptionOn ? (
-        <Textarea
-          marginTop="4pt"
-          placeholder="(Optional) describe the issue..."
-          value={response.description}
-          onChange={handleDescriptionChange}
-        />
-      ) : null,
-    [
-      response.answer,
-      response.description,
-      prompt.promptForDescriptionOn,
-      handleDescriptionChange,
-    ]
+  const handleCheckboxChange = React.useCallback(
+    (multiselectOption: string, event: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = event.target.checked;
+      if (newValue) {
+        if (!response.selectedMultiselect) {
+          answerChanged(prompt.id, {
+            answer: response.answer,
+            selectedMultiselect: [multiselectOption],
+          });
+          return;
+        }
+
+        if (!response.selectedMultiselect.includes(multiselectOption)) {
+          answerChanged(prompt.id, {
+            answer: response.answer,
+            selectedMultiselect: [
+              ...(response.selectedMultiselect ?? []),
+              multiselectOption,
+            ],
+          });
+        }
+      } else {
+        answerChanged(prompt.id, {
+          answer: response.answer,
+          selectedMultiselect: response.selectedMultiselect?.filter(
+            (i) => i !== multiselectOption
+          ),
+        });
+      }
+    },
+    [response.selectedMultiselect, prompt.id, answerChanged, response.answer]
   );
 
   return (
@@ -114,7 +131,34 @@ export const RoomQuestion: React.FC<Props> = ({
           </Box>
         </Stack>
       </RadioGroup>
-      {optionalTextbox}
+      {prompt.type === "YES/NO" &&
+        response.answer === prompt.promptForDescriptionOn && (
+          <Textarea
+            data-testid="description-textbox"
+            marginTop="4pt"
+            placeholder="(Optional) describe the issue..."
+            value={response.description}
+            onChange={handleDescriptionChange}
+          />
+        )}
+      {prompt.type === "MULTISELECT" &&
+        response.answer === prompt.promptForDescriptionOn && (
+          <Stack pl={6} mt={1} spacing={1}>
+            <Text marginTop="8pt">Select all that apply:</Text>
+            {prompt.multiselectValues?.map((selectionValue) => (
+              <Checkbox
+                key={selectionValue}
+                isChecked={
+                  response.selectedMultiselect?.includes(selectionValue) ??
+                  false
+                }
+                onChange={(e) => handleCheckboxChange(selectionValue, e)}
+              >
+                {selectionValue}
+              </Checkbox>
+            ))}
+          </Stack>
+        )}
     </Box>
   );
 };
