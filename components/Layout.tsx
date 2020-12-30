@@ -3,8 +3,9 @@ import { FaFacebook, FaInstagram, FaRecycle } from "react-icons/fa";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
-import { Stack, Text, Box, Button, IconButton } from "@chakra-ui/react";
+import { Stack, Text, Button, IconButton } from "@chakra-ui/react";
 import { useUserStepState } from "../hooks/useUserStepState";
+import { useLayoutType } from "../hooks/useLayoutType";
 
 type Props = {
   children?: ReactNode;
@@ -49,6 +50,8 @@ const Layout = ({
   displayPromotionOffering,
 }: Props) => {
   const { hasSubmissionId, hasAssessmentResult } = useUserStepState();
+  const deviceTye = useLayoutType();
+
   return (
     <Container>
       <Head>
@@ -73,7 +76,13 @@ const Layout = ({
       </Head>
       <header>
         <nav>
-          <Box display="flex" justifyContent="space-between">
+          <Stack
+            display="flex"
+            justifyContent="space-between"
+            spacing={4}
+            isInline={deviceTye !== "mobile"}
+            align="center"
+          >
             <Link href="/">
               <img
                 src="/logo.svg"
@@ -148,7 +157,7 @@ const Layout = ({
                     </Button>
                   </Link>
                 )}
-                {showStartButton && hasAssessmentResult && (
+                {hasAssessmentResult && (
                   <Link href="/results">
                     <Button colorScheme="blue" size="sm" variant="outline">
                       View last result
@@ -168,7 +177,7 @@ const Layout = ({
                 )}
               </Stack>
             </Stack>
-          </Box>
+          </Stack>
         </nav>
       </header>
       <Content>{children}</Content>
