@@ -577,7 +577,7 @@
     "id": 142,
     "name": "Walls, Ceilings and Floors 5.79",
     "description": "Where necessary, interior walls shall have baseboards that shall be Maintained in good Repair and tight fitting so as to prevent the accumulation of dust and garbage.",
-    "mustBeNo": 91,
+    "mustBeNo": "",
     "mustBeYes": ""
   },
   {
@@ -642,5 +642,12 @@
     "description": "Room temperature shall be determined at any point in the room.",
     "mustBeNo": 53,
     "mustBeYes": ""
+  },
+  {
+    "id": 145,
+    "name": "Pest Prevention 4.27",
+    "description": "Buildings shall be kept free of rodents, vermin and insects\nat all times.",
+    "mustBeNo": "",
+    "mustBeYes": 96
   }
 ]

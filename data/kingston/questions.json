@@ -693,19 +693,10 @@
     "multiselectValues": ""
   },
   {
-    "id": 91,
-    "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
-    "order": 10,
-    "roomType": "ENTRANCE",
-    "promptForDescriptionOn": "NO",
-    "type": "YES/NO",
-    "multiselectValues": ""
-  },
-  {
     "id": 96,
-    "question": "Are there any rodents?",
-    "order": "",
-    "roomType": "ENTRANCE",
+    "question": "Are there any pests in your house?",
+    "order": 1,
+    "roomType": "PESTS",
     "promptForDescriptionOn": "YES",
     "type": "MULTISELECT",
     "multiselectValues": "Mice,Rats,Racoons,Squirrels,Bats,Ants,House Flies,Bees and/or Wasps"

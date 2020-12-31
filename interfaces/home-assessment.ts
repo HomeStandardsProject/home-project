@@ -25,8 +25,14 @@ export const ROOM_TYPES = [
   "ENTRANCE",
   "EXTERIOR",
   "HEATING",
+  "PESTS",
 ] as const;
-export const GENERAL_ROOM_TYPES = ["ENTRANCE", "HEATING", "EXTERIOR"] as const;
+export const GENERAL_ROOM_TYPES = [
+  "PESTS",
+  "ENTRANCE",
+  "HEATING",
+  "EXTERIOR",
+] as const;
 export type RoomTypes = typeof ROOM_TYPES[number];
 export type Room = {
   id: string;
@@ -77,6 +83,7 @@ export function placeholderBasedOnType(type: Room["type"]) {
     ENTRANCE: "Main Entrance",
     EXTERIOR: "Exterior",
     HEATING: "Heating",
+    PESTS: "Pests",
   };
 
   return label[type];
