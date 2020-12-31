@@ -70,6 +70,8 @@ export function transformRoomTypeToLabel(type: Room["type"]) {
       return "Exterior";
     case "HEATING":
       return "Heating";
+    case "PESTS":
+      return "Pests";
     default:
       throw new Error("unknown room type");
   }
