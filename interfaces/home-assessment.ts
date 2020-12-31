@@ -60,7 +60,7 @@ export function transformRoomTypeToLabel(type: Room["type"]) {
     case "ENTRANCE":
       return "Entrance";
     case "EXTERIOR":
-      return "Exteriror";
+      return "Exterior";
     case "HEATING":
       return "Heating";
     default:

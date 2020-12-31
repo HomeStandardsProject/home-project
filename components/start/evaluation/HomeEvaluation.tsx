@@ -46,7 +46,7 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
   } = useAssessmentCalculatorApi();
   const toast = useToast();
   const router = useRouter();
-  const layoutType = useLayoutType();
+  const { isMobile, isDesktop } = useLayoutType();
   const [showErrors, setShowErrors] = React.useState(false);
 
   const handleSwitchStep = React.useCallback(() => {
@@ -110,7 +110,7 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
   }, [progress]);
 
   const progressBar = React.useMemo(() => {
-    return layoutType === "mobile" ? (
+    return isMobile ? (
       <Box width="100%">
         <Progress value={progress} colorScheme="blue" size="sm" />
       </Box>
@@ -119,7 +119,7 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
         <CircularProgressLabel>{progress}%</CircularProgressLabel>
       </CircularProgress>
     );
-  }, [progress, layoutType]);
+  }, [progress, isMobile]);
 
   return (
     <HomeEvaluationState.Provider value={evaluationData}>
@@ -141,9 +141,9 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
           >
             <Box width="100%">
               <Stack
-                isInline={layoutType === "desktop"}
+                isInline={isDesktop}
                 justify="space-between"
-                align={layoutType === "desktop" ? "center" : "left"}
+                align={isDesktop ? "center" : "left"}
               >
                 <Stack spacing="0">
                   <Text fontWeight="bold">{details.address.formatted}</Text>

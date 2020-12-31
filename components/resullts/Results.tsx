@@ -34,7 +34,7 @@ type Props = {
 };
 
 export const Results: React.FC<Props> = ({ assessment }) => {
-  const layoutType = useLayoutType();
+  const { isDesktop } = useLayoutType();
   const totalViolations = React.useMemo(
     () =>
       assessment.rooms.reduce(
@@ -50,8 +50,6 @@ export const Results: React.FC<Props> = ({ assessment }) => {
   const generatedDate = new Intl.DateTimeFormat("en-US").format(
     new Date(assessment.generatedDate)
   );
-
-  const isInline = layoutType === "desktop";
 
   return (
     <Stack marginTop="16pt" marginBottom="16pt" spacing={4}>
@@ -112,11 +110,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
       </Stack>
       <Divider />
       <Box>
-        <Stack
-          isInline={layoutType === "desktop"}
-          justify="space-between"
-          align="center"
-        >
+        <Stack isInline={isDesktop} justify="space-between" align="center">
           <Box>
             <Stack spacing={0}>
               <Box>
@@ -149,7 +143,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
             Rooms
           </Heading>
           {assessment.rooms.map((room) => (
-            <RoomViolations key={room.id} room={room} isInline={isInline} />
+            <RoomViolations key={room.id} room={room} isInline={isDesktop} />
           ))}
         </Box>
       </Box>

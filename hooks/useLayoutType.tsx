@@ -29,7 +29,10 @@ export const useLayoutType = () => {
     return "desktop";
   }, [windowWidth, isMobile]);
 
-  return layoutType;
+  return {
+    isMobile: layoutType === "mobile",
+    isDesktop: layoutType === "desktop",
+  };
 };
 
 const getMobileDetect = (userAgent: NavigatorID["userAgent"]) => {
@@ -49,6 +52,7 @@ const getMobileDetect = (userAgent: NavigatorID["userAgent"]) => {
     isSSR,
   };
 };
+
 const useMobileDetect = () => {
   React.useEffect(() => {}, []);
   const userAgent =

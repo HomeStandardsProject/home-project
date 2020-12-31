@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
     backgroundColor: "#f7fafc",
+    padding: "32pt 16pt",
   },
   section: {
     margin: 16,
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
   },
   generatedDate: {
     textAlign: "right",
-    fontSize: "8pt",
+    fontSize: "10pt",
     margin: 10,
     marginBottom: 0,
   },
@@ -95,7 +96,7 @@ export const AssessmentPDF = ({
 }) => {
   const landlord =
     result.details.landlord === "Other"
-      ? `Other (${result.details.landlordOther})`
+      ? result.details.landlordOther
       : result.details.landlord;
 
   const generatedDate = new Intl.DateTimeFormat("en-US").format(

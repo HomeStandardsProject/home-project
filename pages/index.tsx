@@ -9,27 +9,26 @@ import {
   Icon,
   Stack,
   Text,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { AiOutlineSafety } from "react-icons/ai";
 import { BiSend } from "react-icons/bi";
 import Head from "next/head";
 
 import { GetStaticProps } from "next";
+
 import Layout from "../components/Layout";
 import { logStartButtonClick } from "../utils/analyticsEvent";
 import { Article, loadArticles } from "../utils/loadArticles";
 import { fetchLinkPreviewImage } from "../utils/fetchLinkPreviewImage";
 import { HomeAssessmentInteractiveExample } from "../components/landing/HomeAssessmentInteractiveExample";
-import { useLayoutType } from "../hooks/useLayoutType";
+import { RelevantArticle } from "../components/landing/RelevantArticle";
 
 type Props = {
   articles: Article[];
 };
 
 function IndexPage({ articles }: Props) {
-  const layoutType = useLayoutType();
-  const isMobile = layoutType === "mobile";
-
   return (
     <Layout
       title="QBACC's Home Project"
@@ -45,25 +44,23 @@ function IndexPage({ articles }: Props) {
       </Head>
       <Flex
         justifyContent={"center"}
-        minH={`500px`}
+        minH={`450px`}
         direction="column"
         bg={"red"}
         margin={"0 auto"}
-        marginTop={"24pt"}
       >
         <Heading
           as="h1"
           size="xl"
           textAlign="left"
-          width={isMobile ? "100%" : "80%"}
+          width={{ sm: "100%", md: "80%" }}
           fontFamily="Lora, serif"
           fontWeight="500"
           marginBottom="12pt"
         >
-          See if your student housing situation is in breach of any housing
-          bylaws
+          Is your housing in breach of any bylaws?
         </Heading>
-        <Stack>
+        <Stack width={{ sm: "100%", md: "80%" }} userSelect="none">
           <Text textAlign="left">
             Automatically generate a personalized report summarizing your home’s
             issues. This assessment tool guides you through your house room by
@@ -87,7 +84,7 @@ function IndexPage({ articles }: Props) {
             </Button>
           </Link>
         </Box>
-        <Stack marginTop="50px">
+        <Stack marginTop="30pt">
           <Stack isInline align="center" spacing={1}>
             <Icon
               as={AiOutlineSafety}
@@ -120,12 +117,15 @@ function IndexPage({ articles }: Props) {
           </Stack>
         </Stack>
       </Flex>
-      <Box marginTop={isMobile ? "64pt" : 0}>
+      <Box marginTop={{ sm: "64pt", md: 0 }}>
         <Subheading>Why this tool?</Subheading>
-        <Stack isInline={!isMobile} marginTop="16pt">
+        <SimpleGrid columns={{ md: 1, lg: 2 }} spacing={2} marginTop="16pt">
           <Box
             height="165px"
             backgroundImage={`url("/living-room-card.png")`}
+            backgroundRepeat="no-repeat"
+            backgroundSize="cover"
+            backgroundPosition="center center"
             px="30pt"
             py="20pt"
             borderRadius="lg"
@@ -146,6 +146,9 @@ function IndexPage({ articles }: Props) {
           <Box
             height="165px"
             backgroundImage={`url("/night-sky-2-card.png")`}
+            backgroundRepeat="no-repeat"
+            backgroundSize="cover"
+            backgroundPosition="center center"
             px="30pt"
             py="20pt"
             borderRadius="lg"
@@ -166,11 +169,14 @@ function IndexPage({ articles }: Props) {
               million.
             </Text>
           </Box>
-        </Stack>
-        <Stack isInline={!isMobile} marginTop={2}>
+        </SimpleGrid>
+        <SimpleGrid columns={{ md: 1, lg: 2 }} spacing={2} marginTop={2}>
           <Box
             height="165px"
             backgroundImage={`url("/night-sky-1-card.png")`}
+            backgroundRepeat="no-repeat"
+            backgroundSize="cover"
+            backgroundPosition="center center"
             px="30pt"
             py="20pt"
             borderRadius="lg"
@@ -194,6 +200,9 @@ function IndexPage({ articles }: Props) {
           <Box
             height="165px"
             backgroundImage={`url("/flower-card.png")`}
+            backgroundRepeat="no-repeat"
+            backgroundSize="cover"
+            backgroundPosition="center center"
             px="30pt"
             py="20pt"
             borderRadius="lg"
@@ -210,22 +219,35 @@ function IndexPage({ articles }: Props) {
             </Heading>
             <Text>
               GHG emissions such as CO2, are contributing to the current climate
-              change crisis. You can help today with our tool by evaluating your
-              housing.
+              crisis. You can help minimize your climate impact by evaluating
+              your house.
             </Text>
           </Box>
-        </Stack>
+        </SimpleGrid>
+      </Box>
+      <Box marginTop="64pt">
+        <Subheading>How we help</Subheading>
+        <Text width="100%">
+          Check out this rental property’s kitchen. At first glance, it may
+          appear to be in good condition, but there are multiple bylaw
+          violations upon closer investigation.
+        </Text>
+        <HomeAssessmentInteractiveExample />
       </Box>
       <Box marginTop="64pt">
         <Subheading>Did you know?</Subheading>
-        <Stack isInline={!isMobile} spacing={isMobile ? 6 : 12}>
-          <FactContainer title="Erosion">
+        <SimpleGrid
+          columns={{ sm: 1, md: 3 }}
+          spacing={{ sm: 6, md: 12 }}
+          marginTop={2}
+        >
+          <FactContainer title="Kingston’s Excessive Rent">
             <Text>
               Rental rates over the period has been notably higher than the rate
               of inflation over the period illustrating an erosion in housing
               affordability in the local rental market.
             </Text>
-            <Box marginTop={isMobile ? "6pt" : "24pt"}>
+            <Box marginTop={{ sm: "6pt", md: "24pt" }}>
               <ChakraLink
                 color="green.500"
                 href="https://www.cityofkingston.ca/documents/10180/33838002/01_2020_Housing_MTFR_Document_AppendixC.pdf/1d5a4054-704f-836f-561a-470d96627fa2?t=1582740336621"
@@ -235,13 +257,13 @@ function IndexPage({ articles }: Props) {
               </ChakraLink>
             </Box>
           </FactContainer>
-          <FactContainer title="$1998">
+          <FactContainer title="Average Rents">
             <Text>Average cost of rent in Kingston per month, 2018:</Text>
             <Text>
-              Bachelor: $745. One bedroom: $100. Two bedroom: $1200. Three+
+              Bachelor: $745. One bedroom: $1000. Two bedroom: $1200. Three+
               bedroom: $1998.
             </Text>
-            <Box marginTop={isMobile ? "6pt" : "42pt"}>
+            <Box marginTop={{ sm: "6pt", md: "42pt" }}>
               <ChakraLink
                 color="green.500"
                 href="https://www.homelesshub.ca/community-profile/kingston"
@@ -251,7 +273,7 @@ function IndexPage({ articles }: Props) {
               </ChakraLink>
             </Box>
           </FactContainer>
-          <FactContainer title="$1998">
+          <FactContainer title="Allowable Rent Increase">
             <Text>
               The Ontario Ministry of Municipal Affairs and Housing sets the
               limit every year for how much landlords can legally raise your
@@ -270,11 +292,7 @@ function IndexPage({ articles }: Props) {
               </ChakraLink>
             </Box>
           </FactContainer>
-        </Stack>
-      </Box>
-      <Box marginTop="64pt">
-        <Subheading>How we help</Subheading>
-        <HomeAssessmentInteractiveExample />
+        </SimpleGrid>
       </Box>
       <Box marginTop="64pt">
         <Box
@@ -295,11 +313,11 @@ function IndexPage({ articles }: Props) {
               color="white"
               fontWeight="500"
             >
-              Rate Your Landlord Anonymously
+              Rate your landlord anonymously
             </Heading>
             <Text color="white">
-              We together can recommend the best options to people looking for a
-              place to live.
+              Together we can determine the best places to live (and worst)
+              places to live
             </Text>
             <Box>
               <ChakraLink href="https://www.google.com/" isExternal>
@@ -318,12 +336,12 @@ function IndexPage({ articles }: Props) {
         </Box>
       </Box>
       <Box marginTop="64pt">
-        <Subheading>Relevant Articles</Subheading>
-        <Stack isInline={!isMobile} py="16pt" spacing={4}>
+        <Subheading>Relevant articles</Subheading>
+        <SimpleGrid columns={{ sm: 1, md: 4 }} spacing={4} py="16pt">
           {articles.map((article, i) => (
             <RelevantArticle key={i} article={article} />
           ))}
-        </Stack>
+        </SimpleGrid>
       </Box>
     </Layout>
   );
@@ -342,44 +360,12 @@ const FactContainer: React.FC<{ title: string }> = ({ children, title }) => (
       fontFamily="Lora, serif"
       fontSize="1.5rem"
       fontWeight="500"
-      color="rgba(0,0,0,0.5)"
+      color="rgba(0,0,0,0.6)"
     >
       {title}
     </Heading>
     {children}
   </Box>
-);
-
-const RelevantArticle: React.FC<{
-  article: Article;
-}> = ({ article }) => (
-  <ChakraLink href={article.sourceUrl} isExternal>
-    <Box
-      maxWidth="sm"
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      height="100%"
-    >
-      <Box
-        minHeight="140px"
-        width="100%"
-        bg="red.600"
-        backgroundImage={`url("${
-          article.previewImage ?? `/fallback-article-preview.png`
-        }")`}
-        backgroundRepeat="no-repeat"
-        backgroundSize="cover"
-        backgroundPosition="center center"
-      ></Box>
-      <Box padding="4">
-        <Text marginTop="1" fontWeight="semibold" as="h4" lineHeight="tight">
-          {article.title}
-        </Text>
-        <Text color="green.400">{article.source}</Text>
-      </Box>
-    </Box>
-  </ChakraLink>
 );
 
 export const getStaticProps: GetStaticProps = async () => {

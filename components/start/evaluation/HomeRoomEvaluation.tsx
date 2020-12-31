@@ -64,7 +64,7 @@ export function HomeRoomEvaluation({
   );
   if (!selectedRoom) throw new Error("Selected room id does not exist");
   const { isSticky, elementToStick } = useSticky({ windowOffset: 65 });
-  const layoutType = useLayoutType();
+  const { isDesktop } = useLayoutType();
   const invalidRoomIds = useInvalidRoomIds(rooms, questions);
 
   const handleUpdateRoomType = React.useCallback(
@@ -106,7 +106,7 @@ export function HomeRoomEvaluation({
     rooms,
   ]);
 
-  const shouldBecomeSticky = isSticky && layoutType === "desktop";
+  const shouldBecomeSticky = isSticky && isDesktop;
 
   return (
     <Stack maxWidth="950px" display="block" margin="0 auto">
@@ -134,12 +134,13 @@ export function HomeRoomEvaluation({
         <Heading size="lg" as="h2">
           Rooms
         </Heading>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vel
-          enim turpis. Duis convallis magna sit amet magna sollicitudin
-          placerat.
+        <Text marginTop={2} marginBottom={6}>
+          Add all of the rooms in your house and answer the questions for each
+          room. If you leave a question blank, you will be unable to generate a
+          report. We recommend taking pictures of the issues as you go, so you
+          can keep a visual record.
         </Text>
-        <Stack marginTop="8pt" isInline={layoutType === "desktop"}>
+        <Stack marginTop="8pt" isInline={isDesktop}>
           <div
             ref={elementToStick}
             style={{ minWidth: "250px", position: "relative" }}
@@ -184,7 +185,7 @@ export function HomeRoomEvaluation({
             </Box>
           </div>
           <Box padding="4pt" w="100%">
-            <Stack isInline={layoutType === "desktop"} marginBottom="16pt">
+            <Stack isInline={isDesktop} marginBottom="16pt">
               <FormControl flexBasis="100%">
                 <FormLabel fontSize="sm" htmlFor="room-name">
                   Room name

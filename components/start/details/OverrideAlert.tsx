@@ -46,7 +46,7 @@ export function OverrideAlert() {
           want to continue?
         </AlertDialogBody>
         <AlertDialogFooter>
-          <Button onClick={handleAbortAction}>Abort</Button>
+          <Button onClick={handleAbortAction}>Go back</Button>
           <Button ref={cancelRef} colorScheme="red" ml={3} onClick={onClose}>
             Continue
           </Button>

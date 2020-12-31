@@ -3,7 +3,14 @@ import { FaFacebook, FaInstagram, FaRecycle } from "react-icons/fa";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
-import { Stack, Text, Button, IconButton } from "@chakra-ui/react";
+import {
+  Stack,
+  Text,
+  Button,
+  IconButton,
+  Link as ChakraLink,
+} from "@chakra-ui/react";
+import { EmailIcon } from "@chakra-ui/icons";
 import { useUserStepState } from "../hooks/useUserStepState";
 import { useLayoutType } from "../hooks/useLayoutType";
 
@@ -50,7 +57,7 @@ const Layout = ({
   displayPromotionOffering,
 }: Props) => {
   const { hasSubmissionId, hasAssessmentResult } = useUserStepState();
-  const deviceTye = useLayoutType();
+  const { isDesktop } = useLayoutType();
 
   return (
     <Container>
@@ -80,7 +87,7 @@ const Layout = ({
             display="flex"
             justifyContent="space-between"
             spacing={4}
-            isInline={deviceTye !== "mobile"}
+            isInline={isDesktop}
             align="center"
           >
             <Link href="/">
@@ -91,18 +98,6 @@ const Layout = ({
               />
             </Link>
             <Stack isInline spacing={4} marginTop="8pt" align="center">
-              <Link href="/privacy">
-                <Text
-                  as="a"
-                  textColor="blue.700"
-                  fontWeight="bold"
-                  fontSize="sm"
-                  display="block"
-                  cursor="pointer"
-                >
-                  Privacy
-                </Text>
-              </Link>
               <Link href="/about">
                 <Text
                   as="a"
@@ -127,9 +122,33 @@ const Layout = ({
                   Resources
                 </Text>
               </Link>
+              <Link href="/privacy">
+                <Text
+                  as="a"
+                  textColor="blue.700"
+                  fontWeight="bold"
+                  fontSize="sm"
+                  display="block"
+                  cursor="pointer"
+                >
+                  Privacy
+                </Text>
+              </Link>
               {showSocialIcons && (
                 <Stack isInline spacing={0} bg="gray.200" borderRadius="lg">
-                  <Link href="https://www.facebook.com/QueensBACC">
+                  <ChakraLink href="mailto:queensbacc@gmail.com">
+                    <IconButton
+                      size="sm"
+                      color="blue.700"
+                      variant="ghost"
+                      aria-label="Link to QBACC's Email"
+                      icon={<EmailIcon />}
+                    />
+                  </ChakraLink>
+                  <ChakraLink
+                    href="https://www.facebook.com/QueensBACC"
+                    isExternal
+                  >
                     <IconButton
                       size="sm"
                       color="blue.700"
@@ -137,8 +156,8 @@ const Layout = ({
                       aria-label="Link to QBACC's Facebook"
                       icon={<FaFacebook />}
                     />
-                  </Link>
-                  <Link href="https://www.instagram.com/qbacc">
+                  </ChakraLink>
+                  <ChakraLink href="https://www.instagram.com/qbacc" isExternal>
                     <IconButton
                       size="sm"
                       color="blue.700"
@@ -146,7 +165,7 @@ const Layout = ({
                       aria-label="Link to QBACC's Instagram"
                       icon={<FaInstagram />}
                     />
-                  </Link>
+                  </ChakraLink>
                 </Stack>
               )}
               <Stack isInline spacing={2}>

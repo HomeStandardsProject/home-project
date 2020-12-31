@@ -1,14 +1,13 @@
 import { InfoIcon } from "@chakra-ui/icons";
-import { Box, Stack, Image, Text, Tag } from "@chakra-ui/react";
+import { Box, Stack, Image, Text, Tag, SimpleGrid } from "@chakra-ui/react";
 
 import { motion, useAnimation } from "framer-motion";
 
 import * as React from "react";
-import { useLayoutType } from "../../hooks/useLayoutType";
 
 const EXAMPLE_DATA = [
   {
-    name: "5.57 Plumbing",
+    name: "Plumbing 5.57 ",
     description:
       "All plumbing, including every drain, water pipe, water closet and other plumbing fixtures in a Dwelling and every connecting line to the Sewerage System shall be Maintained in good working order and free from leaks or defects, and all water pipes and appurtenances thereto shall be protected from freezing.",
     comment: "The faucet drips.",
@@ -16,7 +15,7 @@ const EXAMPLE_DATA = [
     left: 30.5,
   },
   {
-    name: "5.11 Doors and Windows",
+    name: "Doors and Windows 5.11",
     description:
       "Where storm windows and doors are installed in a dwelling that shall be Maintained in good Repair.",
     comment: "There is a noticeable draft from the edges of the windows",
@@ -24,7 +23,7 @@ const EXAMPLE_DATA = [
     left: 35,
   },
   {
-    name: "5.49.3 Kitchen",
+    name: "Kitchen 5.49.3",
     description:
       "Work surfaces at least 1.2 metres (4 feet) in length x 60 centimeters (2 feet) in width, exclusive of the sink, that are impervious to moisture and grease and easily cleanable so as not to impart any toxic or deleterious effect to food.",
     comment:
@@ -33,7 +32,7 @@ const EXAMPLE_DATA = [
     left: 50,
   },
   {
-    name: "4.8 Appliance",
+    name: "Appliance 4.8",
     comment: "The oven doesn't heat up.",
     description:
       "All appliances, equipment, accessories and installations provided by the Owner shall be installed and Maintained in good repair and working order and used for their intended purposes.",
@@ -43,11 +42,8 @@ const EXAMPLE_DATA = [
 ];
 
 export function HomeAssessmentInteractiveExample() {
-  const layoutType = useLayoutType();
   const violationsControls = useAnimation();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
-
-  const isMobile = layoutType === "mobile";
 
   React.useEffect(() => {
     if (hoveredIndex !== null) {
@@ -63,20 +59,22 @@ export function HomeAssessmentInteractiveExample() {
 
   return (
     <Box marginTop="16pt">
-      <Stack isInline={!isMobile} align="center">
-        <Box position="relative" order={isMobile ? 0 : 1}>
-          <Image src="/kingston-kitchen.jpeg" borderRadius="lg" />
-          {EXAMPLE_DATA.map((violation, i) => (
-            <Annotation
-              key={violation.name}
-              top={violation.top}
-              left={violation.left}
-              number={i + 1}
-              onHover={setHoveredIndex}
-            />
-          ))}
+      <SimpleGrid columns={{ sm: 1, md: 2 }} alignItems="center">
+        <Box>
+          <Box position="relative" order={{ sm: 0, md: 1 }}>
+            <Image src="/kingston-kitchen.jpeg" borderRadius="lg" />
+            {EXAMPLE_DATA.map((violation, i) => (
+              <Annotation
+                key={violation.name}
+                top={violation.top}
+                left={violation.left}
+                number={i + 1}
+                onHover={setHoveredIndex}
+              />
+            ))}
+          </Box>
         </Box>
-        <Stack flexBasis="50%" padding={2} order={isMobile ? 1 : 0}>
+        <Stack padding={2} order={{ sm: 1, md: 1 }}>
           {EXAMPLE_DATA.map((violation, i) => (
             <motion.div
               key={violation.name}
@@ -91,7 +89,7 @@ export function HomeAssessmentInteractiveExample() {
             </motion.div>
           ))}
         </Stack>
-      </Stack>
+      </SimpleGrid>
     </Box>
   );
 }

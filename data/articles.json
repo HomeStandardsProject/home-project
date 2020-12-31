@@ -1,5 +1,15 @@
 [
   { 
+    "title": "Kingston ‘housing crisis’ being blamed on Queen’s, St. Lawrence", 
+    "source": "Global News", 
+    "sourceUrl": "https://globalnews.ca/news/5840842/kingston-housing-crisis-queens-st-lawrence/"
+  },
+  { 
+    "title": "False panic increases average rent", 
+    "source": "Queen's Journal", 
+    "sourceUrl": "https://www.queensjournal.ca/story/2010-12-02/features/false-panic-increases-average-rent"
+  },
+  { 
     "title": "City creates new Climate Leadership Division, seeks public input to develop Residential Energy Retrofit Program", 
     "source": "Kingstonist", 
     "sourceUrl": "https://www.kingstonist.com/news/city-creates-new-climate-leadership-division-seeks-public-input-to-develop-residential-energy-retrofit-program"
@@ -8,15 +18,5 @@
     "title": "Safeguards in place for tenants: Structural housing issues remain largely underreported to Kingston’s Property Standards department",
     "source": "Queen's Journal", 
     "sourceUrl": "https://www.queensjournal.ca/story/2012-01-13/tenant-health-mutual-responsibility"
-  },
-  { 
-    "title": "False panic increases average rent", 
-    "source": "Queen's Journal", 
-    "sourceUrl": "https://www.queensjournal.ca/story/2010-12-02/features/false-panic-increases-average-rent"
-  },
-  { 
-    "title": "Kingston rent costs & homelessness", 
-    "source": "HomelessHub", 
-    "sourceUrl": "https://www.homelesshub.ca/community-profile/kingston"
   }
 ]
