@@ -5,6 +5,7 @@ import { RoomQuestion } from "./RoomQuestion";
 
 const DEFUALT_PROMPT: RoomAssessmentQuestion = {
   id: "1",
+  order: null,
   type: "YES/NO",
   question: "Test question",
   promptForDescriptionOn: "YES",

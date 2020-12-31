@@ -48,6 +48,7 @@ function IndexPage({ articles }: Props) {
         direction="column"
         bg={"red"}
         margin={"0 auto"}
+        marginTop={{ sm: "32pt", md: 0 }}
       >
         <Heading
           as="h1"

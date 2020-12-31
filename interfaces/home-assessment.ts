@@ -1,6 +1,7 @@
 export type RoomType = "YES/NO" | "MULTISELECT";
 export type RoomAssessmentQuestion = {
   id: string;
+  order: number | null;
   type: RoomType;
   question: string;
   promptForDescriptionOn: "YES" | "NO";

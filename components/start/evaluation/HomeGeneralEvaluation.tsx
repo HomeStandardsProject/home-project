@@ -47,8 +47,8 @@ export function HomeGeneralEvaluation({ questions, switchStep }: Props) {
         General
       </Heading>
       <Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vel
-        enim turpis. Duis convallis magna sit amet magna sollicitudin placerat.
+        Click to expand each section. Questions are optional but highly
+        encouraged to be answered to understand the state of your rental better.
       </Text>
       <Accordion allowToggle>
         {Object.entries(SECTIONS).map(([roomType, section]) => (

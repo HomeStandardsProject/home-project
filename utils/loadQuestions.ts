@@ -89,10 +89,18 @@ export function loadQuestionsFromData(questions: QuestionInput[]) {
       id: `${id}`,
       question,
       type: type as RoomType,
+      order: typeof order === "string" ? null : (order as number),
       promptForDescriptionOn: promptForDescriptionOn as "YES" | "NO",
       multiselectValues: multiselectValues?.split(","),
     });
     pastQuestionIds.push(id);
+  }
+
+  // sort questions based on order property
+  for (const roomType of ROOM_TYPES) {
+    roomBuckets[roomType] = roomBuckets[roomType].sort((a, b) =>
+      (a.order ?? 0) > (b.order ?? 0) ? 1 : -1
+    );
   }
 
   return roomBuckets;
