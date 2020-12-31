@@ -5,6 +5,7 @@ import {
   Divider,
   Heading,
   Link,
+  SimpleGrid,
   Stack,
   Tag,
   Text,
@@ -19,13 +20,13 @@ import {
   WarningIcon,
   WarningTwoIcon,
 } from "@chakra-ui/icons";
+
 import {
   ApiBylawViolation,
   ApiHomeAssessmentResult,
   ApiRoomAssessmentResult,
 } from "../../interfaces/api-home-assessment";
 
-import { useLayoutType } from "../home-assessment/hooks/useLayoutType";
 import { PDFDownloadButton } from "./PDFDownloadButton";
 
 type Props = {
@@ -33,12 +34,14 @@ type Props = {
 };
 
 export const Results: React.FC<Props> = ({ assessment }) => {
-  const layoutType = useLayoutType();
   const totalViolations = React.useMemo(
     () =>
       assessment.rooms.reduce(
-        (count, room) => count + room.violations.length,
-        0
+        (last, room) => ({
+          normal: last.normal + room.violations.length,
+          possible: last.possible + room.possibleViolations.length,
+        }),
+        { normal: 0, possible: 0 }
       ),
     [assessment]
   );
@@ -47,13 +50,11 @@ export const Results: React.FC<Props> = ({ assessment }) => {
     new Date(assessment.generatedDate)
   );
 
-  const isInline = layoutType === "desktop";
-
   return (
     <Stack marginTop="16pt" marginBottom="16pt" spacing={4}>
       <Box>
         <Heading as="h4" color="gray.700" size="md">
-          {assessment.details.address}
+          {assessment.details.address.formatted}
         </Heading>
         <Stack isInline spacing={2}>
           <Tag size="sm" colorScheme="green">
@@ -95,7 +96,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
           <Text>
             For more information on{" "}
             <Link
-              href="www.cityofkingston.ca/resident/property-standards"
+              href="https://www.cityofkingston.ca/resident/property-standards"
               color="blue.700"
               isExternal
             >
@@ -108,18 +109,25 @@ export const Results: React.FC<Props> = ({ assessment }) => {
       </Stack>
       <Divider />
       <Box>
-        <Stack
-          isInline={layoutType === "desktop"}
-          justify="space-between"
-          align="center"
-        >
+        <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={4}>
           <Box>
-            <Heading as="h3" size="xl">
-              {totalViolations} Violations
-            </Heading>
+            <Stack spacing={0}>
+              <Box>
+                <Tag colorScheme="blue" size="sm">
+                  {totalViolations.possible} Possible Violations
+                </Tag>
+              </Box>
+              <Heading as="h3" size="xl">
+                {totalViolations.normal} Violations
+              </Heading>
+            </Stack>
             <Text color="gray.400">{generatedDate}</Text>
           </Box>
-          <Stack isInline spacing="4">
+          <Stack
+            isInline
+            spacing={2}
+            justify={{ sm: "flex-start", md: "flex-end" }}
+          >
             <PDFDownloadButton result={assessment} />
             <NextLink href="next-steps">
               <Button
@@ -132,13 +140,13 @@ export const Results: React.FC<Props> = ({ assessment }) => {
               </Button>
             </NextLink>
           </Stack>
-        </Stack>
+        </SimpleGrid>
         <Box marginTop="16pt">
           <Heading as="h4" size="md">
             Rooms
           </Heading>
           {assessment.rooms.map((room) => (
-            <RoomViolations key={room.id} room={room} isInline={isInline} />
+            <RoomViolations key={room.id} room={room} />
           ))}
         </Box>
       </Box>
@@ -148,18 +156,19 @@ export const Results: React.FC<Props> = ({ assessment }) => {
 
 const RoomViolations: React.FC<{
   room: ApiRoomAssessmentResult;
-  isInline: boolean;
-}> = ({ room, isInline }) => {
+}> = ({ room }) => {
   const hasViolationOrPossibleOnes = React.useMemo(
     () => room.possibleViolations.length > 0 || room.violations.length > 0,
     [room.possibleViolations.length, room.violations.length]
   );
 
   return (
-    <Stack marginTop="16pt" isInline={isInline}>
-      <Text as="b" width="30%" minW="200px">
-        {room.name}
-      </Text>
+    <SimpleGrid
+      marginTop="16pt"
+      columns={{ sm: 1, md: 2 }}
+      gridTemplateColumns={{ sm: "100%", md: "minmax(200px, 30%) 70%" }}
+    >
+      <Text as="b">{room.name}</Text>
       <Stack flexBasis="100%" spacing={2}>
         <Stack alignItems="center" isInline>
           <WarningIcon color="red.600" />
@@ -208,7 +217,7 @@ const RoomViolations: React.FC<{
         )}
         <Divider />
       </Stack>
-    </Stack>
+    </SimpleGrid>
   );
 };
 

@@ -17,8 +17,8 @@
     "id": 2,
     "name": "Plumbing 5.58",
     "description": "All plumbing fixtures shall be connected to the Sewerage System through water seal traps.",
-    "mustBeNo": 2,
-    "mustBeYes": ""
+    "mustBeNo": "",
+    "mustBeYes": 2
   },
   {
     "id": 3,
@@ -39,13 +39,6 @@
     "name": "Toilet and Bathroom Facilities 5.63",
     "description": "Every Dwelling Unit (except as otherwise provided) shall contain\n\ntoilet and bathroom plumbing fixtures consisting of at least one water closet, one wash basin and one bathtub or shower.",
     "mustBeNo": 6,
-    "mustBeYes": ""
-  },
-  {
-    "id": 6,
-    "name": "Toilet and Bathroom Facilities 5.65",
-    "description": "All Bathrooms and Toilet Rooms shall be located within and accessible from within the Dwelling Unit except that the Occupants of two Dwelling Units each containing not more than two Habitable Rooms may share toilet and bathroom facilities provided that access to the said toilet and bathroom facilities can be gained without going through rooms of either or another Dwelling Unit or outside of the building.",
-    "mustBeNo": 7,
     "mustBeYes": ""
   },
   {
@@ -521,36 +514,36 @@
     "id": 72,
     "name": "Walls, Ceilings and Floors 5.77",
     "description": "Every floor in a Dwelling shall be acceptably level and be Maintained so as to be free of all loose, warped, protruding, broken or rotted boards, and cracks. \"Acceptably level\" shall be defined as not more than 75 mm (3 inches) slope in 3 metres (10 feet) and not more than 25mm in 610 mm (1 inch in 2 feet).",
-    "mustBeNo": 45,
-    "mustBeYes": ""
+    "mustBeNo": "",
+    "mustBeYes": 45
   },
   {
     "id": 137,
     "name": "Walls, Ceilings and Floors 5.77",
     "description": "Every floor in a Dwelling shall be acceptably level and be Maintained so as to be free of all loose, warped, protruding, broken or rotted boards, and cracks. \"Acceptably level\" shall be defined as not more than 75 mm (3 inches) slope in 3 metres (10 feet) and not more than 25mm in 610 mm (1 inch in 2 feet).",
-    "mustBeNo": 46,
-    "mustBeYes": ""
+    "mustBeNo": "",
+    "mustBeYes": 46
   },
   {
     "id": 139,
     "name": "Walls, Ceilings and Floors 5.77",
     "description": "Every floor in a Dwelling shall be acceptably level and be Maintained so as to be free of all loose, warped, protruding, broken or rotted boards, and cracks. \"Acceptably level\" shall be defined as not more than 75 mm (3 inches) slope in 3 metres (10 feet) and not more than 25mm in 610 mm (1 inch in 2 feet).",
-    "mustBeNo": 47,
-    "mustBeYes": ""
+    "mustBeNo": "",
+    "mustBeYes": 47
   },
   {
     "id": 138,
     "name": "Walls, Ceilings and Floors 5.77",
     "description": "Every floor in a Dwelling shall be acceptably level and be Maintained so as to be free of all loose, warped, protruding, broken or rotted boards, and cracks. \"Acceptably level\" shall be defined as not more than 75 mm (3 inches) slope in 3 metres (10 feet) and not more than 25mm in 610 mm (1 inch in 2 feet).",
-    "mustBeNo": 48,
-    "mustBeYes": ""
+    "mustBeNo": "",
+    "mustBeYes": 48
   },
   {
     "id": 136,
     "name": "Walls, Ceilings and Floors 5.77",
     "description": "Every floor in a Dwelling shall be acceptably level and be Maintained so as to be free of all loose, warped, protruding, broken or rotted boards, and cracks. \"Acceptably level\" shall be defined as not more than 75 mm (3 inches) slope in 3 metres (10 feet) and not more than 25mm in 610 mm (1 inch in 2 feet).",
-    "mustBeNo": 59,
-    "mustBeYes": ""
+    "mustBeNo": "",
+    "mustBeYes": 59
   },
   {
     "id": 76,
@@ -584,7 +577,7 @@
     "id": 142,
     "name": "Walls, Ceilings and Floors 5.79",
     "description": "Where necessary, interior walls shall have baseboards that shall be Maintained in good Repair and tight fitting so as to prevent the accumulation of dust and garbage.",
-    "mustBeNo": 91,
+    "mustBeNo": "",
     "mustBeYes": ""
   },
   {
@@ -649,5 +642,12 @@
     "description": "Room temperature shall be determined at any point in the room.",
     "mustBeNo": 53,
     "mustBeYes": ""
+  },
+  {
+    "id": 145,
+    "name": "Pest Prevention 4.27",
+    "description": "Buildings shall be kept free of rodents, vermin and insects\nat all times.",
+    "mustBeNo": "",
+    "mustBeYes": 96
   }
 ]

@@ -7,21 +7,26 @@ import {
   ApiHomeAssessmentResult,
   ApiRoom,
 } from "../../interfaces/api-home-assessment";
-import { AllRoomAssessmentQuestion } from "../../interfaces/home-assessment";
+import {
+  AllRoomAssessmentQuestion,
+  HomeDetails,
+} from "../../interfaces/home-assessment";
 import { MockDatastore } from "../datastore/MockDatastore";
 import { generateSetOfNullifiedFields } from "../utils/generateSetOfNullifiedFields";
 import { RecursiveRequiredObject } from "../utils/RecursiveRequiredObject";
 import { handleHomeAssessment } from "./handleHomeAssessment";
 import { Datastore } from "../datastore/Datastore";
-import { INITIAL_VALUES } from "../../components/home-assessment/hooks/useRoomAssessmentQuestions";
+import { INITIAL_VALUES_QUESTIONS_VALUES } from "../../utils/loadQuestions";
 
 jest.mock("uuid");
 
 const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
-  ...INITIAL_VALUES,
+  ...INITIAL_VALUES_QUESTIONS_VALUES,
   LIVING: [
     {
       id: "1",
+      order: null,
+      type: "YES/NO",
       question: "Living room Question 1",
       promptForDescriptionOn: "NO",
     },
@@ -29,6 +34,8 @@ const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
   WASH: [
     {
       id: "2",
+      order: null,
+      type: "YES/NO",
       question: "Washroom Question 2",
       promptForDescriptionOn: "NO",
     },
@@ -36,11 +43,15 @@ const MOCK_QUESTIONS: AllRoomAssessmentQuestion = {
   BED: [
     {
       id: "3",
+      order: null,
+      type: "YES/NO",
       question: "Bedroom Question 3",
       promptForDescriptionOn: "NO",
     },
     {
       id: "4",
+      order: null,
+      type: "YES/NO",
       question: "Bedroom Question 3",
       promptForDescriptionOn: "NO",
     },
@@ -64,15 +75,8 @@ const MOCK_ROOM: ApiRoom = {
   responses: {},
 };
 
-const MOCK_DETAILS: ApiHomeAssessmentInput["details"] = {
-  landlord: "Frontenac Property Management",
-  rentalType: "Full house",
-  totalRent: "499.99",
-  address: "99 University Ave, Kingston, ON",
-};
-
 const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput> = {
-  details: MOCK_DETAILS,
+  submissionId: "randomId",
   rooms: [
     {
       name: "Living Room 1",
@@ -84,6 +88,19 @@ const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput>
       },
     },
   ],
+};
+
+const MOCK_DETAILS: HomeDetails = {
+  landlord: "Frontenac Property Management",
+  rentalType: "Full house",
+  totalRent: "499.99",
+  numberOfBedrooms: 3,
+  address: {
+    userProvided: "99 University",
+    formatted: "99 University, Kingston, Ontario",
+    long: "0.00",
+    lat: "0.00",
+  },
 };
 
 const testHandleHomeAssessment = (
@@ -136,7 +153,7 @@ describe("/api/home-assessment", () => {
     const { req, res } = createMocks({
       method: "POST",
       body: {
-        details: MOCK_DETAILS,
+        submissionId: "randomId",
         rooms: [
           {
             ...MOCK_ROOM,
@@ -157,59 +174,11 @@ describe("/api/home-assessment", () => {
     });
   });
 
-  it("returns 400 when rent price is negative", async () => {
-    const { req, res } = createMocks({
-      method: "POST",
-      body: {
-        details: { ...MOCK_DETAILS, totalRent: "-9.99" },
-        rooms: [],
-      },
-    });
-
-    await testHandleHomeAssessment(req, res);
-
-    expect(res._getStatusCode()).toEqual(400);
-    expect(JSON.parse(res._getData())).toEqual({
-      errors: [
-        {
-          location: "body",
-          msg: "Invalid value",
-          param: "details.totalRent",
-          value: "-9.99",
-        },
-      ],
-    });
-  });
-
-  it("returns 400 when landlord other is not defined", async () => {
-    const { req, res } = createMocks({
-      method: "POST",
-      body: {
-        details: { ...MOCK_DETAILS, landlord: "Other", landlordOther: null },
-        rooms: [],
-      },
-    });
-
-    await testHandleHomeAssessment(req, res);
-
-    expect(res._getStatusCode()).toEqual(400);
-    expect(JSON.parse(res._getData())).toEqual({
-      errors: [
-        {
-          location: "body",
-          msg: "landlordOther must be defined when landlord is set to 'Other'",
-          param: "details.landlordOther",
-          value: null,
-        },
-      ],
-    });
-  });
-
   it("returns 400 when not all questions are answered", async () => {
     const { req, res } = createMocks({
       method: "POST",
       body: {
-        details: MOCK_DETAILS,
+        submissionId: "randomId",
         rooms: [
           {
             ...MOCK_ROOM,
@@ -234,7 +203,7 @@ describe("/api/home-assessment", () => {
     const { req, res } = createMocks({
       method: "POST",
       body: {
-        details: MOCK_DETAILS,
+        submissionId: "randomId",
         rooms: [
           {
             ...MOCK_ROOM,
@@ -246,8 +215,11 @@ describe("/api/home-assessment", () => {
         ],
       },
     });
+    const mockStore = new MockDatastore();
+    mockStore.fetchHomeDetailsById = () =>
+      new Promise((resolve) => resolve([MOCK_DETAILS, null]));
 
-    await testHandleHomeAssessment(req, res);
+    await testHandleHomeAssessment(req, res, mockStore);
 
     expect(res._getStatusCode()).toEqual(200);
     const result = JSON.parse(res._getData()) as ApiHomeAssessmentResult;
@@ -267,7 +239,7 @@ describe("/api/home-assessment", () => {
     const { req, res } = createMocks({
       method: "POST",
       body: {
-        details: MOCK_DETAILS,
+        submissionId: "randomId",
         rooms: [
           {
             ...MOCK_ROOM,
@@ -279,8 +251,11 @@ describe("/api/home-assessment", () => {
         ],
       },
     });
+    const mockStore = new MockDatastore();
+    mockStore.fetchHomeDetailsById = () =>
+      new Promise((resolve) => resolve([MOCK_DETAILS, null]));
 
-    await testHandleHomeAssessment(req, res);
+    await testHandleHomeAssessment(req, res, mockStore);
 
     expect(res._getStatusCode()).toEqual(200);
     const result = JSON.parse(res._getData()) as ApiHomeAssessmentResult;
@@ -307,7 +282,7 @@ describe("/api/home-assessment", () => {
     const { req, res } = createMocks({
       method: "POST",
       body: {
-        details: MOCK_DETAILS,
+        submissionId: "randomId",
         rooms: [
           {
             ...MOCK_ROOM,
@@ -327,10 +302,11 @@ describe("/api/home-assessment", () => {
       () => new Promise<[true, null]>((resolve) => resolve([true, null]))
     );
 
-    const store: Datastore = {
-      saveHomeAssessmentInput: moockedSaveHomeAssessmentInput,
-      saveHomeAssessmentResult: mockedSaveHomeAssessmentResult,
-    };
+    const store: Datastore = new MockDatastore();
+    store.saveHomeAssessmentInput = moockedSaveHomeAssessmentInput;
+    store.saveHomeAssessmentResult = mockedSaveHomeAssessmentResult;
+    store.fetchHomeDetailsById = () =>
+      new Promise((resolve) => resolve([MOCK_DETAILS, null]));
 
     await testHandleHomeAssessment(req, res, store);
     expect(res._getStatusCode()).toEqual(200);

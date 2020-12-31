@@ -1,21 +1,27 @@
 import Airtable from "airtable";
 
 import {
-  ApiHomeAssessmentInput,
   ApiHomeAssessmentInputWithRoomIds,
   ApiHomeAssessmentResult,
 } from "../../interfaces/api-home-assessment";
+import { ApiUserInfo } from "../../interfaces/api-user-info";
+import { HomeDetails } from "../../interfaces/home-assessment";
+import { UNKNOWN_ERROR } from "../../utils/apiErrors";
 import { chunk } from "../../utils/chunkArray";
 import { Datastore } from "./Datastore";
 
 type AirtableSubmissionRow = {
   id: string;
-  address: string;
+  userProvidedAddress: string;
+  formattedAddress: string;
+  long: string;
+  lat: string;
   unitNumber?: string;
   rentalType: string;
   totalRent: number;
   landlord: string;
   landlordOther?: string;
+  numberOfBedrooms: number;
 };
 
 type AirtableRoomRow = {
@@ -29,6 +35,7 @@ type AirtableRoomResponsesRow = {
   roomId: string;
   questionId: string;
   answer: "YES" | "NO" | "UNSURE";
+  selectedMultiselect: string;
 };
 
 type AirtableRoomViolationRow = {
@@ -45,18 +52,48 @@ export class AirtableStore implements Datastore {
     this._base = Airtable.base(baseId);
   }
 
-  async saveHomeAssessmentInput(
+  async fetchHomeDetailsById(
+    submissionId: string
+  ): Promise<[HomeDetails | null, Error | null]> {
+    try {
+      const val = await this._base("raw_submissions")
+        .select({
+          maxRecords: 1,
+          filterByFormula: `id = "${submissionId}"`,
+        })
+        .all();
+
+      if (val.length > 0) {
+        return [transformHomeDetailsAirtableRow(val[0].fields), null];
+      }
+      return [null, new Error("submission id does not exist")];
+    } catch (error) {
+      console.error(error);
+      return [null, UNKNOWN_ERROR];
+    }
+  }
+
+  async saveHomeDetails(
     submissionId: string,
+    details: HomeDetails
+  ): Promise<[boolean, Error | null]> {
+    try {
+      await this._base("raw_submissions").create(
+        transformHomeDetailsToRow(submissionId, details)
+      );
+      return [true, null];
+    } catch (error) {
+      return [false, error];
+    }
+  }
+
+  async saveHomeAssessmentInput(
     input: ApiHomeAssessmentInputWithRoomIds
   ): Promise<[boolean, Error | null]> {
     try {
-      // save details
-      await this._base("raw_submissions").create(
-        transformInputToSubmissionRow(submissionId, input)
-      );
       // save room data
       const transfomredRoomRows = transformInputToRoomRows(
-        submissionId,
+        input.submissionId,
         input
       ).map((row) => ({
         fields: row,
@@ -65,7 +102,7 @@ export class AirtableStore implements Datastore {
 
       // save room responses
       const transformedRoomResponses = transformInputToRoomResponses(
-        submissionId,
+        input.submissionId,
         input
       ).map((row) => ({
         fields: row,
@@ -110,6 +147,15 @@ export class AirtableStore implements Datastore {
         );
       }
 
+      return [true, null];
+    } catch (error) {
+      return [false, error];
+    }
+  }
+
+  async saveUserInfo(details: ApiUserInfo): Promise<[boolean, Error | null]> {
+    try {
+      await this._base("user_info").create(details);
       return [true, null];
     } catch (error) {
       return [false, error];
@@ -176,18 +222,41 @@ function transformInputToRoomRows(
   );
 }
 
-function transformInputToSubmissionRow(
+function transformHomeDetailsToRow(
   id: string,
-  input: ApiHomeAssessmentInput
+  details: HomeDetails
 ): AirtableSubmissionRow {
   return {
     id,
-    address: input.details.address,
-    unitNumber: input.details.unitNumber,
-    rentalType: input.details.rentalType,
-    totalRent: parseFloat(input.details.totalRent),
-    landlord: input.details.landlord,
-    landlordOther: input.details.landlordOther,
+    userProvidedAddress: details.address.userProvided,
+    formattedAddress: details.address.formatted,
+    long: details.address.long,
+    lat: details.address.lat,
+    unitNumber: details.unitNumber,
+    rentalType: details.rentalType,
+    totalRent: parseFloat(details.totalRent),
+    landlord: details.landlord,
+    landlordOther: details.landlordOther,
+    numberOfBedrooms: details.numberOfBedrooms,
+  };
+}
+
+function transformHomeDetailsAirtableRow(
+  row: AirtableSubmissionRow
+): HomeDetails {
+  return {
+    address: {
+      userProvided: row.userProvidedAddress,
+      formatted: row.formattedAddress,
+      long: row.long,
+      lat: row.lat,
+    },
+    numberOfBedrooms: row.numberOfBedrooms,
+    unitNumber: row.unitNumber,
+    rentalType: row.rentalType as HomeDetails["rentalType"],
+    totalRent: `${row.totalRent}`,
+    landlord: row.landlord,
+    landlordOther: row.landlordOther,
   };
 }
 
@@ -201,6 +270,7 @@ function transformInputToRoomResponses(
       roomId: room.id,
       questionId,
       answer: response.answer,
+      selectedMultiselect: response.selectedMultiselect ?? "",
     }))
   );
 

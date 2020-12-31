@@ -3,10 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 import { check, validationResult } from "express-validator";
 import {
   ROOM_TYPES,
-  RENTAL_TYPES,
-  LANDLORDS,
   AllRoomAssessmentQuestion,
   RoomTypes,
+  isGeneralRoomType,
 } from "../../interfaces/home-assessment";
 import { validateMiddleware } from "../utils/validation";
 import {
@@ -22,29 +21,15 @@ import { Datastore } from "../datastore/Datastore";
 
 const validateSchema = validateMiddleware(
   [
-    check("details.address").isString(),
-    // .map is a workaround to a typescript readonly issue
-    check("details.rentalType").isIn(RENTAL_TYPES.map((i) => i)),
-    check("details.totalRent").isCurrency({ allow_negatives: false }),
-    check("details.landlord").isIn(LANDLORDS.map((i) => i)),
-    check("details.landlordOther")
-      // if the landlord is set to other, then the value for this field must be defined
-      .custom((value, { req }) => {
-        if (req.body.details.landlord === "Other") {
-          if (value && typeof value === "string") {
-            return true;
-          }
-          throw new Error(
-            "landlordOther must be defined when landlord is set to 'Other'"
-          );
-        }
-        return true;
-      }),
+    check("submissionId").isString(),
     check("rooms.*.name").isString(),
     check("rooms.*.type").isIn(ROOM_TYPES.map((i) => i)),
     check("rooms.*.responses").exists(),
     check("rooms.*.responses.*.answer").isIn(["YES", "NO", "UNSURE"]),
     check("rooms.*.responses.*.description")
+      .optional({ nullable: true })
+      .isString(),
+    check("rooms.*.responses.*.selectedMultiselect")
       .optional({ nullable: true })
       .isString(),
   ],
@@ -64,6 +49,14 @@ export async function handleHomeAssessment(
       return res.status(400).json({ errors: validationErrors.array() });
 
     const input = req.body as ApiHomeAssessmentInput;
+
+    const [details, error] = await datastore.fetchHomeDetailsById(
+      input.submissionId
+    );
+    if (!details || error)
+      return res
+        .status(400)
+        .send({ errors: [{ msg: "invalid submission id" }] });
 
     const promptValidationErrors = input.rooms
       .map((room) =>
@@ -90,12 +83,11 @@ export async function handleHomeAssessment(
       }
     );
 
-    const submissionId = uuidv4();
     const [
       inputSaveResult,
       inputSaveError,
-    ] = await datastore.saveHomeAssessmentInput(submissionId, {
-      details: input.details,
+    ] = await datastore.saveHomeAssessmentInput({
+      submissionId: input.submissionId,
       rooms: inputRoomsWithId,
     });
 
@@ -108,14 +100,15 @@ export async function handleHomeAssessment(
 
     const result: ApiHomeAssessmentResult = {
       rooms,
-      details: input.details,
+      details,
       generatedDate: new Date(),
     };
 
     const [
       violationsSaveResult,
       violationsSaveError,
-    ] = await datastore.saveHomeAssessmentResult(submissionId, result);
+    ] = await datastore.saveHomeAssessmentResult(input.submissionId, result);
+
     if (violationsSaveResult === false) {
       console.error(violationsSaveError);
       return res
@@ -134,6 +127,9 @@ function validateAllPromptsAreAnswered(
   responses: { [questionId: string]: ApiRoomAssessmentQuestionResponse },
   questions: AllRoomAssessmentQuestion
 ) {
+  // general room type questions are optional
+  if (isGeneralRoomType(type)) return null;
+
   const validationErrors = [];
   const questionsForType = questions[type];
   for (const question of questionsForType) {
