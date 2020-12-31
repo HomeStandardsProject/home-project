@@ -321,7 +321,10 @@ function IndexPage({ articles }: Props) {
               places to live
             </Text>
             <Box>
-              <ChakraLink href="https://www.google.com/" isExternal>
+              <ChakraLink
+                href="https://docs.google.com/forms/d/e/1FAIpQLSd8vaWsAFvZQANtaEC0AryfBswk5RP2N-1mr9zl0FA4bFh8yQ/viewform?usp=sf_link"
+                isExternal
+              >
                 <Button
                   variant="outline"
                   colorScheme="white"
