@@ -3,8 +3,10 @@ import {
   CircularProgress,
   CircularProgressLabel,
   Progress,
+  SimpleGrid,
   Stack,
   Text,
+  useBreakpointValue,
   useToast,
 } from "@chakra-ui/react";
 import * as React from "react";
@@ -27,7 +29,6 @@ import {
   INITIAL_STATE,
 } from "./hooks/useHomeEvaluation";
 import { useHomeEvaluationProgress } from "./hooks/useHomeEvaluationProgress";
-import { useLayoutType } from "../../../hooks/useLayoutType";
 
 type Props = {
   submissionId: string;
@@ -46,7 +47,7 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
   } = useAssessmentCalculatorApi();
   const toast = useToast();
   const router = useRouter();
-  const { isMobile, isDesktop } = useLayoutType();
+  const progressBarStyle = useBreakpointValue({ sm: "bar", md: "circular" });
   const [showErrors, setShowErrors] = React.useState(false);
 
   const handleSwitchStep = React.useCallback(() => {
@@ -110,7 +111,7 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
   }, [progress]);
 
   const progressBar = React.useMemo(() => {
-    return isMobile ? (
+    return progressBarStyle === "bar" ? (
       <Box width="100%">
         <Progress value={progress} colorScheme="blue" size="sm" />
       </Box>
@@ -119,7 +120,7 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
         <CircularProgressLabel>{progress}%</CircularProgressLabel>
       </CircularProgress>
     );
-  }, [progress, isMobile]);
+  }, [progress, progressBarStyle]);
 
   return (
     <HomeEvaluationState.Provider value={evaluationData}>
@@ -140,17 +141,13 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
             padding="0.5rem"
           >
             <Box width="100%">
-              <Stack
-                isInline={isDesktop}
-                justify="space-between"
-                align={isDesktop ? "center" : "left"}
-              >
+              <SimpleGrid columns={{ sm: 1, md: 2 }}>
                 <Stack spacing="0">
                   <Text fontWeight="bold">{details.address.formatted}</Text>
                   <Text>{details.landlord}</Text>
                 </Stack>
-                {progressBar}
-              </Stack>
+                <Box textAlign="right">{progressBar}</Box>
+              </SimpleGrid>
             </Box>
           </Box>
         </Box>

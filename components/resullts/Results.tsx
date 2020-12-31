@@ -5,6 +5,7 @@ import {
   Divider,
   Heading,
   Link,
+  SimpleGrid,
   Stack,
   Tag,
   Text,
@@ -27,14 +28,12 @@ import {
 } from "../../interfaces/api-home-assessment";
 
 import { PDFDownloadButton } from "./PDFDownloadButton";
-import { useLayoutType } from "../../hooks/useLayoutType";
 
 type Props = {
   assessment: ApiHomeAssessmentResult;
 };
 
 export const Results: React.FC<Props> = ({ assessment }) => {
-  const { isDesktop } = useLayoutType();
   const totalViolations = React.useMemo(
     () =>
       assessment.rooms.reduce(
@@ -110,7 +109,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
       </Stack>
       <Divider />
       <Box>
-        <Stack isInline={isDesktop} justify="space-between" align="center">
+        <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={4}>
           <Box>
             <Stack spacing={0}>
               <Box>
@@ -124,7 +123,11 @@ export const Results: React.FC<Props> = ({ assessment }) => {
             </Stack>
             <Text color="gray.400">{generatedDate}</Text>
           </Box>
-          <Stack isInline spacing={2}>
+          <Stack
+            isInline
+            spacing={2}
+            justify={{ sm: "flex-start", md: "flex-end" }}
+          >
             <PDFDownloadButton result={assessment} />
             <NextLink href="next-steps">
               <Button
@@ -137,13 +140,13 @@ export const Results: React.FC<Props> = ({ assessment }) => {
               </Button>
             </NextLink>
           </Stack>
-        </Stack>
+        </SimpleGrid>
         <Box marginTop="16pt">
           <Heading as="h4" size="md">
             Rooms
           </Heading>
           {assessment.rooms.map((room) => (
-            <RoomViolations key={room.id} room={room} isInline={isDesktop} />
+            <RoomViolations key={room.id} room={room} />
           ))}
         </Box>
       </Box>
@@ -153,18 +156,19 @@ export const Results: React.FC<Props> = ({ assessment }) => {
 
 const RoomViolations: React.FC<{
   room: ApiRoomAssessmentResult;
-  isInline: boolean;
-}> = ({ room, isInline }) => {
+}> = ({ room }) => {
   const hasViolationOrPossibleOnes = React.useMemo(
     () => room.possibleViolations.length > 0 || room.violations.length > 0,
     [room.possibleViolations.length, room.violations.length]
   );
 
   return (
-    <Stack marginTop="16pt" isInline={isInline}>
-      <Text as="b" width="30%" minW="200px">
-        {room.name}
-      </Text>
+    <SimpleGrid
+      marginTop="16pt"
+      columns={{ sm: 1, md: 2 }}
+      gridTemplateColumns={{ sm: "100%", md: "minmax(200px, 30%) 70%" }}
+    >
+      <Text as="b">{room.name}</Text>
       <Stack flexBasis="100%" spacing={2}>
         <Stack alignItems="center" isInline>
           <WarningIcon color="red.600" />
@@ -213,7 +217,7 @@ const RoomViolations: React.FC<{
         )}
         <Divider />
       </Stack>
-    </Stack>
+    </SimpleGrid>
   );
 };
 

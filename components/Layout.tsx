@@ -9,10 +9,10 @@ import {
   Button,
   IconButton,
   Link as ChakraLink,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { EmailIcon } from "@chakra-ui/icons";
 import { useUserStepState } from "../hooks/useUserStepState";
-import { useLayoutType } from "../hooks/useLayoutType";
 
 type Props = {
   children?: ReactNode;
@@ -20,6 +20,7 @@ type Props = {
   description: string;
   showStartButton?: boolean;
   showSocialIcons?: boolean;
+  showLastResults?: boolean;
   displayPromotionOffering?: () => void;
 };
 
@@ -52,12 +53,12 @@ const Layout = ({
   children,
   title,
   description,
+  showLastResults = true,
   showStartButton = false,
   showSocialIcons = false,
   displayPromotionOffering,
 }: Props) => {
   const { hasSubmissionId, hasAssessmentResult } = useUserStepState();
-  const { isDesktop } = useLayoutType();
 
   return (
     <Container>
@@ -83,13 +84,7 @@ const Layout = ({
       </Head>
       <header>
         <nav>
-          <Stack
-            display="flex"
-            justifyContent="space-between"
-            spacing={4}
-            isInline={isDesktop}
-            align="center"
-          >
+          <SimpleGrid spacing={{ sm: 0, md: 4 }} columns={{ sm: 1, md: 2 }}>
             <Link href="/">
               <img
                 src="/logo.svg"
@@ -97,7 +92,13 @@ const Layout = ({
                 alt="QBACC's Home Project"
               />
             </Link>
-            <Stack isInline spacing={4} marginTop="8pt" align="center">
+            <Stack
+              isInline
+              spacing={4}
+              marginTop="8pt"
+              align="center"
+              justify={{ sm: "space-around", md: "flex-end" }}
+            >
               <Link href="/about">
                 <Text
                   as="a"
@@ -168,35 +169,33 @@ const Layout = ({
                   </ChakraLink>
                 </Stack>
               )}
-              <Stack isInline spacing={2}>
-                {showStartButton && (
-                  <Link href="/start">
-                    <Button colorScheme="blue" size="sm">
-                      {hasSubmissionId ? "Continue Evaluation" : "Start"}
-                    </Button>
-                  </Link>
-                )}
-                {hasAssessmentResult && (
-                  <Link href="/results">
-                    <Button colorScheme="blue" size="sm" variant="outline">
-                      View last result
-                    </Button>
-                  </Link>
-                )}
-                {displayPromotionOffering && (
-                  <Button
-                    leftIcon={<FaRecycle />}
-                    colorScheme="green"
-                    variant="outline"
-                    size="sm"
-                    onClick={displayPromotionOffering}
-                  >
-                    Collect green bin
+              {showStartButton && (
+                <Link href="/start">
+                  <Button colorScheme="blue" size="sm">
+                    {hasSubmissionId ? "Continue Evaluation" : "Start"}
                   </Button>
-                )}
-              </Stack>
+                </Link>
+              )}
+              {hasAssessmentResult && showLastResults && (
+                <Link href="/results">
+                  <Button colorScheme="blue" size="sm" variant="outline">
+                    View last result
+                  </Button>
+                </Link>
+              )}
+              {displayPromotionOffering && (
+                <Button
+                  leftIcon={<FaRecycle />}
+                  colorScheme="green"
+                  variant="outline"
+                  size="sm"
+                  onClick={displayPromotionOffering}
+                >
+                  Collect green bin
+                </Button>
+              )}
             </Stack>
-          </Stack>
+          </SimpleGrid>
         </nav>
       </header>
       <Content>{children}</Content>

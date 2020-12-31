@@ -17,10 +17,12 @@ import {
   FormLabel,
   Input,
   Select,
+  SimpleGrid,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { Flipped, Flipper } from "react-flip-toolkit";
-import { useLayoutType } from "../../../hooks/useLayoutType";
+
 import useSticky from "../../../hooks/useSticky";
 import {
   NON_GENERAL_ROOM_TYPES,
@@ -64,7 +66,7 @@ export function HomeRoomEvaluation({
   );
   if (!selectedRoom) throw new Error("Selected room id does not exist");
   const { isSticky, elementToStick } = useSticky({ windowOffset: 65 });
-  const { isDesktop } = useLayoutType();
+  const shouldBecomeSticky = useBreakpointValue({ sm: false, md: true });
   const invalidRoomIds = useInvalidRoomIds(rooms, questions);
 
   const handleUpdateRoomType = React.useCallback(
@@ -106,7 +108,7 @@ export function HomeRoomEvaluation({
     rooms,
   ]);
 
-  const shouldBecomeSticky = isSticky && isDesktop;
+  const enableStickyness = isSticky && shouldBecomeSticky;
 
   return (
     <Stack maxWidth="950px" display="block" margin="0 auto">
@@ -140,18 +142,19 @@ export function HomeRoomEvaluation({
           report. We recommend taking pictures of the issues as you go, so you
           can keep a visual record.
         </Text>
-        <Stack marginTop="8pt" isInline={isDesktop}>
-          <div
-            ref={elementToStick}
-            style={{ minWidth: "250px", position: "relative" }}
-          >
+        <SimpleGrid
+          marginTop="8pt"
+          columns={{ sm: 1, md: 2 }}
+          gridTemplateColumns={{ sm: "100%", md: "minmax(200px, 30%) 70%" }}
+        >
+          <div ref={elementToStick} style={{ position: "relative" }}>
             <Box
               bg="gray.100"
               margin="2pt"
               padding="4pt"
               rounded="md"
               minW="250px"
-              position={shouldBecomeSticky ? "fixed" : "initial"}
+              position={enableStickyness ? "fixed" : "initial"}
               top={"65px"}
             >
               <Flipper flipKey={flipKey}>
@@ -185,7 +188,11 @@ export function HomeRoomEvaluation({
             </Box>
           </div>
           <Box padding="4pt" w="100%">
-            <Stack isInline={isDesktop} marginBottom="16pt">
+            <SimpleGrid
+              marginBottom="16pt"
+              columns={{ sm: 1, md: 2 }}
+              spacing={4}
+            >
               <FormControl flexBasis="100%">
                 <FormLabel fontSize="sm" htmlFor="room-name">
                   Room name
@@ -216,7 +223,7 @@ export function HomeRoomEvaluation({
                   ))}
                 </Select>
               </FormControl>
-            </Stack>
+            </SimpleGrid>
             <Box>
               {questions[selectedRoom.type].map((prompt) => (
                 <RoomQuestion
@@ -233,7 +240,7 @@ export function HomeRoomEvaluation({
               ))}
             </Box>
           </Box>
-        </Stack>
+        </SimpleGrid>
       </Box>
     </Stack>
   );

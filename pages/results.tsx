@@ -13,6 +13,7 @@ const ResultPage: React.FC = () => {
       title="Results"
       description="Results for the home assessment"
       displayPromotionOffering={onOpen}
+      showLastResults={false}
     >
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
