@@ -328,7 +328,7 @@
     "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "order": 11,
     "roomType": "WASH",
-    "promptForDescriptionOn": "NO",
+    "promptForDescriptionOn": "YES",
     "type": "YES/NO",
     "multiselectValues": ""
   },
@@ -337,7 +337,7 @@
     "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "order": 14,
     "roomType": "KITCHEN",
-    "promptForDescriptionOn": "NO",
+    "promptForDescriptionOn": "YES",
     "type": "YES/NO",
     "multiselectValues": ""
   },
@@ -346,7 +346,7 @@
     "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "order": 9,
     "roomType": "BED",
-    "promptForDescriptionOn": "NO",
+    "promptForDescriptionOn": "YES",
     "type": "YES/NO",
     "multiselectValues": ""
   },
@@ -355,7 +355,7 @@
     "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
     "order": 8,
     "roomType": "LIVING",
-    "promptForDescriptionOn": "NO",
+    "promptForDescriptionOn": "YES",
     "type": "YES/NO",
     "multiselectValues": ""
   },
@@ -445,7 +445,7 @@
     "question": "Do your stairs, porches, decks, or balconies have holes, cracks, or other defects?",
     "order": 4,
     "roomType": "EXTERIOR",
-    "promptForDescriptionOn": "NO",
+    "promptForDescriptionOn": "YES",
     "type": "YES/NO",
     "multiselectValues": ""
   },
