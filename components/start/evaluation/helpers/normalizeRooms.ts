@@ -24,7 +24,7 @@ export function normalizeRoomNames(sortedRooms: Room[]): NormalizedRoom[] {
         // different type of room or no room rolling, start new count
         normalizedRooms.push({
           ...room,
-          name: `${transformRoomTypeToLabel(room.type)} 1`,
+          name: transformRoomTypeToLabel(room.type),
         });
         rollingRoom = { count: 1, type: room.type };
       }

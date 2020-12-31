@@ -71,16 +71,16 @@ const Layout = ({
         <meta name="description" content={description} />
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://home-project.qbacc.org" />
+        <meta property="og:url" content="https://homeproject.qbacc.org" />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content="/banner.jpeg" />
+        <meta property="og:image" content="/banner.jpg" />
         {/* Twitte */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://home-project.qbacc.org" />
+        <meta property="twitter:url" content="https://homeproject.qbacc.org" />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content="/banner.jpeg" />
+        <meta property="twitter:image" content="/banner.jpg" />
       </Head>
       <header>
         <nav>

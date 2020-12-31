@@ -639,7 +639,7 @@
   {
     "id": 145,
     "name": "Pest Prevention 4.27",
-    "description": "Buildings shall be kept free of rodents, vermin and insects\nat all times.",
+    "description": "Buildings shall be kept free of rodents, vermin and insects at all times.",
     "mustBeNo": "",
     "mustBeYes": 96
   }
