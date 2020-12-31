@@ -34,7 +34,11 @@ export function calculateBylawViolationsForRoom(
     const bylaw = bylawMultiplexer.bylaws[rule.bylawId];
     const questionIds = [...rule.mustBeFalse, ...rule.mustBeTrue];
     const userProvidedDescriptions = questionIds
-      .map((id) => responses[id] && responses[id].description)
+      .map(
+        (id) =>
+          responses[id] &&
+          (responses[id].description ?? responses[id].selectedMultiselect)
+      )
       .filter((val) => val);
 
     if ([meetsNoCriteria, meetsYesCriteria].includes("POSSIBLE-YES")) {
