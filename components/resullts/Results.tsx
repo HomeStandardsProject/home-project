@@ -66,13 +66,13 @@ export const Results: React.FC<Props> = ({ assessment }) => {
           {assessment.details.address.formatted}
         </Heading>
         <Stack isInline spacing={2}>
-          <Tag size="sm" colorScheme="green">
+          <Tag size="sm" colorScheme="green" py="4pt">
             ${assessment.details.totalRent}
           </Tag>
-          <Tag size="sm" colorScheme="green">
+          <Tag size="sm" colorScheme="green" py="4pt">
             {assessment.details.rentalType}
           </Tag>
-          <Tag size="sm" colorScheme="green">
+          <Tag size="sm" colorScheme="green" py="4pt">
             {assessment.details.landlordOther ?? assessment.details.landlord}
           </Tag>
           {assessment.details.unitNumber && (

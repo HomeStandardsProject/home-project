@@ -17,6 +17,7 @@ import {
   NumberInputField,
   NumberInputStepper,
   Select,
+  SimpleGrid,
   Stack,
 } from "@chakra-ui/react";
 import {
@@ -220,7 +221,11 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
               ))}
             </Select>
           </FormControl>
-          <Stack isInline>
+          <SimpleGrid
+            columns={{ sm: 1, md: 2 }}
+            templateColumns={{ sm: "100%", md: "60% 40%" }}
+            spacing={2}
+          >
             <FormControl
               isInvalid={!isTotalRentValid}
               isRequired={true}
@@ -264,7 +269,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
               </NumberInput>
               <FormErrorMessage>Enter a valid number of rooms</FormErrorMessage>
             </FormControl>
-          </Stack>
+          </SimpleGrid>
           <FormControl
             isRequired={true}
             isInvalid={!details.landlord && showValidationErrors}

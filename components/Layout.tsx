@@ -84,7 +84,12 @@ const Layout = ({
       </Head>
       <header>
         <nav>
-          <SimpleGrid spacing={{ sm: 0, md: 4 }} columns={{ sm: 1, md: 2 }}>
+          <SimpleGrid
+            spacing={4}
+            columns={{ sm: 1, md: 3 }}
+            templateColumns={{ sm: "100%", md: "auto 1fr auto" }}
+            justifyItems={{ sm: "center", md: "flex-end" }}
+          >
             <Link href="/">
               <img
                 src="/logo.svg"
@@ -95,7 +100,6 @@ const Layout = ({
             <Stack
               isInline
               spacing={4}
-              marginTop="8pt"
               align="center"
               justify={{ sm: "space-around", md: "flex-end" }}
             >
@@ -170,6 +174,8 @@ const Layout = ({
                   </ChakraLink>
                 </Stack>
               )}
+            </Stack>
+            <Stack isInline align="center" width="auto">
               {showStartButton && (
                 <Link href="/start">
                   <Button colorScheme="blue" size="sm">

@@ -111,14 +111,15 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
   }, [progress]);
 
   const progressBar = React.useMemo(() => {
-    return progressBarStyle === "bar" ? (
-      <Box width="100%">
-        <Progress value={progress} colorScheme="blue" size="sm" />
-      </Box>
-    ) : (
+    // for some reason the breakpoint is undefined on mobile?
+    return progressBarStyle === "circular" && progressBarStyle ? (
       <CircularProgress value={progress}>
         <CircularProgressLabel>{progress}%</CircularProgressLabel>
       </CircularProgress>
+    ) : (
+      <Box width="100%">
+        <Progress value={progress} colorScheme="blue" size="sm" />
+      </Box>
     );
   }, [progress, progressBarStyle]);
 
@@ -151,7 +152,7 @@ export function HomeEvaluation({ details, questions, submissionId }: Props) {
             </Box>
           </Box>
         </Box>
-        <Box>
+        <Box marginTop={4}>
           {evaluationData.step === "general" ? (
             <HomeGeneralEvaluation
               questions={questions}
