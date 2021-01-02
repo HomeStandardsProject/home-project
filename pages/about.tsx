@@ -88,7 +88,7 @@ function About() {
             </Box>
             <Text>
               Be sure to check out the many other unique tools our website has
-              to offer, including a RATE YOUR LANDLORD survey, relevant
+              to offer, including a RATE YOUR LANDLORD survey and relevant
               articles, facts, and resources to help you with housing disputes.
             </Text>
             <Text>
@@ -102,8 +102,12 @@ function About() {
             </Text>
             <Text>
               On behalf of QBACC, we would like to extend a big thank you to
-              everyone who has helped make this project possible and to Ricky
-              Zhang for his exquisite design expertise.
+              everyone who has helped make this project possible, Notably, to{" "}
+              Ozzie Kirkby, who has invested countless hours and patience into
+              designing and building the website and to Ricky Zhang for his
+              exquisite design expertise. Neither of them would accept payment
+              for their services and we sincerely appreciate their passion and
+              insight.
             </Text>
             <Text>
               If you have any further questions, comments, or concerns, we
@@ -122,8 +126,10 @@ function About() {
               Let’s make our living conditions more enjoyable, safer, and
               energy-efficient.
             </Text>
-            <Text>Sincerely,</Text>
-            <Text>Queen’s Backing Action on Climate Change</Text>
+            <Box>
+              <Text>Sincerely,</Text>
+              <Text>Queen’s Backing Action on Climate Change</Text>
+            </Box>
           </Stack>
         </Box>
       </Box>
