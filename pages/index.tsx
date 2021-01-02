@@ -49,7 +49,7 @@ function IndexPage({ articles }: Props) {
         direction="column"
         bg={"red"}
         margin={"0 auto"}
-        marginTop={{ sm: "32pt", md: 0 }}
+        marginTop={{ base: "32pt", md: 0 }}
       >
         <Heading
           as="h1"
@@ -130,20 +130,10 @@ function IndexPage({ articles }: Props) {
           </Stack>
         </Stack>
       </Flex>
-      <Box marginTop={{ sm: "64pt", md: 0 }}>
+      <Box mt={{ base: "32pt", md: 0 }}>
         <Subheading>Why this tool?</Subheading>
-        <SimpleGrid columns={{ md: 1, lg: 2 }} spacing={2} marginTop="16pt">
-          <Box
-            height="165px"
-            backgroundImage={`url("/living-room-card.png")`}
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-            backgroundPosition="center center"
-            px="30pt"
-            py="20pt"
-            borderRadius="lg"
-            flexBasis="47.5%"
-          >
+        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={2} marginTop="16pt">
+          <EnergyFactContainer backgroundImage="/living-room-card.png">
             <Heading
               as="h3"
               fontFamily="Lora, serif"
@@ -156,18 +146,8 @@ function IndexPage({ articles }: Props) {
               Buildings account for 13% of Canada&apos;s overall greenhouse gas
               emission.
             </Text>
-          </Box>
-          <Box
-            height="165px"
-            backgroundImage={`url("/night-sky-2-card.png")`}
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-            backgroundPosition="center center"
-            px="30pt"
-            py="20pt"
-            borderRadius="lg"
-            flexBasis="52.5%"
-          >
+          </EnergyFactContainer>
+          <EnergyFactContainer backgroundImage="/night-sky-2-card.png">
             <Heading
               as="h3"
               fontFamily="Lora, serif"
@@ -182,20 +162,10 @@ function IndexPage({ articles }: Props) {
               14% of Kingston’s greenhouse gas emissions and cost nearly $90
               million.
             </Text>
-          </Box>
+          </EnergyFactContainer>
         </SimpleGrid>
         <SimpleGrid columns={{ md: 1, lg: 2 }} spacing={2} marginTop={2}>
-          <Box
-            height="165px"
-            backgroundImage={`url("/night-sky-1-card.png")`}
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-            backgroundPosition="center center"
-            px="30pt"
-            py="20pt"
-            borderRadius="lg"
-            flexBasis="52.5%"
-          >
+          <EnergyFactContainer backgroundImage="/night-sky-1-card.png">
             <Heading
               as="h3"
               fontFamily="Lora, serif"
@@ -210,18 +180,8 @@ function IndexPage({ articles }: Props) {
               emergency, setting a goal to cut greenhouse gas emissions by 30%
               by the year 2030.
             </Text>
-          </Box>
-          <Box
-            height="165px"
-            backgroundImage={`url("/flower-card.png")`}
-            backgroundRepeat="no-repeat"
-            backgroundSize="cover"
-            backgroundPosition="center center"
-            px="30pt"
-            py="20pt"
-            borderRadius="lg"
-            flexBasis="47.5%"
-          >
+          </EnergyFactContainer>
+          <EnergyFactContainer backgroundImage="/flower-card.png">
             <Heading
               as="h3"
               fontFamily="Lora, serif"
@@ -236,10 +196,10 @@ function IndexPage({ articles }: Props) {
               crisis. You can help minimize your climate impact by evaluating
               your house.
             </Text>
-          </Box>
+          </EnergyFactContainer>
         </SimpleGrid>
       </Box>
-      <Box marginTop="64pt">
+      <Box marginTop={{ base: "32pt", md: "64pt" }}>
         <Subheading>How we help</Subheading>
         <Text width="100%">
           Check out this rental property’s kitchen. At first glance, it may
@@ -251,8 +211,8 @@ function IndexPage({ articles }: Props) {
       <Box marginTop="64pt">
         <Subheading>Did you know?</Subheading>
         <SimpleGrid
-          columns={{ sm: 1, md: 3 }}
-          spacing={{ sm: 6, md: 12 }}
+          columns={{ base: 1, md: 3 }}
+          spacing={{ base: 6, md: 12 }}
           marginTop={2}
         >
           <FactContainer title="Kingston's Skyrocketing Rent">
@@ -261,15 +221,13 @@ function IndexPage({ articles }: Props) {
               of inflation over the period illustrating an erosion in housing
               affordability in the local rental market.
             </Text>
-            <Box marginTop={{ sm: "6pt", md: "24pt" }}>
-              <ChakraLink
-                color="green.500"
-                href="https://www.cityofkingston.ca/documents/10180/33838002/01_2020_Housing_MTFR_Document_AppendixC.pdf/1d5a4054-704f-836f-561a-470d96627fa2?t=1582740336621"
-                isExternal
-              >
-                Kingston Rental Housing Market Analysis Report
-              </ChakraLink>
-            </Box>
+            <ChakraLink
+              color="green.500"
+              href="https://www.cityofkingston.ca/documents/10180/33838002/01_2020_Housing_MTFR_Document_AppendixC.pdf/1d5a4054-704f-836f-561a-470d96627fa2?t=1582740336621"
+              isExternal
+            >
+              Kingston Rental Housing Market Analysis Report
+            </ChakraLink>
           </FactContainer>
           <FactContainer title="Average Rents">
             <Text>
@@ -277,15 +235,13 @@ function IndexPage({ articles }: Props) {
               $745. One bedroom: $1000. Two bedrooms: $1200. Three +(space)
               bedrooms: $1998.
             </Text>
-            <Box marginTop={{ sm: "6pt", md: "42pt" }}>
-              <ChakraLink
-                color="green.500"
-                href="https://www.homelesshub.ca/community-profile/kingston"
-                isExternal
-              >
-                Community Profiles - Kingston
-              </ChakraLink>
-            </Box>
+            <ChakraLink
+              color="green.500"
+              href="https://www.homelesshub.ca/community-profile/kingston"
+              isExternal
+            >
+              Community Profiles - Kingston
+            </ChakraLink>
           </FactContainer>
           <FactContainer title="Allowable Rent Increase">
             <Text>
@@ -296,15 +252,13 @@ function IndexPage({ articles }: Props) {
             <Text>
               In 2019, the limit was 1.8%. In 2020, the limit was 2.2%.
             </Text>
-            <Box marginTop="6pt">
-              <ChakraLink
-                color="green.500"
-                href="https://settlement.org/ontario/housing/rent-a-home/tenant-rights-and-responsibilities/how-often-can-a-landlord-increase-the-rent"
-                isExternal
-              >
-                How often can a landlord increase the rent?
-              </ChakraLink>
-            </Box>
+            <ChakraLink
+              color="green.500"
+              href="https://settlement.org/ontario/housing/rent-a-home/tenant-rights-and-responsibilities/how-often-can-a-landlord-increase-the-rent"
+              isExternal
+            >
+              How often can a landlord increase the rent?
+            </ChakraLink>
           </FactContainer>
         </SimpleGrid>
       </Box>
@@ -383,6 +337,25 @@ const FactContainer: React.FC<{ title: string }> = ({ children, title }) => (
     </Heading>
     {children}
   </Stack>
+);
+
+const EnergyFactContainer: React.FC<{ backgroundImage: string }> = ({
+  children,
+  backgroundImage,
+}) => (
+  <Box
+    minHheight={{ base: "auto", md: "165px" }}
+    backgroundImage={`url("${backgroundImage}")`}
+    backgroundRepeat="no-repeat"
+    backgroundSize="cover"
+    backgroundPosition="center center"
+    px={{ base: "15pt", sm: "30pt" }}
+    py={{ base: "10pt", sm: "20pt" }}
+    borderRadius="lg"
+    flexBasis="47.5%"
+  >
+    {children}
+  </Box>
 );
 
 export const getStaticProps: GetStaticProps = async () => {

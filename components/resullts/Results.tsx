@@ -65,14 +65,22 @@ export const Results: React.FC<Props> = ({ assessment }) => {
         <Heading as="h4" color="gray.700" size="md">
           {assessment.details.address.formatted}
         </Heading>
-        <Stack isInline spacing={2}>
-          <Tag size="sm" colorScheme="green" py="4pt">
+        <SimpleGrid
+          isInline
+          columns={{ base: 1, sm: 3 }}
+          templateColumns={{
+            base: "min-content",
+            sm: "min-content min-content min-content",
+          }}
+          spacing={2}
+        >
+          <Tag size="sm" colorScheme="green" py="4pt" whiteSpace="nowrap">
             ${assessment.details.totalRent}
           </Tag>
-          <Tag size="sm" colorScheme="green" py="4pt">
+          <Tag size="sm" colorScheme="green" py="4pt" whiteSpace="nowrap">
             {assessment.details.rentalType}
           </Tag>
-          <Tag size="sm" colorScheme="green" py="4pt">
+          <Tag size="sm" colorScheme="green" py="4pt" whiteSpace="nowrap">
             {assessment.details.landlordOther ?? assessment.details.landlord}
           </Tag>
           {assessment.details.unitNumber && (
@@ -80,7 +88,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
               Unit {assessment.details.unitNumber}
             </Tag>
           )}
-        </Stack>
+        </SimpleGrid>
       </Box>
       <Stack
         borderWidth="1px"

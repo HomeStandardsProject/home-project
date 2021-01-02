@@ -86,9 +86,9 @@ const Layout = ({
         <nav>
           <SimpleGrid
             spacing={4}
-            columns={{ sm: 1, md: 3 }}
-            templateColumns={{ sm: "100%", md: "auto 1fr auto" }}
-            justifyItems={{ sm: "center", md: "flex-end" }}
+            columns={{ base: 1, md: 3 }}
+            templateColumns={{ base: "100%", md: "auto 1fr auto" }}
+            justifyItems={{ base: "center", md: "flex-end" }}
           >
             <Link href="/">
               <img
@@ -101,7 +101,7 @@ const Layout = ({
               isInline
               spacing={4}
               align="center"
-              justify={{ sm: "space-around", md: "flex-end" }}
+              justify={{ base: "space-around", md: "flex-end" }}
             >
               <Link href="/about">
                 <Text
