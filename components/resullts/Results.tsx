@@ -38,7 +38,7 @@ type Props = {
 };
 
 export const Results: React.FC<Props> = ({ assessment }) => {
-  const [collapseDisclaimer, setCollapseDiscaimer] = React.useState(false);
+  const [collapseDisclaimer, setCollapseDiscaimer] = React.useState(true);
   const totalViolations = React.useMemo(
     () =>
       assessment.rooms.reduce(

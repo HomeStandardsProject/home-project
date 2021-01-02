@@ -1,3 +1,4 @@
+import { WarningIcon } from "@chakra-ui/icons";
 import {
   Box,
   Checkbox,
@@ -19,12 +20,14 @@ type Props = {
   prompt: RoomAssessmentQuestion;
   response: RoomAssessmentQuestionResponse;
   answerChanged: (id: string, response: RoomAssessmentQuestionResponse) => void;
+  showInvalidMarkerIfNeeded?: boolean;
 };
 
 export const RoomQuestion: React.FC<Props> = ({
   prompt,
   response,
   answerChanged,
+  showInvalidMarkerIfNeeded = false,
 }) => {
   const handleRadioGroupValueChange = React.useCallback(
     (newValue: string) => {
@@ -83,9 +86,14 @@ export const RoomQuestion: React.FC<Props> = ({
 
   return (
     <Box marginBottom="24pt">
-      <Heading as="h5" size="sm" marginBottom="4pt">
-        {prompt.question}
-      </Heading>
+      <Stack isInline align="center">
+        {showInvalidMarkerIfNeeded && !response.answer && (
+          <WarningIcon color="red.500" />
+        )}
+        <Heading as="h5" size="sm" marginBottom="4pt">
+          {prompt.question}
+        </Heading>
+      </Stack>
       <RadioGroup
         onChange={handleRadioGroupValueChange}
         value={response.answer}

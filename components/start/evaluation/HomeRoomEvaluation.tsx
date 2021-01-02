@@ -235,6 +235,7 @@ export function HomeRoomEvaluation({
                       description: "",
                     }
                   }
+                  showInvalidMarkerIfNeeded={showErrors}
                   answerChanged={setResponseAnswer}
                 />
               ))}
