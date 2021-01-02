@@ -4,6 +4,7 @@ import {
   Button,
   Divider,
   Heading,
+  IconButton,
   Link,
   SimpleGrid,
   Stack,
@@ -14,6 +15,8 @@ import NextLink from "next/link";
 import {
   ArrowForwardIcon,
   CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
   ExternalLinkIcon,
   InfoOutlineIcon,
   QuestionIcon,
@@ -21,6 +24,7 @@ import {
   WarningTwoIcon,
 } from "@chakra-ui/icons";
 
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ApiBylawViolation,
   ApiHomeAssessmentResult,
@@ -34,6 +38,7 @@ type Props = {
 };
 
 export const Results: React.FC<Props> = ({ assessment }) => {
+  const [collapseDisclaimer, setCollapseDiscaimer] = React.useState(false);
   const totalViolations = React.useMemo(
     () =>
       assessment.rooms.reduce(
@@ -49,6 +54,10 @@ export const Results: React.FC<Props> = ({ assessment }) => {
   const generatedDate = new Intl.DateTimeFormat("en-US").format(
     new Date(assessment.generatedDate)
   );
+
+  const handleDisclaimerButtonClick = React.useCallback(() => {
+    setCollapseDiscaimer((val) => !val);
+  }, []);
 
   return (
     <Stack marginTop="16pt" marginBottom="16pt" spacing={4}>
@@ -80,32 +89,70 @@ export const Results: React.FC<Props> = ({ assessment }) => {
         padding="8pt"
         bg="gray.100"
       >
-        <Stack align="center" isInline>
-          <WarningTwoIcon color="gray.700" />
-          <Text fontWeight="bold" textColor="gray.700">
-            Disclaimer
-          </Text>
+        <Stack align="center" isInline justify="space-between">
+          <Stack isInline align="center">
+            <WarningTwoIcon color="gray.700" />
+            <Text fontWeight="bold" textColor="gray.700">
+              Disclaimer
+            </Text>
+          </Stack>
+          <Box>
+            <IconButton
+              icon={
+                collapseDisclaimer ? <ChevronUpIcon /> : <ChevronDownIcon />
+              }
+              size="sm"
+              aria-label="Close Disclaimer"
+              onClick={handleDisclaimerButtonClick}
+            />
+          </Box>
         </Stack>
-        <Stack>
-          <Text>
-            Please note, while The Home Project and QBACC do their best to
-            provide you with accurate home assessments, we do not assume any
-            liability for inaccurate home assessments. Be sure to check your
-            leases for any further stipulations.
-          </Text>
-          <Text>
-            For more information on{" "}
-            <Link
-              href="https://www.cityofkingston.ca/resident/property-standards"
-              color="blue.700"
-              isExternal
+        <AnimatePresence initial={false}>
+          {collapseDisclaimer && (
+            <motion.section
+              key="content"
+              initial="collapsed"
+              animate="open"
+              exit="collapsed"
+              variants={{
+                open: { height: "auto" },
+                collapsed: { height: 0, overflow: "hidden" },
+              }}
+              transition={{ duration: 0.4 }}
             >
-              Kingston property standards
-              <ExternalLinkIcon />
-            </Link>
-            .
-          </Text>
-        </Stack>
+              <Stack>
+                <Text>
+                  Please note that, due to the nature of self assessments, The
+                  Home Project and QBACC do not assume any liability for
+                  inaccurate home assessments. We encourage you to check your
+                  lease for any unique stipulations. What that liability could
+                  be, we&apos;re not sure. But we don&apos;t want it.
+                </Text>
+                <Text>
+                  For more information on{" "}
+                  <Link
+                    href="https://www.cityofkingston.ca/resident/property-standards"
+                    color="blue.700"
+                    isExternal
+                  >
+                    Kingston Property Standards
+                    <ExternalLinkIcon />
+                  </Link>
+                  .
+                </Text>
+                <Box>
+                  <Button
+                    size="xs"
+                    colorScheme="blue"
+                    onClick={handleDisclaimerButtonClick}
+                  >
+                    Close
+                  </Button>
+                </Box>
+              </Stack>
+            </motion.section>
+          )}
+        </AnimatePresence>
       </Stack>
       <Divider />
       <Box>
@@ -235,6 +282,7 @@ const RoomViolation: React.FC<{ violation: ApiBylawViolation }> = ({
         isInline
         align="center"
         marginTop="8pt"
+        borderRadius="md"
       >
         <InfoOutlineIcon />
         <Text>{description}</Text>
