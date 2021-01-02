@@ -95,12 +95,10 @@ function About() {
               We hope that this project can benefit those in the Kingston
               community who find themselves at the mercy of their landlord and
               the asymmetric power relationships that are inherent to this
-              relationship. Despite pleas from students and community members
-              alike, the City of Kingston has done little to support tenants.
-              This must change. We believe that every renter deserves to have
-              adequate housing and be free from intimidation, and hope that this
-              project will serve as a valuable tool for those seeking to better
-              their circumstances.
+              relationship. This must change. We believe that every renter
+              deserves to have adequate housing and be free from intimidation,
+              and hope that this project will serve as a valuable tool for those
+              seeking to better their circumstances.
             </Text>
             <Text>
               On behalf of QBACC, we would like to extend a big thank you to
