@@ -190,7 +190,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
               showValidationErrors={showValidationErrors}
             />
             <FormControl flexBasis={"20%"}>
-              <FormLabel fontSize="sm">Unit #</FormLabel>
+              <FormLabel fontSize="sm">Unit</FormLabel>
               <Input
                 placeholder={"3"}
                 aria-describedby="unit number"
@@ -226,7 +226,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
               isRequired={true}
               flexBasis="60%"
             >
-              <FormLabel fontSize="sm">Total Rent cost</FormLabel>
+              <FormLabel fontSize="sm">Total Rent Cost</FormLabel>
               <InputGroup>
                 <InputLeftElement color="gray.300">$</InputLeftElement>
                 <Input
@@ -249,7 +249,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
               flexBasis={"40%"}
               isInvalid={!details.numberOfBedrooms && showValidationErrors}
             >
-              <FormLabel fontSize="sm">Number of bedrooms</FormLabel>
+              <FormLabel fontSize="sm">Number of Bedrooms</FormLabel>
               <NumberInput
                 isInvalid={!details.numberOfBedrooms && showValidationErrors}
                 value={details.numberOfBedrooms}

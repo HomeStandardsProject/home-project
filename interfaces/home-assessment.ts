@@ -80,8 +80,8 @@ export function transformRoomTypeToLabel(type: Room["type"]) {
 export function placeholderBasedOnType(type: Room["type"]) {
   const label: { [key in Room["type"]]: string } = {
     BED: "Finley's Room",
-    LIVING: "Upstairs living room",
-    WASH: "Main washroom",
+    LIVING: "Upstairs Living Room",
+    WASH: "Main Washroom",
     KITCHEN: "Kitchen",
     ENTRANCE: "Main Entrance",
     EXTERIOR: "Exterior",

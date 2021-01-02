@@ -107,8 +107,9 @@ const Layout = ({
                   fontSize="sm"
                   display="block"
                   cursor="pointer"
+                  whiteSpace="nowrap"
                 >
-                  About
+                  About Us
                 </Text>
               </Link>
               <Link href="/resources">
@@ -191,7 +192,7 @@ const Layout = ({
                   size="sm"
                   onClick={displayPromotionOffering}
                 >
-                  Collect green bin
+                  Collect Green Bin
                 </Button>
               )}
             </Stack>

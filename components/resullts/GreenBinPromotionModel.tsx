@@ -79,11 +79,11 @@ export function GreenBinPromotionModel({ onClose }: Props) {
       <ModalBody>
         <Stack marginTop={"24pt"}>
           <Text as="b" fontSize="xl" color="gray.700">
-            Collect your free green bin
+            Collect your free Green Bin
           </Text>
           <Text color="gray.700">
             Thank you for completing your home assessment! Enter your email
-            below to receive your free green bin.
+            below to receive your free Green Bin.
           </Text>
           <Text color="gray.700">
             We&apos;ll reach out with further details from there.

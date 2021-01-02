@@ -47,7 +47,7 @@ function Resources() {
     >
       <Stack marginTop="16pt" maxWidth="950px">
         <Heading as="h1" size="lg">
-          Valuable Resources and Contacts
+          Resources and Contacts
         </Heading>
         <Stack spacing={4}>
           {RESOURCES.map((props) => (

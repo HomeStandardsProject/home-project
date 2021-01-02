@@ -24,10 +24,20 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   detailsSection: {
-    margin: 16,
+    margin: 8,
     padding: 8,
     backgroundColor: "#3182ce",
     borderRadius: 4,
+  },
+  title: {
+    fontSize: "16pt",
+    fontFamily: "Helvetica",
+    textAlign: "center",
+  },
+  titleSection: {
+    margin: 16,
+    marginTop: 8,
+    marginBottom: 4,
   },
   h1: {
     fontSize: "12pt",
@@ -110,6 +120,9 @@ export const AssessmentPDF = ({
         <Link src="https://homeproject.qbacc.org">
           <Image src="/logo.png" style={styles.logo} />
         </Link>
+        <View style={styles.titleSection}>
+          <Text style={styles.title}>Self-Guided Rental Assessment</Text>
+        </View>
         <View style={styles.detailsSection}>
           <Text style={styles.h1}>
             {result.details.address.formatted}{" "}

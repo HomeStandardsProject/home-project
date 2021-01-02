@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineSafety } from "react-icons/ai";
 import { BiSend } from "react-icons/bi";
+import { FaRunning } from "react-icons/fa";
 import Head from "next/head";
 
 import { GetStaticProps } from "next";
@@ -54,18 +55,18 @@ function IndexPage({ articles }: Props) {
           as="h1"
           size="xl"
           textAlign="left"
-          width={{ sm: "100%", md: "80%" }}
           fontFamily="Lora, serif"
           fontWeight="500"
           marginBottom="12pt"
         >
-          Is your housing in breach of any bylaws?
+          Is your Kingston housing in violation of any bylaws?
         </Heading>
         <Stack width={{ sm: "100%", md: "80%" }} userSelect="none">
           <Text textAlign="left">
             Automatically generate a personalized report summarizing your home’s
             issues. This assessment tool guides you through your house room by
-            room, asking a series of questions to help you quickly spot issues.
+            room, asking a series of questions to help you quickly and easily
+            spot issues.
           </Text>
           <Text>
             Let’s make your living conditions more enjoyable, safe, and
@@ -86,6 +87,17 @@ function IndexPage({ articles }: Props) {
           </Link>
         </Box>
         <Stack marginTop="30pt">
+          <Stack isInline align="center" spacing={1}>
+            <Icon
+              as={FaRunning}
+              color="rgba(59, 168, 0, 1.000)"
+              w="22px"
+              h="22px"
+            />
+            <Text fontSize="sm">
+              Complete your assessment in less than 15 minutes
+            </Text>
+          </Stack>
           <Stack isInline align="center" spacing={1}>
             <Icon
               as={AiOutlineSafety}
@@ -141,7 +153,8 @@ function IndexPage({ articles }: Props) {
               13% from Homes
             </Heading>
             <Text width="70%">
-              Homes and buildings contribute 13% of Canada’s emissions.
+              Buildings account for 13% of Canada&apos;s overall greenhouse gas
+              emission.
             </Text>
           </Box>
           <Box
@@ -193,9 +206,9 @@ function IndexPage({ articles }: Props) {
               -30% Emission
             </Heading>
             <Text color="white">
-              Kingston is the first Ontario municipality to declare climate
-              emergency. The City set a goal to reduce greenhouse gas emissions
-              by 30% by the year 2030.
+              Kingston was the first Ontario municipality to declare a climate
+              emergency, setting a goal to cut greenhouse gas emissions by 30%
+              by the year 2030.
             </Text>
           </Box>
           <Box
@@ -230,8 +243,8 @@ function IndexPage({ articles }: Props) {
         <Subheading>How we help</Subheading>
         <Text width="100%">
           Check out this rental property’s kitchen. At first glance, it may
-          appear to be in good condition, but there are multiple bylaw
-          violations upon closer investigation.
+          appear to be in good condition, but multiple bylaw violations can be
+          found upon closer inspection.
         </Text>
         <HomeAssessmentInteractiveExample />
       </Box>
@@ -242,7 +255,7 @@ function IndexPage({ articles }: Props) {
           spacing={{ sm: 6, md: 12 }}
           marginTop={2}
         >
-          <FactContainer title="Kingston’s Excessive Rent">
+          <FactContainer title="Kingston's Skyrocketing Rent">
             <Text>
               Rental rates over the period has been notably higher than the rate
               of inflation over the period illustrating an erosion in housing
@@ -259,10 +272,10 @@ function IndexPage({ articles }: Props) {
             </Box>
           </FactContainer>
           <FactContainer title="Average Rents">
-            <Text>Average cost of rent in Kingston per month, 2018:</Text>
             <Text>
-              Bachelor: $745. One bedroom: $1000. Two bedroom: $1200. Three+
-              bedroom: $1998.
+              Average cost of rent in Kingston per month for 2018 was Bachelor:
+              $745. One bedroom: $1000. Two bedrooms: $1200. Three +(space)
+              bedrooms: $1998.
             </Text>
             <Box marginTop={{ sm: "6pt", md: "42pt" }}>
               <ChakraLink
@@ -317,8 +330,7 @@ function IndexPage({ articles }: Props) {
               Rate your landlord anonymously
             </Heading>
             <Text color="white">
-              Together we can determine the best places to live (and worst)
-              places to live
+              Together we can determine the best (and worst) places to live.
             </Text>
             <Box>
               <ChakraLink
@@ -358,18 +370,19 @@ const Subheading: React.FC = ({ children }) => (
 );
 
 const FactContainer: React.FC<{ title: string }> = ({ children, title }) => (
-  <Box flexBasis="33.3%">
+  <Stack flexBasis="33.3%">
     <Heading
       as="h3"
       fontFamily="Lora, serif"
       fontSize="1.5rem"
       fontWeight="500"
       color="rgba(0,0,0,0.6)"
+      lineHeight="1.5rem"
     >
       {title}
     </Heading>
     {children}
-  </Box>
+  </Stack>
 );
 
 export const getStaticProps: GetStaticProps = async () => {

@@ -195,7 +195,7 @@ export function HomeRoomEvaluation({
             >
               <FormControl flexBasis="100%">
                 <FormLabel fontSize="sm" htmlFor="room-name">
-                  Room name
+                  Room Name
                 </FormLabel>
                 <Input
                   id="room-name"
@@ -208,7 +208,7 @@ export function HomeRoomEvaluation({
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel fontSize="sm">Room type</FormLabel>
+                <FormLabel fontSize="sm">Room Type</FormLabel>
                 <Select
                   size="md"
                   isRequired={true}

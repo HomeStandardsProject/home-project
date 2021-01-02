@@ -13,7 +13,7 @@ import { sortRoomsBasedOnTypeAndName } from "../helpers/sortRoomsBasedOnTypeAndN
 
 const generateDefaultRoom = (): Room => ({
   id: uuidv4(),
-  type: "LIVING",
+  type: "WASH",
   responses: {},
 });
 

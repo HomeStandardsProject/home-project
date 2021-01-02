@@ -47,8 +47,8 @@ export function HomeGeneralEvaluation({ questions, switchStep }: Props) {
         General
       </Heading>
       <Text>
-        Click to expand each section. Questions are optional but highly
-        encouraged to be answered to understand the state of your rental better.
+        Click to expand each section. Questions are optional but answering is
+        highly encouraged to better understand the state of your rental.
       </Text>
       <Accordion allowToggle>
         {Object.entries(SECTIONS).map(([roomType, section]) => (

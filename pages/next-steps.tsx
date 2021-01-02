@@ -19,14 +19,8 @@ function NextSteps() {
           </Heading>
           <OrderedList>
             <li>
-              <Text>Contact your landlord about the problem(s).</Text>
+              <Text>Contact your landlord.</Text>
               <ol style={{ listStyle: "lower-alpha", marginLeft: "16pt" }}>
-                <li>
-                  <Text>
-                    It’s recommended that you attach your completed housing
-                    assessment to the correspondence.
-                  </Text>
-                </li>
                 <li>
                   <Text>
                     This may be done through your property management
@@ -36,8 +30,14 @@ function NextSteps() {
                 <li>
                   <Text>
                     We strongly recommend that correspondence with your landlord
-                    happens in print (email, letter, etc...), so a record is
+                    happen in print (email, letter, etc...), so a record is
                     kept.
+                  </Text>
+                </li>
+                <li>
+                  <Text>
+                    We advise that you attach your completed housing assessment
+                    to the correspondence.
                   </Text>
                 </li>
               </ol>
@@ -49,8 +49,11 @@ function NextSteps() {
                 <Link href="tel:613-546-4291" textColor="blue.500">
                   613-546-4291
                 </Link>
-                , extension <Text textColor="blue.500">3280</Text> or via email
-                at{" "}
+                , extension{" "}
+                <Text as="span" textColor="blue.500">
+                  3280
+                </Text>{" "}
+                or via email at{" "}
                 <Link
                   href="mailto:bylawenforcement@cityofkingston.ca"
                   textColor="blue.500"
@@ -64,36 +67,39 @@ function NextSteps() {
                 If necessary, as deemed by Kingston&apos;s Property Standards
                 office, they will set up an inspection within two weeks of you
                 contacting them to arrange an inspection of your dwelling.
-              </Text>
-            </li>
-            <li>
-              <Text>
-                After the inspector confirms these violations, they will issue
-                an Order to the landlord to repair these issues within a set
-                time frame.
+                (COVID-19 could impact this.)
               </Text>
               <ol style={{ listStyle: "lower-alpha", marginLeft: "16pt" }}>
                 <li>
                   <Text>
-                    Note, it is your responsibility as a tenant to contact the
+                    After the inspector confirms these violations, they will
+                    issue an order to the landlord to repair these issues within
+                    a set time frame.
+                  </Text>
+                </li>
+                <li>
+                  <Text>
+                    It is your responsibility as a tenant to contact the
                     Property Standards office if these repairs are not
                     completed.
                   </Text>
                 </li>
+                <li>
+                  <Text>
+                    If these repairs are not sufficiently completed within the
+                    timeline mentioned above, and the landlord does not appeal
+                    the order, then the City may take legal action.
+                  </Text>
+                  <ol style={{ listStyle: "lower-roman", marginLeft: "22pt" }}>
+                    <li>
+                      <Text>
+                        Legal action could entail charges being laid under the
+                        Building Code Act against the landlord.
+                      </Text>
+                    </li>
+                  </ol>
+                </li>
               </ol>
-            </li>
-            <li>
-              <Text>
-                If these repairs are not sufficiently completed within the
-                timeline mentioned above, and the landlord does not appeal the
-                Order, then The City may take Legal action.
-              </Text>
-            </li>
-            <li>
-              <Text>
-                Legal action could entail charges being laid under the Building
-                Code Act against the landlord.
-              </Text>
             </li>
           </OrderedList>
         </Box>
