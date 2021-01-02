@@ -198,7 +198,7 @@ const Layout = ({
                   size="sm"
                   onClick={displayPromotionOffering}
                 >
-                  Collect Your Free Green Bin
+                  Collect your free Green Bin
                 </Button>
               )}
             </Stack>
