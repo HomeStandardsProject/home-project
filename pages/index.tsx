@@ -140,11 +140,11 @@ function IndexPage({ articles }: Props) {
               fontSize="1.5rem"
               fontWeight="500"
             >
-              13% from Homes
+              13%
             </Heading>
             <Text width="70%">
               Buildings account for 13% of Canada&apos;s overall greenhouse gas
-              emission.
+              emissions.
             </Text>
           </EnergyFactContainer>
           <EnergyFactContainer backgroundImage="/night-sky-2-card.png">
@@ -155,12 +155,12 @@ function IndexPage({ articles }: Props) {
               fontWeight="500"
               color="rgba(255,255,255,0.6)"
             >
-              $90M Energy
+              $90M
             </Heading>
             <Text color="white">
               The energy we consume to heat, cool and power our homes represents
               14% of Kingston’s greenhouse gas emissions and cost nearly $90
-              million.
+              million annually.
             </Text>
           </EnergyFactContainer>
         </SimpleGrid>
@@ -173,12 +173,12 @@ function IndexPage({ articles }: Props) {
               fontWeight="500"
               color="rgba(255,255,255,0.6)"
             >
-              -30% Emission
+              -30%
             </Heading>
             <Text color="white">
               Kingston was the first Ontario municipality to declare a climate
-              emergency, setting a goal to cut greenhouse gas emissions by 30%
-              by the year 2030.
+              emergency, setting a goal to cut greenhouse gas emissions 30% by
+              the year 2030.
             </Text>
           </EnergyFactContainer>
           <EnergyFactContainer backgroundImage="/flower-card.png">
@@ -189,12 +189,13 @@ function IndexPage({ articles }: Props) {
               fontSize="1.5rem"
               fontWeight="500"
             >
-              Our commitment to change
+              Committing to Change
             </Heading>
             <Text>
-              GHG emissions such as CO2, are contributing to the current climate
-              crisis. You can help minimize your climate impact by evaluating
-              your house.
+              Greenhouse gases such as CO2, which are created from home heating
+              systems, are contributing to the current climate crisis. You can
+              help minimize your climate impact by evaluating your house to
+              eliminate substandard conditions.
             </Text>
           </EnergyFactContainer>
         </SimpleGrid>
