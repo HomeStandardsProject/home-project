@@ -469,7 +469,7 @@
   },
   {
     "id": 65,
-    "question": "Are the eaves troughs, roof gutters and/or down pipes securely fastened to the building?",
+    "question": "Are the eavestroughs, roof gutters and/or down pipes securely fastened to the building?",
     "order": 6,
     "roomType": "EXTERIOR",
     "promptForDescriptionOn": "NO",
@@ -532,7 +532,7 @@
   },
   {
     "id": 72,
-    "question": "Are there at least two separate outlets, which are on different circuits? (Although not foolproof, a way to check this is can you run multiple appliances at a time from different outlets, without losing power.)",
+    "question": "Are there at least two separate outlets, which are on different circuits? Although not foolproof, a way to check this is can you run multiple appliances at a time from different outlets, without losing power.",
     "order": 18,
     "roomType": "KITCHEN",
     "promptForDescriptionOn": "NO",
@@ -658,7 +658,7 @@
   },
   {
     "id": 86,
-    "question": "Is there at least one duplex outlet? (An outlet with at least two spots to plug something in.)",
+    "question": "Is there at least one duplex outlet? (This is an outlet with at least two spots to plug something in.)",
     "order": 10,
     "roomType": "BED",
     "promptForDescriptionOn": "NO",
@@ -667,7 +667,7 @@
   },
   {
     "id": 87,
-    "question": "Is there at least one duplex outlet? (An outlet with at least two spots to plug something in.)",
+    "question": "Is there at least one duplex outlet? (This is an  outlet with at least two spots to plug something in.)",
     "order": 16,
     "roomType": "KITCHEN",
     "promptForDescriptionOn": "NO",
@@ -676,7 +676,7 @@
   },
   {
     "id": 88,
-    "question": "Is there at least one duplex outlet? (An outlet with at least two spots to plug something in.)",
+    "question": "Is there at least one duplex outlet? (This is an  outlet with at least two spots to plug something in.)",
     "order": 9,
     "roomType": "LIVING",
     "promptForDescriptionOn": "NO",
@@ -694,11 +694,38 @@
   },
   {
     "id": 96,
-    "question": "Are there any pests in your house?",
+    "question": "Are there any pests in your rental?",
     "order": 1,
     "roomType": "PESTS",
     "promptForDescriptionOn": "YES",
     "type": "MULTISELECT",
     "multiselectValues": "Mice,Rats,Racoons,Squirrels,Bats,Ants,House Flies,Bees and/or Wasps"
+  },
+  {
+    "id": 97,
+    "question": "",
+    "order": "",
+    "roomType": "",
+    "promptForDescriptionOn": "",
+    "type": "",
+    "multiselectValues": ""
+  },
+  {
+    "id": 98,
+    "question": "",
+    "order": "",
+    "roomType": "",
+    "promptForDescriptionOn": "",
+    "type": "",
+    "multiselectValues": ""
+  },
+  {
+    "id": 99,
+    "question": "",
+    "order": "",
+    "roomType": "",
+    "promptForDescriptionOn": "",
+    "type": "",
+    "multiselectValues": ""
   }
 ]
