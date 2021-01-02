@@ -126,8 +126,10 @@ function About() {
               Let’s make our living conditions more enjoyable, safer, and
               energy-efficient.
             </Text>
-            <Text>Sincerely,</Text>
-            <Text>Queen’s Backing Action on Climate Change</Text>
+            <Box>
+              <Text>Sincerely,</Text>
+              <Text>Queen’s Backing Action on Climate Change</Text>
+            </Box>
           </Stack>
         </Box>
       </Box>

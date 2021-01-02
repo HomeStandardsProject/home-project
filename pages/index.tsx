@@ -112,7 +112,7 @@ function IndexPage({ articles }: Props) {
                 isExternal
                 color="rgba(52, 151, 55, 1.000)"
               >
-                Kingston’s mandatory housing standards
+                Kingston’s mandatory Property Standards
               </ChakraLink>
             </Text>
           </Stack>
@@ -189,7 +189,7 @@ function IndexPage({ articles }: Props) {
               fontSize="1.5rem"
               fontWeight="500"
             >
-              Committing to Change
+              Committing to change
             </Heading>
             <Text>
               Greenhouse gases such as CO2, which are created from home heating
@@ -230,7 +230,7 @@ function IndexPage({ articles }: Props) {
               Kingston Rental Housing Market Analysis Report
             </ChakraLink>
           </FactContainer>
-          <FactContainer title="Average Rents">
+          <FactContainer title="Average Rent">
             <Text>
               Average cost of rent in Kingston per month for 2018 was Bachelor:
               $745. One bedroom: $1000. Two bedrooms: $1200. Three +(space)
