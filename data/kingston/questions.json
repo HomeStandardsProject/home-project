@@ -700,32 +700,5 @@
     "promptForDescriptionOn": "YES",
     "type": "MULTISELECT",
     "multiselectValues": "Mice,Rats,Racoons,Squirrels,Bats,Ants,House Flies,Bees and/or Wasps"
-  },
-  {
-    "id": 97,
-    "question": "",
-    "order": "",
-    "roomType": "",
-    "promptForDescriptionOn": "",
-    "type": "",
-    "multiselectValues": ""
-  },
-  {
-    "id": 98,
-    "question": "",
-    "order": "",
-    "roomType": "",
-    "promptForDescriptionOn": "",
-    "type": "",
-    "multiselectValues": ""
-  },
-  {
-    "id": 99,
-    "question": "",
-    "order": "",
-    "roomType": "",
-    "promptForDescriptionOn": "",
-    "type": "",
-    "multiselectValues": ""
   }
 ]
