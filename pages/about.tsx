@@ -32,7 +32,7 @@ function About() {
               assess the state of your home and ensure that it meets the City of
               Kingston’s Property Standards. Unsurprisingly, many previously
               evaluated homes are found to be full of violations, including
-              drafts, unsealed windows, leaky faucets and more
+              drafts, unsealed windows, leaky faucets and more.
             </Text>
             <Text>
               Taking on average less than 15 minutes, this guided room by room
