@@ -1,6 +1,15 @@
 import { EmailIcon, PhoneIcon } from "@chakra-ui/icons";
-import { Box, Button, Heading, Link, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  Icon,
+  Link,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import * as React from "react";
+import { FaFacebook } from "react-icons/fa";
 import Layout from "../components/Layout";
 
 const RESOURCES: ResourcePanelProps[] = [
@@ -36,6 +45,15 @@ const RESOURCES: ResourcePanelProps[] = [
     phoneNumber: "613-533-6000",
     phoneNumberExtension: "32327",
   },
+  {
+    name: "Katarowki-Kingston Union of Tenants",
+    nameLink: "tenantsunite.ca",
+    email: "katarokwitenants@gmail.com",
+    description:
+      "We can help tenants understand their rights, advocate for better conditions and respect for tenant, organize with their neighbours, and find legal help for tenants in varying financial situations.",
+    facebook: "KCUnionofTenants",
+    facebookUrl: "www.facebook.com/groups/KCUnionofTenants",
+  },
 ];
 
 function Resources() {
@@ -66,6 +84,8 @@ type ResourcePanelProps = {
   email?: string;
   phoneNumber?: string;
   phoneNumberExtension?: string;
+  facebook?: string;
+  facebookUrl?: string;
 };
 
 function ResourcePanel({
@@ -75,6 +95,8 @@ function ResourcePanel({
   description,
   phoneNumber,
   phoneNumberExtension,
+  facebook,
+  facebookUrl,
 }: ResourcePanelProps) {
   return (
     <Box>
@@ -105,6 +127,18 @@ function ResourcePanel({
             >
               {phoneNumber}{" "}
               {phoneNumberExtension && `(ext. ${phoneNumberExtension})`}
+            </Button>
+          </Link>
+        )}
+        {facebook && facebookUrl && (
+          <Link href={facebookUrl} isExternal>
+            <Button
+              leftIcon={<Icon as={FaFacebook} />}
+              color="blue.700"
+              fontWeight="400"
+              size="sm"
+            >
+              {facebook}
             </Button>
           </Link>
         )}

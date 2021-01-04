@@ -642,5 +642,26 @@
     "description": "Buildings shall be kept free of rodents, vermin and insects at all times.",
     "mustBeNo": "",
     "mustBeYes": 96
+  },
+  {
+    "id": 148,
+    "name": "Parking Areas, Walks, Driveways 4.23",
+    "description": "Entrances and means of access, excluding driveways and designated parking spaces, shall be kept clear of automobiles, trailers, motorcycles and bicycles and unsafe accumulations of ice and snow.",
+    "mustBeNo": 100,
+    "mustBeYes": ""
+  },
+  {
+    "id": 149,
+    "name": "Emergency Contacts and Apartment Identification 5.27",
+    "description": "Every Owner shall provide, install, and maintain contact information in a common area in case of an emergency on a 24 hour basis where an authorized person responsible for the Property can be reached.",
+    "mustBeNo": 102,
+    "mustBeYes": ""
+  },
+  {
+    "id": 150,
+    "name": "Emergency Contacts and Apartment Identification 5.27",
+    "description": "Every Owner shall provide, install, and maintain contact information in a common area in case of an emergency on a 24 hour basis where an authorized person responsible for the Property can be reached.",
+    "mustBeNo": 103,
+    "mustBeYes": ""
   }
 ]

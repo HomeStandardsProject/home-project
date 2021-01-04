@@ -103,6 +103,9 @@ const SORTED_LANDLORDS = [
   "Panadew Property Management",
   "Queen’s Community Housing",
   "Varsity Communities",
+  "Cimellaro Properties",
+  "Homestead",
+  "Starlight/DMS",
 ].sort();
 
 export const LANDLORDS = [...SORTED_LANDLORDS, "Other"] as const;

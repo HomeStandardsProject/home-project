@@ -345,7 +345,7 @@ const EnergyFactContainer: React.FC<{ backgroundImage: string }> = ({
   backgroundImage,
 }) => (
   <Box
-    minHheight={{ base: "auto", md: "165px" }}
+    minHeight={{ base: "auto", md: "165px" }}
     backgroundImage={`url("${backgroundImage}")`}
     backgroundRepeat="no-repeat"
     backgroundSize="cover"

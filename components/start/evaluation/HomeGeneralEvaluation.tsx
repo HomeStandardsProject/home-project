@@ -35,9 +35,9 @@ const SECTIONS: {
   [key in typeof GENERAL_ROOM_TYPES[number]]: SectionType;
 } = {
   PESTS: { name: "Pests", icon: AiFillBug },
-  ENTRANCE: { name: "Entrance", icon: GiDoor },
   HEATING: { name: "Heating", icon: GiThermometerHot },
   EXTERIOR: { name: "Exterior", icon: BsFillHouseFill },
+  ENTRANCE: { name: "Entrance", icon: GiDoor },
 };
 
 export function HomeGeneralEvaluation({ questions, switchStep }: Props) {

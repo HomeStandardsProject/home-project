@@ -73,7 +73,7 @@
   },
   {
     "id": 17,
-    "question": "Is there working ventilation? This may include an electric fan or a window that opens.",
+    "question": "Is there working ventilation? (This may include an electric fan or a window that opens.)",
     "order": 12,
     "roomType": "WASH",
     "promptForDescriptionOn": "NO",
@@ -389,7 +389,7 @@
   {
     "id": 56,
     "question": "Are your windows weather tight and reasonably draft-free?",
-    "order": 2,
+    "order": 4,
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO",
     "type": "YES/NO",
@@ -398,7 +398,7 @@
   {
     "id": 57,
     "question": "Do all of your windows that open have undamaged, well-secured screens?",
-    "order": 3,
+    "order": 5,
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO",
     "type": "YES/NO",
@@ -407,7 +407,7 @@
   {
     "id": 58,
     "question": "Are you able to lock all of your windows and exterior doors from inside the unit?",
-    "order": 5,
+    "order": 7,
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO",
     "type": "YES/NO",
@@ -416,7 +416,7 @@
   {
     "id": 59,
     "question": "Is your flooring warped, protruding, broken, have rotted boards, or cracks?",
-    "order": 7,
+    "order": 9,
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "YES",
     "type": "YES/NO",
@@ -425,7 +425,7 @@
   {
     "id": 60,
     "question": "Are there any sections of baseboard (bottom trim) missing, damaged, or not tightly fitted to the wall?",
-    "order": 8,
+    "order": 10,
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO",
     "type": "YES/NO",
@@ -434,7 +434,7 @@
   {
     "id": 61,
     "question": "Do you have at least one entrance door that can be locked from inside and outside the unit?",
-    "order": 1,
+    "order": 3,
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO",
     "type": "YES/NO",
@@ -487,7 +487,7 @@
   },
   {
     "id": 67,
-    "question": "Are the steps into your house adequately lit?",
+    "question": "Are the parking lots, driveways, and/or steps into your house adequately lit?",
     "order": 1,
     "roomType": "EXTERIOR",
     "promptForDescriptionOn": "NO",
@@ -497,7 +497,7 @@
   {
     "id": 68,
     "question": "Do all of the outlets and lights work?",
-    "order": 2,
+    "order": 8,
     "roomType": "EXTERIOR",
     "promptForDescriptionOn": "NO",
     "type": "YES/NO",
@@ -568,7 +568,7 @@
   },
   {
     "id": 76,
-    "question": "Is there a vent?",
+    "question": "Is there working ventilation? (This may include mechanical ventilation or a window that opens.)",
     "order": 12,
     "roomType": "BED",
     "promptForDescriptionOn": "NO",
@@ -605,7 +605,7 @@
   {
     "id": 80,
     "question": "Are there any holes or cracks in the walls, ceilings, or floors?",
-    "order": 6,
+    "order": 8,
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "YES",
     "type": "YES/NO",
@@ -614,7 +614,7 @@
   {
     "id": 81,
     "question": "Do all of the outlets and lights work?",
-    "order": 9,
+    "order": 11,
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO",
     "type": "YES/NO",
@@ -686,7 +686,7 @@
   {
     "id": 89,
     "question": "Can your windows be opened with normally applied pressure?",
-    "order": 4,
+    "order": 6,
     "roomType": "ENTRANCE",
     "promptForDescriptionOn": "NO",
     "type": "YES/NO",
@@ -699,6 +699,33 @@
     "roomType": "PESTS",
     "promptForDescriptionOn": "YES",
     "type": "MULTISELECT",
-    "multiselectValues": "Mice,Rats,Racoons,Squirrels,Bats,Ants,House Flies,Bees and/or Wasps"
+    "multiselectValues": "Ants,Bats,Bed bugs,Bees and/or Wasps,Birds,Cockroaches,House Flies,Ladybugs,Mice,Rats,Racoons,Squirrels"
+  },
+  {
+    "id": 100,
+    "question": "Are the entry ways kept free of snow and ice accumulation?",
+    "order": 2,
+    "roomType": "EXTERIOR",
+    "promptForDescriptionOn": "NO",
+    "type": "YES/NO",
+    "multiselectValues": ""
+  },
+  {
+    "id": 102,
+    "question": "If your rental has more than one unit connected to an interior common space, hallways, exits, etc., is there a number or unit letter listed on or beside the door?",
+    "order": 1,
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO",
+    "type": "YES/NO",
+    "multiselectValues": ""
+  },
+  {
+    "id": 103,
+    "question": "Did your property owner provide or install up to date contact information where an authorized person responsible for the property can be reached in case of an emergency on a 24 hour basis in a common area?",
+    "order": 2,
+    "roomType": "ENTRANCE",
+    "promptForDescriptionOn": "NO",
+    "type": "YES/NO",
+    "multiselectValues": ""
   }
 ]
