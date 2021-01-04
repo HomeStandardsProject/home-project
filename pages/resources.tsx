@@ -47,12 +47,12 @@ const RESOURCES: ResourcePanelProps[] = [
   },
   {
     name: "Katarowki-Kingston Union of Tenants",
-    nameLink: "tenantsunite.ca",
+    nameLink: "http://tenantsunite.ca/",
     email: "katarokwitenants@gmail.com",
     description:
       "We can help tenants understand their rights, advocate for better conditions and respect for tenant, organize with their neighbours, and find legal help for tenants in varying financial situations.",
     facebook: "KCUnionofTenants",
-    facebookUrl: "www.facebook.com/groups/KCUnionofTenants",
+    facebookUrl: "https://www.facebook.com/groups/KCUnionofTenants",
   },
 ];
 
