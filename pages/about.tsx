@@ -1,4 +1,3 @@
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Box, Heading, Link, Stack, Text } from "@chakra-ui/react";
 import * as React from "react";
 import Layout from "../components/Layout";
@@ -17,22 +16,15 @@ function About() {
           </Heading>
           <Stack spacing={4}>
             <Text>
-              Queen’s Backing Action on Climate Change ({" "}
-              <Link color="green.700" isExternal href="https://www.qbacc.org/">
-                QBACC <ExternalLinkIcon mx="2px" />
-              </Link>
-              ) is proud to debut the Home Project!
-            </Text>
-            <Text>
               As rental tenants in Kingston, it is no secret that we pay
               excessive rent for substandard living conditions. Rent continues
               to rise yet maintenance and upkeep fall by the wayside. To address
-              this, over the past 6 months we have worked to create a free, easy
-              to use home assessment tool. With this, you can quickly and easily
-              assess the state of your home and ensure that it meets the City of
-              Kingston’s Property Standards. Unsurprisingly, many previously
-              evaluated homes are found to be full of violations, including
-              drafts, unsealed windows, leaky faucets and more.
+              this, over the past six months we have worked to create a free,
+              easy to use home assessment tool. With this, you can quickly and
+              easily assess the state of your home and ensure that it meets the
+              City of Kingston’s Property Standards. Unsurprisingly, many
+              previously evaluated homes are found to be full of violations,
+              including drafts, unsealed windows, leaky faucets and more.
             </Text>
             <Text>
               Taking on average less than 15 minutes, this guided room by room
@@ -88,7 +80,7 @@ function About() {
             </Box>
             <Text>
               Be sure to check out the many other unique tools our website has
-              to offer, including a RATE YOUR LANDLORD survey and relevant
+              to offer, including a rate your landlord survey and relevant
               articles, facts, and resources to help you with housing disputes.
             </Text>
             <Text>
@@ -101,26 +93,27 @@ function About() {
               seeking to better their circumstances.
             </Text>
             <Text>
-              On behalf of QBACC, we would like to extend a big thank you to
-              everyone who has helped make this project possible, Notably, to{" "}
-              Ozzie Kirkby, who has invested countless hours and patience into
-              designing and building the website and to Ricky Zhang for his
-              exquisite design expertise. Neither of them would accept payment
-              for their services and we sincerely appreciate their passion and
-              insight.
+              On behalf of the Home Standards Project, we would like to extend a
+              big thank you to everyone who has helped make this project
+              possible, Notably, to Ozzie Kirkby, who has invested countless
+              hours and patience into designing and building the website and to
+              Ricky Zhang for his exquisite design expertise. Neither of them
+              would accept payment for their services and we sincerely
+              appreciate their passion and insight.
             </Text>
             <Text>
               If you have any further questions, comments, or concerns, we
-              encourage you to reach out to our Home Project Director, Natalie
-              Woodland at{" "}
+              encourage you to reach out to our founders Natalie Woodland and
+              Nick Lorroway at{" "}
               <Link
                 color="green.700"
                 isExternal
-                href="mailto:queensbacc@gmail.com"
+                href="mailto:connect@homestandards.org"
               >
-                queensbacc@gmail.com
+                connect@homestandards.org
               </Link>
-              .
+              . Let’s make our living conditions more enjoyable, safer, and
+              energy-efficient.
             </Text>
             <Text>
               Let’s make our living conditions more enjoyable, safer, and
@@ -128,7 +121,8 @@ function About() {
             </Text>
             <Box>
               <Text>Sincerely,</Text>
-              <Text>Queen’s Backing Action on Climate Change</Text>
+              <Text>Natalie & Nick</Text>
+              <Text>Founders</Text>
             </Box>
           </Stack>
         </Box>

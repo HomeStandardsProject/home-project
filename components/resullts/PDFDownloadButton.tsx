@@ -20,7 +20,7 @@ export const PDFDownloadButton: React.FC<{
       {hasMounted && (
         <PDFDownloadLink
           document={<AssessmentPDF result={result} />}
-          fileName="qbacc-assessment.pdf"
+          fileName="home-standards-assessment.pdf"
         >
           {(props) => <DownloadButton {...props} />}
         </PDFDownloadLink>

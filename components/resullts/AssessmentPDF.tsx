@@ -117,7 +117,7 @@ export const AssessmentPDF = ({
     <Document>
       <Page size="A4" style={styles.page}>
         <Text style={styles.generatedDate}>{generatedDate}</Text>
-        <Link src="https://homeproject.qbacc.org">
+        <Link src="https://homestandards.org">
           <Image src="/logo.png" style={styles.logo} />
         </Link>
         <View style={styles.titleSection}>
