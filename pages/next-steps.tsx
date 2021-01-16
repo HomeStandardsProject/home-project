@@ -9,13 +9,13 @@ function NextSteps() {
   return (
     <Layout
       title="Next Steps"
-      description="Process for Reporting Housing Issues"
+      description="Steps for Reporting Issues"
       showStartButton={true}
     >
       <Box display="flex" justifyContent="left">
         <Box marginTop="16pt" maxWidth="900px">
           <Heading as="h1" size="lg" marginBottom="8pt">
-            Process for Reporting Housing Issues
+            Steps for Reporting Issues
           </Heading>
           <OrderedList>
             <li>

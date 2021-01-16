@@ -129,6 +129,18 @@ const Layout = ({
                   Resources
                 </Text>
               </Link>
+              <Link href="/next-steps">
+                <Text
+                  as="a"
+                  textColor="blue.700"
+                  fontWeight="bold"
+                  fontSize="sm"
+                  display="block"
+                  cursor="pointer"
+                >
+                  Reporting
+                </Text>
+              </Link>
               <Link href="/privacy">
                 <Text
                   as="a"
