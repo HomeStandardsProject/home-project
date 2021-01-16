@@ -1,5 +1,5 @@
 import * as React from "react";
-import { CheckIcon, NotAllowedIcon } from "@chakra-ui/icons";
+import { CheckIcon, InfoIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -19,6 +19,7 @@ import {
   Select,
   SimpleGrid,
   Stack,
+  Tooltip,
 } from "@chakra-ui/react";
 import {
   Landlords,
@@ -274,7 +275,20 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             isRequired={true}
             isInvalid={!details.landlord && showValidationErrors}
           >
-            <FormLabel fontSize="sm">Landlord</FormLabel>
+            <Stack isInline spacing={0}>
+              <FormLabel fontSize="sm">Landlord</FormLabel>
+              <Tooltip label="The Home Standards Project does not send assessments to landlords.">
+                <Box>
+                  <InfoIcon
+                    color="blue.700"
+                    verticalAlign="baseline"
+                    mt={0.5}
+                    w="11pt"
+                    h="11pt"
+                  />
+                </Box>
+              </Tooltip>
+            </Stack>
             <Select
               placeholder="Select option"
               size="md"
