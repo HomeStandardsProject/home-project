@@ -186,7 +186,7 @@ const Layout = ({
       </header>
       <Content>{children}</Content>
       <Footer>
-        <Flex justify="space-between">
+        <Flex justify="space-between" alignItems="baseline">
           <a href={VERCEL_SPONSORED_LINK} target="_blank" rel="noreferrer">
             <Stack
               justifyContent="flex-start"
@@ -212,7 +212,7 @@ const Layout = ({
             <Stack isInline spacing={0} bg="gray.200" borderRadius="lg" mb={4}>
               <ChakraLink href="mailto:founders@homestandards.org">
                 <IconButton
-                  size="sm"
+                  size="md"
                   color="blue.700"
                   variant="ghost"
                   aria-label="Link to the Home Standards Email"
@@ -224,7 +224,7 @@ const Layout = ({
                 isExternal
               >
                 <IconButton
-                  size="sm"
+                  size="md"
                   color="blue.700"
                   variant="ghost"
                   aria-label="Link to Home Standards Facebook"
@@ -236,7 +236,7 @@ const Layout = ({
                 isExternal
               >
                 <IconButton
-                  size="sm"
+                  size="md"
                   color="blue.700"
                   variant="ghost"
                   aria-label="Link to Home Standards Instagram"
@@ -245,7 +245,7 @@ const Layout = ({
               </ChakraLink>
               <ChakraLink href="https://twitter.com/home_standards" isExternal>
                 <IconButton
-                  size="sm"
+                  size="md"
                   color="blue.700"
                   variant="ghost"
                   aria-label="Link to Home Standards Twitter"
