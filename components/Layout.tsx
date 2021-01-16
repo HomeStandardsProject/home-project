@@ -210,7 +210,7 @@ const Layout = ({
           </a>
           {showSocialIcons && (
             <Stack isInline spacing={0} bg="gray.200" borderRadius="lg" mb={4}>
-              <ChakraLink href="mailto:founders@homestandards.org">
+              <ChakraLink href="mailto:connect@homestandards.org">
                 <IconButton
                   size="md"
                   color="blue.700"

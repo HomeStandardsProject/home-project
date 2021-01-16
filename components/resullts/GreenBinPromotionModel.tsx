@@ -105,7 +105,7 @@ export function GreenBinPromotionModel({ onClose }: Props) {
             isChecked={userInfo.subscribeToNewsletter}
             onChange={handleNewsletterChange}
           >
-            Would you like to join our Newsletter?
+            Would you like to join our mailing list?
           </Checkbox>
         </Stack>
       </ModalBody>
