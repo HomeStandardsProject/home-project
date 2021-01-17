@@ -131,7 +131,7 @@ export const Results: React.FC<Props> = ({ assessment }) => {
               <Stack>
                 <Text>
                   Please note that, due to the nature of self assessments, The
-                  Home Project and QBACC do not assume any liability for
+                  Home Standards Project does not assume any liability for
                   inaccurate home assessments. We encourage you to check your
                   lease for any unique stipulations. What that liability could
                   be, we&apos;re not sure. But we don&apos;t want it.

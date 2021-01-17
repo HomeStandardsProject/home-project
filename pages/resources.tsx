@@ -8,6 +8,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import * as React from "react";
 import { FaFacebook } from "react-icons/fa";
 import Layout from "../components/Layout";
@@ -72,6 +73,13 @@ function Resources() {
             <ResourcePanel key={props.name} {...props} />
           ))}
         </Stack>
+        <Box>
+          <NextLink href="/next-steps">
+            <Button mt={8} colorScheme="blue" variant="outline">
+              Steps for Reporting Issues
+            </Button>
+          </NextLink>
+        </Box>
       </Stack>
     </Layout>
   );

@@ -16,15 +16,14 @@ function Privacy() {
           </Heading>
           <Stack>
             <Text>
-              This privacy policy governs your use of the website The Home
-              Project created by Queen&apos;s Backing Action on Climate Change
-              (QBACC). The Home Project allows users to assess their homes in
-              accordance with the City of Kingston&apos;s Bylaws. The City of
-              Kingston has no involvement with the project. The Website requires
-              users to enter data regarding their housing situation. However,
-              The Home Project and its creators cannot be held responsible for
-              inaccurate housing assessments, potential disputes with landlords
-              or incorrect user data entered.
+              This privacy policy governs your use of the website created by the
+              Home Standards Project. The Home Standard Project allows users to
+              assess their homes in accordance with the City of Kingston&apos;s
+              Bylaws. The City of Kingston has no involvement with the project.
+              The Website requires users to enter data regarding their housing
+              situation. However, The Home Project and its creators cannot be
+              held responsible for inaccurate housing assessments, potential
+              disputes with landlords or incorrect user data entered.
             </Text>
             <Heading size="md">
               What information does the Website obtain, and how is it used?

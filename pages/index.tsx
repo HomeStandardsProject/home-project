@@ -32,7 +32,7 @@ type Props = {
 function IndexPage({ articles }: Props) {
   return (
     <Layout
-      title="QBACC's Home Project"
+      title="Home Standards Project"
       description="Does your student housing meet Kingston’s required property standards? Complete your free home assessment."
       showSocialIcons={true}
     >

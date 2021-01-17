@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: "https://homeproject.qbacc.org",
+  siteUrl: "https://homestandards.org",
   generateRobotsTxt: true,
   exlude: ["/start/details", "/start/evaluation", "/results"],
 };
