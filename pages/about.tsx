@@ -115,10 +115,6 @@ function About() {
               . Let’s make our living conditions more enjoyable, safer, and
               energy-efficient.
             </Text>
-            <Text>
-              Let’s make our living conditions more enjoyable, safer, and
-              energy-efficient.
-            </Text>
             <Box>
               <Text>Sincerely,</Text>
               <Text>Natalie & Nick</Text>
