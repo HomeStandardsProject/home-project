@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
   SimpleGrid,
+  useToast,
 } from "@chakra-ui/react";
 import { AiOutlineSafety } from "react-icons/ai";
 import { BiSend } from "react-icons/bi";
@@ -18,18 +19,30 @@ import Head from "next/head";
 
 import { GetStaticProps } from "next";
 
+import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import { logStartButtonClick } from "../utils/analyticsEvent";
 import { Article, loadArticles } from "../utils/loadArticles";
 import { fetchLinkPreviewImage } from "../utils/fetchLinkPreviewImage";
 import { HomeAssessmentInteractiveExample } from "../components/landing/HomeAssessmentInteractiveExample";
 import { RelevantArticle } from "../components/landing/RelevantArticle";
+import { AlertMetadata, parseQueryForAlert } from "../utils/parseQueryForAlert";
 
 type Props = {
   articles: Article[];
 };
 
 function IndexPage({ articles }: Props) {
+  const { query } = useRouter();
+  const toast = useToast();
+
+  React.useEffect(() => {
+    const alertType = parseQueryForAlert(query);
+    if (alertType) {
+      toast({ position: "top-right", ...AlertMetadata[alertType] });
+    }
+  }, [toast, query]);
+
   return (
     <Layout
       title="Home Standards Project"

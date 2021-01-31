@@ -155,6 +155,22 @@ const Layout = ({
               </Link>
             </Stack>
             <Stack isInline align="center" width="auto">
+              <ChakraLink
+                href="https://www.paypal.com/donate?hosted_button_id=AGNW37L4YTKTL"
+                isExternal
+                _hover={{ textDecoration: "none" }}
+              >
+                <Text
+                  as="a"
+                  textColor="blue.700"
+                  fontWeight="bold"
+                  fontSize="sm"
+                  display="block"
+                  cursor="pointer"
+                >
+                  Donate
+                </Text>
+              </ChakraLink>
               {showStartButton && (
                 <Link href="/start">
                   <Button colorScheme="blue" size="sm">
