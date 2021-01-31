@@ -81,7 +81,10 @@ const Layout = ({
         <meta property="twitter:url" content="https://homestandards.org" />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content="/banner.png" />
+        <meta
+          property="twitter:image"
+          content="https://homestandards.org/banner.png"
+        />
       </Head>
       <header>
         <nav>
