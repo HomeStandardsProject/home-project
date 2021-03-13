@@ -277,49 +277,6 @@ function IndexPage({ articles }: Props) {
         </SimpleGrid>
       </Box>
       <Box marginTop="64pt">
-        <Box
-          bg="rgba(48, 132, 51, 1.000)"
-          backgroundImage={`url("rate-landlord-banner.png")`}
-          backgroundRepeat="no-repeat"
-          backgroundSize="cover"
-          backgroundPosition="center center"
-          borderRadius="lg"
-          padding="28px"
-          boxShadow="lg"
-        >
-          <Stack>
-            <Heading
-              as="h2"
-              fontFamily="Lora, serif"
-              fontSize="1.5rem"
-              color="white"
-              fontWeight="500"
-            >
-              Rate your landlord anonymously
-            </Heading>
-            <Text color="white">
-              Together we can determine the best (and worst) places to live.
-            </Text>
-            <Box>
-              <ChakraLink
-                href="https://docs.google.com/forms/d/e/1FAIpQLSd8vaWsAFvZQANtaEC0AryfBswk5RP2N-1mr9zl0FA4bFh8yQ/viewform?usp=sf_link"
-                isExternal
-              >
-                <Button
-                  variant="outline"
-                  colorScheme="white"
-                  color="white"
-                  marginTop="8pt"
-                  size="sm"
-                >
-                  Rate now
-                </Button>
-              </ChakraLink>
-            </Box>
-          </Stack>
-        </Box>
-      </Box>
-      <Box marginTop="64pt">
         <Subheading>Relevant articles</Subheading>
         <SimpleGrid columns={{ sm: 1, md: 4 }} spacing={4} py="16pt">
           {articles.map((article, i) => (
