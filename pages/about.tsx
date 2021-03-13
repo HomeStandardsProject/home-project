@@ -16,15 +16,19 @@ function About() {
           </Heading>
           <Stack spacing={4}>
             <Text>
-              As rental tenants in Kingston, it is no secret that we pay
-              excessive rent for substandard living conditions. Rent continues
-              to rise yet maintenance and upkeep fall by the wayside. To address
-              this, over the past six months we have worked to create a free,
-              easy to use home assessment tool. With this, you can quickly and
-              easily assess the state of your home and ensure that it meets the
-              City of Kingston’s Property Standards. Unsurprisingly, many
-              previously evaluated homes are found to be full of violations,
-              including drafts, unsealed windows, leaky faucets and more.
+              The Home Standards Project was founded in 2021 by Nick Lorraway
+              and Natalie Woodland in response to issues they had experienced
+              with their rented properties while at Queen’s University. They
+              found that many were unaware of the bylaw standards and were
+              accepting subpar housing as they believed that was simply what
+              rental housing is like.
+            </Text>
+            <Text>
+              With this tool, you can quickly and easily assess the state of
+              your home and ensure that it meets the City of Kingston’s Property
+              Standards. Unsurprisingly, many previously evaluated homes are
+              found to be full of violations, including drafts, unsealed
+              windows, leaky faucets and more.
             </Text>
             <Text>
               Taking on average less than 15 minutes, this guided room by room
@@ -34,7 +38,7 @@ function About() {
               personalized report summarizing your home’s issues will be
               automatically generated. You can send this report directly to your
               landlord or use it to back up maintenance requests with confidence
-              that repairs are soon on their way.
+              that repairs are soon on their way
             </Text>
             <Box>
               <Text>So, why complete a home assessment?</Text>
@@ -69,28 +73,20 @@ function About() {
                 <li>
                   <Text>It’s quick & easy to do</Text>
                 </li>
-                <li>
-                  <Text>
-                    BONUS: Complete your assessment now, and you can have a free
-                    outdoor and/or kitchen-sized green bin delivered to your
-                    door
-                  </Text>
-                </li>
               </ul>
             </Box>
             <Text>
               Be sure to check out the many other unique tools our website has
-              to offer, including a rate your landlord survey and relevant
-              articles, facts, and resources to help you with housing disputes.
+              to offer, relevant articles, facts, and resources to help you with
+              housing disputes.
             </Text>
             <Text>
               We hope that this project can benefit those in the Kingston
-              community who find themselves at the mercy of their landlord and
-              the asymmetric power relationships that are inherent to this
-              relationship. This must change. We believe that every renter
-              deserves to have adequate housing and be free from intimidation,
-              and hope that this project will serve as a valuable tool for those
-              seeking to better their circumstances.
+              community who find themselves living in substandard housing. We
+              believe that every renter deserves to have adequate housing and be
+              able to easily understand their rights. We hope that this project
+              will serve as a valuable tool for those seeking to better their
+              circumstances.
             </Text>
             <Text>
               On behalf of the Home Standards Project, we would like to extend a
