@@ -18,14 +18,14 @@ function About() {
             <Text>
               The Home Standards Project was founded in 2021 by Nick Lorraway
               and Natalie Woodland in response to issues they had experienced
-              with their rented properties while at Queen’s University. They
-              found that many were unaware of the bylaw standards and were
+              with their rented properties while attending Queen’s University.
+              They found that many were unaware of the bylaw standards and were
               accepting subpar housing as they believed that was simply what
               rental housing is like.
             </Text>
             <Text>
-              With this tool, you can quickly and easily assess the state of
-              your home and ensure that it meets the City of Kingston’s Property
+              With this tool you can quickly and easily assess the state of your
+              home and ensure that it meets the City of Kingston’s Property
               Standards. Unsurprisingly, many previously evaluated homes are
               found to be full of violations, including drafts, unsealed
               windows, leaky faucets and more.
@@ -50,7 +50,7 @@ function About() {
                   </Text>
                 </li>
                 <li>
-                  <Text>Reduce your utilities costs.</Text>
+                  <Text>Reduce your utilities costs</Text>
                 </li>
                 <li>
                   <Text>
@@ -71,7 +71,7 @@ function About() {
                   </Text>
                 </li>
                 <li>
-                  <Text>It’s quick & easy to do</Text>
+                  <Text>It’s quick and easy to do</Text>
                 </li>
               </ul>
             </Box>
@@ -100,7 +100,7 @@ function About() {
             <Text>
               If you have any further questions, comments, or concerns, we
               encourage you to reach out to our founders Natalie Woodland and
-              Nick Lorroway at{" "}
+              Nick Lorraway at{" "}
               <Link
                 color="green.700"
                 isExternal
@@ -108,7 +108,7 @@ function About() {
               >
                 connect@homestandards.org
               </Link>
-              . Let’s make our living conditions more enjoyable, safer, and
+              . Let’s make our living conditions more enjoyable, safe, and
               energy-efficient.
             </Text>
             <Box>
