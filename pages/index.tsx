@@ -27,6 +27,12 @@ import { fetchLinkPreviewImage } from "../utils/fetchLinkPreviewImage";
 import { HomeAssessmentInteractiveExample } from "../components/landing/HomeAssessmentInteractiveExample";
 import { RelevantArticle } from "../components/landing/RelevantArticle";
 import { AlertMetadata, parseQueryForAlert } from "../utils/parseQueryForAlert";
+import {
+  fetchLanding,
+  // LandingMetadata,
+  // LandingExampleViolation,
+  // LandingFact,
+} from "../api-functions/CMS/Contentful";
 
 type Props = {
   articles: Article[];
@@ -331,6 +337,9 @@ const EnergyFactContainer: React.FC<{ backgroundImage: string }> = ({
 
 export const getStaticProps: GetStaticProps = async () => {
   const articles = loadArticles();
+
+  const landing = await fetchLanding();
+  console.log(landing);
 
   for (const article of articles) {
     const previewImage = await fetchLinkPreviewImage(article.sourceUrl);
