@@ -4,6 +4,7 @@ import { Box, Stack, Image, Text, Tag, SimpleGrid } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 
 import * as React from "react";
+import { LandingExampleViolation } from "../../api-functions/CMS/Contentful";
 
 const EXAMPLE_DATA = [
   {
@@ -18,7 +19,7 @@ const EXAMPLE_DATA = [
     name: "Doors and Windows 5.11",
     description:
       "Where storm windows and doors are installed in a dwelling that shall be Maintained in good Repair.",
-    comment: "There is a noticeable draft from the edges of the windows",
+    comment: "There is a noticeable draft from the edges of the windows.",
     top: 37.5,
     left: 35,
   },
@@ -33,17 +34,21 @@ const EXAMPLE_DATA = [
   },
   {
     name: "Appliance 4.8",
-    comment: "The oven doesn't heat up.",
     description:
       "All appliances, equipment, accessories and installations provided by the Owner shall be installed and Maintained in good repair and working order and used for their intended purposes.",
+    comment: "The oven doesn't heat up.",
     top: 74,
     left: 73,
   },
 ];
 
-export function HomeAssessmentInteractiveExample() {
+export function HomeAssessmentInteractiveExample(props: {
+  violations: LandingExampleViolation[];
+}) {
   const violationsControls = useAnimation();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
+  const { violations } = props;
+  console.log(violations);
 
   React.useEffect(() => {
     if (hoveredIndex !== null) {

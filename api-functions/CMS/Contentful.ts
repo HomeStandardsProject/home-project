@@ -1,5 +1,3 @@
-// import Contentful from "contentful"
-
 export const CMS_ERRORS = {
   unableToFetch: new Error("unable to fetch content from CMS"),
   itemsUndefined: new Error("cms failed to return expected items"),
@@ -11,7 +9,7 @@ export const CMS_ERRORS = {
 };
 export type LandingMetadata = {
   title: string;
-  description: [];
+  description: string[];
   buttonStartNow: string;
   articleTitle: string;
 };
@@ -19,22 +17,22 @@ export type LandingMetadata = {
 export type LandingExampleViolation = {
   title: string;
   description: string;
-  violationReason: string;
+  comment: string;
   order: number;
-  markerLeftPosition: number;
-  markerTopPosition: number;
+  left: number;
+  top: number;
 };
 
 export type LandingFact = {
   title: string;
   description: string;
-  backgroundImage: [];
+  backgroundImage: any;
   order: number;
 };
 
 export type LandingContent = {
   metadata: LandingMetadata;
-  violation: LandingExampleViolation[];
+  violations: LandingExampleViolation[];
   facts: LandingFact[];
 };
 
@@ -48,7 +46,6 @@ type ContentfulResponse = {
   }[];
 };
 
-// not handling any errors - add try/catch?
 export const fetchLanding = async () => {
   try {
     const response = await fetch(url);
@@ -61,17 +58,32 @@ export const fetchLanding = async () => {
     for (const item of data.items) {
       const itemType = item.sys.contentType.sys.id;
       switch (itemType) {
-        case "landingMetadata":
+        case "landingMetadata": {
           if (content.metadata) throw CMS_ERRORS.metadataNotUnique;
-          content.metadata = item.fields as LandingMetadata;
+          const description = item.fields.description as {
+            content: { content: [{ value: string }] }[];
+          };
+          content.metadata = {
+            title: item.fields.title,
+            description: description.content.map(
+              (item) => item.content[0].value
+            ),
+            buttonStartNow: item.fields.buttonStartNow,
+            articleTitle: item.fields.articleTitle,
+          } as LandingMetadata;
           break;
+        }
         case "offeringExampleViolation": {
           const violation = item.fields as LandingExampleViolation;
-          if (!content.violation) {
-            content.violation = [violation];
+          if (!content.violations) {
+            content.violations = [violation];
           } else {
-            content.violation.push(violation);
+            content.violations.push(violation);
           }
+          // sort the violation array based on order(index)
+          content.violations.sort((a, b) => {
+            return a.order - b.order;
+          });
           break;
         }
         case "landingFact": {

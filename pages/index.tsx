@@ -27,20 +27,17 @@ import { fetchLinkPreviewImage } from "../utils/fetchLinkPreviewImage";
 import { HomeAssessmentInteractiveExample } from "../components/landing/HomeAssessmentInteractiveExample";
 import { RelevantArticle } from "../components/landing/RelevantArticle";
 import { AlertMetadata, parseQueryForAlert } from "../utils/parseQueryForAlert";
-import {
-  fetchLanding,
-  // LandingMetadata,
-  // LandingExampleViolation,
-  // LandingFact,
-} from "../api-functions/CMS/Contentful";
+import { fetchLanding, LandingContent } from "../api-functions/CMS/Contentful";
 
 type Props = {
   articles: Article[];
+  landingContent: LandingContent;
 };
 
-function IndexPage({ articles }: Props) {
+function IndexPage({ articles, landingContent }: Props) {
   const { query } = useRouter();
   const toast = useToast();
+  const { metadata, violations } = landingContent;
 
   React.useEffect(() => {
     const alertType = parseQueryForAlert(query);
@@ -78,10 +75,11 @@ function IndexPage({ articles }: Props) {
           fontWeight="500"
           marginBottom="12pt"
         >
-          Is your Kingston housing in violation of any bylaws?
+          {/* Is your Kingston housing in violation of any bylaws? */}
+          {metadata.title}
         </Heading>
         <Stack width={{ sm: "100%", md: "80%" }} userSelect="none">
-          <Text textAlign="left">
+          {/* <Text textAlign="left">
             Automatically generate a personalized report summarizing your home’s
             issues. This assessment tool guides you through your house room by
             room, asking a series of questions to help you quickly and easily
@@ -90,7 +88,14 @@ function IndexPage({ articles }: Props) {
           <Text>
             Let’s make your living conditions more enjoyable, safe, and
             energy-efficient.
-          </Text>
+          </Text> */}
+          {metadata.description.map((item: string, index: number) => {
+            return (
+              <Text key={index} textAlign="left">
+                {item}
+              </Text>
+            );
+          })}
         </Stack>
         <Box>
           <Link href="/start">
@@ -101,7 +106,8 @@ function IndexPage({ articles }: Props) {
               boxShadow="md"
               onClick={logStartButtonClick}
             >
-              Start now
+              {/* Start now */}
+              {metadata.buttonStartNow}
             </Button>
           </Link>
         </Box>
@@ -152,6 +158,9 @@ function IndexPage({ articles }: Props) {
       <Box mt={{ base: "32pt", md: 0 }}>
         <Subheading>Why this tool?</Subheading>
         <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={2} marginTop="16pt">
+          {/* {facts.map((fact) => {
+            return false;
+          })} */}
           <EnergyFactContainer backgroundImage="/living-room-card.png">
             <Heading
               as="h3"
@@ -226,7 +235,7 @@ function IndexPage({ articles }: Props) {
           appear to be in good condition, but multiple bylaw violations can be
           found upon closer inspection.
         </Text>
-        <HomeAssessmentInteractiveExample />
+        <HomeAssessmentInteractiveExample violations={violations} />
       </Box>
       <Box marginTop="64pt">
         <Subheading>Did you know?</Subheading>
@@ -338,15 +347,14 @@ const EnergyFactContainer: React.FC<{ backgroundImage: string }> = ({
 export const getStaticProps: GetStaticProps = async () => {
   const articles = loadArticles();
 
-  const landing = await fetchLanding();
-  console.log(landing);
+  const landingContent = await fetchLanding();
 
   for (const article of articles) {
     const previewImage = await fetchLinkPreviewImage(article.sourceUrl);
     article.previewImage = previewImage;
   }
 
-  return { props: { articles } };
+  return { props: { articles, landingContent } };
 };
 
 export default IndexPage;
