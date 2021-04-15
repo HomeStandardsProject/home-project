@@ -17,10 +17,10 @@ export type LandingMetadata = {
 export type LandingExampleViolation = {
   title: string;
   description: string;
-  comment: string;
+  violationReason: string;
   order: number;
-  left: number;
-  top: number;
+  markerLeftPosition: number;
+  markerTopPosition: number;
 };
 
 export type LandingFact = {
@@ -80,7 +80,6 @@ export const fetchLanding = async () => {
           } else {
             content.violations.push(violation);
           }
-          // sort the violation array based on order(index)
           content.violations.sort((a, b) => {
             return a.order - b.order;
           });
