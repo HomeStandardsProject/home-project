@@ -11,6 +11,10 @@ export type LandingMetadata = {
   title: string;
   description: string[];
   buttonStartNow: string;
+  whyThisToolTitle: string;
+  howWeHelpTitle: string;
+  kitchenIntro: string;
+  didYouKnowTitle: string;
   articleTitle: string;
 };
 
@@ -59,6 +63,13 @@ export type DidYouKnow = {
   sourceUrl: string;
   order: number;
 };
+export type RelevantArticle = {
+  title: string;
+  sourceName: string;
+  sourceUrl: string;
+  order: number;
+  previewImage: string | null;
+};
 
 export type LandingContent = {
   metadata: LandingMetadata;
@@ -66,6 +77,7 @@ export type LandingContent = {
   facts: LandingFact[];
   explanations?: RichElement[];
   didYouKnows: DidYouKnow[];
+  relevantArticles: RelevantArticle[];
 };
 
 const url =
@@ -115,6 +127,10 @@ export const fetchLanding = async () => {
               (item) => item.content[0].value
             ),
             buttonStartNow: item.fields.buttonStartNow,
+            whyThisToolTitle: item.fields.whyThisToolTitle,
+            howWeHelpTitle: item.fields.howWeHelpTitle,
+            kitchenIntro: item.fields.kitchenIntro,
+            didYouKnowTitle: item.fields.didYouKnowTitle,
             articleTitle: item.fields.articleTitle,
           } as LandingMetadata;
           break;
@@ -216,6 +232,24 @@ export const fetchLanding = async () => {
             content.didYouKnows = [didYouKnow];
           }
           content.didYouKnows.sort((a, b) => {
+            return a.order - b.order;
+          });
+          break;
+        }
+        case "relevantArticle": {
+          const relevantArticle = {
+            title: item.fields.title,
+            sourceName: item.fields.sourceName,
+            sourceUrl: item.fields.sourceUrl,
+            order: item.fields.order,
+            previewImage: item.fields.previewImage,
+          } as RelevantArticle;
+          if (content.relevantArticles) {
+            content.relevantArticles.push(relevantArticle);
+          } else {
+            content.relevantArticles = [relevantArticle];
+          }
+          content.relevantArticles.sort((a, b) => {
             return a.order - b.order;
           });
           break;

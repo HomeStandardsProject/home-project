@@ -22,19 +22,17 @@ import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 import { logStartButtonClick } from "../utils/analyticsEvent";
-import { Article, loadArticles } from "../utils/loadArticles";
 import { fetchLinkPreviewImage } from "../utils/fetchLinkPreviewImage";
 import { HomeAssessmentInteractiveExample } from "../components/landing/HomeAssessmentInteractiveExample";
-import { RelevantArticle } from "../components/landing/RelevantArticle";
+import { Article } from "../components/landing/RelevantArticle";
 import { AlertMetadata, parseQueryForAlert } from "../utils/parseQueryForAlert";
 import { fetchLanding, LandingContent } from "../api-functions/CMS/Contentful";
 
 type Props = {
-  articles: Article[];
   landingContent: LandingContent;
 };
 
-function IndexPage({ articles, landingContent }: Props) {
+function IndexPage({ landingContent }: Props) {
   const { query } = useRouter();
   const toast = useToast();
   const {
@@ -43,9 +41,8 @@ function IndexPage({ articles, landingContent }: Props) {
     facts,
     explanations,
     didYouKnows,
+    relevantArticles,
   } = landingContent;
-
-  console.log(didYouKnows);
 
   React.useEffect(() => {
     const alertType = parseQueryForAlert(query);
@@ -111,7 +108,7 @@ function IndexPage({ articles, landingContent }: Props) {
           {explanations?.map((explanation, index) => {
             if (explanation.subRichElements) {
               return (
-                <Stack isInline align="center" spacing={1}>
+                <Stack key={index} isInline align="center" spacing={1}>
                   <Icon
                     as={FaRunning}
                     color="rgba(59, 168, 0, 1.000)"
@@ -152,7 +149,7 @@ function IndexPage({ articles, landingContent }: Props) {
         </Stack>
       </Flex>
       <Box mt={{ base: "32pt", md: 0 }}>
-        <Subheading>Why this tool?</Subheading>
+        <Subheading>{metadata.whyThisToolTitle}</Subheading>
         <SimpleGrid columns={{ base: 2, lg: 2 }} spacing={2} marginTop="16pt">
           {facts.map((fact, index) => {
             return (
@@ -184,16 +181,12 @@ function IndexPage({ articles, landingContent }: Props) {
         </SimpleGrid>
       </Box>
       <Box marginTop={{ base: "32pt", md: "64pt" }}>
-        <Subheading>How we help</Subheading>
-        <Text width="100%">
-          Check out this rental property’s kitchen. At first glance, it may
-          appear to be in good condition, but multiple bylaw violations can be
-          found upon closer inspection.
-        </Text>
+        <Subheading>{metadata.howWeHelpTitle}</Subheading>
+        <Text width="100%">{metadata.kitchenIntro}</Text>
         <HomeAssessmentInteractiveExample violations={violations} />
       </Box>
       <Box marginTop="64pt">
-        <Subheading>Did you know?</Subheading>
+        <Subheading>{metadata.didYouKnowTitle}</Subheading>
         <SimpleGrid
           columns={{ base: 1, md: 3 }}
           spacing={{ base: 6, md: 12 }}
@@ -216,10 +209,10 @@ function IndexPage({ articles, landingContent }: Props) {
         </SimpleGrid>
       </Box>
       <Box marginTop="64pt">
-        <Subheading>Relevant articles</Subheading>
+        <Subheading>{metadata.articleTitle}</Subheading>
         <SimpleGrid columns={{ sm: 1, md: 4 }} spacing={4} py="16pt">
-          {articles.map((article, i) => (
-            <RelevantArticle key={i} article={article} />
+          {relevantArticles.map((article, i) => (
+            <Article key={i} article={article} />
           ))}
         </SimpleGrid>
       </Box>
@@ -269,16 +262,14 @@ const EnergyFactContainer: React.FC<{ backgroundImage: string }> = ({
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const articles = loadArticles();
-
   const landingContent = await fetchLanding();
 
-  for (const article of articles) {
-    const previewImage = await fetchLinkPreviewImage(article.sourceUrl);
-    article.previewImage = previewImage;
+  for (const relevantArticle of landingContent.relevantArticles) {
+    const previewImage = await fetchLinkPreviewImage(relevantArticle.sourceUrl);
+    relevantArticle.previewImage = previewImage;
   }
 
-  return { props: { articles, landingContent } };
+  return { props: { landingContent } };
 };
 
 export default IndexPage;
