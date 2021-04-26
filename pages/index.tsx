@@ -12,8 +12,8 @@ import {
   SimpleGrid,
   useToast,
 } from "@chakra-ui/react";
-import { AiOutlineSafety } from "react-icons/ai";
-import { BiSend } from "react-icons/bi";
+// import { AiOutlineSafety } from "react-icons/ai";
+// import { BiSend } from "react-icons/bi";
 import { FaRunning } from "react-icons/fa";
 import Head from "next/head";
 
@@ -37,7 +37,15 @@ type Props = {
 function IndexPage({ articles, landingContent }: Props) {
   const { query } = useRouter();
   const toast = useToast();
-  const { metadata, violations, facts, explanations } = landingContent;
+  const {
+    metadata,
+    violations,
+    facts,
+    explanations,
+    didYouKnows,
+  } = landingContent;
+
+  console.log(didYouKnows);
 
   React.useEffect(() => {
     const alertType = parseQueryForAlert(query);
@@ -75,20 +83,9 @@ function IndexPage({ articles, landingContent }: Props) {
           fontWeight="500"
           marginBottom="12pt"
         >
-          {/* Is your Kingston housing in violation of any bylaws? */}
           {metadata.title}
         </Heading>
         <Stack width={{ sm: "100%", md: "80%" }} userSelect="none">
-          {/* <Text textAlign="left">
-            Automatically generate a personalized report summarizing your home’s
-            issues. This assessment tool guides you through your house room by
-            room, asking a series of questions to help you quickly and easily
-            spot issues.
-          </Text>
-          <Text>
-            Let’s make your living conditions more enjoyable, safe, and
-            energy-efficient.
-          </Text> */}
           {metadata.description.map((item: string, index: number) => {
             return (
               <Text key={index} textAlign="left">
@@ -106,7 +103,6 @@ function IndexPage({ articles, landingContent }: Props) {
               boxShadow="md"
               onClick={logStartButtonClick}
             >
-              {/* Start now */}
               {metadata.buttonStartNow}
             </Button>
           </Link>
@@ -114,68 +110,45 @@ function IndexPage({ articles, landingContent }: Props) {
         <Stack marginTop="30pt">
           {explanations?.map((explanation, index) => {
             if (explanation.subRichElements) {
-              explanation.subRichElements.map((element, index) => {
-                if (element.nodeType === "hyperlink") {
-                  return <a href={element.uri}>{element.value}</a>;
-                }
-                return <p key={index}>{element.value}</p>;
-              });
+              return (
+                <Stack isInline align="center" spacing={1}>
+                  <Icon
+                    as={FaRunning}
+                    color="rgba(59, 168, 0, 1.000)"
+                    w="22px"
+                    h="22px"
+                  />
+                  <Text fontSize="sm">
+                    {explanation.subRichElements.map((element) => {
+                      if (element.nodeType === "hyperlink") {
+                        return (
+                          <ChakraLink
+                            href={element.uri}
+                            isExternal
+                            color="rgba(52, 151, 55, 1.000)"
+                          >
+                            {element.value}{" "}
+                          </ChakraLink>
+                        );
+                      }
+                      return <span key={index}>{element.value}</span>;
+                    })}
+                  </Text>
+                </Stack>
+              );
             }
-            return <p key={index}>{explanation.value}</p>;
+            return (
+              <Stack key={index} isInline align="center" spacing={1}>
+                <Icon
+                  as={FaRunning}
+                  color="rgba(59, 168, 0, 1.000)"
+                  w="22px"
+                  h="22px"
+                />
+                <Text fontSize="sm">{explanation.value} </Text>
+              </Stack>
+            );
           })}
-          {/* {explanations?.map((explanation) => {
-            if (explanation.subRichElements) {
-              explanation.subRichElements.map((element) => {
-                console.log(element);
-                if (element.nodeType === "hyperlink") {
-                  return <a href={element.uri}>{element.value}</a>;
-                } else {
-                  return <p>{element.value}</p>;
-              }
-              return null;
-            });
-          })} */}
-          <Stack isInline align="center" spacing={1}>
-            <Icon
-              as={FaRunning}
-              color="rgba(59, 168, 0, 1.000)"
-              w="22px"
-              h="22px"
-            />
-            <Text fontSize="sm">
-              Complete your assessment in less than 15 minutes
-            </Text>
-          </Stack>
-          <Stack isInline align="center" spacing={1}>
-            <Icon
-              as={AiOutlineSafety}
-              color="rgba(59, 168, 0, 1.000)"
-              w="24px"
-              h="24px"
-            />
-            <Text fontSize="sm">
-              Cross-referenced with{" "}
-              <ChakraLink
-                href="https://www.cityofkingston.ca/resident/property-standards"
-                isExternal
-                color="rgba(52, 151, 55, 1.000)"
-              >
-                Kingston’s mandatory Property Standards
-              </ChakraLink>
-            </Text>
-          </Stack>
-          <Stack isInline align="center" spacing={1}>
-            <Icon
-              as={BiSend}
-              color="rgba(59, 168, 0, 1.000)"
-              w="22px"
-              h="22px"
-            />
-            <Text fontSize="sm">
-              You can send the result directly to your landlord or reference it
-              when submitting maintenance requests with confidence
-            </Text>
-          </Stack>
         </Stack>
       </Flex>
       <Box mt={{ base: "32pt", md: 0 }}>
@@ -209,73 +182,6 @@ function IndexPage({ articles, landingContent }: Props) {
             );
           })}
         </SimpleGrid>
-        {/* <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={2} marginTop="16pt">
-          <EnergyFactContainer backgroundImage="/living-room-card.png">
-            <Heading
-              as="h3"
-              fontFamily="Lora, serif"
-              fontSize="1.5rem"
-              fontWeight="500"
-            >
-              13%
-            </Heading>
-            <Text width="70%">
-              Buildings account for 13% of Canada&apos;s overall greenhouse gas
-              emissions.
-            </Text>
-          </EnergyFactContainer>
-          <EnergyFactContainer backgroundImage="/night-sky-2-card.png">
-            <Heading
-              as="h3"
-              fontFamily="Lora, serif"
-              fontSize="1.5rem"
-              fontWeight="500"
-              color="rgba(255,255,255,0.6)"
-            >
-              $90M
-            </Heading>
-            <Text color="white">
-              The energy we consume to heat, cool and power our homes represents
-              14% of Kingston’s greenhouse gas emissions and cost nearly $90
-              million annually.
-            </Text>
-          </EnergyFactContainer>
-        </SimpleGrid>
-        <SimpleGrid columns={{ md: 1, lg: 2 }} spacing={2} marginTop={2}>
-          <EnergyFactContainer backgroundImage="/night-sky-1-card.png">
-            <Heading
-              as="h3"
-              fontFamily="Lora, serif"
-              fontSize="1.5rem"
-              fontWeight="500"
-              color="rgba(255,255,255,0.6)"
-            >
-              -30%
-            </Heading>
-            <Text color="white">
-              Kingston was the first Ontario municipality to declare a climate
-              emergency, setting a goal to cut greenhouse gas emissions 30% by
-              the year 2030.
-            </Text>
-          </EnergyFactContainer>
-          <EnergyFactContainer backgroundImage="/flower-card.png">
-            <Heading
-              as="h3"
-              fontFamily="Lora, serif"
-              color="rgba(0,0,0,0.6)"
-              fontSize="1.5rem"
-              fontWeight="500"
-            >
-              Committing to change
-            </Heading>
-            <Text>
-              Greenhouse gases such as CO2, which are created from home heating
-              systems, are contributing to the current climate crisis. You can
-              help minimize your climate impact by evaluating your house to
-              eliminate substandard conditions.
-            </Text>
-          </EnergyFactContainer>
-        </SimpleGrid> */}
       </Box>
       <Box marginTop={{ base: "32pt", md: "64pt" }}>
         <Subheading>How we help</Subheading>
@@ -293,51 +199,20 @@ function IndexPage({ articles, landingContent }: Props) {
           spacing={{ base: 6, md: 12 }}
           marginTop={2}
         >
-          <FactContainer title="Kingston's Skyrocketing Rent">
-            <Text>
-              Rental rates over the period has been notably higher than the rate
-              of inflation over the period illustrating an erosion in housing
-              affordability in the local rental market.
-            </Text>
-            <ChakraLink
-              color="green.500"
-              href="https://www.cityofkingston.ca/documents/10180/33838002/01_2020_Housing_MTFR_Document_AppendixC.pdf/1d5a4054-704f-836f-561a-470d96627fa2?t=1582740336621"
-              isExternal
-            >
-              Kingston Rental Housing Market Analysis Report
-            </ChakraLink>
-          </FactContainer>
-          <FactContainer title="Average Rent">
-            <Text>
-              Average cost of rent in Kingston per month for 2018 was Bachelor:
-              $745. One bedroom: $1000. Two bedrooms: $1200. Three +(space)
-              bedrooms: $1998.
-            </Text>
-            <ChakraLink
-              color="green.500"
-              href="https://www.homelesshub.ca/community-profile/kingston"
-              isExternal
-            >
-              Community Profiles - Kingston
-            </ChakraLink>
-          </FactContainer>
-          <FactContainer title="Allowable Rent Increase">
-            <Text>
-              The Ontario Ministry of Municipal Affairs and Housing sets the
-              limit every year for how much landlords can legally raise your
-              rent that year.
-            </Text>
-            <Text>
-              In 2019, the limit was 1.8%. In 2020, the limit was 2.2%.
-            </Text>
-            <ChakraLink
-              color="green.500"
-              href="https://settlement.org/ontario/housing/rent-a-home/tenant-rights-and-responsibilities/how-often-can-a-landlord-increase-the-rent"
-              isExternal
-            >
-              How often can a landlord increase the rent?
-            </ChakraLink>
-          </FactContainer>
+          {didYouKnows.map((element, index) => {
+            return (
+              <FactContainer key={index} title={element.title}>
+                <Text>{element.description}</Text>
+                <ChakraLink
+                  color="green.500"
+                  href={element.sourceUrl}
+                  isExternal
+                >
+                  {element.sourceName}
+                </ChakraLink>
+              </FactContainer>
+            );
+          })}
         </SimpleGrid>
       </Box>
       <Box marginTop="64pt">

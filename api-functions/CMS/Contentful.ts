@@ -43,6 +43,7 @@ export type RichElement = {
   value?: string;
   subRichElements?: SubRichElement[];
   order: number;
+  icon: string;
 };
 
 export type SubRichElement = {
@@ -51,11 +52,20 @@ export type SubRichElement = {
   uri?: string;
 };
 
+export type DidYouKnow = {
+  title: string;
+  description: string;
+  sourceName: string;
+  sourceUrl: string;
+  order: number;
+};
+
 export type LandingContent = {
   metadata: LandingMetadata;
   violations: LandingExampleViolation[];
   facts: LandingFact[];
   explanations?: RichElement[];
+  didYouKnows: DidYouKnow[];
 };
 
 const url =
@@ -144,7 +154,6 @@ export const fetchLanding = async () => {
           break;
         }
         case "landingExplanation": {
-          const order = item.fields.order as number;
           const info = item.fields.description.content[0].content;
           const subRichElements: SubRichElement[] = [];
           if (info.length > 1) {
@@ -166,7 +175,8 @@ export const fetchLanding = async () => {
             });
             const richElement = {
               subRichElements: subRichElements as SubRichElement[],
-              order: order as number,
+              order: item.fields.order,
+              icon: item.fields.icon,
             } as RichElement;
             if (content.explanations) {
               content.explanations.push(richElement);
@@ -178,7 +188,8 @@ export const fetchLanding = async () => {
             const richElement = {
               nodeType: data.nodeType,
               value: data.value,
-              order: order as number,
+              order: item.fields.order,
+              icon: item.fields.icon,
             } as RichElement;
             if (content.explanations) {
               content.explanations.push(richElement);
@@ -187,6 +198,24 @@ export const fetchLanding = async () => {
             }
           }
           content.explanations.sort((a, b) => {
+            return a.order - b.order;
+          });
+          break;
+        }
+        case "didYouKnow": {
+          const didYouKnow = {
+            title: item.fields.title,
+            description: item.fields.description,
+            sourceName: item.fields.sourceName,
+            sourceUrl: item.fields.sourceUrl,
+            order: item.fields.order,
+          } as DidYouKnow;
+          if (content.didYouKnows) {
+            content.didYouKnows.push(didYouKnow);
+          } else {
+            content.didYouKnows = [didYouKnow];
+          }
+          content.didYouKnows.sort((a, b) => {
             return a.order - b.order;
           });
           break;
