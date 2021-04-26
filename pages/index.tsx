@@ -12,8 +12,8 @@ import {
   SimpleGrid,
   useToast,
 } from "@chakra-ui/react";
-// import { AiOutlineSafety } from "react-icons/ai";
-// import { BiSend } from "react-icons/bi";
+import { AiOutlineSafety } from "react-icons/ai";
+import { BiSend } from "react-icons/bi";
 import { FaRunning } from "react-icons/fa";
 import Head from "next/head";
 
@@ -109,12 +109,7 @@ function IndexPage({ landingContent }: Props) {
             if (explanation.subRichElements) {
               return (
                 <Stack key={index} isInline align="center" spacing={1}>
-                  <Icon
-                    as={FaRunning}
-                    color="rgba(59, 168, 0, 1.000)"
-                    w="22px"
-                    h="22px"
-                  />
+                  {renderIcon(explanation.icon)}
                   <Text fontSize="sm">
                     {explanation.subRichElements.map((element) => {
                       if (element.nodeType === "hyperlink") {
@@ -136,12 +131,7 @@ function IndexPage({ landingContent }: Props) {
             }
             return (
               <Stack key={index} isInline align="center" spacing={1}>
-                <Icon
-                  as={FaRunning}
-                  color="rgba(59, 168, 0, 1.000)"
-                  w="22px"
-                  h="22px"
-                />
+                {renderIcon(explanation.icon)}
                 <Text fontSize="sm">{explanation.value} </Text>
               </Stack>
             );
@@ -219,6 +209,26 @@ function IndexPage({ landingContent }: Props) {
     </Layout>
   );
 }
+
+const iconStyles = {
+  color: "rgba(59, 168, 0, 1.000)",
+  w: "22px",
+  h: "22px",
+};
+
+const renderIcon = (icon: string) => {
+  switch (icon) {
+    case "FaRunning":
+      return <Icon as={FaRunning} {...iconStyles} />;
+    case "BiSend":
+      return <Icon as={BiSend} {...iconStyles} />;
+    case "AiOutlineSafety":
+      return <Icon as={AiOutlineSafety} {...iconStyles} />;
+    default:
+      break;
+  }
+  return null;
+};
 
 const Subheading: React.FC = ({ children }) => (
   <Heading as="h2" fontFamily="Lora, serif" fontSize="1.6rem" fontWeight="500">
