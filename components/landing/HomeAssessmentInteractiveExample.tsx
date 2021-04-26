@@ -6,49 +6,12 @@ import { motion, useAnimation } from "framer-motion";
 import * as React from "react";
 import { LandingExampleViolation } from "../../api-functions/CMS/Contentful";
 
-// const EXAMPLE_DATA = [
-//   {
-//     name: "Plumbing 5.57 ",
-//     description:
-//       "All plumbing, including every drain, water pipe, water closet and other plumbing fixtures in a Dwelling and every connecting line to the Sewerage System shall be Maintained in good working order and free from leaks or defects, and all water pipes and appurtenances thereto shall be protected from freezing.",
-//     comment: "The faucet drips.",
-//     top: 55,
-//     left: 30.5,
-//   },
-//   {
-//     name: "Doors and Windows 5.11",
-//     description:
-//       "Where storm windows and doors are installed in a dwelling that shall be Maintained in good Repair.",
-//     comment: "There is a noticeable draft from the edges of the windows.",
-//     top: 37.5,
-//     left: 35,
-//   },
-//   {
-//     name: "Kitchen 5.49.3",
-//     description:
-//       "Work surfaces at least 1.2 metres (4 feet) in length x 60 centimeters (2 feet) in width, exclusive of the sink, that are impervious to moisture and grease and easily cleanable so as not to impart any toxic or deleterious effect to food.",
-//     comment:
-//       "The countertop behind the sink is damaged, which allows water to seep in.",
-//     top: 57.5,
-//     left: 50,
-//   },
-//   {
-//     name: "Appliance 4.8",
-//     description:
-//       "All appliances, equipment, accessories and installations provided by the Owner shall be installed and Maintained in good repair and working order and used for their intended purposes.",
-//     comment: "The oven doesn't heat up.",
-//     top: 74,
-//     left: 73,
-//   },
-// ];
-
 export function HomeAssessmentInteractiveExample(props: {
   violations: LandingExampleViolation[];
 }) {
   const violationsControls = useAnimation();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   const { violations } = props;
-  console.log(violations);
 
   React.useEffect(() => {
     if (hoveredIndex !== null) {

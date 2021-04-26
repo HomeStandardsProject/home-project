@@ -37,7 +37,7 @@ type Props = {
 function IndexPage({ articles, landingContent }: Props) {
   const { query } = useRouter();
   const toast = useToast();
-  const { metadata, violations } = landingContent;
+  const { metadata, violations, facts, explanations } = landingContent;
 
   React.useEffect(() => {
     const alertType = parseQueryForAlert(query);
@@ -112,6 +112,29 @@ function IndexPage({ articles, landingContent }: Props) {
           </Link>
         </Box>
         <Stack marginTop="30pt">
+          {explanations?.map((explanation, index) => {
+            if (explanation.subRichElements) {
+              explanation.subRichElements.map((element, index) => {
+                if (element.nodeType === "hyperlink") {
+                  return <a href={element.uri}>{element.value}</a>;
+                }
+                return <p key={index}>{element.value}</p>;
+              });
+            }
+            return <p key={index}>{explanation.value}</p>;
+          })}
+          {/* {explanations?.map((explanation) => {
+            if (explanation.subRichElements) {
+              explanation.subRichElements.map((element) => {
+                console.log(element);
+                if (element.nodeType === "hyperlink") {
+                  return <a href={element.uri}>{element.value}</a>;
+                } else {
+                  return <p>{element.value}</p>;
+              }
+              return null;
+            });
+          })} */}
           <Stack isInline align="center" spacing={1}>
             <Icon
               as={FaRunning}
@@ -157,10 +180,36 @@ function IndexPage({ articles, landingContent }: Props) {
       </Flex>
       <Box mt={{ base: "32pt", md: 0 }}>
         <Subheading>Why this tool?</Subheading>
-        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={2} marginTop="16pt">
-          {/* {facts.map((fact) => {
-            return false;
-          })} */}
+        <SimpleGrid columns={{ base: 2, lg: 2 }} spacing={2} marginTop="16pt">
+          {facts.map((fact, index) => {
+            return (
+              <EnergyFactContainer
+                key={fact.title}
+                backgroundImage={fact.backgroundImage}
+              >
+                <Heading
+                  as="h3"
+                  fontFamily="Lora, serif"
+                  fontSize="1.5rem"
+                  fontWeight="500"
+                  color={
+                    fact.lightTextColor ? "rgba(255,255,255,0.6)" : "black"
+                  }
+                >
+                  {fact.title}
+                </Heading>
+                <Text
+                  width={index === 0 ? "70%" : "100%"}
+                  // better way to make width dynamic?
+                  color={fact.lightTextColor ? "white" : "black"}
+                >
+                  {fact.description}
+                </Text>
+              </EnergyFactContainer>
+            );
+          })}
+        </SimpleGrid>
+        {/* <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={2} marginTop="16pt">
           <EnergyFactContainer backgroundImage="/living-room-card.png">
             <Heading
               as="h3"
@@ -226,7 +275,7 @@ function IndexPage({ articles, landingContent }: Props) {
               eliminate substandard conditions.
             </Text>
           </EnergyFactContainer>
-        </SimpleGrid>
+        </SimpleGrid> */}
       </Box>
       <Box marginTop={{ base: "32pt", md: "64pt" }}>
         <Subheading>How we help</Subheading>
