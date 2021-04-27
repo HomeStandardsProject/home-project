@@ -26,7 +26,9 @@ import { fetchLinkPreviewImage } from "../utils/fetchLinkPreviewImage";
 import { HomeAssessmentInteractiveExample } from "../components/landing/HomeAssessmentInteractiveExample";
 import { Article } from "../components/landing/RelevantArticle";
 import { AlertMetadata, parseQueryForAlert } from "../utils/parseQueryForAlert";
-import { fetchLanding, LandingContent } from "../api-functions/CMS/Contentful";
+import { fetchLanding } from "../api-functions/cms/ContentfulLanding";
+import { LandingContent } from "../interfaces/contentful-landing";
+import { RichContentfulContent } from "../components/RichContentfulContent";
 
 type Props = {
   landingContent: LandingContent;
@@ -83,13 +85,7 @@ function IndexPage({ landingContent }: Props) {
           {metadata.title}
         </Heading>
         <Stack width={{ sm: "100%", md: "80%" }} userSelect="none">
-          {metadata.description.map((item: string, index: number) => {
-            return (
-              <Text key={index} textAlign="left">
-                {item}
-              </Text>
-            );
-          })}
+          <RichContentfulContent content={metadata.richDescription} />
         </Stack>
         <Box>
           <Link href="/start">
@@ -105,37 +101,12 @@ function IndexPage({ landingContent }: Props) {
           </Link>
         </Box>
         <Stack marginTop="30pt">
-          {explanations?.map((explanation, index) => {
-            if (explanation.subRichElements) {
-              return (
-                <Stack key={index} isInline align="center" spacing={1}>
-                  {renderIcon(explanation.icon)}
-                  <Text fontSize="sm">
-                    {explanation.subRichElements.map((element) => {
-                      if (element.nodeType === "hyperlink") {
-                        return (
-                          <ChakraLink
-                            href={element.uri}
-                            isExternal
-                            color="rgba(52, 151, 55, 1.000)"
-                          >
-                            {element.value}{" "}
-                          </ChakraLink>
-                        );
-                      }
-                      return <span key={index}>{element.value}</span>;
-                    })}
-                  </Text>
-                </Stack>
-              );
-            }
-            return (
-              <Stack key={index} isInline align="center" spacing={1}>
-                {renderIcon(explanation.icon)}
-                <Text fontSize="sm">{explanation.value} </Text>
-              </Stack>
-            );
-          })}
+          {explanations.map((explanation, i) => (
+            <Stack key={i} isInline align="center" spacing={2}>
+              {renderIcon(explanation.icon)}
+              <RichContentfulContent content={explanation.richDescription} />
+            </Stack>
+          ))}
         </Stack>
       </Flex>
       <Box mt={{ base: "32pt", md: 0 }}>
@@ -145,7 +116,7 @@ function IndexPage({ landingContent }: Props) {
             return (
               <EnergyFactContainer
                 key={fact.title}
-                backgroundImage={fact.backgroundImage}
+                backgroundImage={fact.backgroundImage.url}
               >
                 <Heading
                   as="h3"
