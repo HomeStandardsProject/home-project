@@ -579,7 +579,7 @@ export type GraphQLContentfulLandingExplanationOrder =
   | "sys_publishedVersion_ASC"
   | "sys_publishedVersion_DESC";
 
-/** Reasons to use this tool [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
 export type GraphQLContentfulLandingFact = GraphQLContentfulEntry & {
   __typename?: "LandingFact";
   sys: GraphQLContentfulSys;
@@ -592,33 +592,33 @@ export type GraphQLContentfulLandingFact = GraphQLContentfulEntry & {
   lightTextColor?: Maybe<Scalars["Boolean"]>;
 };
 
-/** Reasons to use this tool [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
 export type GraphQLContentfulLandingFactLinkedFromArgs = {
   allowedLocales?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 
-/** Reasons to use this tool [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
 export type GraphQLContentfulLandingFactTitleArgs = {
   locale?: Maybe<Scalars["String"]>;
 };
 
-/** Reasons to use this tool [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
 export type GraphQLContentfulLandingFactDescriptionArgs = {
   locale?: Maybe<Scalars["String"]>;
 };
 
-/** Reasons to use this tool [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
 export type GraphQLContentfulLandingFactBackgroundImageArgs = {
   preview?: Maybe<Scalars["Boolean"]>;
   locale?: Maybe<Scalars["String"]>;
 };
 
-/** Reasons to use this tool [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
 export type GraphQLContentfulLandingFactOrderArgs = {
   locale?: Maybe<Scalars["String"]>;
 };
 
-/** Reasons to use this tool [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landingFact) */
 export type GraphQLContentfulLandingFactLightTextColorArgs = {
   locale?: Maybe<Scalars["String"]>;
 };
@@ -1032,6 +1032,8 @@ export type GraphQLContentfulQuery = {
   __typename?: "Query";
   asset?: Maybe<GraphQLContentfulAsset>;
   assetCollection?: Maybe<GraphQLContentfulAssetCollection>;
+  landingFact?: Maybe<GraphQLContentfulLandingFact>;
+  landingFactCollection?: Maybe<GraphQLContentfulLandingFactCollection>;
   landingMetadata?: Maybe<GraphQLContentfulLandingMetadata>;
   landingMetadataCollection?: Maybe<GraphQLContentfulLandingMetadataCollection>;
   relevantArticle?: Maybe<GraphQLContentfulRelevantArticle>;
@@ -1042,8 +1044,6 @@ export type GraphQLContentfulQuery = {
   landingExplanationCollection?: Maybe<
     GraphQLContentfulLandingExplanationCollection
   >;
-  landingFact?: Maybe<GraphQLContentfulLandingFact>;
-  landingFactCollection?: Maybe<GraphQLContentfulLandingFactCollection>;
   offeringExampleViolation?: Maybe<GraphQLContentfulOfferingExampleViolation>;
   offeringExampleViolationCollection?: Maybe<
     GraphQLContentfulOfferingExampleViolationCollection
@@ -1064,6 +1064,21 @@ export type GraphQLContentfulQueryAssetCollectionArgs = {
   locale?: Maybe<Scalars["String"]>;
   where?: Maybe<GraphQLContentfulAssetFilter>;
   order?: Maybe<Array<Maybe<GraphQLContentfulAssetOrder>>>;
+};
+
+export type GraphQLContentfulQueryLandingFactArgs = {
+  id: Scalars["String"];
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulQueryLandingFactCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+  where?: Maybe<GraphQLContentfulLandingFactFilter>;
+  order?: Maybe<Array<Maybe<GraphQLContentfulLandingFactOrder>>>;
 };
 
 export type GraphQLContentfulQueryLandingMetadataArgs = {
@@ -1124,21 +1139,6 @@ export type GraphQLContentfulQueryLandingExplanationCollectionArgs = {
   locale?: Maybe<Scalars["String"]>;
   where?: Maybe<GraphQLContentfulLandingExplanationFilter>;
   order?: Maybe<Array<Maybe<GraphQLContentfulLandingExplanationOrder>>>;
-};
-
-export type GraphQLContentfulQueryLandingFactArgs = {
-  id: Scalars["String"];
-  preview?: Maybe<Scalars["Boolean"]>;
-  locale?: Maybe<Scalars["String"]>;
-};
-
-export type GraphQLContentfulQueryLandingFactCollectionArgs = {
-  skip?: Maybe<Scalars["Int"]>;
-  limit?: Maybe<Scalars["Int"]>;
-  preview?: Maybe<Scalars["Boolean"]>;
-  locale?: Maybe<Scalars["String"]>;
-  where?: Maybe<GraphQLContentfulLandingFactFilter>;
-  order?: Maybe<Array<Maybe<GraphQLContentfulLandingFactOrder>>>;
 };
 
 export type GraphQLContentfulQueryOfferingExampleViolationArgs = {
@@ -1356,7 +1356,7 @@ export type GraphQLContentfulLandingPageContentQuery = {
             >)
           | ({ __typename: "LandingExplanation" } & Pick<
               GraphQLContentfulLandingExplanation,
-              "title" | "icon" | "order"
+              "icon" | "order"
             > & {
                 richDescription?: Maybe<
                   { __typename?: "LandingExplanationDescription" } & Pick<

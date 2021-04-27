@@ -3,7 +3,7 @@ schema:
   - https://graphql.contentful.com/content/v1/spaces/56c95v53ajrr:
       headers:
         Authorization: Bearer ${API_KEY}
-documents: "api-functions/cms/Contentful.ts"
+documents: "api-functions/cms/ContentfulLanding.ts"
 require:
   - ts-node/register
 generates:
