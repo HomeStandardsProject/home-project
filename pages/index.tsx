@@ -111,7 +111,7 @@ function IndexPage({ landingContent }: Props) {
       </Flex>
       <Box mt={{ base: "32pt", md: 0 }}>
         <Subheading>{metadata.whyThisToolTitle}</Subheading>
-        <SimpleGrid columns={{ base: 2, lg: 2 }} spacing={2} marginTop="16pt">
+        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={2} marginTop="16pt">
           {facts.map((fact, index) => {
             return (
               <EnergyFactContainer
@@ -223,7 +223,7 @@ const FactContainer: React.FC<{ title: string }> = ({ children, title }) => (
   </Stack>
 );
 
-const EnergyFactContainer: React.FC<{ backgroundImage: string }> = ({
+const EnergyFactContainer: React.FC<{ backgroundImage: string | null }> = ({
   children,
   backgroundImage,
 }) => (

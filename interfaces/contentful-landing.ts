@@ -23,13 +23,12 @@ export type LandingExampleViolation = {
 export type LandingFact = {
   title: string;
   description: string;
-  backgroundImage: { url: string };
+  backgroundImage: { url: string | null };
   order: number;
   lightTextColor: boolean;
 };
 
 export type LandingExplanation = {
-  title: string;
   icon: string;
   richDescription: ContentfulRichText;
   order: number;

@@ -4,7 +4,7 @@ import { Box, Stack, Image, Text, Tag, SimpleGrid } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 
 import * as React from "react";
-import { LandingExampleViolation } from "../../api-functions/CMS/Contentful";
+import { LandingExampleViolation } from "../../interfaces/contentful-landing";
 
 export function HomeAssessmentInteractiveExample(props: {
   violations: LandingExampleViolation[];

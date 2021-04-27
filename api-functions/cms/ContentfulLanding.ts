@@ -112,10 +112,9 @@ export async function fetchLanding() {
           const value = checkIfEachPropertyIsDefined(item);
           const fact = {
             ...value,
-            backgroundImage: checkIfEachPropertyIsDefined({
-              __typename: "Asset",
-              ...item.backgroundImage,
-            }),
+            backgroundImage: {
+              url: item.backgroundImage?.url ?? null,
+            },
           };
           content.facts = [fact, ...(content.facts ?? [])];
           break;
@@ -147,7 +146,18 @@ export async function fetchLanding() {
     for (const [key, val] of Object.entries(content)) {
       if (!val) throw CMS_ERRORS.missingData(key);
     }
-    return content as Required<LandingContent>;
+    const requiredContent = content as Required<LandingContent>;
+
+    // sort the content based on the order property
+    const sortedContent: LandingContent = {
+      metadata: requiredContent.metadata,
+      facts: requiredContent.facts.sort((i) => i.order),
+      didYouKnows: requiredContent.didYouKnows.sort((i) => i.order),
+      violations: requiredContent.violations.sort((i) => i.order),
+      relevantArticles: requiredContent.relevantArticles.sort((i) => i.order),
+      explanations: requiredContent.explanations.sort((i) => i.order),
+    };
+    return sortedContent;
   } catch (error) {
     console.error(error);
     throw CMS_ERRORS.unableToFetch;

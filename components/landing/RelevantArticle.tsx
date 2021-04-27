@@ -1,6 +1,6 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import * as React from "react";
-import { RelevantArticle } from "../../api-functions/CMS/Contentful";
+import { RelevantArticle } from "../../interfaces/contentful-landing";
 
 type Props = {
   article: RelevantArticle;
