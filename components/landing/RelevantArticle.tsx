@@ -1,12 +1,12 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import * as React from "react";
-import { RelevantArticle } from "../../interfaces/contentful-landing";
+import { RelevantArticle as RelevantArticleType } from "../../interfaces/contentful-landing";
 
 type Props = {
-  article: RelevantArticle;
+  article: RelevantArticleType;
 };
 
-export function Article({ article }: Props) {
+export function RelevantArticle({ article }: Props) {
   return (
     <Link href={article.sourceUrl} isExternal>
       <Box

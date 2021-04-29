@@ -148,14 +148,18 @@ export async function fetchLanding() {
     }
     const requiredContent = content as Required<LandingContent>;
 
+    const sortByOrder = <T extends { order: number }>(content: T[]): T[] => {
+      return content.sort((a, b) => a.order - b.order);
+    };
+
     // sort the content based on the order property
     const sortedContent: LandingContent = {
       metadata: requiredContent.metadata,
-      facts: requiredContent.facts.sort((i) => i.order),
-      didYouKnows: requiredContent.didYouKnows.sort((i) => i.order),
-      violations: requiredContent.violations.sort((i) => i.order),
-      relevantArticles: requiredContent.relevantArticles.sort((i) => i.order),
-      explanations: requiredContent.explanations.sort((i) => i.order),
+      facts: sortByOrder(requiredContent.facts),
+      didYouKnows: sortByOrder(requiredContent.didYouKnows),
+      violations: sortByOrder(requiredContent.violations),
+      relevantArticles: sortByOrder(requiredContent.relevantArticles),
+      explanations: sortByOrder(requiredContent.explanations),
     };
     return sortedContent;
   } catch (error) {

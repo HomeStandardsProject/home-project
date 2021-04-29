@@ -24,11 +24,11 @@ import Layout from "../components/Layout";
 import { logStartButtonClick } from "../utils/analyticsEvent";
 import { fetchLinkPreviewImage } from "../utils/fetchLinkPreviewImage";
 import { HomeAssessmentInteractiveExample } from "../components/landing/HomeAssessmentInteractiveExample";
-import { Article } from "../components/landing/RelevantArticle";
 import { AlertMetadata, parseQueryForAlert } from "../utils/parseQueryForAlert";
 import { fetchLanding } from "../api-functions/cms/ContentfulLanding";
 import { LandingContent } from "../interfaces/contentful-landing";
 import { RichContentfulContent } from "../components/RichContentfulContent";
+import { RelevantArticle } from "../components/landing/RelevantArticle";
 
 type Props = {
   landingContent: LandingContent;
@@ -124,15 +124,14 @@ function IndexPage({ landingContent }: Props) {
                   fontSize="1.5rem"
                   fontWeight="500"
                   color={
-                    fact.lightTextColor ? "rgba(255,255,255,0.6)" : "black"
+                    fact.lightTextColor ? "rgba(255,255,255,0.6)" : undefined
                   }
                 >
                   {fact.title}
                 </Heading>
                 <Text
                   width={index === 0 ? "70%" : "100%"}
-                  // better way to make width dynamic?
-                  color={fact.lightTextColor ? "white" : "black"}
+                  color={fact.lightTextColor ? "white" : undefined}
                 >
                   {fact.description}
                 </Text>
@@ -173,7 +172,7 @@ function IndexPage({ landingContent }: Props) {
         <Subheading>{metadata.articleTitle}</Subheading>
         <SimpleGrid columns={{ sm: 1, md: 4 }} spacing={4} py="16pt">
           {relevantArticles.map((article, i) => (
-            <Article key={i} article={article} />
+            <RelevantArticle key={i} article={article} />
           ))}
         </SimpleGrid>
       </Box>
