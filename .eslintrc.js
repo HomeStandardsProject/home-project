@@ -60,4 +60,12 @@ module.exports = {
 
     "unused-imports/no-unused-imports": "error",
   },
+  overrides: [
+    {
+      files: ["api-functions/cms/ContentfulQueries.ts"],
+      rules: {
+        camelcase: "off",
+      },
+    },
+  ],
 };

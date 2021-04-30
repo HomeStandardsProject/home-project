@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "build:graphql": "API_KEY=$(node scripts/loadEnv.js) npx graphql-codegen --config api-functions/cms/codegen.yml && npm run lint:fix",
     "postbuild": "next-sitemap",
     "start": "next start",
     "type": "tsc",
@@ -14,6 +15,8 @@
   "dependencies": {
     "@chakra-ui/icons": "^1.0.0",
     "@chakra-ui/react": "^1.0.0",
+    "@contentful/rich-text-react-renderer": "^14.1.3",
+    "@contentful/rich-text-types": "^14.1.2",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "@react-pdf/renderer": "^1.6.12",
@@ -23,6 +26,7 @@
     "emotion-theming": "^10.0.27",
     "express-validator": "^6.6.1",
     "framer-motion": "^2.9.4",
+    "graphql-request": "^3.4.0",
     "isomorphic-unfetch": "^3.1.0",
     "jest": "^26.6.3",
     "next": "^10.0.1",
@@ -37,12 +41,17 @@
     "uuid": "^8.3.1"
   },
   "devDependencies": {
+    "@graphql-codegen/add": "^2.0.2",
+    "@graphql-codegen/cli": "^1.21.4",
+    "@graphql-codegen/typescript": "^1.22.0",
+    "@graphql-codegen/typescript-operations": "^1.17.16",
     "@testing-library/react": "^11.1.2",
     "@types/node": "^12.19.4",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
+    "dotenv": "^8.2.0",
     "eslint": "^7.13.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^6.15.0",
@@ -56,7 +65,7 @@
     "node-mocks-http": "^1.9.0",
     "prettier": "^2.1.2",
     "typescript": "^4.0.5",
-    "vercel": "^20.1.4"
+    "vercel": "^21.0.1"
   },
   "license": "MIT"
 }
