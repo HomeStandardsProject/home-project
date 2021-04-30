@@ -6,12 +6,13 @@ import { motion, useAnimation } from "framer-motion";
 import * as React from "react";
 import { LandingExampleViolation } from "../../interfaces/contentful-landing";
 
-export function HomeAssessmentInteractiveExample(props: {
+type Props = {
   violations: LandingExampleViolation[];
-}) {
+};
+
+export function HomeAssessmentInteractiveExample({ violations }: Props) {
   const violationsControls = useAnimation();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
-  const { violations } = props;
 
   React.useEffect(() => {
     if (hoveredIndex !== null) {
