@@ -1,9 +1,9 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 import * as React from "react";
-import { RelevantArticle as RelevantArticleType } from "../../interfaces/contentful-landing";
+import { Article } from "../../utils/loadArticles";
 
 type Props = {
-  article: RelevantArticleType;
+  article: Article;
 };
 
 export function RelevantArticle({ article }: Props) {
@@ -31,7 +31,7 @@ export function RelevantArticle({ article }: Props) {
           <Text marginTop="1" fontWeight="semibold" as="h4" lineHeight="tight">
             {article.title}
           </Text>
-          <Text color="green.400">{article.sourceName}</Text>
+          <Text color="green.400">{article.source}</Text>
         </Box>
       </Box>
     </Link>

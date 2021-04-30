@@ -4,13 +4,44 @@ import { Box, Stack, Image, Text, Tag, SimpleGrid } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 
 import * as React from "react";
-import { LandingExampleViolation } from "../../interfaces/contentful-landing";
 
-type Props = {
-  violations: LandingExampleViolation[];
-};
+const EXAMPLE_DATA = [
+  {
+    name: "Plumbing 5.57 ",
+    description:
+      "All plumbing, including every drain, water pipe, water closet and other plumbing fixtures in a Dwelling and every connecting line to the Sewerage System shall be Maintained in good working order and free from leaks or defects, and all water pipes and appurtenances thereto shall be protected from freezing.",
+    comment: "The faucet drips.",
+    top: 55,
+    left: 30.5,
+  },
+  {
+    name: "Doors and Windows 5.11",
+    description:
+      "Where storm windows and doors are installed in a dwelling that shall be Maintained in good Repair.",
+    comment: "There is a noticeable draft from the edges of the windows",
+    top: 37.5,
+    left: 35,
+  },
+  {
+    name: "Kitchen 5.49.3",
+    description:
+      "Work surfaces at least 1.2 metres (4 feet) in length x 60 centimeters (2 feet) in width, exclusive of the sink, that are impervious to moisture and grease and easily cleanable so as not to impart any toxic or deleterious effect to food.",
+    comment:
+      "The countertop behind the sink is damaged, which allows water to seep in.",
+    top: 57.5,
+    left: 50,
+  },
+  {
+    name: "Appliance 4.8",
+    comment: "The oven doesn't heat up.",
+    description:
+      "All appliances, equipment, accessories and installations provided by the Owner shall be installed and Maintained in good repair and working order and used for their intended purposes.",
+    top: 74,
+    left: 73,
+  },
+];
 
-export function HomeAssessmentInteractiveExample({ violations }: Props) {
+export function HomeAssessmentInteractiveExample() {
   const violationsControls = useAnimation();
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
 
@@ -32,11 +63,11 @@ export function HomeAssessmentInteractiveExample({ violations }: Props) {
         <Box>
           <Box position="relative" order={{ sm: 0, md: 1 }}>
             <Image src="/kingston-kitchen.jpeg" borderRadius="lg" />
-            {violations.map((violation, i) => (
+            {EXAMPLE_DATA.map((violation, i) => (
               <Annotation
-                key={violation.title}
-                top={violation.markerTopPosition}
-                left={violation.markerLeftPosition}
+                key={violation.name}
+                top={violation.top}
+                left={violation.left}
                 number={i + 1}
                 onHover={setHoveredIndex}
               />
@@ -44,14 +75,14 @@ export function HomeAssessmentInteractiveExample({ violations }: Props) {
           </Box>
         </Box>
         <Stack padding={2} order={{ sm: 1, md: 1 }}>
-          {violations.map((violation, i) => (
+          {EXAMPLE_DATA.map((violation, i) => (
             <motion.div
-              key={violation.title}
+              key={violation.name}
               custom={i}
               animate={violationsControls}
             >
               <ViolationContainer
-                key={violation.title}
+                key={violation.name}
                 violation={violation}
                 number={i + 1}
               />
@@ -64,7 +95,7 @@ export function HomeAssessmentInteractiveExample({ violations }: Props) {
 }
 
 function ViolationContainer(props: {
-  violation: LandingExampleViolation;
+  violation: typeof EXAMPLE_DATA[number];
   number: number;
 }) {
   return (
@@ -82,7 +113,7 @@ function ViolationContainer(props: {
           {props.number}
         </Tag>
         <Text as="b" fontSize="sm">
-          {props.violation.title}
+          {props.violation.name}
         </Text>
       </Stack>
       <Text fontSize="sm">{props.violation.description}</Text>
@@ -97,7 +128,7 @@ function ViolationContainer(props: {
       >
         <InfoIcon color="blue.600" />
         <Text fontSize="xs" color="blue.800">
-          {props.violation.violationReason}
+          {props.violation.comment}
         </Text>
       </Stack>
     </Stack>
