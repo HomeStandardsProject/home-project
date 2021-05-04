@@ -79,7 +79,7 @@ export const CMS_ERRORS = {
     new Error(`cms failed to return value for field: ${field}`),
 };
 
-const client = new GraphQLClient(
+export const client = new GraphQLClient(
   `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_API_SPACE_ID}`,
   {
     headers: {
@@ -148,10 +148,6 @@ export async function fetchLanding() {
     }
     const requiredContent = content as Required<LandingContent>;
 
-    const sortByOrder = <T extends { order: number }>(content: T[]): T[] => {
-      return content.sort((a, b) => a.order - b.order);
-    };
-
     // sort the content based on the order property
     const sortedContent: LandingContent = {
       metadata: requiredContent.metadata,
@@ -168,7 +164,11 @@ export async function fetchLanding() {
   }
 }
 
-function checkIfEachPropertyIsDefined<T extends { __typename: string }>(
+export function sortByOrder<T extends { order: number }>(content: T[]): T[] {
+  return content.sort((a, b) => a.order - b.order);
+}
+
+export function checkIfEachPropertyIsDefined<T extends { __typename: string }>(
   obj: T
 ): Required<T> {
   if (typeof obj !== "object")

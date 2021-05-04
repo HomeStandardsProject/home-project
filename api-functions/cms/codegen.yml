@@ -2,7 +2,7 @@ overwrite: true
 schema:
   - https://graphql.contentful.com/content/v1/spaces/56c95v53ajrr:
       headers:
-        Authorization: Bearer ${API_KEY}
+        Authorization: Bearer frKI8dTWZsF7pcu-K_Wieudk98HzHCW5da2ROs15WHM
 documents: "api-functions/cms/ContentfulLanding.ts"
 require:
   - ts-node/register

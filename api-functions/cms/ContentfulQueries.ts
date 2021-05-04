@@ -894,8 +894,8 @@ export type GraphQLContentfulOfferingExampleViolation = GraphQLContentfulEntry &
   description?: Maybe<Scalars["String"]>;
   violationReason?: Maybe<Scalars["String"]>;
   order?: Maybe<Scalars["Int"]>;
-  markerLeftPosition?: Maybe<Scalars["Float"]>;
   markerTopPosition?: Maybe<Scalars["Float"]>;
+  markerLeftPosition?: Maybe<Scalars["Float"]>;
 };
 
 /** Example violation for the how we help section [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/offeringExampleViolation) */
@@ -924,12 +924,12 @@ export type GraphQLContentfulOfferingExampleViolationOrderArgs = {
 };
 
 /** Example violation for the how we help section [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/offeringExampleViolation) */
-export type GraphQLContentfulOfferingExampleViolationMarkerLeftPositionArgs = {
+export type GraphQLContentfulOfferingExampleViolationMarkerTopPositionArgs = {
   locale?: Maybe<Scalars["String"]>;
 };
 
 /** Example violation for the how we help section [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/offeringExampleViolation) */
-export type GraphQLContentfulOfferingExampleViolationMarkerTopPositionArgs = {
+export type GraphQLContentfulOfferingExampleViolationMarkerLeftPositionArgs = {
   locale?: Maybe<Scalars["String"]>;
 };
 
@@ -974,15 +974,6 @@ export type GraphQLContentfulOfferingExampleViolationFilter = {
   order_gte?: Maybe<Scalars["Int"]>;
   order_lt?: Maybe<Scalars["Int"]>;
   order_lte?: Maybe<Scalars["Int"]>;
-  markerLeftPosition_exists?: Maybe<Scalars["Boolean"]>;
-  markerLeftPosition?: Maybe<Scalars["Float"]>;
-  markerLeftPosition_not?: Maybe<Scalars["Float"]>;
-  markerLeftPosition_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
-  markerLeftPosition_not_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
-  markerLeftPosition_gt?: Maybe<Scalars["Float"]>;
-  markerLeftPosition_gte?: Maybe<Scalars["Float"]>;
-  markerLeftPosition_lt?: Maybe<Scalars["Float"]>;
-  markerLeftPosition_lte?: Maybe<Scalars["Float"]>;
   markerTopPosition_exists?: Maybe<Scalars["Boolean"]>;
   markerTopPosition?: Maybe<Scalars["Float"]>;
   markerTopPosition_not?: Maybe<Scalars["Float"]>;
@@ -992,6 +983,15 @@ export type GraphQLContentfulOfferingExampleViolationFilter = {
   markerTopPosition_gte?: Maybe<Scalars["Float"]>;
   markerTopPosition_lt?: Maybe<Scalars["Float"]>;
   markerTopPosition_lte?: Maybe<Scalars["Float"]>;
+  markerLeftPosition_exists?: Maybe<Scalars["Boolean"]>;
+  markerLeftPosition?: Maybe<Scalars["Float"]>;
+  markerLeftPosition_not?: Maybe<Scalars["Float"]>;
+  markerLeftPosition_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+  markerLeftPosition_not_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+  markerLeftPosition_gt?: Maybe<Scalars["Float"]>;
+  markerLeftPosition_gte?: Maybe<Scalars["Float"]>;
+  markerLeftPosition_lt?: Maybe<Scalars["Float"]>;
+  markerLeftPosition_lte?: Maybe<Scalars["Float"]>;
   OR?: Maybe<Array<Maybe<GraphQLContentfulOfferingExampleViolationFilter>>>;
   AND?: Maybe<Array<Maybe<GraphQLContentfulOfferingExampleViolationFilter>>>;
 };
@@ -1015,10 +1015,10 @@ export type GraphQLContentfulOfferingExampleViolationOrder =
   | "violationReason_DESC"
   | "order_ASC"
   | "order_DESC"
-  | "markerLeftPosition_ASC"
-  | "markerLeftPosition_DESC"
   | "markerTopPosition_ASC"
   | "markerTopPosition_DESC"
+  | "markerLeftPosition_ASC"
+  | "markerLeftPosition_DESC"
   | "sys_id_ASC"
   | "sys_id_DESC"
   | "sys_publishedAt_ASC"
@@ -1032,6 +1032,14 @@ export type GraphQLContentfulQuery = {
   __typename?: "Query";
   asset?: Maybe<GraphQLContentfulAsset>;
   assetCollection?: Maybe<GraphQLContentfulAssetCollection>;
+  resourcesAndContacts?: Maybe<GraphQLContentfulResourcesAndContacts>;
+  resourcesAndContactsCollection?: Maybe<
+    GraphQLContentfulResourcesAndContactsCollection
+  >;
+  offeringExampleViolation?: Maybe<GraphQLContentfulOfferingExampleViolation>;
+  offeringExampleViolationCollection?: Maybe<
+    GraphQLContentfulOfferingExampleViolationCollection
+  >;
   landingFact?: Maybe<GraphQLContentfulLandingFact>;
   landingFactCollection?: Maybe<GraphQLContentfulLandingFactCollection>;
   landingMetadata?: Maybe<GraphQLContentfulLandingMetadata>;
@@ -1043,10 +1051,6 @@ export type GraphQLContentfulQuery = {
   landingExplanation?: Maybe<GraphQLContentfulLandingExplanation>;
   landingExplanationCollection?: Maybe<
     GraphQLContentfulLandingExplanationCollection
-  >;
-  offeringExampleViolation?: Maybe<GraphQLContentfulOfferingExampleViolation>;
-  offeringExampleViolationCollection?: Maybe<
-    GraphQLContentfulOfferingExampleViolationCollection
   >;
   entryCollection?: Maybe<GraphQLContentfulEntryCollection>;
 };
@@ -1064,6 +1068,36 @@ export type GraphQLContentfulQueryAssetCollectionArgs = {
   locale?: Maybe<Scalars["String"]>;
   where?: Maybe<GraphQLContentfulAssetFilter>;
   order?: Maybe<Array<Maybe<GraphQLContentfulAssetOrder>>>;
+};
+
+export type GraphQLContentfulQueryResourcesAndContactsArgs = {
+  id: Scalars["String"];
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulQueryResourcesAndContactsCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+  where?: Maybe<GraphQLContentfulResourcesAndContactsFilter>;
+  order?: Maybe<Array<Maybe<GraphQLContentfulResourcesAndContactsOrder>>>;
+};
+
+export type GraphQLContentfulQueryOfferingExampleViolationArgs = {
+  id: Scalars["String"];
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulQueryOfferingExampleViolationCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+  where?: Maybe<GraphQLContentfulOfferingExampleViolationFilter>;
+  order?: Maybe<Array<Maybe<GraphQLContentfulOfferingExampleViolationOrder>>>;
 };
 
 export type GraphQLContentfulQueryLandingFactArgs = {
@@ -1139,21 +1173,6 @@ export type GraphQLContentfulQueryLandingExplanationCollectionArgs = {
   locale?: Maybe<Scalars["String"]>;
   where?: Maybe<GraphQLContentfulLandingExplanationFilter>;
   order?: Maybe<Array<Maybe<GraphQLContentfulLandingExplanationOrder>>>;
-};
-
-export type GraphQLContentfulQueryOfferingExampleViolationArgs = {
-  id: Scalars["String"];
-  preview?: Maybe<Scalars["Boolean"]>;
-  locale?: Maybe<Scalars["String"]>;
-};
-
-export type GraphQLContentfulQueryOfferingExampleViolationCollectionArgs = {
-  skip?: Maybe<Scalars["Int"]>;
-  limit?: Maybe<Scalars["Int"]>;
-  preview?: Maybe<Scalars["Boolean"]>;
-  locale?: Maybe<Scalars["String"]>;
-  where?: Maybe<GraphQLContentfulOfferingExampleViolationFilter>;
-  order?: Maybe<Array<Maybe<GraphQLContentfulOfferingExampleViolationOrder>>>;
 };
 
 export type GraphQLContentfulQueryEntryCollectionArgs = {
@@ -1292,6 +1311,212 @@ export type GraphQLContentfulRelevantArticleOrder =
   | "sys_publishedVersion_ASC"
   | "sys_publishedVersion_DESC";
 
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContacts = GraphQLContentfulEntry & {
+  __typename?: "ResourcesAndContacts";
+  sys: GraphQLContentfulSys;
+  contentfulMetadata: GraphQLContentfulContentfulMetadata;
+  linkedFrom?: Maybe<GraphQLContentfulResourcesAndContactsLinkingCollections>;
+  name?: Maybe<Scalars["String"]>;
+  nameUrl?: Maybe<Scalars["String"]>;
+  description?: Maybe<GraphQLContentfulResourcesAndContactsDescription>;
+  email?: Maybe<Scalars["String"]>;
+  phoneNumber?: Maybe<Scalars["String"]>;
+  phoneNumberExtension?: Maybe<Scalars["String"]>;
+  facebookName?: Maybe<Scalars["String"]>;
+  facebookUrl?: Maybe<Scalars["String"]>;
+  order?: Maybe<Scalars["Int"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsNameArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsNameUrlArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsDescriptionArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsEmailArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsPhoneNumberArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsPhoneNumberExtensionArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsFacebookNameArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsFacebookUrlArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/resourcesAndContacts) */
+export type GraphQLContentfulResourcesAndContactsOrderArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulResourcesAndContactsCollection = {
+  __typename?: "ResourcesAndContactsCollection";
+  total: Scalars["Int"];
+  skip: Scalars["Int"];
+  limit: Scalars["Int"];
+  items: Array<Maybe<GraphQLContentfulResourcesAndContacts>>;
+};
+
+export type GraphQLContentfulResourcesAndContactsDescription = {
+  __typename?: "ResourcesAndContactsDescription";
+  json: Scalars["JSON"];
+  links: GraphQLContentfulResourcesAndContactsDescriptionLinks;
+};
+
+export type GraphQLContentfulResourcesAndContactsDescriptionAssets = {
+  __typename?: "ResourcesAndContactsDescriptionAssets";
+  hyperlink: Array<Maybe<GraphQLContentfulAsset>>;
+  block: Array<Maybe<GraphQLContentfulAsset>>;
+};
+
+export type GraphQLContentfulResourcesAndContactsDescriptionEntries = {
+  __typename?: "ResourcesAndContactsDescriptionEntries";
+  inline: Array<Maybe<GraphQLContentfulEntry>>;
+  hyperlink: Array<Maybe<GraphQLContentfulEntry>>;
+  block: Array<Maybe<GraphQLContentfulEntry>>;
+};
+
+export type GraphQLContentfulResourcesAndContactsDescriptionLinks = {
+  __typename?: "ResourcesAndContactsDescriptionLinks";
+  entries: GraphQLContentfulResourcesAndContactsDescriptionEntries;
+  assets: GraphQLContentfulResourcesAndContactsDescriptionAssets;
+};
+
+export type GraphQLContentfulResourcesAndContactsFilter = {
+  sys?: Maybe<GraphQLContentfulSysFilter>;
+  contentfulMetadata?: Maybe<GraphQLContentfulContentfulMetadataFilter>;
+  name_exists?: Maybe<Scalars["Boolean"]>;
+  name?: Maybe<Scalars["String"]>;
+  name_not?: Maybe<Scalars["String"]>;
+  name_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  name_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  name_contains?: Maybe<Scalars["String"]>;
+  name_not_contains?: Maybe<Scalars["String"]>;
+  nameUrl_exists?: Maybe<Scalars["Boolean"]>;
+  nameUrl?: Maybe<Scalars["String"]>;
+  nameUrl_not?: Maybe<Scalars["String"]>;
+  nameUrl_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  nameUrl_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  nameUrl_contains?: Maybe<Scalars["String"]>;
+  nameUrl_not_contains?: Maybe<Scalars["String"]>;
+  description_exists?: Maybe<Scalars["Boolean"]>;
+  description_contains?: Maybe<Scalars["String"]>;
+  description_not_contains?: Maybe<Scalars["String"]>;
+  email_exists?: Maybe<Scalars["Boolean"]>;
+  email?: Maybe<Scalars["String"]>;
+  email_not?: Maybe<Scalars["String"]>;
+  email_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  email_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  email_contains?: Maybe<Scalars["String"]>;
+  email_not_contains?: Maybe<Scalars["String"]>;
+  phoneNumber_exists?: Maybe<Scalars["Boolean"]>;
+  phoneNumber?: Maybe<Scalars["String"]>;
+  phoneNumber_not?: Maybe<Scalars["String"]>;
+  phoneNumber_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  phoneNumber_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  phoneNumber_contains?: Maybe<Scalars["String"]>;
+  phoneNumber_not_contains?: Maybe<Scalars["String"]>;
+  phoneNumberExtension_exists?: Maybe<Scalars["Boolean"]>;
+  phoneNumberExtension?: Maybe<Scalars["String"]>;
+  phoneNumberExtension_not?: Maybe<Scalars["String"]>;
+  phoneNumberExtension_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  phoneNumberExtension_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  phoneNumberExtension_contains?: Maybe<Scalars["String"]>;
+  phoneNumberExtension_not_contains?: Maybe<Scalars["String"]>;
+  facebookName_exists?: Maybe<Scalars["Boolean"]>;
+  facebookName?: Maybe<Scalars["String"]>;
+  facebookName_not?: Maybe<Scalars["String"]>;
+  facebookName_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  facebookName_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  facebookName_contains?: Maybe<Scalars["String"]>;
+  facebookName_not_contains?: Maybe<Scalars["String"]>;
+  facebookUrl_exists?: Maybe<Scalars["Boolean"]>;
+  facebookUrl?: Maybe<Scalars["String"]>;
+  facebookUrl_not?: Maybe<Scalars["String"]>;
+  facebookUrl_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  facebookUrl_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  facebookUrl_contains?: Maybe<Scalars["String"]>;
+  facebookUrl_not_contains?: Maybe<Scalars["String"]>;
+  order_exists?: Maybe<Scalars["Boolean"]>;
+  order?: Maybe<Scalars["Int"]>;
+  order_not?: Maybe<Scalars["Int"]>;
+  order_in?: Maybe<Array<Maybe<Scalars["Int"]>>>;
+  order_not_in?: Maybe<Array<Maybe<Scalars["Int"]>>>;
+  order_gt?: Maybe<Scalars["Int"]>;
+  order_gte?: Maybe<Scalars["Int"]>;
+  order_lt?: Maybe<Scalars["Int"]>;
+  order_lte?: Maybe<Scalars["Int"]>;
+  OR?: Maybe<Array<Maybe<GraphQLContentfulResourcesAndContactsFilter>>>;
+  AND?: Maybe<Array<Maybe<GraphQLContentfulResourcesAndContactsFilter>>>;
+};
+
+export type GraphQLContentfulResourcesAndContactsLinkingCollections = {
+  __typename?: "ResourcesAndContactsLinkingCollections";
+  entryCollection?: Maybe<GraphQLContentfulEntryCollection>;
+};
+
+export type GraphQLContentfulResourcesAndContactsLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulResourcesAndContactsOrder =
+  | "name_ASC"
+  | "name_DESC"
+  | "nameUrl_ASC"
+  | "nameUrl_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "phoneNumber_ASC"
+  | "phoneNumber_DESC"
+  | "phoneNumberExtension_ASC"
+  | "phoneNumberExtension_DESC"
+  | "facebookName_ASC"
+  | "facebookName_DESC"
+  | "facebookUrl_ASC"
+  | "facebookUrl_DESC"
+  | "order_ASC"
+  | "order_DESC"
+  | "sys_id_ASC"
+  | "sys_id_DESC"
+  | "sys_publishedAt_ASC"
+  | "sys_publishedAt_DESC"
+  | "sys_firstPublishedAt_ASC"
+  | "sys_firstPublishedAt_DESC"
+  | "sys_publishedVersion_ASC"
+  | "sys_publishedVersion_DESC";
+
 export type GraphQLContentfulSys = {
   __typename?: "Sys";
   id: Scalars["String"];
@@ -1403,6 +1628,7 @@ export type GraphQLContentfulLandingPageContentQuery = {
               GraphQLContentfulRelevantArticle,
               "title" | "sourceUrl" | "sourceName" | "order"
             >)
+          | { __typename: "ResourcesAndContacts" }
         >
       >;
     }
