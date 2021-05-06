@@ -1032,6 +1032,8 @@ export type GraphQLContentfulQuery = {
   __typename?: "Query";
   asset?: Maybe<GraphQLContentfulAsset>;
   assetCollection?: Maybe<GraphQLContentfulAssetCollection>;
+  richTextOnly?: Maybe<GraphQLContentfulRichTextOnly>;
+  richTextOnlyCollection?: Maybe<GraphQLContentfulRichTextOnlyCollection>;
   resourcesAndContacts?: Maybe<GraphQLContentfulResourcesAndContacts>;
   resourcesAndContactsCollection?: Maybe<
     GraphQLContentfulResourcesAndContactsCollection
@@ -1068,6 +1070,21 @@ export type GraphQLContentfulQueryAssetCollectionArgs = {
   locale?: Maybe<Scalars["String"]>;
   where?: Maybe<GraphQLContentfulAssetFilter>;
   order?: Maybe<Array<Maybe<GraphQLContentfulAssetOrder>>>;
+};
+
+export type GraphQLContentfulQueryRichTextOnlyArgs = {
+  id: Scalars["String"];
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulQueryRichTextOnlyCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+  where?: Maybe<GraphQLContentfulRichTextOnlyFilter>;
+  order?: Maybe<Array<Maybe<GraphQLContentfulRichTextOnlyOrder>>>;
 };
 
 export type GraphQLContentfulQueryResourcesAndContactsArgs = {
@@ -1517,6 +1534,105 @@ export type GraphQLContentfulResourcesAndContactsOrder =
   | "sys_publishedVersion_ASC"
   | "sys_publishedVersion_DESC";
 
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/richTextOnly) */
+export type GraphQLContentfulRichTextOnly = GraphQLContentfulEntry & {
+  __typename?: "RichTextOnly";
+  sys: GraphQLContentfulSys;
+  contentfulMetadata: GraphQLContentfulContentfulMetadata;
+  linkedFrom?: Maybe<GraphQLContentfulRichTextOnlyLinkingCollections>;
+  title?: Maybe<Scalars["String"]>;
+  description?: Maybe<GraphQLContentfulRichTextOnlyDescription>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/richTextOnly) */
+export type GraphQLContentfulRichTextOnlyLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/richTextOnly) */
+export type GraphQLContentfulRichTextOnlyTitleArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/richTextOnly) */
+export type GraphQLContentfulRichTextOnlyDescriptionArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulRichTextOnlyCollection = {
+  __typename?: "RichTextOnlyCollection";
+  total: Scalars["Int"];
+  skip: Scalars["Int"];
+  limit: Scalars["Int"];
+  items: Array<Maybe<GraphQLContentfulRichTextOnly>>;
+};
+
+export type GraphQLContentfulRichTextOnlyDescription = {
+  __typename?: "RichTextOnlyDescription";
+  json: Scalars["JSON"];
+  links: GraphQLContentfulRichTextOnlyDescriptionLinks;
+};
+
+export type GraphQLContentfulRichTextOnlyDescriptionAssets = {
+  __typename?: "RichTextOnlyDescriptionAssets";
+  hyperlink: Array<Maybe<GraphQLContentfulAsset>>;
+  block: Array<Maybe<GraphQLContentfulAsset>>;
+};
+
+export type GraphQLContentfulRichTextOnlyDescriptionEntries = {
+  __typename?: "RichTextOnlyDescriptionEntries";
+  inline: Array<Maybe<GraphQLContentfulEntry>>;
+  hyperlink: Array<Maybe<GraphQLContentfulEntry>>;
+  block: Array<Maybe<GraphQLContentfulEntry>>;
+};
+
+export type GraphQLContentfulRichTextOnlyDescriptionLinks = {
+  __typename?: "RichTextOnlyDescriptionLinks";
+  entries: GraphQLContentfulRichTextOnlyDescriptionEntries;
+  assets: GraphQLContentfulRichTextOnlyDescriptionAssets;
+};
+
+export type GraphQLContentfulRichTextOnlyFilter = {
+  sys?: Maybe<GraphQLContentfulSysFilter>;
+  contentfulMetadata?: Maybe<GraphQLContentfulContentfulMetadataFilter>;
+  title_exists?: Maybe<Scalars["Boolean"]>;
+  title?: Maybe<Scalars["String"]>;
+  title_not?: Maybe<Scalars["String"]>;
+  title_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  title_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  title_contains?: Maybe<Scalars["String"]>;
+  title_not_contains?: Maybe<Scalars["String"]>;
+  description_exists?: Maybe<Scalars["Boolean"]>;
+  description_contains?: Maybe<Scalars["String"]>;
+  description_not_contains?: Maybe<Scalars["String"]>;
+  OR?: Maybe<Array<Maybe<GraphQLContentfulRichTextOnlyFilter>>>;
+  AND?: Maybe<Array<Maybe<GraphQLContentfulRichTextOnlyFilter>>>;
+};
+
+export type GraphQLContentfulRichTextOnlyLinkingCollections = {
+  __typename?: "RichTextOnlyLinkingCollections";
+  entryCollection?: Maybe<GraphQLContentfulEntryCollection>;
+};
+
+export type GraphQLContentfulRichTextOnlyLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulRichTextOnlyOrder =
+  | "title_ASC"
+  | "title_DESC"
+  | "sys_id_ASC"
+  | "sys_id_DESC"
+  | "sys_publishedAt_ASC"
+  | "sys_publishedAt_DESC"
+  | "sys_firstPublishedAt_ASC"
+  | "sys_firstPublishedAt_DESC"
+  | "sys_publishedVersion_ASC"
+  | "sys_publishedVersion_DESC";
+
 export type GraphQLContentfulSys = {
   __typename?: "Sys";
   id: Scalars["String"];
@@ -1629,6 +1745,7 @@ export type GraphQLContentfulLandingPageContentQuery = {
               "title" | "sourceUrl" | "sourceName" | "order"
             >)
           | { __typename: "ResourcesAndContacts" }
+          | { __typename: "RichTextOnly" }
         >
       >;
     }
