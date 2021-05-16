@@ -48,7 +48,6 @@ export async function fetchResources() {
     const sortedContent: ResourcesAndContactsContent = {
       resourcesAndContacts: sortByOrder(content.resourcesAndContacts),
     };
-    // console.log(sortedContent);
     return sortedContent;
   } catch (error) {
     console.error(error);

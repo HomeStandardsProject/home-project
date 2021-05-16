@@ -1,11 +1,13 @@
 import { gql } from "graphql-request";
-import { AboutUsContent } from "../../interfaces/contentful-about";
+import { ReportingContent } from "../../interfaces/contentful-reporting";
 import { client, CMS_ERRORS } from "./ContentfulLanding";
 
-const aboutUsPageQuery = gql`
+const reportingQuery = gql`
   query AboutUsPageContent {
     entryCollection(
-      where: { contentfulMetadata: { tags: { id_contains_all: ["aboutUs"] } } }
+      where: {
+        contentfulMetadata: { tags: { id_contains_all: ["reporting"] } }
+      }
     ) {
       items {
         __typename
@@ -20,15 +22,15 @@ const aboutUsPageQuery = gql`
   }
 `;
 
-export async function fetchAboutUs() {
+export async function fetchReporting() {
   try {
-    const data = await client.request(aboutUsPageQuery);
+    const data = await client.request(reportingQuery);
     if (!data || !data.entryCollection) throw CMS_ERRORS.unableToFetch;
-    const content: Partial<AboutUsContent> = {};
+    const content: Partial<ReportingContent> = {};
     for (const item of data.entryCollection.items) {
       if (!item) continue;
       if (item.__typename === "RichTextOnly") {
-        content.aboutUs = item;
+        content.reporting = item;
       }
     }
     return content;
