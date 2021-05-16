@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, Link } from "@chakra-ui/react";
+import { Text, Link, Box } from "@chakra-ui/react";
 import { BLOCKS, INLINES, MARKS } from "@contentful/rich-text-types";
 import {
   documentToReactComponents,
@@ -32,7 +32,11 @@ const options: Options = {
       </Box>
     ),
     [INLINES.HYPERLINK]: (node, children) => (
-      <Link href={node.data.url} isExternal color="rgba(52, 151, 55, 1.000)">
+      <Link
+        href={node.data.url ?? node.data.uri}
+        isExternal
+        color="rgba(52, 151, 55, 1.000)"
+      >
         {children}
       </Link>
     ),
