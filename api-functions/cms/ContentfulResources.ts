@@ -46,7 +46,7 @@ export async function fetchResources() {
     }
     // const requiredContent = content as Required<ResourcesAndContactsContent>;
     const sortedContent: ResourcesAndContactsContent = {
-      resourcesAndContacts: sortByOrder(content.resourcesAndContacts),
+      resourcesAndContacts: sortByOrder(content.resourcesAndContacts ?? []),
     };
     return sortedContent;
   } catch (error) {
