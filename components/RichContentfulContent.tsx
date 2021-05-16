@@ -21,6 +21,16 @@ const options: Options = {
   },
   renderNode: {
     [BLOCKS.PARAGRAPH]: (_, children) => <Text>{children}</Text>,
+    [BLOCKS.UL_LIST]: (_, children) => (
+      <Box as="ul" px="24pt">
+        {children}
+      </Box>
+    ),
+    [BLOCKS.OL_LIST]: (_, children) => (
+      <Box as="ol" marginLeft="16pt">
+        {children}
+      </Box>
+    ),
     [INLINES.HYPERLINK]: (node, children) => (
       <Link href={node.data.url} isExternal color="rgba(52, 151, 55, 1.000)">
         {children}
