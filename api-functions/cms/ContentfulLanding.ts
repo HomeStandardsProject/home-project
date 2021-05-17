@@ -1,6 +1,6 @@
 import { gql, GraphQLClient } from "graphql-request";
 import { LandingContent } from "../../interfaces/contentful-landing";
-import { GraphQLContentfulLandingPageContentQuery } from "./ContentfulQueries";
+import { GraphQLContentfulLandingPageContentQuery } from "./codegen/queries";
 
 const landingPageQuery = gql`
   query LandingPageContent {
