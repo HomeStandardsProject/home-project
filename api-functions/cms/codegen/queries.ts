@@ -1798,35 +1798,28 @@ export type GraphQLContentfulResourcesPageContentQueryVariables = Exact<{
 export type GraphQLContentfulResourcesPageContentQuery = {
   __typename?: "Query";
 } & {
-  entryCollection?: Maybe<
-    { __typename?: "EntryCollection" } & {
+  resourcesAndContactsCollection?: Maybe<
+    { __typename?: "ResourcesAndContactsCollection" } & {
       items: Array<
         Maybe<
-          | { __typename: "DidYouKnow" }
-          | { __typename: "LandingExplanation" }
-          | { __typename: "LandingFact" }
-          | { __typename: "LandingMetadata" }
-          | { __typename: "OfferingExampleViolation" }
-          | { __typename: "RelevantArticle" }
-          | ({ __typename: "ResourcesAndContacts" } & Pick<
-              GraphQLContentfulResourcesAndContacts,
-              | "name"
-              | "nameUrl"
-              | "email"
-              | "phoneNumber"
-              | "phoneNumberExtension"
-              | "facebookName"
-              | "facebookUrl"
-              | "order"
-            > & {
-                richDescription?: Maybe<
-                  { __typename?: "ResourcesAndContactsDescription" } & Pick<
-                    GraphQLContentfulResourcesAndContactsDescription,
-                    "json"
-                  >
-                >;
-              })
-          | { __typename: "RichTextOnly" }
+          { __typename: "ResourcesAndContacts" } & Pick<
+            GraphQLContentfulResourcesAndContacts,
+            | "name"
+            | "nameUrl"
+            | "email"
+            | "phoneNumber"
+            | "phoneNumberExtension"
+            | "facebookName"
+            | "facebookUrl"
+            | "order"
+          > & {
+              richDescription?: Maybe<
+                { __typename?: "ResourcesAndContactsDescription" } & Pick<
+                  GraphQLContentfulResourcesAndContactsDescription,
+                  "json"
+                >
+              >;
+            }
         >
       >;
     }

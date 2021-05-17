@@ -1,29 +1,27 @@
 import { gql } from "graphql-request";
-import { ResourcesAndContactsContent } from "../../interfaces/contentful-resources";
+import {
+  isResourceAndContact,
+  ResourcesAndContactsContent,
+} from "../../interfaces/contentful-resources";
+import { GraphQLContentfulResourcesPageContentQuery } from "./codegen/queries";
 import { CMS_ERRORS, client, sortByOrder } from "./ContentfulLanding";
 
 const resourcesPageQuery = gql`
   query ResourcesPageContent {
-    entryCollection(
-      where: {
-        contentfulMetadata: { tags: { id_contains_all: ["resources"] } }
-      }
-    ) {
+    resourcesAndContactsCollection {
       items {
         __typename
-        ... on ResourcesAndContacts {
-          name
-          nameUrl
-          richDescription: description {
-            json
-          }
-          email
-          phoneNumber
-          phoneNumberExtension
-          facebookName
-          facebookUrl
-          order
+        name
+        nameUrl
+        richDescription: description {
+          json
         }
+        email
+        phoneNumber
+        phoneNumberExtension
+        facebookName
+        facebookUrl
+        order
       }
     }
   }
@@ -31,17 +29,21 @@ const resourcesPageQuery = gql`
 
 export async function fetchResources() {
   try {
-    const data = await client.request(resourcesPageQuery);
-    if (!data || !data.entryCollection) throw CMS_ERRORS.unableToFetch;
+    const data = await client.request<
+      GraphQLContentfulResourcesPageContentQuery
+    >(resourcesPageQuery);
+    if (!data || !data.resourcesAndContactsCollection)
+      throw CMS_ERRORS.unableToFetch;
+
     const content: Partial<ResourcesAndContactsContent> = {};
-    for (const item of data.entryCollection.items) {
+    for (const item of data.resourcesAndContactsCollection.items) {
       if (!item) continue;
-      if (item.__typename === "ResourcesAndContacts") {
-        if (content.resourcesAndContacts) {
-          content.resourcesAndContacts.push(item);
-        } else {
-          content.resourcesAndContacts = [item];
-        }
+      if (!isResourceAndContact(item)) continue;
+
+      if (content.resourcesAndContacts) {
+        content.resourcesAndContacts.push(item);
+      } else {
+        content.resourcesAndContacts = [item];
       }
     }
     // const requiredContent = content as Required<ResourcesAndContactsContent>;
