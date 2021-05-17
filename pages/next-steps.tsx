@@ -1,6 +1,5 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
-// import styled from "@emotion/styled";
 import * as React from "react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { GetStaticProps } from "next";

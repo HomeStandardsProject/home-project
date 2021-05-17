@@ -44,6 +44,9 @@ export async function fetchResources() {
         }
       }
     }
+    for (const [key, val] of Object.entries(content)) {
+      if (!val) throw CMS_ERRORS.missingData(key);
+    }
     // const requiredContent = content as Required<ResourcesAndContactsContent>;
     const sortedContent: ResourcesAndContactsContent = {
       resourcesAndContacts: sortByOrder(content.resourcesAndContacts),
