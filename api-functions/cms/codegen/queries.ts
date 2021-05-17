@@ -1541,7 +1541,10 @@ export type GraphQLContentfulRichTextOnly = GraphQLContentfulEntry & {
   contentfulMetadata: GraphQLContentfulContentfulMetadata;
   linkedFrom?: Maybe<GraphQLContentfulRichTextOnlyLinkingCollections>;
   title?: Maybe<Scalars["String"]>;
+  path?: Maybe<Scalars["String"]>;
   description?: Maybe<GraphQLContentfulRichTextOnlyDescription>;
+  seoDescription?: Maybe<Scalars["String"]>;
+  showStartButton?: Maybe<Scalars["Boolean"]>;
 };
 
 /** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/richTextOnly) */
@@ -1555,7 +1558,22 @@ export type GraphQLContentfulRichTextOnlyTitleArgs = {
 };
 
 /** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/richTextOnly) */
+export type GraphQLContentfulRichTextOnlyPathArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/richTextOnly) */
 export type GraphQLContentfulRichTextOnlyDescriptionArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/richTextOnly) */
+export type GraphQLContentfulRichTextOnlySeoDescriptionArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/richTextOnly) */
+export type GraphQLContentfulRichTextOnlyShowStartButtonArgs = {
   locale?: Maybe<Scalars["String"]>;
 };
 
@@ -1602,9 +1620,26 @@ export type GraphQLContentfulRichTextOnlyFilter = {
   title_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
   title_contains?: Maybe<Scalars["String"]>;
   title_not_contains?: Maybe<Scalars["String"]>;
+  path_exists?: Maybe<Scalars["Boolean"]>;
+  path?: Maybe<Scalars["String"]>;
+  path_not?: Maybe<Scalars["String"]>;
+  path_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  path_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  path_contains?: Maybe<Scalars["String"]>;
+  path_not_contains?: Maybe<Scalars["String"]>;
   description_exists?: Maybe<Scalars["Boolean"]>;
   description_contains?: Maybe<Scalars["String"]>;
   description_not_contains?: Maybe<Scalars["String"]>;
+  seoDescription_exists?: Maybe<Scalars["Boolean"]>;
+  seoDescription?: Maybe<Scalars["String"]>;
+  seoDescription_not?: Maybe<Scalars["String"]>;
+  seoDescription_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  seoDescription_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  seoDescription_contains?: Maybe<Scalars["String"]>;
+  seoDescription_not_contains?: Maybe<Scalars["String"]>;
+  showStartButton_exists?: Maybe<Scalars["Boolean"]>;
+  showStartButton?: Maybe<Scalars["Boolean"]>;
+  showStartButton_not?: Maybe<Scalars["Boolean"]>;
   OR?: Maybe<Array<Maybe<GraphQLContentfulRichTextOnlyFilter>>>;
   AND?: Maybe<Array<Maybe<GraphQLContentfulRichTextOnlyFilter>>>;
 };
@@ -1624,6 +1659,10 @@ export type GraphQLContentfulRichTextOnlyLinkingCollectionsEntryCollectionArgs =
 export type GraphQLContentfulRichTextOnlyOrder =
   | "title_ASC"
   | "title_DESC"
+  | "path_ASC"
+  | "path_DESC"
+  | "showStartButton_ASC"
+  | "showStartButton_DESC"
   | "sys_id_ASC"
   | "sys_id_DESC"
   | "sys_publishedAt_ASC"
@@ -1746,6 +1785,88 @@ export type GraphQLContentfulLandingPageContentQuery = {
             >)
           | { __typename: "ResourcesAndContacts" }
           | { __typename: "RichTextOnly" }
+        >
+      >;
+    }
+  >;
+};
+
+export type GraphQLContentfulResourcesPageContentQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GraphQLContentfulResourcesPageContentQuery = {
+  __typename?: "Query";
+} & {
+  resourcesAndContactsCollection?: Maybe<
+    { __typename?: "ResourcesAndContactsCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename: "ResourcesAndContacts" } & Pick<
+            GraphQLContentfulResourcesAndContacts,
+            | "name"
+            | "nameUrl"
+            | "email"
+            | "phoneNumber"
+            | "phoneNumberExtension"
+            | "facebookName"
+            | "facebookUrl"
+            | "order"
+          > & {
+              richDescription?: Maybe<
+                { __typename?: "ResourcesAndContactsDescription" } & Pick<
+                  GraphQLContentfulResourcesAndContactsDescription,
+                  "json"
+                >
+              >;
+            }
+        >
+      >;
+    }
+  >;
+};
+
+export type GraphQLContentfulAllRichTextPagesQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GraphQLContentfulAllRichTextPagesQuery = {
+  __typename?: "Query";
+} & {
+  richTextOnlyCollection?: Maybe<
+    { __typename?: "RichTextOnlyCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename: "RichTextOnly" } & Pick<
+            GraphQLContentfulRichTextOnly,
+            "path"
+          >
+        >
+      >;
+    }
+  >;
+};
+
+export type GraphQLContentfulRichTextPageQueryVariables = Exact<{
+  path?: Maybe<Scalars["String"]>;
+}>;
+
+export type GraphQLContentfulRichTextPageQuery = { __typename?: "Query" } & {
+  richTextOnlyCollection?: Maybe<
+    { __typename?: "RichTextOnlyCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename: "RichTextOnly" } & Pick<
+            GraphQLContentfulRichTextOnly,
+            "title" | "seoDescription" | "showStartButton"
+          > & {
+              richDescription?: Maybe<
+                { __typename?: "RichTextOnlyDescription" } & Pick<
+                  GraphQLContentfulRichTextOnlyDescription,
+                  "json"
+                >
+              >;
+            }
         >
       >;
     }

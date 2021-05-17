@@ -107,7 +107,7 @@ function ResourcePanel({
 export const getStaticProps: GetStaticProps = async () => {
   const resourcesAndContactsContent = await fetchResources();
 
-  return { props: { resourcesAndContactsContent } };
+  return { props: { resourcesAndContactsContent }, revalidate: 60 };
 };
 
 export default Resources;

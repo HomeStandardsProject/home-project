@@ -1,10 +1,8 @@
 import { ContentfulRichText } from "./contentful-generic";
 
-export type Privacy = {
+export type RichTextPage = {
   title: string;
   richDescription: ContentfulRichText;
-};
-
-export type PrivacyContent = {
-  privacy: Privacy;
+  seoDescription: string;
+  showStartButton: boolean;
 };

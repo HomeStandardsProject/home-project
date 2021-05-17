@@ -2,12 +2,12 @@ overwrite: true
 schema:
   - https://graphql.contentful.com/content/v1/spaces/56c95v53ajrr:
       headers:
-        Authorization: Bearer frKI8dTWZsF7pcu-K_Wieudk98HzHCW5da2ROs15WHM
-documents: "api-functions/cms/ContentfulLanding.ts"
+        Authorization: Bearer ${API_KEY}
+documents: "api-functions/cms/*.ts"
 require:
   - ts-node/register
 generates:
-  "api-functions/cms/ContentfulQueries.ts":
+  "api-functions/cms/codegen/queries.ts":
     plugins:
       - typescript
       - typescript-operations

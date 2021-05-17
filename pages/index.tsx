@@ -249,7 +249,7 @@ export const getStaticProps: GetStaticProps = async () => {
     relevantArticle.previewImage = previewImage;
   }
 
-  return { props: { landingContent } };
+  return { props: { landingContent }, revalidate: 60 };
 };
 
 export default IndexPage;
