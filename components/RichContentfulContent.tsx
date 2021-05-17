@@ -26,11 +26,13 @@ const options: Options = {
         {children}
       </Box>
     ),
-    [BLOCKS.OL_LIST]: (_, children) => (
-      <Box as="ol" marginLeft="16pt">
-        {children}
-      </Box>
-    ),
+    [BLOCKS.OL_LIST]: (_, children) => {
+      return (
+        <Box as="ol" marginLeft="16pt">
+          {children}
+        </Box>
+      );
+    },
     [INLINES.HYPERLINK]: (node, children) => (
       <Link
         href={node.data.url ?? node.data.uri}
