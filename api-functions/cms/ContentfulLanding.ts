@@ -1,6 +1,12 @@
-import { gql, GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
 import { LandingContent } from "../../interfaces/contentful-landing";
-import { GraphQLContentfulLandingPageContentQuery } from "./ContentfulQueries";
+import { GraphQLContentfulLandingPageContentQuery } from "./codegen/queries";
+import {
+  checkIfEachPropertyIsDefined,
+  client,
+  CMS_ERRORS,
+  sortByOrder,
+} from "./ContentfulUtils";
 
 const landingPageQuery = gql`
   query LandingPageContent {
@@ -69,25 +75,6 @@ const landingPageQuery = gql`
   }
 `;
 
-export const CMS_ERRORS = {
-  unableToFetch: new Error("unable to fetch content from CMS"),
-  itemsUndefined: new Error("cms failed to return expected items"),
-  metadataNotUnique: new Error(
-    "Metadata already defined. Only one metadata field can be present"
-  ),
-  missingData: (field: string) =>
-    new Error(`cms failed to return value for field: ${field}`),
-};
-
-const client = new GraphQLClient(
-  `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_API_SPACE_ID}`,
-  {
-    headers: {
-      authorization: `Bearer ${process.env.CONTENTFUL_API_KEY}`,
-    },
-  }
-);
-
 export async function fetchLanding() {
   try {
     const data = await client.request<GraphQLContentfulLandingPageContentQuery>(
@@ -148,10 +135,6 @@ export async function fetchLanding() {
     }
     const requiredContent = content as Required<LandingContent>;
 
-    const sortByOrder = <T extends { order: number }>(content: T[]): T[] => {
-      return content.sort((a, b) => a.order - b.order);
-    };
-
     // sort the content based on the order property
     const sortedContent: LandingContent = {
       metadata: requiredContent.metadata,
@@ -166,17 +149,4 @@ export async function fetchLanding() {
     console.error(error);
     throw CMS_ERRORS.unableToFetch;
   }
-}
-
-function checkIfEachPropertyIsDefined<T extends { __typename: string }>(
-  obj: T
-): Required<T> {
-  if (typeof obj !== "object")
-    throw new Error("invalid value. Provided value is not an object");
-
-  for (const [key, value] of Object.entries(obj)) {
-    if (value === null || value === undefined)
-      throw new Error(`Value of ${key} is undefined on ${obj.__typename}`);
-  }
-  return obj as Required<T>;
 }

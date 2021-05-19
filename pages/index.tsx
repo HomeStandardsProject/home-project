@@ -249,13 +249,7 @@ export const getStaticProps: GetStaticProps = async () => {
     relevantArticle.previewImage = previewImage;
   }
 
-  return {
-    props: { landingContent },
-    // Next.js will attempt to re-generate the page:
-    // - When a request comes in
-    // - At most once every 60 second
-    revalidate: 60,
-  };
+  return { props: { landingContent }, revalidate: 60 };
 };
 
 export default IndexPage;

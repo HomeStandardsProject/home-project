@@ -62,7 +62,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["api-functions/cms/ContentfulQueries.ts"],
+      files: ["api-functions/cms/codegen/**/*"],
       rules: {
         camelcase: "off",
       },
