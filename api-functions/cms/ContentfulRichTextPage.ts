@@ -33,7 +33,6 @@ export async function fetchPathsForAllPages(): Promise<string[]> {
       if (!richTextPage.path) continue;
       paths.push(richTextPage.path);
     }
-
     return paths;
   } catch (error) {
     console.error(error);
