@@ -12,7 +12,7 @@ type Props = {
   content: BlogItem & BlogPost;
 };
 
-const BlogPost = ({ content }: Props) => {
+const DynamicPost = ({ content }: Props) => {
   return (
     <Layout title={content.title} description={content.seoDescription}>
       {content.tags.map((tag, index) => {
@@ -46,4 +46,4 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return { props: { content: page }, revalidate: 60 };
 };
 
-export default BlogPost;
+export default DynamicPost;
