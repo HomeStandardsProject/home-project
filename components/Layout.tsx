@@ -177,7 +177,6 @@ const Layout = ({
                 _hover={{ textDecoration: "none" }}
               >
                 <Text
-                  as="a"
                   textColor="blue.700"
                   fontWeight="bold"
                   fontSize="sm"
