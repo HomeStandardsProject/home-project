@@ -20,7 +20,7 @@ function Blog({ blogFeedContent }: Props) {
       >
         {pinnedPosts.map((post, index) => {
           const url: string =
-            "path" in post ? `/blog/${post.path}` : post.externalLink;
+            "path" in post ? `/blog/${post.path}` : post.externalUrl;
           return (
             <Link key={index} href={url}>
               <div>
@@ -36,7 +36,7 @@ function Blog({ blogFeedContent }: Props) {
         })}
         {recentPosts.map((post: BlogItem, index) => {
           const url: string =
-            "path" in post ? `/blog/${post.path}` : post.externalLink;
+            "path" in post ? `/blog/${post.path}` : post.externalUrl;
           console.log(url);
           return (
             <Link key={index} href={url}>

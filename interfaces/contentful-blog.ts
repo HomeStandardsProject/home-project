@@ -1,7 +1,7 @@
 import { ContentfulRichText } from "./contentful-generic";
 
 export type BlogItem = {
-  title?: string;
+  title: string;
   image: string;
   author: string;
   tags: string[];

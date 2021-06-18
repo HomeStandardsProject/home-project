@@ -8,7 +8,7 @@ import { client, CMS_ERRORS } from "./ContentfulUtils";
 
 const allBlogPostPagesQuery = gql`
   query AllBlogPosts {
-    blogPostCollection {
+    blogPostCollection(where: { path_exists: true }) {
       items {
         __typename
         path
@@ -152,10 +152,10 @@ export async function fetchBlogPageFromPath(path: string): Promise<BlogItem> {
       blogPostPageQuery,
       { path }
     );
-    if (!data || (!data.pinnedPosts && !data.recentPosts))
-      throw CMS_ERRORS.unableToFetch;
-    // if (!data.pinnedPosts.items && !data.recentPosts.items)
-    //   throw CMS_ERRORS.missingData;
+    if (!data) throw CMS_ERRORS.unableToFetch;
+
+    if (!data.pinnedPosts?.items || !data.recentPosts?.items)
+      throw CMS_ERRORS.missingData;
 
     const item = data.pinnedPosts.items[0]
       ? data.pinnedPosts.items[0]

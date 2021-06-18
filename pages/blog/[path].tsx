@@ -6,11 +6,12 @@ import {
 } from "../../api-functions/cms/ContentfulBlogLanding";
 import Layout from "../../components/Layout";
 import { RichContentfulContent } from "../../components/RichContentfulContent";
-import { BlogItem } from "../../interfaces/contentful-blog";
+import { BlogPost, BlogItem } from "../../interfaces/contentful-blog";
 
 type Props = {
-  content: BlogItem;
+  content: BlogItem & BlogPost;
 };
+
 const BlogPost = ({ content }: Props) => {
   const {
     title,
