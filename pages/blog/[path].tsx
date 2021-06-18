@@ -13,26 +13,16 @@ type Props = {
 };
 
 const BlogPost = ({ content }: Props) => {
-  const {
-    title,
-    image,
-    author,
-    richDescription,
-    tags,
-    seoDescription,
-    publishedAt,
-  } = content;
-  console.log(content);
   return (
-    <Layout title={title} description={seoDescription}>
-      {tags.map((tag, index) => {
+    <Layout title={content.title} description={content.seoDescription}>
+      {content.tags.map((tag, index) => {
         return <p key={index}>{tag}</p>;
       })}
-      <img src={image} />
-      <p>{title}</p>
-      <p>{author}</p>
-      <p>{publishedAt}</p>
-      <RichContentfulContent content={richDescription} />
+      <img src={content.image} />
+      <p>{content.title}</p>
+      <p>{content.author}</p>
+      <p>{content.publishedAt}</p>
+      <RichContentfulContent content={content.richDescription} />
     </Layout>
   );
 };
@@ -52,8 +42,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     throw new Error("Unable to generate the page. Path does not exist.");
 
   const page = await fetchBlogPageFromPath(params.path);
-
-  console.log(page);
 
   return { props: { content: page }, revalidate: 60 };
 };

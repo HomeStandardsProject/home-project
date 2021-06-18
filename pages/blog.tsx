@@ -10,7 +10,6 @@ type Props = {
 };
 
 function Blog({ blogFeedContent }: Props) {
-  const { pinnedPosts, recentPosts } = blogFeedContent;
   return (
     <>
       <Layout
@@ -18,7 +17,7 @@ function Blog({ blogFeedContent }: Props) {
         description="Blog landing with pinned and recent posts"
         showStartButton={true}
       >
-        {pinnedPosts.map((post, index) => {
+        {blogFeedContent.pinnedPosts.map((post, index) => {
           const url: string =
             "path" in post ? `/blog/${post.path}` : post.externalUrl;
           return (
@@ -34,10 +33,9 @@ function Blog({ blogFeedContent }: Props) {
             </Link>
           );
         })}
-        {recentPosts.map((post: BlogItem, index) => {
+        {blogFeedContent.recentPosts.map((post: BlogItem, index) => {
           const url: string =
             "path" in post ? `/blog/${post.path}` : post.externalUrl;
-          console.log(url);
           return (
             <Link key={index} href={url}>
               <div>

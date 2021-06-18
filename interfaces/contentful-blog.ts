@@ -22,14 +22,3 @@ export type BlogPostFeed = {
   pinnedPosts: BlogItem[];
   recentPosts: BlogItem[];
 };
-
-// export type BlogPostPage = {
-//   title: string;
-//   image: string;
-//   author: string;
-//   tags: string[];
-//   publishedAt: string;
-//   path: string;
-//   richDescription: ContentfulRichText;
-//   seoDescription: string;
-// };

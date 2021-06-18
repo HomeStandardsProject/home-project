@@ -160,7 +160,6 @@ export async function fetchBlogPageFromPath(path: string): Promise<BlogItem> {
     const item = data.pinnedPosts.items[0]
       ? data.pinnedPosts.items[0]
       : data.recentPosts.items[0];
-    // if (!checkIfEachPropertyIsDefined(page)) throw CMS_ERRORS.itemsUndefined;
 
     return {
       title: item.title,
