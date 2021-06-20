@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import { BlogItem, BlogPostFeed } from "../../interfaces/contentful-blog";
+import { BlogItem, BlogContent } from "../../interfaces/contentful-blog";
 import {
   GraphQLContentfulAllBlogPostsQuery,
   GraphQLContentfulBlogPostPageQuery,
@@ -39,7 +39,10 @@ export async function fetchPathsForAllBlogPages(): Promise<string[]> {
 
 const blogPostPageQuery = gql`
   query BlogPostPage {
-    pinnedPosts: blogPostCollection(where: { pinned: true }) {
+    pinnedPosts: blogPostCollection(
+      where: { pinned: true }
+      order: sys_firstPublishedAt_DESC
+    ) {
       items {
         title
         image {
@@ -60,7 +63,7 @@ const blogPostPageQuery = gql`
     }
     recentPosts: blogPostCollection(
       where: { pinned: false }
-      order: sys_firstPublishedAt_ASC
+      order: sys_firstPublishedAt_DESC
     ) {
       items {
         title
@@ -91,7 +94,7 @@ export const fetchBlogPosts = async () => {
     if (!data || !data.pinnedPosts || !data.recentPosts)
       throw CMS_ERRORS.unableToFetch;
 
-    const content: Partial<BlogPostFeed> = {};
+    const content: Partial<BlogContent> = {};
     for (const item of data.pinnedPosts.items) {
       if (!item) continue;
       const newItem = {
@@ -103,7 +106,7 @@ export const fetchBlogPosts = async () => {
         tags: item.tags,
         externalUrl: item.externalUrl,
         seoDescription: item.seoDescription,
-        publishedAt: item.sys.firstPublishedAt,
+        date: item.sys.firstPublishedAt,
       };
       if (content.pinnedPosts) {
         content.pinnedPosts.push(newItem as BlogItem);
@@ -122,7 +125,7 @@ export const fetchBlogPosts = async () => {
         tags: item.tags,
         externalUrl: item.externalUrl,
         seoDescription: item.seoDescription,
-        publishedAt: item.sys.firstPublishedAt,
+        date: item.sys.firstPublishedAt,
       };
       if (content.recentPosts) {
         content.recentPosts.push(newItem as BlogItem);
@@ -131,15 +134,7 @@ export const fetchBlogPosts = async () => {
       }
     }
 
-    const sortedContent: BlogPostFeed = {
-      pinnedPosts: content.pinnedPosts ?? [],
-      recentPosts:
-        content.recentPosts?.sort((a, b) =>
-          a.publishedAt > b.publishedAt ? 1 : -1
-        ) ?? [],
-    };
-
-    return sortedContent;
+    return content as BlogContent;
   } catch (error) {
     console.error(error);
     throw CMS_ERRORS.unableToFetch;
@@ -170,7 +165,7 @@ export async function fetchBlogPageFromPath(path: string): Promise<BlogItem> {
       tags: item.tags,
       externalUrl: item.externalUrl,
       seoDescription: item.seoDescription,
-      publishedAt: item.sys.firstPublishedAt,
+      date: item.sys.firstPublishedAt,
     } as BlogItem;
   } catch (error) {
     console.error(error);

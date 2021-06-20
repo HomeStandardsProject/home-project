@@ -5,7 +5,7 @@ export type BlogItem = {
   image: string;
   author: string;
   tags: string[];
-  publishedAt: string;
+  date: string;
 } & (BlogPost | BlogExternalLink);
 
 export type BlogPost = {
@@ -18,7 +18,7 @@ export type BlogExternalLink = {
   externalUrl: string;
 };
 
-export type BlogPostFeed = {
+export type BlogContent = {
   pinnedPosts: BlogItem[];
   recentPosts: BlogItem[];
 };

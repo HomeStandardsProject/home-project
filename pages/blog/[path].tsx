@@ -21,7 +21,7 @@ const DynamicPost = ({ content }: Props) => {
       <img src={content.image} />
       <p>{content.title}</p>
       <p>{content.author}</p>
-      <p>{content.publishedAt}</p>
+      <p>{content.date}</p>
       <RichContentfulContent content={content.richDescription} />
     </Layout>
   );
