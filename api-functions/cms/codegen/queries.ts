@@ -2015,6 +2015,46 @@ export type GraphQLContentfulBlogPostPageQuery = { __typename?: "Query" } & {
   >;
 };
 
+export type GraphQLContentfulBlogPostFromPathQueryVariables = Exact<{
+  path?: Maybe<Scalars["String"]>;
+}>;
+
+export type GraphQLContentfulBlogPostFromPathQuery = {
+  __typename?: "Query";
+} & {
+  blogPostCollection?: Maybe<
+    { __typename?: "BlogPostCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename?: "BlogPost" } & Pick<
+            GraphQLContentfulBlogPost,
+            | "title"
+            | "path"
+            | "author"
+            | "tags"
+            | "externalUrl"
+            | "seoDescription"
+          > & {
+              image?: Maybe<
+                { __typename?: "Asset" } & Pick<GraphQLContentfulAsset, "url">
+              >;
+              richDescription?: Maybe<
+                { __typename?: "BlogPostDescription" } & Pick<
+                  GraphQLContentfulBlogPostDescription,
+                  "json"
+                >
+              >;
+              sys: { __typename?: "Sys" } & Pick<
+                GraphQLContentfulSys,
+                "firstPublishedAt"
+              >;
+            }
+        >
+      >;
+    }
+  >;
+};
+
 export type GraphQLContentfulLandingPageContentQueryVariables = Exact<{
   [key: string]: never;
 }>;

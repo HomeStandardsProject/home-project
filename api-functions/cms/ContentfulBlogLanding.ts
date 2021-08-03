@@ -2,6 +2,7 @@ import { gql } from "graphql-request";
 import { BlogItem, BlogContent } from "../../interfaces/contentful-blog";
 import {
   GraphQLContentfulAllBlogPostsQuery,
+  GraphQLContentfulBlogPostFromPathQuery,
   GraphQLContentfulBlogPostPageQuery,
 } from "./codegen/queries";
 import { client, CMS_ERRORS } from "./ContentfulUtils";
@@ -141,20 +142,45 @@ export const fetchBlogPosts = async () => {
   }
 };
 
+const blogPostAtPathQuery = gql`
+  query BlogPostFromPath($path: String) {
+    blogPostCollection(where: { path: $path }) {
+      items {
+        title
+        image {
+          url
+        }
+        path
+        author
+        richDescription: description {
+          json
+        }
+        tags
+        externalUrl
+        seoDescription
+        sys {
+          firstPublishedAt
+        }
+      }
+    }
+  }
+`;
+
 export async function fetchBlogPageFromPath(path: string): Promise<BlogItem> {
   try {
-    const data = await client.request<GraphQLContentfulBlogPostPageQuery>(
-      blogPostPageQuery,
+    const data = await client.request<GraphQLContentfulBlogPostFromPathQuery>(
+      blogPostAtPathQuery,
       { path }
     );
     if (!data) throw CMS_ERRORS.unableToFetch;
 
-    if (!data.pinnedPosts?.items || !data.recentPosts?.items)
-      throw CMS_ERRORS.missingData;
-
-    const item = data.pinnedPosts.items[0]
-      ? data.pinnedPosts.items[0]
-      : data.recentPosts.items[0];
+    if (
+      !data.blogPostCollection?.items ||
+      data.blogPostCollection.items.length === 0
+    ) {
+      throw CMS_ERRORS.unableToFetch;
+    }
+    const item = data.blogPostCollection.items[0];
 
     return {
       title: item.title,
