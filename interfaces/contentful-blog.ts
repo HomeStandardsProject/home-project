@@ -1,20 +1,22 @@
 import { ContentfulRichText } from "./contentful-generic";
 
-export type BlogItem = {
+type BlogItemBase = {
   title: string;
-  image: string;
+  image: { url: string; alt: string };
   author: string;
   tags: string[];
   date: string;
-} & (BlogPost | BlogExternalLink);
+};
 
-export type BlogPost = {
+export type BlogItem = BlogPost | BlogExternalLink;
+
+export type BlogPost = BlogItemBase & {
   path: string;
   richDescription: ContentfulRichText;
   seoDescription: string;
 };
 
-export type BlogExternalLink = {
+export type BlogExternalLink = BlogItemBase & {
   externalUrl: string;
 };
 

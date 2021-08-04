@@ -30,8 +30,10 @@ export function checkIfEachPropertyIsDefined<T extends { __typename: string }>(
     throw new Error("invalid value. Provided value is not an object");
 
   for (const [key, value] of Object.entries(obj)) {
-    if (value === null || value === undefined)
+    if (value === null || value === undefined) {
+      console.debug(obj);
       throw new Error(`Value of ${key} is undefined on ${obj.__typename}`);
+    }
   }
   return obj as Required<T>;
 }

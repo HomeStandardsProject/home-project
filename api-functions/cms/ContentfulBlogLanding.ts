@@ -1,11 +1,19 @@
 import { gql } from "graphql-request";
-import { BlogItem, BlogContent } from "../../interfaces/contentful-blog";
+import {
+  BlogItem,
+  BlogContent,
+  BlogPost,
+} from "../../interfaces/contentful-blog";
 import {
   GraphQLContentfulAllBlogPostsQuery,
   GraphQLContentfulBlogPostFromPathQuery,
   GraphQLContentfulBlogPostPageQuery,
 } from "./codegen/queries";
-import { client, CMS_ERRORS } from "./ContentfulUtils";
+import {
+  checkIfEachPropertyIsDefined,
+  client,
+  CMS_ERRORS,
+} from "./ContentfulUtils";
 
 const allBlogPostPagesQuery = gql`
   query AllBlogPosts {
@@ -48,6 +56,7 @@ const blogPostPageQuery = gql`
         title
         image {
           url
+          description
         }
         path
         author
@@ -70,6 +79,7 @@ const blogPostPageQuery = gql`
         title
         image {
           url
+          description
         }
         path
         author
@@ -98,36 +108,67 @@ export const fetchBlogPosts = async () => {
     const content: Partial<BlogContent> = {};
     for (const item of data.pinnedPosts.items) {
       if (!item) continue;
-      const newItem = {
+      const newItem: Partial<BlogItem> & { __typename: string } = {
+        __typename: "BlogPost",
         title: item.title,
-        image: item.image?.url,
-        path: item.path,
+        image: item.image?.url
+          ? {
+              url: item.image.url,
+              alt: item.image.description ?? "",
+            }
+          : undefined,
         author: item.author,
-        richDescription: item.richDescription,
         tags: item.tags,
-        externalUrl: item.externalUrl,
-        seoDescription: item.seoDescription,
         date: item.sys.firstPublishedAt,
+        ...(item.externalUrl
+          ? {
+              externalUrl: item.externalUrl,
+            }
+          : {
+              path: item.path,
+              richDescription: item.richDescription,
+              seoDescription: item.seoDescription,
+            }),
       };
+
+      if (!checkIfEachPropertyIsDefined(newItem))
+        throw CMS_ERRORS.itemsUndefined;
+
       if (content.pinnedPosts) {
         content.pinnedPosts.push(newItem as BlogItem);
       } else {
         content.pinnedPosts = [newItem as BlogItem];
       }
     }
+
     for (const item of data.recentPosts.items) {
       if (!item) continue;
-      const newItem = {
+      const newItem: Partial<BlogItem> & { __typename: string } = {
+        __typename: "BlogPost",
         title: item.title,
-        image: item.image?.url,
-        path: item.path,
+        image: item.image?.url
+          ? {
+              url: item.image.url,
+              alt: item.image.description ?? "",
+            }
+          : undefined,
         author: item.author,
-        richDescription: item.richDescription,
         tags: item.tags,
-        externalUrl: item.externalUrl,
-        seoDescription: item.seoDescription,
         date: item.sys.firstPublishedAt,
+        ...(item.externalUrl
+          ? {
+              externalUrl: item.externalUrl,
+            }
+          : {
+              path: item.path,
+              richDescription: item.richDescription,
+              seoDescription: item.seoDescription,
+            }),
       };
+
+      if (!checkIfEachPropertyIsDefined(newItem))
+        throw CMS_ERRORS.itemsUndefined;
+
       if (content.recentPosts) {
         content.recentPosts.push(newItem as BlogItem);
       } else {
@@ -149,6 +190,7 @@ const blogPostAtPathQuery = gql`
         title
         image {
           url
+          description
         }
         path
         author
@@ -166,7 +208,7 @@ const blogPostAtPathQuery = gql`
   }
 `;
 
-export async function fetchBlogPageFromPath(path: string): Promise<BlogItem> {
+export async function fetchBlogPageFromPath(path: string): Promise<BlogPost> {
   try {
     const data = await client.request<GraphQLContentfulBlogPostFromPathQuery>(
       blogPostAtPathQuery,
@@ -181,18 +223,26 @@ export async function fetchBlogPageFromPath(path: string): Promise<BlogItem> {
       throw CMS_ERRORS.unableToFetch;
     }
     const item = data.blogPostCollection.items[0];
-
-    return {
+    const partialPost: Partial<BlogPost> & { __typename: string } = {
+      __typename: "BlogPost",
       title: item.title,
-      image: item.image?.url,
+      image: item.image?.url
+        ? {
+            url: item.image.url,
+            alt: item.image.description ?? "",
+          }
+        : undefined,
       path: item.path,
       author: item.author,
       richDescription: item.richDescription,
       tags: item.tags,
-      externalUrl: item.externalUrl,
       seoDescription: item.seoDescription,
       date: item.sys.firstPublishedAt,
-    } as BlogItem;
+    };
+    if (!checkIfEachPropertyIsDefined(partialPost))
+      throw CMS_ERRORS.itemsUndefined;
+
+    return partialPost as BlogPost;
   } catch (error) {
     console.error(error);
     throw CMS_ERRORS.unableToFetch;

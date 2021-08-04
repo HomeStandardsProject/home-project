@@ -1965,7 +1965,10 @@ export type GraphQLContentfulBlogPostPageQuery = { __typename?: "Query" } & {
             | "seoDescription"
           > & {
               image?: Maybe<
-                { __typename?: "Asset" } & Pick<GraphQLContentfulAsset, "url">
+                { __typename?: "Asset" } & Pick<
+                  GraphQLContentfulAsset,
+                  "url" | "description"
+                >
               >;
               richDescription?: Maybe<
                 { __typename?: "BlogPostDescription" } & Pick<
@@ -1996,7 +1999,10 @@ export type GraphQLContentfulBlogPostPageQuery = { __typename?: "Query" } & {
             | "seoDescription"
           > & {
               image?: Maybe<
-                { __typename?: "Asset" } & Pick<GraphQLContentfulAsset, "url">
+                { __typename?: "Asset" } & Pick<
+                  GraphQLContentfulAsset,
+                  "url" | "description"
+                >
               >;
               richDescription?: Maybe<
                 { __typename?: "BlogPostDescription" } & Pick<
@@ -2036,7 +2042,10 @@ export type GraphQLContentfulBlogPostFromPathQuery = {
             | "seoDescription"
           > & {
               image?: Maybe<
-                { __typename?: "Asset" } & Pick<GraphQLContentfulAsset, "url">
+                { __typename?: "Asset" } & Pick<
+                  GraphQLContentfulAsset,
+                  "url" | "description"
+                >
               >;
               richDescription?: Maybe<
                 { __typename?: "BlogPostDescription" } & Pick<
