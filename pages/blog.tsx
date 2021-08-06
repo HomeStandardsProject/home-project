@@ -9,6 +9,8 @@ import {
   Tag,
   IconButton,
   Link,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
 import Head from "next/head";
@@ -63,8 +65,8 @@ function Blog({ blogContent }: Props) {
     </Layout>
   );
 }
-// position="absolute" left="8pt" top="8pt"
-function Post({ post, isPinned }: { post: BlogItem; isPinned: boolean }) {
+
+function Post({ post }: { post: BlogItem; isPinned: boolean }) {
   console.log(post);
   return (
     <NextLink
@@ -90,17 +92,25 @@ function Post({ post, isPinned }: { post: BlogItem; isPinned: boolean }) {
                 aria-label="Search database"
               />
             </Box>
-            <Stack position="absolute" bottom="8pt" left="8pt" isInline>
+            <Wrap
+              position="absolute"
+              bottom="8pt"
+              left="8pt"
+              right="8pt"
+              isInline
+            >
               {post.tags.map((tag, i) => (
-                <Tag
-                  key={i}
-                  colorScheme={isPinned ? "yellow" : "blue"}
-                  variant="subtle"
-                >
-                  {tag}
-                </Tag>
+                <WrapItem key={i}>
+                  <Tag
+                    colorScheme={"blue"}
+                    variant="subtle"
+                    whiteSpace="nowrap"
+                  >
+                    {tag}
+                  </Tag>
+                </WrapItem>
               ))}
-            </Stack>
+            </Wrap>
             <Image
               borderRadius="lg"
               src={post.image.url}
