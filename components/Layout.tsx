@@ -120,6 +120,19 @@ const Layout = ({
                   About Us
                 </Text>
               </Link>
+              <Link href="/blog">
+                <Text
+                  as="a"
+                  textColor="blue.700"
+                  fontWeight="bold"
+                  fontSize="sm"
+                  display="block"
+                  cursor="pointer"
+                  whiteSpace="nowrap"
+                >
+                  Blog
+                </Text>
+              </Link>
               <Link href="/resources">
                 <Text
                   as="a"
@@ -164,7 +177,6 @@ const Layout = ({
                 _hover={{ textDecoration: "none" }}
               >
                 <Text
-                  as="a"
                   textColor="blue.700"
                   fontWeight="bold"
                   fontSize="sm"

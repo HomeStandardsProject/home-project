@@ -137,10 +137,18 @@ export type GraphQLContentfulAssetFilter = {
 export type GraphQLContentfulAssetLinkingCollections = {
   __typename?: "AssetLinkingCollections";
   entryCollection?: Maybe<GraphQLContentfulEntryCollection>;
+  blogPostCollection?: Maybe<GraphQLContentfulBlogPostCollection>;
   landingFactCollection?: Maybe<GraphQLContentfulLandingFactCollection>;
 };
 
 export type GraphQLContentfulAssetLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulAssetLinkingCollectionsBlogPostCollectionArgs = {
   skip?: Maybe<Scalars["Int"]>;
   limit?: Maybe<Scalars["Int"]>;
   preview?: Maybe<Scalars["Boolean"]>;
@@ -167,6 +175,192 @@ export type GraphQLContentfulAssetOrder =
   | "width_DESC"
   | "height_ASC"
   | "height_DESC"
+  | "sys_id_ASC"
+  | "sys_id_DESC"
+  | "sys_publishedAt_ASC"
+  | "sys_publishedAt_DESC"
+  | "sys_firstPublishedAt_ASC"
+  | "sys_firstPublishedAt_DESC"
+  | "sys_publishedVersion_ASC"
+  | "sys_publishedVersion_DESC";
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPost = GraphQLContentfulEntry & {
+  __typename?: "BlogPost";
+  sys: GraphQLContentfulSys;
+  contentfulMetadata: GraphQLContentfulContentfulMetadata;
+  linkedFrom?: Maybe<GraphQLContentfulBlogPostLinkingCollections>;
+  title?: Maybe<Scalars["String"]>;
+  image?: Maybe<GraphQLContentfulAsset>;
+  path?: Maybe<Scalars["String"]>;
+  author?: Maybe<Scalars["String"]>;
+  description?: Maybe<GraphQLContentfulBlogPostDescription>;
+  tags?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  pinned?: Maybe<Scalars["Boolean"]>;
+  externalUrl?: Maybe<Scalars["String"]>;
+  seoDescription?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostTitleArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostImageArgs = {
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostPathArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostAuthorArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostDescriptionArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostTagsArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostPinnedArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostExternalUrlArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/blogPost) */
+export type GraphQLContentfulBlogPostSeoDescriptionArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulBlogPostCollection = {
+  __typename?: "BlogPostCollection";
+  total: Scalars["Int"];
+  skip: Scalars["Int"];
+  limit: Scalars["Int"];
+  items: Array<Maybe<GraphQLContentfulBlogPost>>;
+};
+
+export type GraphQLContentfulBlogPostDescription = {
+  __typename?: "BlogPostDescription";
+  json: Scalars["JSON"];
+  links: GraphQLContentfulBlogPostDescriptionLinks;
+};
+
+export type GraphQLContentfulBlogPostDescriptionAssets = {
+  __typename?: "BlogPostDescriptionAssets";
+  hyperlink: Array<Maybe<GraphQLContentfulAsset>>;
+  block: Array<Maybe<GraphQLContentfulAsset>>;
+};
+
+export type GraphQLContentfulBlogPostDescriptionEntries = {
+  __typename?: "BlogPostDescriptionEntries";
+  inline: Array<Maybe<GraphQLContentfulEntry>>;
+  hyperlink: Array<Maybe<GraphQLContentfulEntry>>;
+  block: Array<Maybe<GraphQLContentfulEntry>>;
+};
+
+export type GraphQLContentfulBlogPostDescriptionLinks = {
+  __typename?: "BlogPostDescriptionLinks";
+  entries: GraphQLContentfulBlogPostDescriptionEntries;
+  assets: GraphQLContentfulBlogPostDescriptionAssets;
+};
+
+export type GraphQLContentfulBlogPostFilter = {
+  sys?: Maybe<GraphQLContentfulSysFilter>;
+  contentfulMetadata?: Maybe<GraphQLContentfulContentfulMetadataFilter>;
+  title_exists?: Maybe<Scalars["Boolean"]>;
+  title?: Maybe<Scalars["String"]>;
+  title_not?: Maybe<Scalars["String"]>;
+  title_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  title_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  title_contains?: Maybe<Scalars["String"]>;
+  title_not_contains?: Maybe<Scalars["String"]>;
+  image_exists?: Maybe<Scalars["Boolean"]>;
+  path_exists?: Maybe<Scalars["Boolean"]>;
+  path?: Maybe<Scalars["String"]>;
+  path_not?: Maybe<Scalars["String"]>;
+  path_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  path_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  path_contains?: Maybe<Scalars["String"]>;
+  path_not_contains?: Maybe<Scalars["String"]>;
+  author_exists?: Maybe<Scalars["Boolean"]>;
+  author?: Maybe<Scalars["String"]>;
+  author_not?: Maybe<Scalars["String"]>;
+  author_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  author_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  author_contains?: Maybe<Scalars["String"]>;
+  author_not_contains?: Maybe<Scalars["String"]>;
+  description_exists?: Maybe<Scalars["Boolean"]>;
+  description_contains?: Maybe<Scalars["String"]>;
+  description_not_contains?: Maybe<Scalars["String"]>;
+  tags_exists?: Maybe<Scalars["Boolean"]>;
+  tags_contains_all?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  tags_contains_some?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  tags_contains_none?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  pinned_exists?: Maybe<Scalars["Boolean"]>;
+  pinned?: Maybe<Scalars["Boolean"]>;
+  pinned_not?: Maybe<Scalars["Boolean"]>;
+  externalUrl_exists?: Maybe<Scalars["Boolean"]>;
+  externalUrl?: Maybe<Scalars["String"]>;
+  externalUrl_not?: Maybe<Scalars["String"]>;
+  externalUrl_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  externalUrl_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  externalUrl_contains?: Maybe<Scalars["String"]>;
+  externalUrl_not_contains?: Maybe<Scalars["String"]>;
+  seoDescription_exists?: Maybe<Scalars["Boolean"]>;
+  seoDescription?: Maybe<Scalars["String"]>;
+  seoDescription_not?: Maybe<Scalars["String"]>;
+  seoDescription_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  seoDescription_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  seoDescription_contains?: Maybe<Scalars["String"]>;
+  seoDescription_not_contains?: Maybe<Scalars["String"]>;
+  OR?: Maybe<Array<Maybe<GraphQLContentfulBlogPostFilter>>>;
+  AND?: Maybe<Array<Maybe<GraphQLContentfulBlogPostFilter>>>;
+};
+
+export type GraphQLContentfulBlogPostLinkingCollections = {
+  __typename?: "BlogPostLinkingCollections";
+  entryCollection?: Maybe<GraphQLContentfulEntryCollection>;
+};
+
+export type GraphQLContentfulBlogPostLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulBlogPostOrder =
+  | "title_ASC"
+  | "title_DESC"
+  | "path_ASC"
+  | "path_DESC"
+  | "author_ASC"
+  | "author_DESC"
+  | "pinned_ASC"
+  | "pinned_DESC"
+  | "externalUrl_ASC"
+  | "externalUrl_DESC"
   | "sys_id_ASC"
   | "sys_id_DESC"
   | "sys_publishedAt_ASC"
@@ -1032,6 +1226,8 @@ export type GraphQLContentfulQuery = {
   __typename?: "Query";
   asset?: Maybe<GraphQLContentfulAsset>;
   assetCollection?: Maybe<GraphQLContentfulAssetCollection>;
+  blogPost?: Maybe<GraphQLContentfulBlogPost>;
+  blogPostCollection?: Maybe<GraphQLContentfulBlogPostCollection>;
   richTextOnly?: Maybe<GraphQLContentfulRichTextOnly>;
   richTextOnlyCollection?: Maybe<GraphQLContentfulRichTextOnlyCollection>;
   resourcesAndContacts?: Maybe<GraphQLContentfulResourcesAndContacts>;
@@ -1070,6 +1266,21 @@ export type GraphQLContentfulQueryAssetCollectionArgs = {
   locale?: Maybe<Scalars["String"]>;
   where?: Maybe<GraphQLContentfulAssetFilter>;
   order?: Maybe<Array<Maybe<GraphQLContentfulAssetOrder>>>;
+};
+
+export type GraphQLContentfulQueryBlogPostArgs = {
+  id: Scalars["String"];
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulQueryBlogPostCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+  where?: Maybe<GraphQLContentfulBlogPostFilter>;
+  order?: Maybe<Array<Maybe<GraphQLContentfulBlogPostOrder>>>;
 };
 
 export type GraphQLContentfulQueryRichTextOnlyArgs = {
@@ -1719,6 +1930,140 @@ export type GraphQLContentfulSysFilter = {
   publishedVersion_lte?: Maybe<Scalars["Float"]>;
 };
 
+export type GraphQLContentfulAllBlogPostsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GraphQLContentfulAllBlogPostsQuery = { __typename?: "Query" } & {
+  blogPostCollection?: Maybe<
+    { __typename?: "BlogPostCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename: "BlogPost" } & Pick<GraphQLContentfulBlogPost, "path">
+        >
+      >;
+    }
+  >;
+};
+
+export type GraphQLContentfulBlogPostPageQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GraphQLContentfulBlogPostPageQuery = { __typename?: "Query" } & {
+  pinnedPosts?: Maybe<
+    { __typename?: "BlogPostCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename?: "BlogPost" } & Pick<
+            GraphQLContentfulBlogPost,
+            | "title"
+            | "path"
+            | "author"
+            | "tags"
+            | "externalUrl"
+            | "seoDescription"
+          > & {
+              image?: Maybe<
+                { __typename?: "Asset" } & Pick<
+                  GraphQLContentfulAsset,
+                  "url" | "description"
+                >
+              >;
+              richDescription?: Maybe<
+                { __typename?: "BlogPostDescription" } & Pick<
+                  GraphQLContentfulBlogPostDescription,
+                  "json"
+                >
+              >;
+              sys: { __typename?: "Sys" } & Pick<
+                GraphQLContentfulSys,
+                "firstPublishedAt"
+              >;
+            }
+        >
+      >;
+    }
+  >;
+  recentPosts?: Maybe<
+    { __typename?: "BlogPostCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename?: "BlogPost" } & Pick<
+            GraphQLContentfulBlogPost,
+            | "title"
+            | "path"
+            | "author"
+            | "tags"
+            | "externalUrl"
+            | "seoDescription"
+          > & {
+              image?: Maybe<
+                { __typename?: "Asset" } & Pick<
+                  GraphQLContentfulAsset,
+                  "url" | "description"
+                >
+              >;
+              richDescription?: Maybe<
+                { __typename?: "BlogPostDescription" } & Pick<
+                  GraphQLContentfulBlogPostDescription,
+                  "json"
+                >
+              >;
+              sys: { __typename?: "Sys" } & Pick<
+                GraphQLContentfulSys,
+                "firstPublishedAt"
+              >;
+            }
+        >
+      >;
+    }
+  >;
+};
+
+export type GraphQLContentfulBlogPostFromPathQueryVariables = Exact<{
+  path?: Maybe<Scalars["String"]>;
+}>;
+
+export type GraphQLContentfulBlogPostFromPathQuery = {
+  __typename?: "Query";
+} & {
+  blogPostCollection?: Maybe<
+    { __typename?: "BlogPostCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename?: "BlogPost" } & Pick<
+            GraphQLContentfulBlogPost,
+            | "title"
+            | "path"
+            | "author"
+            | "tags"
+            | "externalUrl"
+            | "seoDescription"
+          > & {
+              image?: Maybe<
+                { __typename?: "Asset" } & Pick<
+                  GraphQLContentfulAsset,
+                  "url" | "description"
+                >
+              >;
+              richDescription?: Maybe<
+                { __typename?: "BlogPostDescription" } & Pick<
+                  GraphQLContentfulBlogPostDescription,
+                  "json"
+                >
+              >;
+              sys: { __typename?: "Sys" } & Pick<
+                GraphQLContentfulSys,
+                "firstPublishedAt"
+              >;
+            }
+        >
+      >;
+    }
+  >;
+};
+
 export type GraphQLContentfulLandingPageContentQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -1730,6 +2075,7 @@ export type GraphQLContentfulLandingPageContentQuery = {
     { __typename?: "EntryCollection" } & {
       items: Array<
         Maybe<
+          | { __typename: "BlogPost" }
           | ({ __typename: "DidYouKnow" } & Pick<
               GraphQLContentfulDidYouKnow,
               "title" | "description" | "sourceName" | "sourceUrl" | "order"
