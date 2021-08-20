@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import {
   ApiHomeAssessmentInputWithRoomIds,
   ApiHomeAssessmentResult,
@@ -150,37 +150,43 @@ export class PrismaDatastore implements Datastore {
   }
 }
 
+// ideally we could just use the codegenerated types from prisma here
+// but it looks like the nextjs bundler struggles at finding the types
+// for some reason
+type PrismaViolation = {
+  rawSubmissionId: string;
+  rawRoomId: string;
+  bylawId: string;
+  status: "violation" | "unsure";
+};
+
 function transformResultToViolationRows(
   submissionId: string,
   result: ApiHomeAssessmentResult
-): Prisma.SubmissionRoomViolationsCreateManyInput[] {
-  const unflattenedViolations = result.rooms.map(
-    (room): Prisma.SubmissionRoomViolationsCreateManyInput[] => {
-      const violations = room.violations.map(
-        (violation): Prisma.SubmissionRoomViolationsCreateManyInput => ({
-          rawSubmissionId: submissionId,
-          rawRoomId: room.id,
-          bylawId: violation.id,
-          status: "violation",
-        })
-      );
+): PrismaViolation[] {
+  const unflattenedViolations = result.rooms.map((room): PrismaViolation[] => {
+    const violations = room.violations.map(
+      (violation): PrismaViolation => ({
+        rawSubmissionId: submissionId,
+        rawRoomId: room.id,
+        bylawId: violation.id,
+        status: "violation",
+      })
+    );
 
-      const possibleViolations = room.possibleViolations.map(
-        (violation): Prisma.SubmissionRoomViolationsCreateManyInput => ({
-          rawSubmissionId: submissionId,
-          rawRoomId: room.id,
-          bylawId: violation.id,
-          status: "unsure",
-        })
-      );
+    const possibleViolations = room.possibleViolations.map(
+      (violation): PrismaViolation => ({
+        rawSubmissionId: submissionId,
+        rawRoomId: room.id,
+        bylawId: violation.id,
+        status: "unsure",
+      })
+    );
 
-      return [...violations, ...possibleViolations];
-    }
-  );
+    return [...violations, ...possibleViolations];
+  });
 
-  const emptyArray = new Array<
-    Prisma.SubmissionRoomViolationsCreateManyInput
-  >();
+  const emptyArray = new Array<PrismaViolation>();
   // flatten 2D array to 1D array
   return emptyArray.concat(...unflattenedViolations);
 }
