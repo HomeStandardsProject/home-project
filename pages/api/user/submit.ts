@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Airtable from "airtable";
 
-import { AirtableStore } from "../../../api-functions/datastore/Airtable";
 import { Datastore } from "../../../api-functions/datastore/Datastore";
 import { MockDatastore } from "../../../api-functions/datastore/MockDatastore";
 
 import { handleSubmitUserInfo } from "../../../api-functions/handleSubmitUserInfo/handleSubmitUserInfo";
+import { PrismaDatastore } from "../../../api-functions/datastore/PrismaDatastore";
 
 Airtable.configure({
   apiKey: process.env.AIRTABLE_API_KEY,
@@ -20,7 +20,7 @@ async function homeDetailsBySubmisionId(
 ) {
   let datastore: Datastore;
   if (process.env.AIRTABLE_SUBMISSIONS_BASE && process.env.AIRTABLE_API_KEY) {
-    datastore = new AirtableStore(process.env.AIRTABLE_SUBMISSIONS_BASE);
+    datastore = new PrismaDatastore();
   } else {
     console.warn("Airtable base not provided, defaulting to mock datastore");
     datastore = new MockDatastore();
