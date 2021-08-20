@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, PrismaPromise } from "@prisma/client";
 import {
   ApiHomeAssessmentInputWithRoomIds,
   ApiHomeAssessmentResult,
@@ -19,27 +19,31 @@ export class PrismaDatastore implements Datastore {
     input: ApiHomeAssessmentInputWithRoomIds
   ): Promise<[boolean, Error | null]> {
     try {
-      // TODO execute this within a transaction
-      await this.client.rawRoom.createMany({
-        data: input.rooms.map((room) => ({
-          id: room.id,
-          rawSubmissionId: input.submissionId,
-          type: room.type,
-        })),
-      });
+      const ops: PrismaPromise<any>[] = [];
 
-      await this.client.rawRoomResponses.createMany({
-        data: input.rooms
-          .map((room) =>
-            Object.entries(room.responses).map(([questionId, response]) => ({
-              rawRoomId: room.id,
-              questionId,
-              answer: response.answer,
-              selectedMultiselect: response.selectedMultiselect,
-            }))
-          )
-          .flat(),
-      });
+      for (const room of input.rooms) {
+        const op = this.client.rawRoom.create({
+          data: {
+            id: room.id,
+            rawSubmissionId: input.submissionId,
+            type: room.type,
+            responses: {
+              createMany: {
+                data: Object.entries(room.responses).map(
+                  ([questionId, response]) => ({
+                    questionId,
+                    answer: response.answer,
+                    selectedMultiselect: response.selectedMultiselect,
+                  })
+                ),
+              },
+            },
+          },
+        });
+        ops.push(op);
+      }
+
+      await this.client.$transaction(ops);
 
       return [true, null];
     } catch (error) {

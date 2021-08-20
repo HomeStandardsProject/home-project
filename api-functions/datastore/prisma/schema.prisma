@@ -43,7 +43,7 @@ model RawRoomResponses {
   selectedMultiselect String?
 
   // references
-  RawRoom   RawRoom @relation(fields: [rawRoomId], references: [id])
+  room      RawRoom @relation(fields: [rawRoomId], references: [id])
   rawRoomId String
 }
 
@@ -54,11 +54,11 @@ model SubmissionRoomViolations {
   generatedDate DateTime        @default(now())
 
   // references
-  RawSubmission   RawSubmission? @relation(fields: [rawSubmissionId], references: [id])
+  submission      RawSubmission? @relation(fields: [rawSubmissionId], references: [id])
   rawSubmissionId String?
 
   // references
-  RawRoom   RawRoom @relation(fields: [rawRoomId], references: [id])
+  room      RawRoom @relation(fields: [rawRoomId], references: [id])
   rawRoomId String
 }
 
