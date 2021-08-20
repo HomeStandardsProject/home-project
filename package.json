@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next",
+    "preinstall": "cd api-functions/datastore/prisma; prisma generate",
     "build": "next build",
     "build:graphql": "API_KEY=$(node scripts/loadEnv.js) npx graphql-codegen --config api-functions/cms/codegen.yml && npm run lint:fix",
     "postbuild": "next-sitemap",
