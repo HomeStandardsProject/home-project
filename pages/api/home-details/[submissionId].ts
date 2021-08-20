@@ -11,7 +11,7 @@ async function homeDetailsBySubmisionId(
   res: NextApiResponse
 ) {
   let datastore: Datastore;
-  if (process.env.AIRTABLE_SUBMISSIONS_BASE && process.env.AIRTABLE_API_KEY) {
+  if (process.env.DATABASE_URL) {
     datastore = new PrismaDatastore();
   } else {
     console.warn("Airtable base not provided, defaulting to mock datastore");
