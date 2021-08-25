@@ -1,0 +1,81 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model RawSubmission {
+  id                  String   @id
+  userProvidedAddress String
+  formattedAddress    String
+  long                String
+  lat                 String
+  unitNumber          String?
+  rentalType          String
+  numberOfBedrooms    Int
+  totalRent           Float
+  landlord            String
+  landlordOther       String?
+  creationDate        DateTime @default(now())
+
+  rooms      RawRoom[]
+  violations SubmissionRoomViolations[]
+}
+
+model RawRoom {
+  id         String                     @id
+  type       String
+  responses  RawRoomResponses[]
+  violations SubmissionRoomViolations[]
+
+  // references
+  submission      RawSubmission @relation(fields: [rawSubmissionId], references: [id])
+  rawSubmissionId String
+}
+
+model RawRoomResponses {
+  id                  Int            @id @default(autoincrement())
+  questionId          String
+  answer              QuestionAnswer
+  selectedMultiselect String?
+
+  // references
+  room      RawRoom @relation(fields: [rawRoomId], references: [id])
+  rawRoomId String
+}
+
+model SubmissionRoomViolations {
+  id            Int             @id @default(autoincrement())
+  bylawId       String
+  status        ViolationStatus
+  generatedDate DateTime        @default(now())
+
+  // references
+  submission      RawSubmission? @relation(fields: [rawSubmissionId], references: [id])
+  rawSubmissionId String?
+
+  // references
+  room      RawRoom @relation(fields: [rawRoomId], references: [id])
+  rawRoomId String
+}
+
+enum QuestionAnswer {
+  YES
+  NO
+  UNSURE
+}
+
+enum ViolationStatus {
+  violation
+  unsure
+}
+
+model User {
+  id                    Int      @id @default(autoincrement())
+  email                 String
+  subscribeToNewsletter Boolean
+  createdAt             DateTime @default(now())
+}

@@ -14,7 +14,7 @@ export class MockGeocoder implements Geocoder {
     return new Promise((resolve) => {
       resolve([
         {
-          address: "Mocked Address",
+          address: "Mocked Address Kingston",
           lat: "44.2319459",
           long: "-76.496439299",
         },
