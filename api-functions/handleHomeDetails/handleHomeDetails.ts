@@ -12,6 +12,7 @@ import { Datastore } from "../datastore/Datastore";
 
 const validateSchema = validateMiddleware(
   [
+    check("details.city").isString(),
     check("details.address.userProvided").isString(),
     check("details.address.formatted").isString(),
     check("details.address.long").isString(),
