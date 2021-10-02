@@ -3,37 +3,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
-model RawSubmission {
-  id                  String   @id
-  userProvidedAddress String
-  formattedAddress    String
-  long                String
-  lat                 String
-  unitNumber          String?
-  rentalType          String
-  numberOfBedrooms    Int
-  totalRent           Float
-  landlord            String
-  landlordOther       String?
-  creationDate        DateTime @default(now())
-
-  rooms      RawRoom[]
-  violations SubmissionRoomViolations[]
-}
-
 model RawRoom {
-  id         String                     @id
-  type       String
-  responses  RawRoomResponses[]
-  violations SubmissionRoomViolations[]
-
-  // references
-  submission      RawSubmission @relation(fields: [rawSubmissionId], references: [id])
-  rawSubmissionId String
+  id                       String                     @id
+  type                     String
+  rawSubmissionId          String
+  RawSubmission            RawSubmission              @relation(fields: [rawSubmissionId], references: [id], onDelete: Cascade)
+  RawRoomResponses         RawRoomResponses[]
+  SubmissionRoomViolations SubmissionRoomViolations[]
 }
 
 model RawRoomResponses {
@@ -41,25 +17,44 @@ model RawRoomResponses {
   questionId          String
   answer              QuestionAnswer
   selectedMultiselect String?
+  rawRoomId           String
+  RawRoom             RawRoom        @relation(fields: [rawRoomId], references: [id], onDelete: Cascade)
+}
 
-  // references
-  room      RawRoom @relation(fields: [rawRoomId], references: [id])
-  rawRoomId String
+model RawSubmission {
+  id                       String                     @id
+  userProvidedAddress      String
+  formattedAddress         String
+  city                     String                     @default("kingston")
+  long                     String
+  lat                      String
+  unitNumber               String?
+  rentalType               String
+  numberOfBedrooms         Int
+  totalRent                Float
+  landlord                 String
+  landlordOther            String?
+  creationDate             DateTime                   @default(now())
+  RawRoom                  RawRoom[]
+  SubmissionRoomViolations SubmissionRoomViolations[]
 }
 
 model SubmissionRoomViolations {
-  id            Int             @id @default(autoincrement())
-  bylawId       String
-  status        ViolationStatus
-  generatedDate DateTime        @default(now())
-
-  // references
-  submission      RawSubmission? @relation(fields: [rawSubmissionId], references: [id])
+  id              Int             @id @default(autoincrement())
+  bylawId         String
+  status          ViolationStatus
+  generatedDate   DateTime        @default(now())
   rawSubmissionId String?
+  rawRoomId       String
+  RawRoom         RawRoom         @relation(fields: [rawRoomId], references: [id], onDelete: Cascade)
+  RawSubmission   RawSubmission?  @relation(fields: [rawSubmissionId], references: [id])
+}
 
-  // references
-  room      RawRoom @relation(fields: [rawRoomId], references: [id])
-  rawRoomId String
+model User {
+  id                    Int      @id @default(autoincrement())
+  email                 String
+  subscribeToNewsletter Boolean
+  createdAt             DateTime @default(now())
 }
 
 enum QuestionAnswer {
@@ -71,11 +66,4 @@ enum QuestionAnswer {
 enum ViolationStatus {
   violation
   unsure
-}
-
-model User {
-  id                    Int      @id @default(autoincrement())
-  email                 String
-  subscribeToNewsletter Boolean
-  createdAt             DateTime @default(now())
 }
