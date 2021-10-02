@@ -6,7 +6,6 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Heading,
   Input,
   InputGroup,
   InputLeftElement,
@@ -33,13 +32,16 @@ import { validateHomeDetailsForm } from "../helpers/validateHomeDetailsForm";
 import { validatePrice } from "../helpers/validatePrice";
 
 import { AddressSelector } from "./AddressSelector";
+import { ContentfulCity } from "../../../interfaces/contentful-city";
 
 type Props = {
+  selectedCity: ContentfulCity;
   loading: boolean;
   submitDetails: (details: HomeDetailsType) => void;
 };
 
 export const HomeAssessmentDetails: React.FC<Props> = ({
+  selectedCity,
   submitDetails,
   loading,
 }) => {
@@ -144,6 +146,10 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
     }
   }, [details, submitDetails]);
 
+  React.useEffect(() => {
+    setDetails((oldVal) => ({ ...oldVal, city: selectedCity.name }));
+  }, [selectedCity]);
+
   const isTotalRentValid = React.useMemo(() => {
     if (details.totalRent) {
       return validatePrice(details.totalRent);
@@ -179,143 +185,139 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
   );
 
   return (
-    <Box width="100%" alignItems="center">
-      <Stack padding="4pt" marginTop="16pt" maxWidth="800px">
-        <Heading as="h3" size="xs" textTransform="uppercase" marginBottom="8pt">
-          Details
-        </Heading>
-        <Stack>
-          <Stack isInline>
-            <AddressSelector
-              validatedAddress={details.address?.formatted}
-              setValidatedAddress={handleAddressChange}
-              showValidationErrors={showValidationErrors}
+    <>
+      <Stack>
+        <Stack isInline>
+          <AddressSelector
+            city={selectedCity}
+            validatedAddress={details.address?.formatted}
+            setValidatedAddress={handleAddressChange}
+            showValidationErrors={showValidationErrors}
+          />
+          <FormControl flexBasis={"20%"}>
+            <FormLabel fontSize="sm">Unit</FormLabel>
+            <Input
+              placeholder={"3"}
+              aria-describedby="unit number"
+              size="md"
+              value={details.unitNumber ?? ""}
+              onChange={handleUnitNumberChange}
             />
-            <FormControl flexBasis={"20%"}>
-              <FormLabel fontSize="sm">Unit</FormLabel>
-              <Input
-                placeholder={"3"}
-                aria-describedby="unit number"
-                size="md"
-                value={details.unitNumber ?? ""}
-                onChange={handleUnitNumberChange}
-              />
-            </FormControl>
-          </Stack>
-          <FormControl
-            flexBasis="30%"
-            minW={"265px"}
-            isInvalid={!details.rentalType && showValidationErrors}
-            isRequired={true}
-          >
-            <FormLabel fontSize="sm">Rental Type</FormLabel>
-            <Select
-              placeholder="Select option"
-              size="md"
-              value={details.rentalType}
-              onChange={handleRentalTypeChange}
-            >
-              {RENTAL_TYPES.map((houseType) => (
-                <option key={houseType} value={houseType}>
-                  {houseType}
-                </option>
-              ))}
-            </Select>
           </FormControl>
-          <SimpleGrid
-            columns={{ sm: 1, md: 2 }}
-            templateColumns={{ sm: "100%", md: "60% 40%" }}
-            spacing={2}
-          >
-            <FormControl
-              isInvalid={!isTotalRentValid}
-              isRequired={true}
-              flexBasis="60%"
-            >
-              <FormLabel fontSize="sm">Total Rent Cost</FormLabel>
-              <InputGroup>
-                <InputLeftElement color="gray.300">$</InputLeftElement>
-                <Input
-                  placeholder="Enter amount"
-                  value={details.totalRent ?? ""}
-                  onChange={handleRentPriceChange}
-                />
-                <InputRightElement>
-                  {details.totalRent && isTotalRentValid ? (
-                    <CheckIcon color="green.500" />
-                  ) : null}
-                  {details.totalRent && !isTotalRentValid ? (
-                    <NotAllowedIcon color="red.500" />
-                  ) : null}
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <FormControl
-              isRequired={true}
-              flexBasis={"40%"}
-              isInvalid={!details.numberOfBedrooms && showValidationErrors}
-            >
-              <FormLabel fontSize="sm">Number of Bedrooms</FormLabel>
-              <NumberInput
-                isInvalid={!details.numberOfBedrooms && showValidationErrors}
-                value={details.numberOfBedrooms}
-                min={1}
-                onChange={handleNumberOfValueChangres}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <FormErrorMessage>Enter a valid number of rooms</FormErrorMessage>
-            </FormControl>
-          </SimpleGrid>
-          <FormControl
-            isRequired={true}
-            isInvalid={!details.landlord && showValidationErrors}
-          >
-            <Stack isInline spacing={0}>
-              <FormLabel fontSize="sm">Landlord</FormLabel>
-              <Tooltip label="The Home Standards Project does not send assessments to landlords.">
-                <Box>
-                  <InfoIcon
-                    color="blue.700"
-                    verticalAlign="baseline"
-                    mt={0.5}
-                    w="11pt"
-                    h="11pt"
-                  />
-                </Box>
-              </Tooltip>
-            </Stack>
-            <Select
-              placeholder="Select option"
-              size="md"
-              value={details.landlord}
-              onChange={handleLandlordChange}
-            >
-              {LANDLORDS.map((landlord) => (
-                <option key={landlord} value={landlord}>
-                  {landlord}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          {otherLandlordField}
         </Stack>
-        <Box>
-          <Button
-            colorScheme="green"
-            size="sm"
-            marginTop={"16pt"}
-            onClick={handleNextButtonClick}
-            isLoading={loading}
+        <FormControl
+          flexBasis="30%"
+          minW={"265px"}
+          isInvalid={!details.rentalType && showValidationErrors}
+          isRequired={true}
+        >
+          <FormLabel fontSize="sm">Rental Type</FormLabel>
+          <Select
+            placeholder="Select option"
+            size="md"
+            value={details.rentalType}
+            onChange={handleRentalTypeChange}
           >
-            Next
-          </Button>
-        </Box>
+            {RENTAL_TYPES.map((houseType) => (
+              <option key={houseType} value={houseType}>
+                {houseType}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        <SimpleGrid
+          columns={{ sm: 1, md: 2 }}
+          templateColumns={{ sm: "100%", md: "60% 40%" }}
+          spacing={2}
+        >
+          <FormControl
+            isInvalid={!isTotalRentValid}
+            isRequired={true}
+            flexBasis="60%"
+          >
+            <FormLabel fontSize="sm">Total Rent Cost</FormLabel>
+            <InputGroup>
+              <InputLeftElement color="gray.300">$</InputLeftElement>
+              <Input
+                placeholder="Enter amount"
+                value={details.totalRent ?? ""}
+                onChange={handleRentPriceChange}
+              />
+              <InputRightElement>
+                {details.totalRent && isTotalRentValid ? (
+                  <CheckIcon color="green.500" />
+                ) : null}
+                {details.totalRent && !isTotalRentValid ? (
+                  <NotAllowedIcon color="red.500" />
+                ) : null}
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
+          <FormControl
+            isRequired={true}
+            flexBasis={"40%"}
+            isInvalid={!details.numberOfBedrooms && showValidationErrors}
+          >
+            <FormLabel fontSize="sm">Number of Bedrooms</FormLabel>
+            <NumberInput
+              isInvalid={!details.numberOfBedrooms && showValidationErrors}
+              value={details.numberOfBedrooms}
+              min={1}
+              onChange={handleNumberOfValueChangres}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <FormErrorMessage>Enter a valid number of rooms</FormErrorMessage>
+          </FormControl>
+        </SimpleGrid>
+        <FormControl
+          isRequired={true}
+          isInvalid={!details.landlord && showValidationErrors}
+        >
+          <Stack isInline spacing={0}>
+            <FormLabel fontSize="sm">Landlord</FormLabel>
+            <Tooltip label="The Home Standards Project does not send assessments to landlords.">
+              <Box>
+                <InfoIcon
+                  color="blue.700"
+                  verticalAlign="baseline"
+                  mt={0.5}
+                  w="11pt"
+                  h="11pt"
+                />
+              </Box>
+            </Tooltip>
+          </Stack>
+          <Select
+            placeholder="Select option"
+            size="md"
+            value={details.landlord}
+            onChange={handleLandlordChange}
+          >
+            {LANDLORDS.map((landlord) => (
+              <option key={landlord} value={landlord}>
+                {landlord}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        {otherLandlordField}
       </Stack>
-    </Box>
+      <Box>
+        <Button
+          colorScheme="green"
+          size="sm"
+          marginTop={"16pt"}
+          onClick={handleNextButtonClick}
+          isLoading={loading}
+        >
+          Next
+        </Button>
+      </Box>
+    </>
   );
 };

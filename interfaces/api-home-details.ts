@@ -9,6 +9,7 @@ export type ApiHomeDetailsResult = {
 };
 
 export type ApiHomeDetailsLocationInput = {
+  city: string;
   query: string;
 };
 

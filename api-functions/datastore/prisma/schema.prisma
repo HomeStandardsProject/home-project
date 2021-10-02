@@ -3,13 +3,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model RawRoom {
-  id                       String                     @id
-  type                     String
-  rawSubmissionId          String
-  RawSubmission            RawSubmission              @relation(fields: [rawSubmissionId], references: [id], onDelete: Cascade)
-  RawRoomResponses         RawRoomResponses[]
-  SubmissionRoomViolations SubmissionRoomViolations[]
+  id              String                     @id
+  type            String
+  rawSubmissionId String
+  submission      RawSubmission              @relation(fields: [rawSubmissionId], references: [id])
+  responses       RawRoomResponses[]
+  violations      SubmissionRoomViolations[]
 }
 
 model RawRoomResponses {
@@ -18,25 +22,25 @@ model RawRoomResponses {
   answer              QuestionAnswer
   selectedMultiselect String?
   rawRoomId           String
-  RawRoom             RawRoom        @relation(fields: [rawRoomId], references: [id], onDelete: Cascade)
+  room                RawRoom        @relation(fields: [rawRoomId], references: [id])
 }
 
 model RawSubmission {
-  id                       String                     @id
-  userProvidedAddress      String
-  formattedAddress         String
-  city                     String                     @default("kingston")
-  long                     String
-  lat                      String
-  unitNumber               String?
-  rentalType               String
-  numberOfBedrooms         Int
-  totalRent                Float
-  landlord                 String
-  landlordOther            String?
-  creationDate             DateTime                   @default(now())
-  RawRoom                  RawRoom[]
-  SubmissionRoomViolations SubmissionRoomViolations[]
+  id                  String                     @id
+  userProvidedAddress String
+  formattedAddress    String
+  city                String                     @default("kingston")
+  long                String
+  lat                 String
+  unitNumber          String?
+  rentalType          String
+  numberOfBedrooms    Int
+  totalRent           Float
+  landlord            String
+  landlordOther       String?
+  creationDate        DateTime                   @default(now())
+  rooms               RawRoom[]
+  violations          SubmissionRoomViolations[]
 }
 
 model SubmissionRoomViolations {
@@ -46,8 +50,8 @@ model SubmissionRoomViolations {
   generatedDate   DateTime        @default(now())
   rawSubmissionId String?
   rawRoomId       String
-  RawRoom         RawRoom         @relation(fields: [rawRoomId], references: [id], onDelete: Cascade)
-  RawSubmission   RawSubmission?  @relation(fields: [rawSubmissionId], references: [id])
+  room            RawRoom         @relation(fields: [rawRoomId], references: [id])
+  submission      RawSubmission?  @relation(fields: [rawSubmissionId], references: [id])
 }
 
 model User {

@@ -370,6 +370,134 @@ export type GraphQLContentfulBlogPostOrder =
   | "sys_publishedVersion_ASC"
   | "sys_publishedVersion_DESC";
 
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
+export type GraphQLContentfulCity = GraphQLContentfulEntry & {
+  __typename?: "City";
+  sys: GraphQLContentfulSys;
+  contentfulMetadata: GraphQLContentfulContentfulMetadata;
+  linkedFrom?: Maybe<GraphQLContentfulCityLinkingCollections>;
+  name?: Maybe<Scalars["String"]>;
+  biasLat?: Maybe<Scalars["Float"]>;
+  biasLong?: Maybe<Scalars["Float"]>;
+  biasRadius?: Maybe<Scalars["Float"]>;
+  questions?: Maybe<Scalars["JSON"]>;
+  bylawMultiplexer?: Maybe<Scalars["JSON"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
+export type GraphQLContentfulCityLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
+export type GraphQLContentfulCityNameArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
+export type GraphQLContentfulCityBiasLatArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
+export type GraphQLContentfulCityBiasLongArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
+export type GraphQLContentfulCityBiasRadiusArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
+export type GraphQLContentfulCityQuestionsArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
+export type GraphQLContentfulCityBylawMultiplexerArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulCityCollection = {
+  __typename?: "CityCollection";
+  total: Scalars["Int"];
+  skip: Scalars["Int"];
+  limit: Scalars["Int"];
+  items: Array<Maybe<GraphQLContentfulCity>>;
+};
+
+export type GraphQLContentfulCityFilter = {
+  sys?: Maybe<GraphQLContentfulSysFilter>;
+  contentfulMetadata?: Maybe<GraphQLContentfulContentfulMetadataFilter>;
+  name_exists?: Maybe<Scalars["Boolean"]>;
+  name?: Maybe<Scalars["String"]>;
+  name_not?: Maybe<Scalars["String"]>;
+  name_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  name_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  name_contains?: Maybe<Scalars["String"]>;
+  name_not_contains?: Maybe<Scalars["String"]>;
+  biasLat_exists?: Maybe<Scalars["Boolean"]>;
+  biasLat?: Maybe<Scalars["Float"]>;
+  biasLat_not?: Maybe<Scalars["Float"]>;
+  biasLat_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+  biasLat_not_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+  biasLat_gt?: Maybe<Scalars["Float"]>;
+  biasLat_gte?: Maybe<Scalars["Float"]>;
+  biasLat_lt?: Maybe<Scalars["Float"]>;
+  biasLat_lte?: Maybe<Scalars["Float"]>;
+  biasLong_exists?: Maybe<Scalars["Boolean"]>;
+  biasLong?: Maybe<Scalars["Float"]>;
+  biasLong_not?: Maybe<Scalars["Float"]>;
+  biasLong_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+  biasLong_not_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+  biasLong_gt?: Maybe<Scalars["Float"]>;
+  biasLong_gte?: Maybe<Scalars["Float"]>;
+  biasLong_lt?: Maybe<Scalars["Float"]>;
+  biasLong_lte?: Maybe<Scalars["Float"]>;
+  biasRadius_exists?: Maybe<Scalars["Boolean"]>;
+  biasRadius?: Maybe<Scalars["Float"]>;
+  biasRadius_not?: Maybe<Scalars["Float"]>;
+  biasRadius_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+  biasRadius_not_in?: Maybe<Array<Maybe<Scalars["Float"]>>>;
+  biasRadius_gt?: Maybe<Scalars["Float"]>;
+  biasRadius_gte?: Maybe<Scalars["Float"]>;
+  biasRadius_lt?: Maybe<Scalars["Float"]>;
+  biasRadius_lte?: Maybe<Scalars["Float"]>;
+  OR?: Maybe<Array<Maybe<GraphQLContentfulCityFilter>>>;
+  AND?: Maybe<Array<Maybe<GraphQLContentfulCityFilter>>>;
+};
+
+export type GraphQLContentfulCityLinkingCollections = {
+  __typename?: "CityLinkingCollections";
+  entryCollection?: Maybe<GraphQLContentfulEntryCollection>;
+};
+
+export type GraphQLContentfulCityLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulCityOrder =
+  | "name_ASC"
+  | "name_DESC"
+  | "biasLat_ASC"
+  | "biasLat_DESC"
+  | "biasLong_ASC"
+  | "biasLong_DESC"
+  | "biasRadius_ASC"
+  | "biasRadius_DESC"
+  | "sys_id_ASC"
+  | "sys_id_DESC"
+  | "sys_publishedAt_ASC"
+  | "sys_publishedAt_DESC"
+  | "sys_firstPublishedAt_ASC"
+  | "sys_firstPublishedAt_DESC"
+  | "sys_publishedVersion_ASC"
+  | "sys_publishedVersion_DESC";
+
 export type GraphQLContentfulContentfulMetadata = {
   __typename?: "ContentfulMetadata";
   tags: Array<Maybe<GraphQLContentfulContentfulTag>>;
@@ -1226,6 +1354,8 @@ export type GraphQLContentfulQuery = {
   __typename?: "Query";
   asset?: Maybe<GraphQLContentfulAsset>;
   assetCollection?: Maybe<GraphQLContentfulAssetCollection>;
+  city?: Maybe<GraphQLContentfulCity>;
+  cityCollection?: Maybe<GraphQLContentfulCityCollection>;
   blogPost?: Maybe<GraphQLContentfulBlogPost>;
   blogPostCollection?: Maybe<GraphQLContentfulBlogPostCollection>;
   richTextOnly?: Maybe<GraphQLContentfulRichTextOnly>;
@@ -1266,6 +1396,21 @@ export type GraphQLContentfulQueryAssetCollectionArgs = {
   locale?: Maybe<Scalars["String"]>;
   where?: Maybe<GraphQLContentfulAssetFilter>;
   order?: Maybe<Array<Maybe<GraphQLContentfulAssetOrder>>>;
+};
+
+export type GraphQLContentfulQueryCityArgs = {
+  id: Scalars["String"];
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulQueryCityCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+  where?: Maybe<GraphQLContentfulCityFilter>;
+  order?: Maybe<Array<Maybe<GraphQLContentfulCityOrder>>>;
 };
 
 export type GraphQLContentfulQueryBlogPostArgs = {
@@ -2064,6 +2209,46 @@ export type GraphQLContentfulBlogPostFromPathQuery = {
   >;
 };
 
+export type GraphQLContentfulAvailableCitiesQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GraphQLContentfulAvailableCitiesQuery = { __typename?: "Query" } & {
+  cityCollection?: Maybe<
+    { __typename?: "CityCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename?: "City" } & Pick<
+            GraphQLContentfulCity,
+            "name" | "biasLat" | "biasLong" | "biasRadius"
+          >
+        >
+      >;
+    }
+  >;
+};
+
+export type GraphQLContentfulAvailableCitiesWithRulesQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GraphQLContentfulAvailableCitiesWithRulesQuery = {
+  __typename?: "Query";
+} & {
+  cityCollection?: Maybe<
+    { __typename?: "CityCollection" } & {
+      items: Array<
+        Maybe<
+          { __typename?: "City" } & Pick<
+            GraphQLContentfulCity,
+            "name" | "questions" | "bylawMultiplexer"
+          >
+        >
+      >;
+    }
+  >;
+};
+
 export type GraphQLContentfulLandingPageContentQueryVariables = Exact<{
   [key: string]: never;
 }>;
@@ -2076,6 +2261,7 @@ export type GraphQLContentfulLandingPageContentQuery = {
       items: Array<
         Maybe<
           | { __typename: "BlogPost" }
+          | { __typename: "City" }
           | ({ __typename: "DidYouKnow" } & Pick<
               GraphQLContentfulDidYouKnow,
               "title" | "description" | "sourceName" | "sourceUrl" | "order"

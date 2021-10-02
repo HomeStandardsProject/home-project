@@ -245,6 +245,7 @@ function transformHomeDetailsAirtableRow(
   row: AirtableSubmissionRow
 ): HomeDetails {
   return {
+    city: "Kingston",
     address: {
       userProvided: row.userProvidedAddress,
       formatted: row.formattedAddress,
