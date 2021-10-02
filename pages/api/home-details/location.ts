@@ -4,6 +4,8 @@ import { MockGeocoder } from "../../../api-functions/geocoding/MockGeocoder";
 import { GoogleMapsGeocoder } from "../../../api-functions/geocoding/GoogleMapsGeocoder";
 import { Geocoder } from "../../../api-functions/geocoding/Geocoder";
 import { handleHomeDetailsLocation } from "../../../api-functions/handleHomeDetailsLocation/handleHomeDetailsLocation";
+import { fetchAvailableCities } from "../../../api-functions/cms/ContentfulCities";
+import { ContentfulCity } from "../../../interfaces/contentful-city";
 
 async function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
   let geocoder: Geocoder;
@@ -16,7 +18,22 @@ async function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
     geocoder = new MockGeocoder();
   }
 
-  return handleHomeDetailsLocation(req, res, geocoder);
+  let availableCities: Array<ContentfulCity>;
+  if (process.env.CONTENTFUL_API_KEY) {
+    availableCities = await fetchAvailableCities();
+  } else {
+    console.log("Contentful key not specified, defaulting to mock value");
+    availableCities = [
+      {
+        name: "Kingston (mocked)",
+        lat: 44.23334,
+        long: -76.5,
+        radius: "50000",
+      },
+    ];
+  }
+
+  return handleHomeDetailsLocation(req, res, geocoder, availableCities);
 }
 
 export default curriedHandler;

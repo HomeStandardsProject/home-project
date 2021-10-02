@@ -28,6 +28,7 @@ export function useHomeDetailsApi() {
     setLoading(true);
 
     const apiDetails: HomeDetails = {
+      city: returnValueOrThrowError({ city: details.city }),
       address: returnValueOrThrowError({ address: details.address }),
       unitNumber: details.unitNumber,
       numberOfBedrooms: details.numberOfBedrooms,

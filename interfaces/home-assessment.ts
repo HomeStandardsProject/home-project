@@ -119,6 +119,7 @@ export const RENTAL_TYPES = [
 ] as const;
 export type RentalType = typeof RENTAL_TYPES[number];
 export type HomeDetails = {
+  city: string;
   address: {
     userProvided: string;
     formatted: string;
