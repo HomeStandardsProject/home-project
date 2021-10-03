@@ -29,6 +29,7 @@ async function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
         lat: 44.23334,
         long: -76.5,
         radius: "50000",
+        landlords: ["Mock Landlord"],
       },
     ];
   }
