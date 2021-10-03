@@ -377,6 +377,7 @@ export type GraphQLContentfulCity = GraphQLContentfulEntry & {
   contentfulMetadata: GraphQLContentfulContentfulMetadata;
   linkedFrom?: Maybe<GraphQLContentfulCityLinkingCollections>;
   name?: Maybe<Scalars["String"]>;
+  landlordsCollection?: Maybe<GraphQLContentfulCityLandlordsCollection>;
   biasLat?: Maybe<Scalars["Float"]>;
   biasLong?: Maybe<Scalars["Float"]>;
   biasRadius?: Maybe<Scalars["Float"]>;
@@ -391,6 +392,14 @@ export type GraphQLContentfulCityLinkedFromArgs = {
 
 /** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
 export type GraphQLContentfulCityNameArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/city) */
+export type GraphQLContentfulCityLandlordsCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
   locale?: Maybe<Scalars["String"]>;
 };
 
@@ -437,6 +446,7 @@ export type GraphQLContentfulCityFilter = {
   name_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
   name_contains?: Maybe<Scalars["String"]>;
   name_not_contains?: Maybe<Scalars["String"]>;
+  landlordsCollection_exists?: Maybe<Scalars["Boolean"]>;
   biasLat_exists?: Maybe<Scalars["Boolean"]>;
   biasLat?: Maybe<Scalars["Float"]>;
   biasLat_not?: Maybe<Scalars["Float"]>;
@@ -466,6 +476,14 @@ export type GraphQLContentfulCityFilter = {
   biasRadius_lte?: Maybe<Scalars["Float"]>;
   OR?: Maybe<Array<Maybe<GraphQLContentfulCityFilter>>>;
   AND?: Maybe<Array<Maybe<GraphQLContentfulCityFilter>>>;
+};
+
+export type GraphQLContentfulCityLandlordsCollection = {
+  __typename?: "CityLandlordsCollection";
+  total: Scalars["Int"];
+  skip: Scalars["Int"];
+  limit: Scalars["Int"];
+  items: Array<Maybe<GraphQLContentfulEntry>>;
 };
 
 export type GraphQLContentfulCityLinkingCollections = {
@@ -1204,6 +1222,71 @@ export type GraphQLContentfulLandingMetadataOrder =
   | "sys_publishedVersion_ASC"
   | "sys_publishedVersion_DESC";
 
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landlord) */
+export type GraphQLContentfulLandlord = GraphQLContentfulEntry & {
+  __typename?: "Landlord";
+  sys: GraphQLContentfulSys;
+  contentfulMetadata: GraphQLContentfulContentfulMetadata;
+  linkedFrom?: Maybe<GraphQLContentfulLandlordLinkingCollections>;
+  name?: Maybe<Scalars["String"]>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landlord) */
+export type GraphQLContentfulLandlordLinkedFromArgs = {
+  allowedLocales?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+/** [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/landlord) */
+export type GraphQLContentfulLandlordNameArgs = {
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulLandlordCollection = {
+  __typename?: "LandlordCollection";
+  total: Scalars["Int"];
+  skip: Scalars["Int"];
+  limit: Scalars["Int"];
+  items: Array<Maybe<GraphQLContentfulLandlord>>;
+};
+
+export type GraphQLContentfulLandlordFilter = {
+  sys?: Maybe<GraphQLContentfulSysFilter>;
+  contentfulMetadata?: Maybe<GraphQLContentfulContentfulMetadataFilter>;
+  name_exists?: Maybe<Scalars["Boolean"]>;
+  name?: Maybe<Scalars["String"]>;
+  name_not?: Maybe<Scalars["String"]>;
+  name_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  name_not_in?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  name_contains?: Maybe<Scalars["String"]>;
+  name_not_contains?: Maybe<Scalars["String"]>;
+  OR?: Maybe<Array<Maybe<GraphQLContentfulLandlordFilter>>>;
+  AND?: Maybe<Array<Maybe<GraphQLContentfulLandlordFilter>>>;
+};
+
+export type GraphQLContentfulLandlordLinkingCollections = {
+  __typename?: "LandlordLinkingCollections";
+  entryCollection?: Maybe<GraphQLContentfulEntryCollection>;
+};
+
+export type GraphQLContentfulLandlordLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulLandlordOrder =
+  | "name_ASC"
+  | "name_DESC"
+  | "sys_id_ASC"
+  | "sys_id_DESC"
+  | "sys_publishedAt_ASC"
+  | "sys_publishedAt_DESC"
+  | "sys_firstPublishedAt_ASC"
+  | "sys_firstPublishedAt_DESC"
+  | "sys_publishedVersion_ASC"
+  | "sys_publishedVersion_DESC";
+
 /** Example violation for the how we help section [See type definition](https://app.contentful.com/spaces/56c95v53ajrr/content_types/offeringExampleViolation) */
 export type GraphQLContentfulOfferingExampleViolation = GraphQLContentfulEntry & {
   __typename?: "OfferingExampleViolation";
@@ -1354,6 +1437,8 @@ export type GraphQLContentfulQuery = {
   __typename?: "Query";
   asset?: Maybe<GraphQLContentfulAsset>;
   assetCollection?: Maybe<GraphQLContentfulAssetCollection>;
+  landlord?: Maybe<GraphQLContentfulLandlord>;
+  landlordCollection?: Maybe<GraphQLContentfulLandlordCollection>;
   city?: Maybe<GraphQLContentfulCity>;
   cityCollection?: Maybe<GraphQLContentfulCityCollection>;
   blogPost?: Maybe<GraphQLContentfulBlogPost>;
@@ -1396,6 +1481,21 @@ export type GraphQLContentfulQueryAssetCollectionArgs = {
   locale?: Maybe<Scalars["String"]>;
   where?: Maybe<GraphQLContentfulAssetFilter>;
   order?: Maybe<Array<Maybe<GraphQLContentfulAssetOrder>>>;
+};
+
+export type GraphQLContentfulQueryLandlordArgs = {
+  id: Scalars["String"];
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+};
+
+export type GraphQLContentfulQueryLandlordCollectionArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  preview?: Maybe<Scalars["Boolean"]>;
+  locale?: Maybe<Scalars["String"]>;
+  where?: Maybe<GraphQLContentfulLandlordFilter>;
+  order?: Maybe<Array<Maybe<GraphQLContentfulLandlordOrder>>>;
 };
 
 export type GraphQLContentfulQueryCityArgs = {
@@ -2221,7 +2321,30 @@ export type GraphQLContentfulAvailableCitiesQuery = { __typename?: "Query" } & {
           { __typename?: "City" } & Pick<
             GraphQLContentfulCity,
             "name" | "biasLat" | "biasLong" | "biasRadius"
-          >
+          > & {
+              landlords?: Maybe<
+                { __typename?: "CityLandlordsCollection" } & {
+                  items: Array<
+                    Maybe<
+                      | { __typename?: "BlogPost" }
+                      | { __typename?: "City" }
+                      | { __typename?: "DidYouKnow" }
+                      | { __typename?: "LandingExplanation" }
+                      | { __typename?: "LandingFact" }
+                      | { __typename?: "LandingMetadata" }
+                      | ({ __typename?: "Landlord" } & Pick<
+                          GraphQLContentfulLandlord,
+                          "name"
+                        >)
+                      | { __typename?: "OfferingExampleViolation" }
+                      | { __typename?: "RelevantArticle" }
+                      | { __typename?: "ResourcesAndContacts" }
+                      | { __typename?: "RichTextOnly" }
+                    >
+                  >;
+                }
+              >;
+            }
         >
       >;
     }
@@ -2302,6 +2425,7 @@ export type GraphQLContentfulLandingPageContentQuery = {
                   >
                 >;
               })
+          | { __typename: "Landlord" }
           | ({ __typename: "OfferingExampleViolation" } & Pick<
               GraphQLContentfulOfferingExampleViolation,
               | "title"
