@@ -17,6 +17,14 @@ const availableCitiesQuery = gql`
         biasLat
         biasLong
         biasRadius
+
+        landlords: landlordsCollection {
+          items {
+            ... on Landlord {
+              name
+            }
+          }
+        }
       }
     }
   }
@@ -28,22 +36,31 @@ export async function fetchAvailableCities(): Promise<ContentfulCity[]> {
       availableCitiesQuery
     );
     if (!data || !data.cityCollection) throw CMS_ERRORS.unableToFetch;
-    const cities = Array<ContentfulCity>();
+    const cities = Array<Partial<ContentfulCity>>();
     for (const item of data.cityCollection.items) {
       if (!item) continue;
-      if (!item.name) continue;
-      if (!item.biasLat) continue;
-      if (!item.biasLong) continue;
-      if (!item.biasRadius) continue;
+      const landlords = Array<string>();
+
+      for (const landlord of item.landlords?.items ?? []) {
+        if ("name" in landlord && typeof landlord.name === "string") {
+          landlords.push(landlord.name);
+        }
+      }
 
       cities.push({
         name: item.name,
         long: item.biasLong,
         lat: item.biasLat,
         radius: `${item.biasRadius}`,
+        landlords,
       });
     }
-    return cities;
+
+    for (const [key, val] of Object.entries(cities)) {
+      if (!val) throw CMS_ERRORS.missingData(key);
+    }
+
+    return cities as Array<ContentfulCity>;
   } catch (error) {
     console.error(error);
     throw CMS_ERRORS.unableToFetch;

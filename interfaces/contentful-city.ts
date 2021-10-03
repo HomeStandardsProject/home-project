@@ -3,6 +3,8 @@ export type ContentfulCity = {
   lat: number;
   long: number;
   radius: string;
+
+  landlords: string[];
 };
 
 export type ContentfulCityWithRules = {

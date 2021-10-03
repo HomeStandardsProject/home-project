@@ -21,8 +21,6 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import {
-  Landlords,
-  LANDLORDS,
   HomeDetails as HomeDetailsType,
   RentalType,
   RENTAL_TYPES,
@@ -89,11 +87,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
 
   const handleLandlordChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
-      const newValue = event.target.value as Landlords;
-      // ensure that the selected room type is valid. this should never happen
-      // but to be safe...
-      if (newValue && !LANDLORDS.includes(newValue))
-        throw new Error("invalid rental type");
+      const newValue = event.target.value;
 
       setDetails((details) => ({
         ...details,
@@ -182,6 +176,11 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
       handleLandlordOtherChange,
       showValidationErrors,
     ]
+  );
+
+  const landlords = React.useMemo(
+    () => [...selectedCity.landlords.sort(), "Other"],
+    [selectedCity.landlords]
   );
 
   return (
@@ -298,7 +297,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             value={details.landlord}
             onChange={handleLandlordChange}
           >
-            {LANDLORDS.map((landlord) => (
+            {landlords.map((landlord) => (
               <option key={landlord} value={landlord}>
                 {landlord}
               </option>

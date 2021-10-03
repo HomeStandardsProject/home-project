@@ -92,25 +92,6 @@ export function placeholderBasedOnType(type: Room["type"]) {
   return label[type];
 }
 
-const SORTED_LANDLORDS = [
-  "Axon Property Management",
-  "Frontenac Property Management",
-  "Highpoint Properties",
-  "Keystone Property Management",
-  "Limestone Property Management",
-  "MacKinnon Development Corporation",
-  "Morris Property Management",
-  "Panadew Property Management",
-  "Queen’s Community Housing",
-  "Varsity Communities",
-  "Cimellaro Properties",
-  "Homestead",
-  "Starlight/DMS",
-].sort();
-
-export const LANDLORDS = [...SORTED_LANDLORDS, "Other"] as const;
-export type Landlords = typeof LANDLORDS[number];
-
 export const RENTAL_TYPES = [
   "Full house",
   "Divided house (multiple units)",
@@ -129,7 +110,7 @@ export type HomeDetails = {
   unitNumber?: string;
   rentalType: RentalType;
   totalRent: string;
-  landlord: Landlords;
+  landlord: string;
   landlordOther?: string;
   numberOfBedrooms: number;
 };
