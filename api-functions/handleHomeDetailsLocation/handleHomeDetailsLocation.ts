@@ -40,10 +40,7 @@ export async function handleHomeDetailsLocation(
     }
     // Kinda hacky... Address validation is hard. Google doesn't seem to offer a way to restrict results
     // to be within the location bias.
-    const filteredAddresses = geocodedAddresses.filter((candidate) =>
-      candidate.address.includes(city)
-    );
-    const result: ApiHomeDetailsLocationResult = { matches: filteredAddresses };
+    const result: ApiHomeDetailsLocationResult = { matches: geocodedAddresses };
     return res.status(200).send(result);
   } catch (error) {
     console.error(error);
