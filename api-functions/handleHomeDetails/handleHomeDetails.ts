@@ -17,7 +17,7 @@ const validateSchema = validateMiddleware(
     check("details.address.long").isString(),
     check("details.address.lat").isString(),
     check("details.numberOfBedrooms").isInt(),
-    check("details.numberOfBedrooms").custom((val) => val > 0),
+    check("details.numberOfBedrooms").custom((val) => val >= 0),
     // .map is a workaround to a typescript readonly issue
     check("details.rentalType").isIn(RENTAL_TYPES.map((i) => i)),
     check("details.totalRent").isCurrency({ allow_negatives: false }),
@@ -31,6 +31,24 @@ const validateSchema = validateMiddleware(
           }
           throw new Error(
             "details.landlordOther must be defined when landlord is set to 'Other'"
+          );
+        }
+        return true;
+      }),
+    check("details.waterInRent").isString(),
+    check("details.hydroInRent").isString(),
+    check("details.gasInRent").isString(),
+    check("details.internetInRent").isString(),
+    check("details.otherInRent").isString(),
+    check("details.otherValue")
+      // if the landlord is set to other, then the value for this field must be defined
+      .custom((value, { req }) => {
+        if (req.body.details.otherInRent === "YES") {
+          if (value && typeof value === "string") {
+            return true;
+          }
+          throw new Error(
+            "details.otherValue must be defined when otherInRent is set to 'YES'"
           );
         }
         return true;

@@ -22,6 +22,12 @@ type AirtableSubmissionRow = {
   landlord: string;
   landlordOther?: string;
   numberOfBedrooms: number;
+  waterInRent: string;
+  hydroInRent: string;
+  gasInRent: string;
+  internetInRent: string;
+  otherInRent: string;
+  otherValue?: string;
 };
 
 type AirtableRoomRow = {
@@ -34,7 +40,7 @@ type AirtableRoomResponsesRow = {
   submissionId: string[];
   roomId: string;
   questionId: string;
-  answer: "YES" | "NO" | "UNSURE";
+  answer: "YES" | "NO" | "UNSURE" | "N/A";
   selectedMultiselect: string;
 };
 
@@ -238,6 +244,12 @@ function transformHomeDetailsToRow(
     landlord: details.landlord,
     landlordOther: details.landlordOther,
     numberOfBedrooms: details.numberOfBedrooms,
+    waterInRent: details.waterInRent,
+    hydroInRent: details.hydroInRent,
+    gasInRent: details.gasInRent,
+    internetInRent: details.internetInRent,
+    otherInRent: details.otherInRent,
+    otherValue: details.otherValue,
   };
 }
 
@@ -257,6 +269,12 @@ function transformHomeDetailsAirtableRow(
     totalRent: `${row.totalRent}`,
     landlord: row.landlord,
     landlordOther: row.landlordOther,
+    waterInRent: row.waterInRent,
+    hydroInRent: row.hydroInRent,
+    gasInRent: result.gasInRent,
+    internetInRent: result.internetInRent,
+    otherInRent: result.otherInRent,
+    otherValue: row.otherValue,
   };
 }
 

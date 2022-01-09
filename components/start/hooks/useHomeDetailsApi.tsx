@@ -35,6 +35,12 @@ export function useHomeDetailsApi() {
       totalRent: returnValueOrThrowError({ totalRent: details.totalRent }),
       landlord: returnValueOrThrowError({ landlord: details.landlord }),
       landlordOther: details.landlordOther,
+      waterInRent: details.waterInRent,
+      hydroInRent: details.hydroInRent,
+      gasInRent: details.gasInRent,
+      internetInRent: details.internetInRent,
+      otherInRent: details.otherInRent,
+      otherValue: details.otherValue,
     };
 
     const request = generateHomeDetailsPostRequest({

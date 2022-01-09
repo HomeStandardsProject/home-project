@@ -13,7 +13,7 @@ export type AllRoomAssessmentQuestion = {
 };
 
 export type RoomAssessmentQuestionResponse = {
-  answer?: ("YES" | "NO" | "UNSURE") | undefined;
+  answer?: ("YES" | "NO" | "UNSURE" | "N/A") | undefined;
   selectedMultiselect?: string[];
   description?: string;
 };
@@ -112,10 +112,12 @@ export const LANDLORDS = [...SORTED_LANDLORDS, "Other"] as const;
 export type Landlords = typeof LANDLORDS[number];
 
 export const RENTAL_TYPES = [
-  "Full house",
-  "Divided house (multiple units)",
-  "Apartment",
-  "Apartment building/complex",
+  "Single Family House",
+  "Divided House (multiple units within a house)",
+  "Townhouse or Row House",
+  "Duplex, Triplex or Fourplex",
+  "Low Rise Apartment (less than 6 stories)",
+  "High Rise Apartment or Condominium (greater than 6 stories)",
 ] as const;
 export type RentalType = typeof RENTAL_TYPES[number];
 export type HomeDetails = {
@@ -131,6 +133,13 @@ export type HomeDetails = {
   landlord: Landlords;
   landlordOther?: string;
   numberOfBedrooms: number;
+  waterInRent: string;
+  hydroInRent: string;
+  gasInRent: string;
+  internetInRent: string;
+  parkingInRent: string;
+  otherInRent: string;
+  otherValue?: string;
 };
 
 export type HomeAssessmentData = {

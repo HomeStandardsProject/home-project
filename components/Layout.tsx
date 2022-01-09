@@ -22,7 +22,6 @@ type Props = {
   showStartButton?: boolean;
   showSocialIcons?: boolean;
   showLastResults?: boolean;
-  displayPromotionOffering?: () => void;
 };
 
 const Container = styled.div`
@@ -117,7 +116,7 @@ const Layout = ({
                   cursor="pointer"
                   whiteSpace="nowrap"
                 >
-                  About Us
+                  Who we Are
                 </Text>
               </Link>
               <Link href="/blog">
@@ -183,7 +182,7 @@ const Layout = ({
                   display="block"
                   cursor="pointer"
                 >
-                  Donate
+                  Support Us
                 </Text>
               </ChakraLink>
               {showStartButton && (
@@ -199,17 +198,6 @@ const Layout = ({
                     View last result
                   </Button>
                 </Link>
-              )}
-              {displayPromotionOffering && (
-                <Button
-                  leftIcon={<FaRecycle />}
-                  colorScheme="green"
-                  variant="outline"
-                  size="sm"
-                  onClick={displayPromotionOffering}
-                >
-                  Collect your free Green Bin
-                </Button>
               )}
             </Stack>
           </SimpleGrid>

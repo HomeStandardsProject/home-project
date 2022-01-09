@@ -73,6 +73,8 @@ const responsesMeetBooleanGuidelines = (
         // but wait, is the answer unsure?
         if (questionAnswer === "UNSURE") {
           containsUnsureAnswer = true;
+        } else if(questionAnswer === "N/A"){  // if the answer is N/A then it meets the guidlines
+          return "NO"
         } else {
           return "NO";
         }
