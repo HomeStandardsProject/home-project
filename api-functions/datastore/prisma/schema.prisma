@@ -24,7 +24,6 @@ model RawSubmission {
   gasInRent           String
   internetInRent      String
   otherInRent         String
-  otherInRent         String
   otherValue          String?
   creationDate        DateTime @default(now())
 
