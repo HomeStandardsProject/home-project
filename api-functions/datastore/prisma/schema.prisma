@@ -46,7 +46,7 @@ model RawRoom {
 model RawRoomResponses {
   id                  Int            @id @default(autoincrement())
   questionId          String
-  answer              QuestionAnswer
+  answer              String
   selectedMultiselect String?
 
   // references
@@ -67,13 +67,6 @@ model SubmissionRoomViolations {
   // references
   room      RawRoom @relation(fields: [rawRoomId], references: [id])
   rawRoomId String
-}
-
-enum QuestionAnswer {
-  YES
-  NO
-  UNSURE
-  N/A
 }
 
 enum ViolationStatus {
