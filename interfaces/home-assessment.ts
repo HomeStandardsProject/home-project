@@ -1,3 +1,4 @@
+
 export type RoomType = "YES/NO" | "MULTISELECT";
 export type RoomAssessmentQuestion = {
   id: string;
@@ -13,7 +14,7 @@ export type AllRoomAssessmentQuestion = {
 };
 
 export type RoomAssessmentQuestionResponse = {
-  answer?: ("YES" | "NO" | "UNSURE" | "N/A") | undefined;
+  answer?: ("YES" | "NO" | "UNSURE" | "NA") | undefined;;
   selectedMultiselect?: string[];
   description?: string;
 };

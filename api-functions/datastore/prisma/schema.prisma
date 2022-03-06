@@ -23,6 +23,7 @@ model RawSubmission {
   hydroInRent         String
   gasInRent           String
   internetInRent      String
+  parkingInRent       String
   otherInRent         String
   otherValue          String?
   creationDate        DateTime @default(now())
@@ -45,7 +46,7 @@ model RawRoom {
 model RawRoomResponses {
   id                  Int            @id @default(autoincrement())
   questionId          String
-  answer              String
+  answer              QuestionAnswer
   selectedMultiselect String?
 
   // references
@@ -66,6 +67,13 @@ model SubmissionRoomViolations {
   // references
   room      RawRoom @relation(fields: [rawRoomId], references: [id])
   rawRoomId String
+}
+
+enum QuestionAnswer {
+  YES
+  NO
+  UNSURE
+  NA
 }
 
 enum ViolationStatus {

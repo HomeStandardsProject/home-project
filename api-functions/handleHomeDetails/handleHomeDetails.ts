@@ -39,6 +39,7 @@ const validateSchema = validateMiddleware(
     check("details.hydroInRent").isString(),
     check("details.gasInRent").isString(),
     check("details.internetInRent").isString(),
+    check("details.parkingInRent").isString(),
     check("details.otherInRent").isString(),
     check("details.otherValue")
       // if the landlord is set to other, then the value for this field must be defined

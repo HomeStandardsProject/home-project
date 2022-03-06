@@ -19,7 +19,8 @@ export function validateHomeDetailsForm(details: Partial<HomeDetails>) {
     details.waterInRent !== undefined,
     details.hydroInRent !== undefined,
     details.gasInRent !== undefined,
-    details.internetInRent !==undefined,
+    details.internetInRent !== undefined,
+    details.parkingInRent !== undefined,
     details.otherInRent !== undefined,
     details.otherInRent == "NO" || (details.otherInRent == "YES" && details.otherValue !== undefined),
   ];

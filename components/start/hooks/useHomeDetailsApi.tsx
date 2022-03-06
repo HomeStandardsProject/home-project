@@ -39,6 +39,7 @@ export function useHomeDetailsApi() {
       hydroInRent: details.hydroInRent,
       gasInRent: details.gasInRent,
       internetInRent: details.internetInRent,
+      parkingInRent: details.parkingInRent,
       otherInRent: details.otherInRent,
       otherValue: details.otherValue,
     };

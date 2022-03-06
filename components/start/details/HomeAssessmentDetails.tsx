@@ -130,6 +130,16 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
     []
   );
 
+  const handleParkingChange = React.useCallback(
+    (newValue: string) => {
+      setDetails((details) => ({
+        ...details,
+        parkingInRent: setAsUndefinedInsteadOfEmptyString(newValue),
+      }));
+    },
+    []
+  );
+
   const handleOtherChange = React.useCallback(
     (newValue: string) => {
       setDetails((details) => ({
@@ -410,7 +420,8 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             isRequired={true}
             isInvalid={!details.waterInRent && !details.hydroInRent &&
               !details.gasInRent && !details.internetInRent &&
-              !details.otherInRent && showValidationErrors}
+              !details.parkingInRent && !details.otherInRent &&
+              showValidationErrors}
           >
             <Stack spacing={0}>
               <FormLabel fontSize="sm">Included in Rent</FormLabel>
@@ -557,6 +568,46 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
                 <RadioGroup
                   onChange={handleInternetChange}
                   value={details.internetInRent ?? ""}
+                >
+                  <Stack isInline align="center" spacing={4}>
+                    <Box
+                      padding="2pt 4pt"
+                      paddingBottom="0pt"
+                      borderWidth="1px"
+                      borderRadius="md"
+                      bg="gray.100"
+                    >
+                      <Radio size="sm" value="YES" bg="gray.200" borderColor="gray.300">
+                        Yes
+                      </Radio>
+                    </Box>
+                    <Box
+                      padding="2pt 4pt"
+                      paddingBottom="0pt"
+                      borderWidth="1px"
+                      borderRadius="md"
+                      bg="gray.100"
+                    >
+                      <Radio size="sm" value="NO" bg="gray.200" borderColor="gray.300">
+                        No
+                      </Radio>
+                    </Box>
+                  </Stack>
+                </RadioGroup>
+                </Stack>
+              </Box>
+              //*****************
+              <Box paddingTop="5pt">
+                <Stack isInline align="center">
+                  {showInvalidMarkerIfNeeded && !details.parkingInRent && (
+                    <WarningIcon color="red.500" />
+                  )}
+                  <Text>
+                    Parking
+                  </Text>
+                <RadioGroup
+                  onChange={handleParkingChange}
+                  value={details.parkingInRent ?? ""}
                 >
                   <Stack isInline align="center" spacing={4}>
                     <Box
