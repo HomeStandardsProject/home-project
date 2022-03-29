@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { FaFacebook, FaInstagram, FaRecycle, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
@@ -56,7 +56,6 @@ const Layout = ({
   showLastResults = true,
   showStartButton = false,
   showSocialIcons = false,
-  displayPromotionOffering,
 }: Props) => {
   const { hasSubmissionId, hasAssessmentResult } = useUserStepState();
 

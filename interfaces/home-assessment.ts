@@ -14,7 +14,7 @@ export type AllRoomAssessmentQuestion = {
 };
 
 export type RoomAssessmentQuestionResponse = {
-  answer?: ("YES" | "NO" | "UNSURE" | "NA") | undefined;;
+  answer?: ("YES" | "NO" | "UNSURE" | "NA") | undefined;
   selectedMultiselect?: string[];
   description?: string;
 };
