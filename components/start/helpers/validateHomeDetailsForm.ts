@@ -7,7 +7,7 @@ export function validateHomeDetailsForm(details: Partial<HomeDetails>) {
     isLandlordOtherFieldValid = details.landlordOther !== undefined;
   }
 
-  const detailsRequired = details.otherInRent;
+  // const detailsRequired = details.otherInRent;
 
   const isValid = [
     validatePrice(details.totalRent),

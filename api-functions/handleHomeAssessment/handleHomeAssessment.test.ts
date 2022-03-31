@@ -92,7 +92,7 @@ const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput>
 
 const MOCK_DETAILS: HomeDetails = {
   landlord: "Frontenac Property Management",
-  rentalType: "Full house",
+  rentalType: "Single Family House",
   totalRent: "499.99",
   numberOfBedrooms: 3,
   address: {
@@ -101,6 +101,13 @@ const MOCK_DETAILS: HomeDetails = {
     long: "0.00",
     lat: "0.00",
   },
+  waterInRent: "YES",
+  hydroInRent: "YES",
+  gasInRent:"YES", 
+  internetInRent:"YES", 
+  parkingInRent:"YES", 
+  otherInRent: "YES",
+  otherValue: "YES",
 };
 
 const testHandleHomeAssessment = (
