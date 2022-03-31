@@ -5,7 +5,6 @@ import {
   Box,
   Button,
   Flex,
-  ExternalLinkIcon,
   Heading,
   Icon,
   Stack,

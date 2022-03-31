@@ -397,13 +397,14 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             <FormControl
               isRequired={true}
               flexBasis={"40%"}
-              isInvalid={details.numberOfBedrooms < 0 && showValidationErrors}
+              isInvalid={!details.numberOfBedrooms && showValidationErrors}
             >
               <FormLabel fontSize="sm">Number of Bedrooms</FormLabel>
               <NumberInput
-                isInvalid={details.numberOfBedrooms < 0 && showValidationErrors}
+                
+                isInvalid={!details.numberOfBedrooms && showValidationErrors}
                 value={details.numberOfBedrooms}
-                min="0"
+                min={0}
                 onChange={handleNumberOfValueChangres}
               >
                 <NumberInputField />
