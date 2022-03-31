@@ -5,13 +5,13 @@ import Layout from "../components/Layout";
 import { ResultsContainer } from "../components/resullts/ResultsContainer";
 
 const ResultPage: React.FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onClose } = useDisclosure();
 
   return (
     <Layout
       title="Results"
       description="Results for the home assessment"
-      displayPromotionOffering={onOpen}
+      // displayPromotionOffering={onOpen}
       showLastResults={false}
     >
       <Modal isOpen={isOpen} onClose={onClose}>
