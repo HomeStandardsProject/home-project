@@ -66,7 +66,6 @@ export const Results: React.FC<Props> = ({ assessment }) => {
           {assessment.details.address.formatted}
         </Heading>
         <SimpleGrid
-          isInline
           columns={{ base: 1, sm: 3 }}
           templateColumns={{
             base: "min-content",
