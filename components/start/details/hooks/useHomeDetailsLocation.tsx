@@ -10,22 +10,20 @@ const API_HOME_DETAILS_LOCATION_PATH = "/api/home-details/location";
 function generateLocationRequest(inputs: ApiHomeDetailsLocationInput) {
   const esc = encodeURIComponent;
   return fetch(
-    `${API_HOME_DETAILS_LOCATION_PATH}?query=${esc(inputs.query)}&city=${esc(
-      inputs.city
-    )}`,
+    `${API_HOME_DETAILS_LOCATION_PATH}?query="${esc(inputs.query)}"`,
     {
       method: "GET",
     }
   );
 }
 
-export function useHomeDetailsLocationApi(city: string) {
+export function useHomeDetailsLocationApi() {
   const [loading, setLoading] = React.useState(false);
 
   const fetchMachingLocations = React.useCallback(async (query: string) => {
     setLoading(true);
 
-    const request = generateLocationRequest({ query, city });
+    const request = generateLocationRequest({ query });
     const { errors, successful, responseBody } = await handleApiResponse(
       request
     );

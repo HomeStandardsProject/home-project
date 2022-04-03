@@ -36,16 +36,11 @@ const validateSchema = validateMiddleware(
   validationResult
 );
 
-export type ParsedCityRules = {
-  name: string;
-  questions: AllRoomAssessmentQuestion;
-  bylawMultiplexer: ApiBylawMultiplexer;
-};
-
 export async function handleHomeAssessment(
   req: NextApiRequest,
   res: NextApiResponse,
-  cities: ParsedCityRules[],
+  bylawMultiplexer: ApiBylawMultiplexer,
+  questions: AllRoomAssessmentQuestion,
   datastore: Datastore
 ) {
   try {
@@ -63,19 +58,9 @@ export async function handleHomeAssessment(
         .status(400)
         .send({ errors: [{ msg: "invalid submission id" }] });
 
-    const selectedCities = cities.filter((city) => city.name === details.city);
-    if (selectedCities.length === 0) {
-      return res.status(400).send({ errors: [{ msg: "invalid city" }] });
-    }
-    const selectedCity = selectedCities[0];
-
     const promptValidationErrors = input.rooms
       .map((room) =>
-        validateAllPromptsAreAnswered(
-          room.type,
-          room.responses,
-          selectedCity.questions
-        )
+        validateAllPromptsAreAnswered(room.type, room.responses, questions)
       )
       .flat()
       .filter((vals) => vals);
@@ -92,7 +77,7 @@ export async function handleHomeAssessment(
       (room): ApiRoomAssessmentResult => {
         const result = calculateBylawViolationsForRoom(
           room.responses,
-          selectedCity.bylawMultiplexer
+          bylawMultiplexer
         );
         return { id: room.id, name: room.name, ...result };
       }
@@ -133,9 +118,7 @@ export async function handleHomeAssessment(
 
     return res.status(200).json(result);
   } catch (err) {
-    return res
-      .status(500)
-      .json({ statusCode: 500, message: (err as Error).message });
+    return res.status(500).json({ statusCode: 500, message: err.message });
   }
 }
 

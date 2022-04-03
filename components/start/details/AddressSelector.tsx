@@ -13,19 +13,16 @@ import * as React from "react";
 import { useDebounce } from "../../../hooks/useDebounce";
 
 import { ApiHomeDetailsLocationResult } from "../../../interfaces/api-home-details";
-import { ContentfulCity } from "../../../interfaces/contentful-city";
 import { HomeDetails } from "../../../interfaces/home-assessment";
 import { useHomeDetailsLocationApi } from "./hooks/useHomeDetailsLocation";
 
 type Props = {
-  city: ContentfulCity;
   showValidationErrors: boolean;
   validatedAddress: string | undefined;
   setValidatedAddress: (newAddress: HomeDetails["address"] | undefined) => void;
 };
 
 export function AddressSelector({
-  city,
   validatedAddress,
   showValidationErrors,
   setValidatedAddress,
@@ -34,9 +31,7 @@ export function AddressSelector({
   const [searchMatches, setSearchMatches] = React.useState<
     ApiHomeDetailsLocationResult["matches"]
   >([]);
-  const { fetchMachingLocations, loading } = useHomeDetailsLocationApi(
-    city.name
-  );
+  const { fetchMachingLocations, loading } = useHomeDetailsLocationApi();
   const debouncedUnvalidatedAddress = useDebounce(unvalidatedAddress, 500);
 
   const handleAddressChange = React.useCallback(
