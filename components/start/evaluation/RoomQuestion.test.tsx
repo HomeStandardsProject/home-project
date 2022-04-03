@@ -18,7 +18,7 @@ const DEFAULT_MULTISELECT_PROMPT: RoomAssessmentQuestion = {
 };
 
 describe("RoomQuestion", () => {
-  it("displays yes, no and unsure options when in empty state", () => {
+  it("displays yes, no, unsure and N/A options when in empty state", () => {
     const { getByLabelText } = render(
       <RoomQuestion
         prompt={DEFUALT_PROMPT}
@@ -29,6 +29,7 @@ describe("RoomQuestion", () => {
     expect(getByLabelText("Yes")).toBeDefined();
     expect(getByLabelText("No")).toBeDefined();
     expect(getByLabelText("Unsure")).toBeDefined();
+    expect(getByLabelText("N/A")).toBeDefined();
   });
 
   it("selecting an answer triggeres answer changed", () => {

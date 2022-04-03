@@ -19,6 +19,13 @@ model RawSubmission {
   totalRent           Float
   landlord            String
   landlordOther       String?
+  waterInRent         String
+  hydroInRent         String
+  gasInRent           String
+  internetInRent      String
+  parkingInRent       String
+  otherInRent         String
+  otherValue          String?
   creationDate        DateTime @default(now())
 
   rooms      RawRoom[]
@@ -66,6 +73,7 @@ enum QuestionAnswer {
   YES
   NO
   UNSURE
+  NA
 }
 
 enum ViolationStatus {

@@ -5,7 +5,6 @@ import {
   Divider,
   Heading,
   IconButton,
-  Link,
   SimpleGrid,
   Stack,
   Tag,
@@ -17,7 +16,6 @@ import {
   CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  ExternalLinkIcon,
   InfoOutlineIcon,
   QuestionIcon,
   WarningIcon,
@@ -137,16 +135,13 @@ export const Results: React.FC<Props> = ({ assessment }) => {
                   be, we&apos;re not sure. But we don&apos;t want it.
                 </Text>
                 <Text>
-                  For more information on{" "}
-                  <Link
-                    href="https://www.cityofkingston.ca/resident/property-standards"
-                    color="blue.700"
-                    isExternal
-                  >
-                    Kingston Property Standards
-                    <ExternalLinkIcon />
-                  </Link>
-                  .
+                  Due to the length and wide scope of the property bylaws, we
+                  have opted to only include those which have been found to be
+                  the most common violations. We encourage you to review your
+                  city&apos;s bylaws if you are concerned about the quality of
+                  your unit. We also suggest that you take photos of any
+                  violations, document them with the date and include them in
+                  your message to your landlord.
                 </Text>
                 <Box>
                   <Button

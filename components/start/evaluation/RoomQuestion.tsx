@@ -31,7 +31,12 @@ export const RoomQuestion: React.FC<Props> = ({
 }) => {
   const handleRadioGroupValueChange = React.useCallback(
     (newValue: string) => {
-      if (newValue === "YES" || newValue === "NO" || newValue === "UNSURE") {
+      if (
+        newValue === "YES" ||
+        newValue === "NO" ||
+        newValue === "UNSURE" ||
+        newValue === "NA"
+      ) {
         answerChanged(prompt.id, { answer: newValue, description: undefined });
         return;
       }
@@ -135,6 +140,17 @@ export const RoomQuestion: React.FC<Props> = ({
               borderColor="gray.300"
             >
               Unsure
+            </Radio>
+          </Box>
+          <Box
+            padding="2pt 4pt"
+            paddingBottom="0pt"
+            borderWidth="1px"
+            borderRadius="md"
+            bg="gray.100"
+          >
+            <Radio size="sm" value="NA" bg="gray.200" borderColor="gray.300">
+              N/A
             </Radio>
           </Box>
         </Stack>

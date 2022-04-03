@@ -25,7 +25,7 @@ const validateSchema = validateMiddleware(
     check("rooms.*.name").isString(),
     check("rooms.*.type").isIn(ROOM_TYPES.map((i) => i)),
     check("rooms.*.responses").exists(),
-    check("rooms.*.responses.*.answer").isIn(["YES", "NO", "UNSURE"]),
+    check("rooms.*.responses.*.answer").isIn(["YES", "NO", "UNSURE", "NA"]),
     check("rooms.*.responses.*.description")
       .optional({ nullable: true })
       .isString(),

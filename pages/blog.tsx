@@ -41,14 +41,11 @@ function Blog({ blogContent }: Props) {
           rel="stylesheet"
         />
       </Head>
-      <Heading
-        mt={10}
-        fontFamily="Lora, serif"
-        fontSize="1.6rem"
-        fontWeight="500"
-      >
-        Blog
-      </Heading>
+      <Stack marginTop="16pt" marginBottom="10pt" maxWidth="950px">
+        <Heading as="h1" size="lg">
+          Blog
+        </Heading>
+      </Stack>
       <SimpleGrid
         columns={{ sm: 1, md: 3 }}
         mt={2}

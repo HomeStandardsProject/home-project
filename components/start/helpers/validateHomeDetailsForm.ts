@@ -7,6 +7,8 @@ export function validateHomeDetailsForm(details: Partial<HomeDetails>) {
     isLandlordOtherFieldValid = details.landlordOther !== undefined;
   }
 
+  // const detailsRequired = details.otherInRent;
+
   const isValid = [
     validatePrice(details.totalRent),
     details.address !== undefined,
@@ -14,6 +16,14 @@ export function validateHomeDetailsForm(details: Partial<HomeDetails>) {
     isLandlordOtherFieldValid,
     details.rentalType !== undefined,
     details.numberOfBedrooms !== undefined,
+    details.waterInRent !== undefined,
+    details.hydroInRent !== undefined,
+    details.gasInRent !== undefined,
+    details.internetInRent !== undefined,
+    details.parkingInRent !== undefined,
+    details.otherInRent !== undefined,
+    details.otherInRent === "NO" ||
+      (details.otherInRent === "YES" && details.otherValue !== undefined),
   ];
 
   return !isValid.includes(false);

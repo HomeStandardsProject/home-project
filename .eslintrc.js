@@ -57,7 +57,7 @@ module.exports = {
 
     "react/prop-types": "off",
     "react/display-name": "off",
-
+    "spaced-comment": "off",
     "unused-imports/no-unused-imports": "error",
   },
   overrides: [

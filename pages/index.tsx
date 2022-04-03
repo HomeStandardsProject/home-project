@@ -135,6 +135,15 @@ function IndexPage({ landingContent }: Props) {
                 >
                   {fact.description}
                 </Text>
+                {index === 2 && (
+                  <ChakraLink
+                    href="https://forms.gle/6Qe1y1DKHDgrL3NC9"
+                    color="#a6effa"
+                    isExternal
+                  >
+                    Link Here
+                  </ChakraLink>
+                )}
               </EnergyFactContainer>
             );
           })}

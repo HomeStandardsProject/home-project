@@ -35,6 +35,25 @@ const validateSchema = validateMiddleware(
         }
         return true;
       }),
+    check("details.waterInRent").isString(),
+    check("details.hydroInRent").isString(),
+    check("details.gasInRent").isString(),
+    check("details.internetInRent").isString(),
+    check("details.parkingInRent").isString(),
+    check("details.otherInRent").isString(),
+    check("details.otherValue")
+      // if the landlord is set to other, then the value for this field must be defined
+      .custom((value, { req }) => {
+        if (req.body.details.otherInRent === "YES") {
+          if (value && typeof value === "string") {
+            return true;
+          }
+          throw new Error(
+            "details.otherValue must be defined when otherInRent is set to 'YES'"
+          );
+        }
+        return true;
+      }),
   ],
   validationResult
 );

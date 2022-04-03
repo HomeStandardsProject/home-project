@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { FaFacebook, FaInstagram, FaRecycle, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
 import Head from "next/head";
 import styled from "@emotion/styled";
@@ -22,7 +22,6 @@ type Props = {
   showStartButton?: boolean;
   showSocialIcons?: boolean;
   showLastResults?: boolean;
-  displayPromotionOffering?: () => void;
 };
 
 const Container = styled.div`
@@ -57,7 +56,6 @@ const Layout = ({
   showLastResults = true,
   showStartButton = false,
   showSocialIcons = false,
-  displayPromotionOffering,
 }: Props) => {
   const { hasSubmissionId, hasAssessmentResult } = useUserStepState();
 
@@ -117,7 +115,7 @@ const Layout = ({
                   cursor="pointer"
                   whiteSpace="nowrap"
                 >
-                  About Us
+                  Who we Are
                 </Text>
               </Link>
               <Link href="/blog">
@@ -183,7 +181,7 @@ const Layout = ({
                   display="block"
                   cursor="pointer"
                 >
-                  Donate
+                  Support Us
                 </Text>
               </ChakraLink>
               {showStartButton && (
@@ -199,17 +197,6 @@ const Layout = ({
                     View last result
                   </Button>
                 </Link>
-              )}
-              {displayPromotionOffering && (
-                <Button
-                  leftIcon={<FaRecycle />}
-                  colorScheme="green"
-                  variant="outline"
-                  size="sm"
-                  onClick={displayPromotionOffering}
-                >
-                  Collect your free Green Bin
-                </Button>
               )}
             </Stack>
           </SimpleGrid>

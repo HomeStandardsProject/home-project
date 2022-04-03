@@ -16,7 +16,7 @@ jest.mock("uuid");
 
 const MOCK_DETAILS: ApiHomeDetailsInput["details"] = {
   landlord: "Frontenac Property Management",
-  rentalType: "Full house",
+  rentalType: "Single Family House",
   totalRent: "499.99",
   numberOfBedrooms: 2,
   address: {
@@ -25,6 +25,13 @@ const MOCK_DETAILS: ApiHomeDetailsInput["details"] = {
     long: "0.00",
     lat: "0.00",
   },
+  waterInRent: "YES",
+  hydroInRent: "YES",
+  gasInRent: "YES",
+  internetInRent: "YES",
+  parkingInRent: "YES",
+  otherInRent: "YES",
+  otherValue: "YES",
 };
 
 const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeDetailsInput> = {
