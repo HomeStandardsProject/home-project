@@ -48,7 +48,7 @@ export class PrismaDatastore implements Datastore {
       return [true, null];
     } catch (error) {
       console.error(error);
-      return [false, error];
+      return [false, error as Error];
     }
   }
 
@@ -70,13 +70,20 @@ export class PrismaDatastore implements Datastore {
           totalRent: Number(details.totalRent),
           landlord: details.landlord,
           landlordOther: details.landlordOther,
+          waterInRent: details.waterInRent,
+          hydroInRent: details.hydroInRent,
+          gasInRent: details.gasInRent,
+          internetInRent: details.internetInRent,
+          parkingInRent: details.parkingInRent,
+          otherInRent: details.otherInRent,
+          otherValue: details.otherValue,
         },
       });
 
       return [true, null];
     } catch (error) {
       console.error(error);
-      return [false, error];
+      return [false, error as Error];
     }
   }
 
@@ -103,7 +110,7 @@ export class PrismaDatastore implements Datastore {
       return [true, null];
     } catch (error) {
       console.error(error);
-      return [false, error];
+      return [false, error as Error];
     }
   }
 
@@ -112,7 +119,7 @@ export class PrismaDatastore implements Datastore {
       await this.client.user.create({ data: details });
       return [true, null];
     } catch (error) {
-      return [false, error];
+      return [false, error as Error];
     }
   }
 
@@ -143,6 +150,13 @@ export class PrismaDatastore implements Datastore {
           numberOfBedrooms: result.numberOfBedrooms,
           unitNumber: result.unitNumber ?? undefined,
           rentalType: result.rentalType as RentalType,
+          waterInRent: result.waterInRent,
+          hydroInRent: result.hydroInRent,
+          gasInRent: result.gasInRent,
+          internetInRent: result.internetInRent,
+          parkingInRent: result.parkingInRent,
+          otherInRent: result.otherInRent,
+          otherValue: result.otherValue ?? undefined,
           totalRent: String(result.totalRent),
         },
         null,
