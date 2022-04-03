@@ -425,9 +425,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             <Stack spacing={0}>
               <FormLabel fontSize="sm">Included in Rent</FormLabel>
               {
-                
-                  //*****************
-                
+                //*****************
               }
               <Box>
                 <Stack isInline align="center">
@@ -477,9 +475,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
                 </Stack>
               </Box>
               {
-                
-                  //*****************
-                
+                //*****************
               }
               <Box paddingTop="5pt">
                 <Stack isInline align="center">
