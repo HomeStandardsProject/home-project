@@ -1,27 +1,24 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
 import { check, validationResult } from "express-validator";
-import {
-  RENTAL_TYPES,
-  LANDLORDS,
-  HomeDetails,
-} from "../../interfaces/home-assessment";
+import { RENTAL_TYPES, HomeDetails } from "../../interfaces/home-assessment";
 import { validateMiddleware } from "../utils/validation";
 
 import { Datastore } from "../datastore/Datastore";
 
 const validateSchema = validateMiddleware(
   [
+    check("details.city").isString(),
     check("details.address.userProvided").isString(),
     check("details.address.formatted").isString(),
     check("details.address.long").isString(),
     check("details.address.lat").isString(),
     check("details.numberOfBedrooms").isInt(),
-    check("details.numberOfBedrooms").custom((val) => val >= 0),
+    check("details.landlord").isString(),
+    check("details.numberOfBedrooms").custom((val) => val > 0),
     // .map is a workaround to a typescript readonly issue
     check("details.rentalType").isIn(RENTAL_TYPES.map((i) => i)),
     check("details.totalRent").isCurrency({ allow_negatives: false }),
-    check("details.landlord").isIn(LANDLORDS.map((i) => i)),
     check("details.landlordOther")
       // if the landlord is set to other, then the value for this field must be defined
       .custom((value, { req }) => {

@@ -15,6 +15,7 @@ import {
 jest.mock("uuid");
 
 const MOCK_DETAILS: ApiHomeDetailsInput["details"] = {
+  city: "Kingston",
   landlord: "Frontenac Property Management",
   rentalType: "Single Family House",
   totalRent: "499.99",
