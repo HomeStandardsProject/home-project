@@ -90,58 +90,66 @@ export const RoomQuestion: React.FC<Props> = ({
   );
 
   return (
-    <Box marginBottom='24pt'>
-      <Stack isInline align='center'>
+    <Box marginBottom="24pt">
+      <Stack isInline align="center">
         {showInvalidMarkerIfNeeded && !response.answer && (
-          <WarningIcon color='red.500' />
+          <WarningIcon color="red.500" />
         )}
-        <Heading as='h5' size='sm' marginBottom='4pt'>
+        <Heading as="h5" size="sm" marginBottom="4pt">
           {prompt.question}
         </Heading>
       </Stack>
-      <RadioGroup onChange={handleRadioGroupValueChange} value={response.answer}>
-        <Stack isInline align='center' spacing={4}>
+      <RadioGroup
+        onChange={handleRadioGroupValueChange}
+        value={response.answer}
+      >
+        <Stack isInline align="center" spacing={4}>
           <Box
-            padding='2pt 4pt'
-            paddingBottom='0pt'
-            borderWidth='1px'
-            borderRadius='md'
-            bg='gray.100'
+            padding="2pt 4pt"
+            paddingBottom="0pt"
+            borderWidth="1px"
+            borderRadius="md"
+            bg="gray.100"
           >
-            <Radio size='sm' value='YES' bg='gray.200' borderColor='gray.300'>
+            <Radio size="sm" value="YES" bg="gray.200" borderColor="gray.300">
               Yes
             </Radio>
           </Box>
           <Box
-            padding='2pt 4pt'
-            paddingBottom='0pt'
-            borderWidth='1px'
-            borderRadius='md'
-            bg='gray.100'
+            padding="2pt 4pt"
+            paddingBottom="0pt"
+            borderWidth="1px"
+            borderRadius="md"
+            bg="gray.100"
           >
-            <Radio size='sm' value='NO' bg='gray.200' borderColor='gray.300'>
+            <Radio size="sm" value="NO" bg="gray.200" borderColor="gray.300">
               No
             </Radio>
           </Box>
           <Box
-            padding='2pt 4pt'
-            paddingBottom='0pt'
-            borderWidth='1px'
-            borderRadius='md'
-            bg='gray.100'
+            padding="2pt 4pt"
+            paddingBottom="0pt"
+            borderWidth="1px"
+            borderRadius="md"
+            bg="gray.100"
           >
-            <Radio size='sm' value='UNSURE' bg='gray.200' borderColor='gray.300'>
+            <Radio
+              size="sm"
+              value="UNSURE"
+              bg="gray.200"
+              borderColor="gray.300"
+            >
               Unsure
             </Radio>
           </Box>
           <Box
-            padding='2pt 4pt'
-            paddingBottom='0pt'
-            borderWidth='1px'
-            borderRadius='md'
-            bg='gray.100'
+            padding="2pt 4pt"
+            paddingBottom="0pt"
+            borderWidth="1px"
+            borderRadius="md"
+            bg="gray.100"
           >
-            <Radio size='sm' value='NA' bg='gray.200' borderColor='gray.300'>
+            <Radio size="sm" value="NA" bg="gray.200" borderColor="gray.300">
               N/A
             </Radio>
           </Box>
@@ -150,9 +158,9 @@ export const RoomQuestion: React.FC<Props> = ({
       {prompt.type === "YES/NO" &&
         response.answer === prompt.promptForDescriptionOn && (
           <Textarea
-            data-testid='description-textbox'
-            marginTop='4pt'
-            placeholder='(Optional) describe the issue...'
+            data-testid="description-textbox"
+            marginTop="4pt"
+            placeholder="(Optional) describe the issue..."
             value={response.description}
             onChange={handleDescriptionChange}
           />
@@ -160,12 +168,13 @@ export const RoomQuestion: React.FC<Props> = ({
       {prompt.type === "MULTISELECT" &&
         response.answer === prompt.promptForDescriptionOn && (
           <Stack pl={6} mt={1} spacing={1}>
-            <Text marginTop='8pt'>Select all that apply:</Text>
+            <Text marginTop="8pt">Select all that apply:</Text>
             {prompt.multiselectValues?.map((selectionValue) => (
               <Checkbox
                 key={selectionValue}
                 isChecked={
-                  response.selectedMultiselect?.includes(selectionValue) ?? false
+                  response.selectedMultiselect?.includes(selectionValue) ??
+                  false
                 }
                 onChange={(e) => handleCheckboxChange(selectionValue, e)}
               >

@@ -115,7 +115,13 @@ const testHandleHomeAssessment = (
   res: NextApiResponse,
   datastore: Datastore = new MockDatastore()
 ) =>
-  handleHomeAssessment(req, res, MOCK_BYLAW_MULTIPLEXER, MOCK_QUESTIONS, datastore);
+  handleHomeAssessment(
+    req,
+    res,
+    MOCK_BYLAW_MULTIPLEXER,
+    MOCK_QUESTIONS,
+    datastore
+  );
 
 describe("/api/home-assessment", () => {
   beforeAll(() => {
@@ -126,7 +132,9 @@ describe("/api/home-assessment", () => {
   // express-validator at the api level. This helps with forgetting to add a validator when
   // adding a new property to an object
   it("implements basic existence validation for all parameters", async () => {
-    const nullifiedFields = generateSetOfNullifiedFields(ONLY_REQUIRED_MOCK_INPUTS);
+    const nullifiedFields = generateSetOfNullifiedFields(
+      ONLY_REQUIRED_MOCK_INPUTS
+    );
 
     const validationError = (param: string) => ({
       errors: [{ location: "body", msg: "Invalid value", param }],

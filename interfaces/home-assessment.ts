@@ -1,4 +1,3 @@
-
 export type RoomType = "YES/NO" | "MULTISELECT";
 export type RoomAssessmentQuestion = {
   id: string;
