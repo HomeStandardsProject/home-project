@@ -22,8 +22,8 @@ export function validateHomeDetailsForm(details: Partial<HomeDetails>) {
     details.internetInRent !== undefined,
     details.parkingInRent !== undefined,
     details.otherInRent !== undefined,
-    details.otherInRent == "NO" ||
-      (details.otherInRent == "YES" && details.otherValue !== undefined),
+    details.otherInRent === "NO" ||
+      (details.otherInRent === "YES" && details.otherValue !== undefined),
   ];
 
   return !isValid.includes(false);
