@@ -55,54 +55,54 @@ function IndexPage({ landingContent }: Props) {
 
   return (
     <Layout
-      title="Home Standards Project"
-      description="Does your student housing meet Kingston’s required property standards? Complete your free home assessment."
+      title='Home Standards Project'
+      description='Does your student housing meet Kingston’s required property standards? Complete your free home assessment.'
       showSocialIcons={true}
     >
       <Head>
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel='preconnect' href='https://fonts.gstatic.com' />
         <link
-          href="https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap"
-          rel="stylesheet"
+          href='https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap'
+          rel='stylesheet'
         />
       </Head>
       <Flex
         justifyContent={"center"}
         minH={`450px`}
-        direction="column"
+        direction='column'
         bg={"red"}
         margin={"0 auto"}
         marginTop={{ base: "32pt", md: 0 }}
       >
         <Heading
-          as="h1"
-          size="xl"
-          textAlign="left"
-          fontFamily="Lora, serif"
-          fontWeight="500"
-          marginBottom="12pt"
+          as='h1'
+          size='xl'
+          textAlign='left'
+          fontFamily='Lora, serif'
+          fontWeight='500'
+          marginBottom='12pt'
         >
           {metadata.title}
         </Heading>
-        <Stack width={{ sm: "100%", md: "80%" }} userSelect="none">
+        <Stack width={{ sm: "100%", md: "80%" }} userSelect='none'>
           <RichContentfulContent content={metadata.richDescription} />
         </Stack>
         <Box>
-          <Link href="/start">
+          <Link href='/start'>
             <Button
               marginTop={"20pt"}
-              colorScheme="green"
-              bg="rgba(59, 168, 0, 1.000)"
-              boxShadow="md"
+              colorScheme='green'
+              bg='rgba(59, 168, 0, 1.000)'
+              boxShadow='md'
               onClick={logStartButtonClick}
             >
               {metadata.buttonStartNow}
             </Button>
           </Link>
         </Box>
-        <Stack marginTop="30pt">
+        <Stack marginTop='30pt'>
           {explanations.map((explanation, i) => (
-            <Stack key={i} isInline align="center" spacing={2}>
+            <Stack key={i} isInline align='center' spacing={2}>
               {renderIcon(explanation.icon)}
               <RichContentfulContent content={explanation.richDescription} />
             </Stack>
@@ -111,7 +111,7 @@ function IndexPage({ landingContent }: Props) {
       </Flex>
       <Box mt={{ base: "32pt", md: 0 }}>
         <Subheading>{metadata.whyThisToolTitle}</Subheading>
-        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={2} marginTop="16pt">
+        <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={2} marginTop='16pt'>
           {facts.map((fact, index) => {
             return (
               <EnergyFactContainer
@@ -119,13 +119,11 @@ function IndexPage({ landingContent }: Props) {
                 backgroundImage={fact.backgroundImage.url}
               >
                 <Heading
-                  as="h3"
-                  fontFamily="Lora, serif"
-                  fontSize="1.5rem"
-                  fontWeight="500"
-                  color={
-                    fact.lightTextColor ? "rgba(255,255,255,0.6)" : undefined
-                  }
+                  as='h3'
+                  fontFamily='Lora, serif'
+                  fontSize='1.5rem'
+                  fontWeight='500'
+                  color={fact.lightTextColor ? "rgba(255,255,255,0.6)" : undefined}
                 >
                   {fact.title}
                 </Heading>
@@ -135,10 +133,10 @@ function IndexPage({ landingContent }: Props) {
                 >
                   {fact.description}
                 </Text>
-                {index === 2 && (
+                {index == 2 && (
                   <ChakraLink
-                    href="https://forms.gle/6Qe1y1DKHDgrL3NC9"
-                    color="#a6effa"
+                    href='https://forms.gle/6Qe1y1DKHDgrL3NC9'
+                    color='#a6effa'
                     isExternal
                   >
                     Link Here
@@ -151,10 +149,10 @@ function IndexPage({ landingContent }: Props) {
       </Box>
       <Box marginTop={{ base: "32pt", md: "64pt" }}>
         <Subheading>{metadata.howWeHelpTitle}</Subheading>
-        <Text width="100%">{metadata.kitchenIntro}</Text>
+        <Text width='100%'>{metadata.kitchenIntro}</Text>
         <HomeAssessmentInteractiveExample violations={violations} />
       </Box>
-      <Box marginTop="64pt">
+      <Box marginTop='64pt'>
         <Subheading>{metadata.didYouKnowTitle}</Subheading>
         <SimpleGrid
           columns={{ base: 1, md: 3 }}
@@ -165,11 +163,7 @@ function IndexPage({ landingContent }: Props) {
             return (
               <FactContainer key={index} title={element.title}>
                 <Text>{element.description}</Text>
-                <ChakraLink
-                  color="green.500"
-                  href={element.sourceUrl}
-                  isExternal
-                >
+                <ChakraLink color='green.500' href={element.sourceUrl} isExternal>
                   {element.sourceName}
                 </ChakraLink>
               </FactContainer>
@@ -177,9 +171,9 @@ function IndexPage({ landingContent }: Props) {
           })}
         </SimpleGrid>
       </Box>
-      <Box marginTop="64pt">
+      <Box marginTop='64pt'>
         <Subheading>{metadata.articleTitle}</Subheading>
-        <SimpleGrid columns={{ sm: 1, md: 4 }} spacing={4} py="16pt">
+        <SimpleGrid columns={{ sm: 1, md: 4 }} spacing={4} py='16pt'>
           {relevantArticles.map((article, i) => (
             <RelevantArticle key={i} article={article} />
           ))}
@@ -210,20 +204,20 @@ const renderIcon = (icon: string) => {
 };
 
 const Subheading: React.FC = ({ children }) => (
-  <Heading as="h2" fontFamily="Lora, serif" fontSize="1.6rem" fontWeight="500">
+  <Heading as='h2' fontFamily='Lora, serif' fontSize='1.6rem' fontWeight='500'>
     {children}
   </Heading>
 );
 
 const FactContainer: React.FC<{ title: string }> = ({ children, title }) => (
-  <Stack flexBasis="33.3%">
+  <Stack flexBasis='33.3%'>
     <Heading
-      as="h3"
-      fontFamily="Lora, serif"
-      fontSize="1.5rem"
-      fontWeight="500"
-      color="rgba(0,0,0,0.6)"
-      lineHeight="1.5rem"
+      as='h3'
+      fontFamily='Lora, serif'
+      fontSize='1.5rem'
+      fontWeight='500'
+      color='rgba(0,0,0,0.6)'
+      lineHeight='1.5rem'
     >
       {title}
     </Heading>
@@ -238,13 +232,13 @@ const EnergyFactContainer: React.FC<{ backgroundImage: string | null }> = ({
   <Box
     minHeight={{ base: "auto", md: "165px" }}
     backgroundImage={`url("${backgroundImage}")`}
-    backgroundRepeat="no-repeat"
-    backgroundSize="cover"
-    backgroundPosition="center center"
+    backgroundRepeat='no-repeat'
+    backgroundSize='cover'
+    backgroundPosition='center center'
     px={{ base: "15pt", sm: "30pt" }}
     py={{ base: "10pt", sm: "20pt" }}
-    borderRadius="lg"
-    flexBasis="47.5%"
+    borderRadius='lg'
+    flexBasis='47.5%'
   >
     {children}
   </Box>
