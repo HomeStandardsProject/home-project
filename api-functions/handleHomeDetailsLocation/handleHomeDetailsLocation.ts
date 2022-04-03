@@ -3,36 +3,27 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Geocoder } from "../geocoding/Geocoder";
 
 import { ApiHomeDetailsLocationResult } from "../../interfaces/api-home-details";
-import { ContentfulCity } from "../../interfaces/contentful-city";
+
+const BIAS_KINGSTON = { lat: 44.233334, long: -76.5 };
+// biased 50km search radius
+const BIAS_RADIUS = "50000";
 
 export async function handleHomeDetailsLocation(
   req: NextApiRequest,
   res: NextApiResponse,
-  geocoder: Geocoder,
-  availableCities: ContentfulCity[]
+  geocoder: Geocoder
 ) {
-  const { query, city } = req.query;
+  const { query } = req.query;
   if (!query || typeof query !== "string") {
     return res.status(400).send("location query not provided");
   }
 
-  if (!city || typeof city !== "string") {
-    return res.status(400).send("city not provided");
-  }
-  const selectedContentfulCities = availableCities.filter(
-    (contentfulCity) => contentfulCity.name.toLowerCase() === city.toLowerCase()
-  );
-  if (selectedContentfulCities.length !== 1) {
-    return res.status(400).send("city is not supported");
-  }
-  const selectedCity = selectedContentfulCities[0];
-
   try {
     const geocodedAddresses = await geocoder.geocodedSuggestionsFromQueryString(
       query,
-      selectedCity.lat,
-      selectedCity.long,
-      selectedCity.radius
+      BIAS_KINGSTON.lat,
+      BIAS_KINGSTON.long,
+      BIAS_RADIUS
     );
 
     if (!geocodedAddresses) {
@@ -40,7 +31,10 @@ export async function handleHomeDetailsLocation(
     }
     // Kinda hacky... Address validation is hard. Google doesn't seem to offer a way to restrict results
     // to be within the location bias.
-    const result: ApiHomeDetailsLocationResult = { matches: geocodedAddresses };
+    const filteredAddresses = geocodedAddresses.filter((candidate) =>
+      candidate.address.includes("Kingston")
+    );
+    const result: ApiHomeDetailsLocationResult = { matches: filteredAddresses };
     return res.status(200).send(result);
   } catch (error) {
     console.error(error);

@@ -22,14 +22,6 @@ export class PrismaDatastore implements Datastore {
       const ops: PrismaPromise<any>[] = [];
 
       for (const room of input.rooms) {
-        const responses = Object.entries(room.responses).map(
-          ([questionId, response]) => ({
-            questionId,
-            answer: response.answer,
-            selectedMultiselect: response.selectedMultiselect,
-          })
-        );
-
         const op = this.client.rawRoom.create({
           data: {
             id: room.id,
@@ -37,7 +29,13 @@ export class PrismaDatastore implements Datastore {
             type: room.type,
             responses: {
               createMany: {
-                data: responses,
+                data: Object.entries(room.responses).map(
+                  ([questionId, response]) => ({
+                    questionId,
+                    answer: response.answer,
+                    selectedMultiselect: response.selectedMultiselect,
+                  })
+                ),
               },
             },
           },
@@ -50,7 +48,7 @@ export class PrismaDatastore implements Datastore {
       return [true, null];
     } catch (error) {
       console.error(error);
-      return [false, error as Error];
+      return [false, error];
     }
   }
 
@@ -62,7 +60,6 @@ export class PrismaDatastore implements Datastore {
       await this.client.rawSubmission.create({
         data: {
           id: submissionId,
-          city: details.city,
           userProvidedAddress: details.address.userProvided,
           formattedAddress: details.address.formatted,
           unitNumber: details.unitNumber,
@@ -86,7 +83,7 @@ export class PrismaDatastore implements Datastore {
       return [true, null];
     } catch (error) {
       console.error(error);
-      return [false, error as Error];
+      return [false, error];
     }
   }
 
@@ -113,7 +110,7 @@ export class PrismaDatastore implements Datastore {
       return [true, null];
     } catch (error) {
       console.error(error);
-      return [false, error as Error];
+      return [false, error];
     }
   }
 
@@ -122,7 +119,7 @@ export class PrismaDatastore implements Datastore {
       await this.client.user.create({ data: details });
       return [true, null];
     } catch (error) {
-      return [false, error as Error];
+      return [false, error];
     }
   }
 
@@ -142,7 +139,6 @@ export class PrismaDatastore implements Datastore {
 
       return [
         {
-          city: result.city,
           address: {
             formatted: result.formattedAddress,
             lat: result.lat,

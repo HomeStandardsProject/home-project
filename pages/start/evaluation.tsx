@@ -1,36 +1,28 @@
 import { GetStaticProps } from "next";
 import * as React from "react";
-import { fetchAvailableCitiesWithRules } from "../../api-functions/cms/ContentfulCities";
-import {
-  HomeEvaluationContainer,
-  ParsedCityRules,
-} from "../../components/start/evaluation/HomeEvaluationContainer";
-import { loadBylawMultiplexerFromData } from "../../utils/loadBylawMultiplexer";
+import { HomeEvaluationContainer } from "../../components/start/evaluation/HomeEvaluationContainer";
 
-import { loadQuestionsFromJSON } from "../../utils/loadQuestions";
+import {
+  RoomAssessmentQuestion,
+  RoomTypes,
+} from "../../interfaces/home-assessment";
+import { loadBylawMultiplexer } from "../../utils/loadBylawMultiplexer";
+import { loadQuestions } from "../../utils/loadQuestions";
 
 type Props = {
-  cities: ParsedCityRules[];
+  questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
 };
 
-const Evaluation: React.FC<Props> = ({ cities }) => {
-  return <HomeEvaluationContainer cities={cities} />;
+const Evaluation: React.FC<Props> = ({ questions }) => {
+  return <HomeEvaluationContainer questions={questions} />;
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  // this approach to passing all the questions for EVERY city
-  // probably won't scale well (could be a lot of data which will take up page size),
-  // it should be fine for now and can be addressed once its a problem.
-  const availableCities = await fetchAvailableCitiesWithRules();
-  const cityWithParsedRules: ParsedCityRules[] = [];
-  for (const city of availableCities) {
-    // Unsused return value, however this is to make sure that the bylaw multiplexer
-    // is validated at build time rather then at execution time
-    const questions = loadQuestionsFromJSON(city.questions);
-    cityWithParsedRules.push({ name: city.name, questions });
-    loadBylawMultiplexerFromData(city.bylawMultiplexer, questions);
-  }
-  return { props: { cities: cityWithParsedRules } };
+  const questions = loadQuestions();
+  // Unsused return value, however this is to make sure that the bylaw multiplexer
+  // is validated at build time rather then at execution time
+  loadBylawMultiplexer(questions);
+  return { props: { questions } };
 };
 
 export default Evaluation;

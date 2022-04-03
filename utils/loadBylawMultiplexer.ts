@@ -1,3 +1,4 @@
+import KingstonBylawMultiplexer from "../data/kingston/bylawMultiplexer.json";
 import { ApiBylawMultiplexer } from "../interfaces/api-home-assessment";
 import {
   AllRoomAssessmentQuestion,
@@ -92,4 +93,8 @@ function areArraysUnique<T>(a: T[], b: T[]) {
     if (b.includes(itemA)) return false;
   }
   return true;
+}
+
+export function loadBylawMultiplexer(questions: AllRoomAssessmentQuestion) {
+  return loadBylawMultiplexerFromData(KingstonBylawMultiplexer, questions);
 }
