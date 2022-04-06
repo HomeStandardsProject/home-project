@@ -83,7 +83,7 @@ export class AirtableStore implements Datastore {
       );
       return [true, null];
     } catch (error) {
-      return [false, error];
+      return [false, error as Error];
     }
   }
 
@@ -115,7 +115,7 @@ export class AirtableStore implements Datastore {
 
       return [true, null];
     } catch (error) {
-      return [false, error];
+      return [false, error as Error];
     }
   }
 
@@ -149,7 +149,7 @@ export class AirtableStore implements Datastore {
 
       return [true, null];
     } catch (error) {
-      return [false, error];
+      return [false, error as Error];
     }
   }
 
@@ -158,7 +158,7 @@ export class AirtableStore implements Datastore {
       await this._base("user_info").create(details);
       return [true, null];
     } catch (error) {
-      return [false, error];
+      return [false, error as Error];
     }
   }
 
