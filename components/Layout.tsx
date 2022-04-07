@@ -117,7 +117,7 @@ const Layout = ({
                   cursor="pointer"
                   whiteSpace="nowrap"
                 >
-                  About Us
+                  Who We Are
                 </Text>
               </Link>
               <Link href="/blog">
@@ -183,7 +183,7 @@ const Layout = ({
                   display="block"
                   cursor="pointer"
                 >
-                  Donate
+                  Support Us
                 </Text>
               </ChakraLink>
               {showStartButton && (
