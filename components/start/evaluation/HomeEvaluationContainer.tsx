@@ -11,11 +11,16 @@ import { fetcher } from "../../../utils/fetcher";
 import { LOCAL_STORAGE_SUBMISSION_ID_KEY } from "../hooks/useHomeDetailsApi";
 import { HomeEvaluation } from "./HomeEvaluation";
 
-type Props = {
+export type ParsedCityRules = {
+  name: string;
   questions: { [type in RoomTypes]: RoomAssessmentQuestion[] };
 };
 
-export function HomeEvaluationContainer({ questions }: Props) {
+type Props = {
+  cities: ParsedCityRules[];
+};
+
+export function HomeEvaluationContainer({ cities }: Props) {
   const [submissionId, setSubmissionId] = React.useState<
     string | undefined | null
   >(undefined);
@@ -26,6 +31,21 @@ export function HomeEvaluationContainer({ questions }: Props) {
     submissionId ? `/api/home-details/${submissionId}` : null,
     fetcher
   );
+
+  const questions = React.useMemo(() => {
+    if (!data) return null;
+    const matchingCities = cities.filter(
+      (i) => i.name === (data.city as string)
+    );
+    if (matchingCities.length !== 1) {
+      toast({
+        status: "error",
+        title: `unable to find questions for city ${data.city}`,
+      });
+      return null;
+    }
+    return matchingCities[0].questions;
+  }, [data, toast, cities]);
 
   React.useEffect(() => {
     const submissionId = localStorage.getItem(LOCAL_STORAGE_SUBMISSION_ID_KEY);
@@ -68,7 +88,7 @@ export function HomeEvaluationContainer({ questions }: Props) {
       <Head>
         <title>Evaluation</title>
       </Head>
-      {data && submissionId ? (
+      {data && submissionId && questions ? (
         <HomeEvaluation
           questions={questions}
           details={data}

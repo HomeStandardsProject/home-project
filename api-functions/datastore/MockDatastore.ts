@@ -35,6 +35,7 @@ export class MockDatastore implements Datastore {
     return new Promise((resolve) => {
       resolve([
         {
+          city: "Kingston",
           address: {
             userProvided: "Fake Address",
             formatted: "Fake Address, Kingston, ON",

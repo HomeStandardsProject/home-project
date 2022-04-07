@@ -14,7 +14,7 @@ import {
 import { MockDatastore } from "../datastore/MockDatastore";
 import { generateSetOfNullifiedFields } from "../utils/generateSetOfNullifiedFields";
 import { RecursiveRequiredObject } from "../utils/RecursiveRequiredObject";
-import { handleHomeAssessment } from "./handleHomeAssessment";
+import { handleHomeAssessment, ParsedCityRules } from "./handleHomeAssessment";
 import { Datastore } from "../datastore/Datastore";
 import { INITIAL_VALUES_QUESTIONS_VALUES } from "../../utils/loadQuestions";
 
@@ -91,6 +91,7 @@ const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput>
 };
 
 const MOCK_DETAILS: HomeDetails = {
+  city: "Kingston",
   landlord: "Frontenac Property Management",
   rentalType: "Single Family House",
   totalRent: "499.99",
@@ -110,18 +111,19 @@ const MOCK_DETAILS: HomeDetails = {
   otherValue: "YES",
 };
 
+const MOCK_PARSED_CITY: ParsedCityRules[] = [
+  {
+    name: "Kingston",
+    questions: MOCK_QUESTIONS,
+    bylawMultiplexer: MOCK_BYLAW_MULTIPLEXER,
+  },
+];
+
 const testHandleHomeAssessment = (
   req: NextApiRequest,
   res: NextApiResponse,
   datastore: Datastore = new MockDatastore()
-) =>
-  handleHomeAssessment(
-    req,
-    res,
-    MOCK_BYLAW_MULTIPLEXER,
-    MOCK_QUESTIONS,
-    datastore
-  );
+) => handleHomeAssessment(req, res, MOCK_PARSED_CITY, datastore);
 
 describe("/api/home-assessment", () => {
   beforeAll(() => {
