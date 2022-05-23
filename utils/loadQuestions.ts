@@ -1,4 +1,3 @@
-import QuestionsData from "../data/kingston/questions.json";
 import {
   AllRoomAssessmentQuestion,
   RoomType,
@@ -34,7 +33,7 @@ export const ERRORS = {
     ),
 };
 
-export function loadQuestionsFromData(questions: QuestionInput[]) {
+export function loadQuestionsFromJSON(questions: QuestionInput[]) {
   // Empty map where each room type is a "bucket" and we'll fill them
   // up based on the input questions.
   const roomBuckets: AllRoomAssessmentQuestion = {
@@ -84,15 +83,17 @@ export function loadQuestionsFromData(questions: QuestionInput[]) {
     if (typeof order === "string" && order !== "") {
       throw ERRORS.INVALID_TYPE(`${id}`, `order`, `number or empty string`);
     }
-
-    roomBuckets[roomType as RoomTypes].push({
-      id: `${id}`,
-      question,
-      type: type as RoomType,
-      order: typeof order === "string" ? null : (order as number),
-      promptForDescriptionOn: promptForDescriptionOn as "YES" | "NO",
-      multiselectValues: multiselectValues?.split(","),
-    });
+    roomBuckets[roomType as RoomTypes] = [
+      ...roomBuckets[roomType as RoomTypes],
+      {
+        id: `${id}`,
+        question,
+        type: type as RoomType,
+        order: typeof order === "string" ? null : (order as number),
+        promptForDescriptionOn: promptForDescriptionOn as "YES" | "NO",
+        multiselectValues: multiselectValues?.split(","),
+      },
+    ];
     pastQuestionIds.push(id);
   }
 
@@ -102,10 +103,5 @@ export function loadQuestionsFromData(questions: QuestionInput[]) {
       (a.order ?? 0) > (b.order ?? 0) ? 1 : -1
     );
   }
-
   return roomBuckets;
-}
-
-export function loadQuestions() {
-  return loadQuestionsFromData(QuestionsData);
 }
