@@ -234,7 +234,20 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             isRequired={true}
             flexBasis="60%"
           >
-            <FormLabel fontSize="sm">Total Rent Cost</FormLabel>
+            <Stack isInline spacing={0}>
+              <FormLabel fontSize="sm">Rent Cost Per Month</FormLabel>
+              <Tooltip label="Just the cost of rent, please don’t include any additional fees for optional amenities (Ex. $50 for parking, $25 for a gym pass, not utilities or management fees).">
+                <Box>
+                  <InfoIcon
+                    color="blue.700"
+                    verticalAlign="baseline"
+                    mt={0.5}
+                    w="11pt"
+                    h="11pt"
+                  />
+                </Box>
+              </Tooltip>
+            </Stack>
             <InputGroup>
               <InputLeftElement color="gray.300">$</InputLeftElement>
               <Input
