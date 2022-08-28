@@ -183,7 +183,7 @@ const Layout = ({
                   display="block"
                   cursor="pointer"
                 >
-                  Donate
+                  Support Us
                 </Text>
               </ChakraLink>
               {showStartButton && (
