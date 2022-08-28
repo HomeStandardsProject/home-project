@@ -200,17 +200,6 @@ const Layout = ({
                   </Button>
                 </Link>
               )}
-              {displayPromotionOffering && (
-                <Button
-                  leftIcon={<FaRecycle />}
-                  colorScheme="green"
-                  variant="outline"
-                  size="sm"
-                  onClick={displayPromotionOffering}
-                >
-                  Collect your free Green Bin
-                </Button>
-              )}
             </Stack>
           </SimpleGrid>
         </nav>
