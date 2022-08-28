@@ -93,10 +93,12 @@ export function placeholderBasedOnType(type: Room["type"]) {
 }
 
 export const RENTAL_TYPES = [
-  "Full house",
-  "Divided house (multiple units)",
-  "Apartment",
-  "Apartment building/complex",
+  "Entire Detached Single Family House",
+  "Divided house (multiple units within a house)",
+  "Townhouse or Row House",
+  "Duplex, Triplex, or Fourplex",
+  "Low Rise Apartment (less than 6 stories)",
+  "High Rise Apartment or Condominium (greater than 6 stories)",
 ] as const;
 export type RentalType = typeof RENTAL_TYPES[number];
 export type HomeDetails = {
