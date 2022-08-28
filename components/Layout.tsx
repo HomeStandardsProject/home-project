@@ -117,7 +117,7 @@ const Layout = ({
                   cursor="pointer"
                   whiteSpace="nowrap"
                 >
-                  About Us
+                  Who We Are
                 </Text>
               </Link>
               <Link href="/blog">
