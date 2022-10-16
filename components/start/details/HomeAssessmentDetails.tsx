@@ -292,7 +292,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
         >
           <Stack isInline spacing={0}>
             <FormLabel fontSize="sm">Landlord</FormLabel>
-            <Tooltip label="The Home Standards Project does not send assessments to landlords.">
+            <Tooltip label="If you are unsure whether to include your landlord or property management company, write in who you would typically contact for a repair. We do not send any assessments to landlords (or anyone).">
               <Box>
                 <InfoIcon
                   color="blue.700"
