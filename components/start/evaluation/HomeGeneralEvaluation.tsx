@@ -37,7 +37,7 @@ const SECTIONS: {
   PESTS: { name: "Pests", icon: AiFillBug },
   HEATING: { name: "Heating", icon: GiThermometerHot },
   EXTERIOR: { name: "Exterior", icon: BsFillHouseFill },
-  ENTRANCE: { name: "Entrance", icon: GiDoor },
+  ENTRANCE: { name: "Entrance/General", icon: GiDoor },
 };
 
 export function HomeGeneralEvaluation({ questions, switchStep }: Props) {

@@ -1,4 +1,4 @@
-import { CheckIcon } from "@chakra-ui/icons";
+import { CheckIcon, InfoIcon } from "@chakra-ui/icons";
 import {
   FormControl,
   FormLabel,
@@ -8,6 +8,7 @@ import {
   Stack,
   Spinner,
   FormErrorMessage,
+  Tooltip,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { useDebounce } from "../../../hooks/useDebounce";
@@ -77,7 +78,20 @@ export function AddressSelector({
       isInvalid={!validatedAddress && showValidationErrors}
       isRequired={true}
     >
-      <FormLabel fontSize="sm">Address</FormLabel>
+      <Stack isInline spacing={0}>
+        <FormLabel fontSize="sm">Address</FormLabel>
+        <Tooltip label="Home Standards is seeking to create a full and holistic dataset on rental properties and their issues so we can identify common property issues renters face. To do this, we want to find correlations, namely between unit rent costs, landlords, general locations and property standard violations. We will never share individual submissions and if we should publish anything, the data will be on aggregate with no identifying features.">
+                <Box>
+                  <InfoIcon
+                    color="blue.700"
+                    verticalAlign="baseline"
+                    mt={0.5}
+                    w="11pt"
+                    h="11pt"
+                  />
+                </Box>
+              </Tooltip>
+      </Stack>
       <Box borderColor="#E2E8F0" borderWidth="1px" borderRadius="lg">
         <Stack isInline padding="0.43rem 1rem" align="center">
           <Input

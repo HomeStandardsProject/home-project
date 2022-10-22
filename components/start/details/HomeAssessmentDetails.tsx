@@ -234,7 +234,20 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             isRequired={true}
             flexBasis="60%"
           >
-            <FormLabel fontSize="sm">Total Rent Cost</FormLabel>
+            <Stack isInline spacing={0}>
+              <FormLabel fontSize="sm">Rent Cost Per Month</FormLabel>
+              <Tooltip label="Just the cost of rent, please don’t include any additional fees for optional amenities (Ex. $50 for parking, $25 for a gym pass, not utilities or management fees).">
+                <Box>
+                  <InfoIcon
+                    color="blue.700"
+                    verticalAlign="baseline"
+                    mt={0.5}
+                    w="11pt"
+                    h="11pt"
+                  />
+                </Box>
+              </Tooltip>
+            </Stack>
             <InputGroup>
               <InputLeftElement color="gray.300">$</InputLeftElement>
               <Input
@@ -257,7 +270,20 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             flexBasis={"40%"}
             isInvalid={!details.numberOfBedrooms && showValidationErrors}
           >
-            <FormLabel fontSize="sm">Number of Bedrooms</FormLabel>
+          <Stack isInline spacing={0}>
+              <FormLabel fontSize="sm">Number of Bedrooms</FormLabel>
+              <Tooltip label="For Bachelor units, please write 99">
+                  <Box>
+                    <InfoIcon
+                      color="blue.700"
+                      verticalAlign="baseline"
+                      mt={0.5}
+                      w="11pt"
+                      h="11pt"
+                    />
+                  </Box>
+              </Tooltip>
+            </Stack>
             <NumberInput
               isInvalid={!details.numberOfBedrooms && showValidationErrors}
               value={details.numberOfBedrooms}
@@ -279,7 +305,7 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
         >
           <Stack isInline spacing={0}>
             <FormLabel fontSize="sm">Landlord</FormLabel>
-            <Tooltip label="The Home Standards Project does not send assessments to landlords.">
+            <Tooltip label="If you are unsure whether to include your landlord or property management company, write in who you would typically contact for a repair. We do not send any assessments to landlords (or anyone).">
               <Box>
                 <InfoIcon
                   color="blue.700"
