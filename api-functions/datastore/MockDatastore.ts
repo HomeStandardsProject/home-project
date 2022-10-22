@@ -43,7 +43,7 @@ export class MockDatastore implements Datastore {
             lat: "0.00",
           },
           numberOfBedrooms: 2,
-          rentalType: "Apartment",
+          rentalType: "Divided house (multiple units within a house)",
           landlord: "Frontenac Property Management",
           totalRent: "900.0",
         },
