@@ -270,18 +270,18 @@ export const HomeAssessmentDetails: React.FC<Props> = ({
             flexBasis={"40%"}
             isInvalid={!details.numberOfBedrooms && showValidationErrors}
           >
-          <Stack isInline spacing={0}>
+            <Stack isInline spacing={0}>
               <FormLabel fontSize="sm">Number of Bedrooms</FormLabel>
               <Tooltip label="For Bachelor units, please write 99">
-                  <Box>
-                    <InfoIcon
-                      color="blue.700"
-                      verticalAlign="baseline"
-                      mt={0.5}
-                      w="11pt"
-                      h="11pt"
-                    />
-                  </Box>
+                <Box>
+                  <InfoIcon
+                    color="blue.700"
+                    verticalAlign="baseline"
+                    mt={0.5}
+                    w="11pt"
+                    h="11pt"
+                  />
+                </Box>
               </Tooltip>
             </Stack>
             <NumberInput

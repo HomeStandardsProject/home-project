@@ -127,11 +127,13 @@ export const Results: React.FC<Props> = ({ assessment }) => {
             >
               <Stack>
                 <Text>
-                  Due to the length and wide scope of the property bylaws, we have opted to only include 
-                  those which have been found to be the most common violations. We encourage you to review 
-                  your city's bylaws if you are concerned about the quality of your unit. We also suggest 
-                  that you take photos of any violations, document them with the date and include them in 
-                  your message to your landlord. 
+                  Due to the length and wide scope of the property bylaws, we
+                  have opted to only include those which have been found to be
+                  the most common violations. We encourage you to review your
+                  city&apos;s bylaws if you are concerned about the quality of
+                  your unit. We also suggest that you take photos of any
+                  violations, document them with the date and include them in
+                  your message to your landlord.
                 </Text>
                 <Box>
                   <Button
