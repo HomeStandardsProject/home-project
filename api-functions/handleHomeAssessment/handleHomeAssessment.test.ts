@@ -93,7 +93,7 @@ const ONLY_REQUIRED_MOCK_INPUTS: RecursiveRequiredObject<ApiHomeAssessmentInput>
 const MOCK_DETAILS: HomeDetails = {
   city: "Kingston",
   landlord: "Frontenac Property Management",
-  rentalType: "Full house",
+  rentalType: "Entire Detached Single Family House",
   totalRent: "499.99",
   numberOfBedrooms: 3,
   address: {
