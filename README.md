@@ -7,9 +7,7 @@ Automatically generate a personalized report summarizing your home’s issues. T
 ### Why?
 
 - Homes and buildings contribute **13%** of Canada’s emissions.
-- Kingston is the first Ontario municipality to declare climate emergency. The City set a goal to reduce greenhouse gas emissions by **30%** by the year 2030.
 - GHG emissions such as CO2, are contributing to the current climate crisis. You can help minimize your climate impact by evaluating your house.
-- The energy we consume to heat, cool and power our homes represents **14%** of Kingston’s greenhouse gas emissions and cost nearly **\$90 million.**
 
 ### Getting Started
 
