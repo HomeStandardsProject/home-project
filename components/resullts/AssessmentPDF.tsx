@@ -13,7 +13,7 @@ import {
   ApiRoomAssessmentResult,
 } from "../../interfaces/api-home-assessment";
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ // REMOVE LATER
   page: {
     flexDirection: "column",
     backgroundColor: "#f7fafc",
