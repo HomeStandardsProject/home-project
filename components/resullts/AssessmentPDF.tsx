@@ -13,7 +13,7 @@ import {
   ApiRoomAssessmentResult,
 } from "../../interfaces/api-home-assessment";
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ // REMOVE LATER
   page: {
     flexDirection: "column",
     backgroundColor: "#f7fafc",
@@ -62,10 +62,6 @@ const styles = StyleSheet.create({
   bodyCommentText: {
     fontSize: "11pt",
   },
-  landlord: {
-    fontSize: "10pt",
-    color: "white",
-  },
   commentContainer: {
     marginTop: 4,
     marginBottom: 4,
@@ -104,11 +100,6 @@ export const AssessmentPDF = ({
 }: {
   result: ApiHomeAssessmentResult;
 }) => {
-  const landlord =
-    result.details.landlord === "Other"
-      ? result.details.landlordOther
-      : result.details.landlord;
-
   const generatedDate = new Intl.DateTimeFormat("en-US").format(
     new Date(result.generatedDate)
   );
@@ -130,7 +121,6 @@ export const AssessmentPDF = ({
               ? `(Unit ${result.details.unitNumber})`
               : ``}
           </Text>
-          <Text style={styles.landlord}>{landlord}</Text>
         </View>
         <View style={styles.section}>{result.rooms.map(roomRenderer)}</View>
       </Page>
