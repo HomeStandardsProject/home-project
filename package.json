@@ -35,7 +35,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-flip-toolkit": "^7.0.17",
-    "react-icons": "^4.1.0",
+    "react-icons": "^4.9.0",
     "swr": "^0.3.11",
     "ts-jest": "^26.4.4",
     "ts-loader": "^8.0.11",
