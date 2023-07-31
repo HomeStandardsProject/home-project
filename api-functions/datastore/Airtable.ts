@@ -64,7 +64,7 @@ export class AirtableStore implements Datastore {
         .all();
 
       if (val.length > 0) {
-        return [transformHomeDetailsAirtableRow(val[0].AirtableSubmissionRow), null];
+        return [transformHomeDetailsAirtableRow(val[0].fields), null];
       }
       return [null, new Error("submission id does not exist")];
     } catch (error) {
@@ -242,7 +242,7 @@ function transformHomeDetailsToRow(
 }
 
 function transformHomeDetailsAirtableRow(
-  row: AirtableSubmissionRow
+  row: FieldSet
 ): HomeDetails {
   return {
     city: "Kingston",
