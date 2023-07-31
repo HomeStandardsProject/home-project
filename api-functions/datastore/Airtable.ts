@@ -64,7 +64,7 @@ export class AirtableStore implements Datastore {
         .all();
 
       if (val.length > 0) {
-        return [transformHomeDetailsAirtableRow(val[0].fields), null];
+        return [transformHomeDetailsAirtableRow(val[0]), null];
       }
       return [null, new Error("submission id does not exist")];
     } catch (error) {
