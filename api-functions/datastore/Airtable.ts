@@ -1,4 +1,4 @@
-import Airtable from "airtable";
+import Airtable, { FieldSet } from "airtable";
 
 import {
   ApiHomeAssessmentInputWithRoomIds,
@@ -72,7 +72,7 @@ export class AirtableStore implements Datastore {
         ];
       }
       return [null, new Error("submission id does not exist")];
-    } catch (error) {
+    } catch (error: Error | any) {
       console.error(error);
       return [null, UNKNOWN_ERROR];
     }
@@ -168,7 +168,7 @@ export class AirtableStore implements Datastore {
   }
 
   // Airtable can only save 10 requests at a time
-  async _createRecordsInChunks<T>(baseName: string, arr: T[]) {
+  async _createRecordsInChunks(baseName: string, arr: any[]) {
     const chunkedArr = chunk(arr, 10);
 
     for (const chunkedRow of chunkedArr) {
@@ -215,7 +215,7 @@ function transformResultToViolationRows(
 function transformInputToRoomRows(
   submissionId: string,
   input: ApiHomeAssessmentInputWithRoomIds
-) {
+): Partial<FieldSet>[] {
   return input.rooms.map(
     (room): AirtableRoomRow => {
       return {
