@@ -67,7 +67,7 @@ export class AirtableStore implements Datastore {
         return [transformHomeDetailsAirtableRow(val[0].fields), null];
       }
       return [null, new Error("submission id does not exist")];
-    } catch (error) {
+    } catch (error: Error | any) {
       console.error(error);
       return [null, UNKNOWN_ERROR];
     }
@@ -82,7 +82,7 @@ export class AirtableStore implements Datastore {
         transformHomeDetailsToRow(submissionId, details)
       );
       return [true, null];
-    } catch (error) {
+    } catch (error: Error | any) {
       return [false, error];
     }
   }
@@ -114,7 +114,7 @@ export class AirtableStore implements Datastore {
       );
 
       return [true, null];
-    } catch (error) {
+    } catch (error: Error | any) {
       return [false, error];
     }
   }
@@ -148,7 +148,7 @@ export class AirtableStore implements Datastore {
       }
 
       return [true, null];
-    } catch (error) {
+    } catch (error: Error | any) {
       return [false, error];
     }
   }
@@ -157,7 +157,7 @@ export class AirtableStore implements Datastore {
     try {
       await this._base("user_info").create(details);
       return [true, null];
-    } catch (error) {
+    } catch (error: Error | any) {
       return [false, error];
     }
   }
@@ -211,15 +211,13 @@ function transformInputToRoomRows(
   submissionId: string,
   input: ApiHomeAssessmentInputWithRoomIds
 ) {
-  return input.rooms.map(
-    (room): AirtableRoomRow => {
-      return {
-        submissionId: [submissionId],
-        id: room.id,
-        type: room.type,
-      };
-    }
-  );
+  return input.rooms.map((room): AirtableRoomRow => {
+    return {
+      submissionId: [submissionId],
+      id: room.id,
+      type: room.type,
+    };
+  });
 }
 
 function transformHomeDetailsToRow(
