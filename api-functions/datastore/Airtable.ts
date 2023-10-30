@@ -1,4 +1,4 @@
-import Airtable, { FieldSet } from "airtable";
+import Airtable from "airtable";
 
 import {
   ApiHomeAssessmentInputWithRoomIds,
@@ -64,15 +64,10 @@ export class AirtableStore implements Datastore {
         .all();
 
       if (val.length > 0) {
-        return [
-          transformHomeDetailsAirtableRow(
-            val[0].fields as AirtableSubmissionRow
-          ),
-          null,
-        ];
+        return [transformHomeDetailsAirtableRow(val[0].fields), null];
       }
       return [null, new Error("submission id does not exist")];
-    } catch (error: Error | any) {
+    } catch (error) {
       console.error(error);
       return [null, UNKNOWN_ERROR];
     }
@@ -87,7 +82,7 @@ export class AirtableStore implements Datastore {
         transformHomeDetailsToRow(submissionId, details)
       );
       return [true, null];
-    } catch (error: Error | any) {
+    } catch (error) {
       return [false, error];
     }
   }
@@ -119,7 +114,7 @@ export class AirtableStore implements Datastore {
       );
 
       return [true, null];
-    } catch (error: Error | any) {
+    } catch (error) {
       return [false, error];
     }
   }
@@ -153,7 +148,7 @@ export class AirtableStore implements Datastore {
       }
 
       return [true, null];
-    } catch (error: Error | any) {
+    } catch (error) {
       return [false, error];
     }
   }
@@ -162,13 +157,13 @@ export class AirtableStore implements Datastore {
     try {
       await this._base("user_info").create(details);
       return [true, null];
-    } catch (error: Error | any) {
+    } catch (error) {
       return [false, error];
     }
   }
 
   // Airtable can only save 10 requests at a time
-  async _createRecordsInChunks(baseName: string, arr: any[]) {
+  async _createRecordsInChunks<T>(baseName: string, arr: T[]) {
     const chunkedArr = chunk(arr, 10);
 
     for (const chunkedRow of chunkedArr) {
@@ -215,7 +210,7 @@ function transformResultToViolationRows(
 function transformInputToRoomRows(
   submissionId: string,
   input: ApiHomeAssessmentInputWithRoomIds
-): Partial<FieldSet>[] {
+) {
   return input.rooms.map(
     (room): AirtableRoomRow => {
       return {
