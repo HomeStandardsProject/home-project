@@ -211,13 +211,15 @@ function transformInputToRoomRows(
   submissionId: string,
   input: ApiHomeAssessmentInputWithRoomIds
 ) {
-  return input.rooms.map((room): AirtableRoomRow => {
-    return {
-      submissionId: [submissionId],
-      id: room.id,
-      type: room.type,
-    };
-  });
+  return input.rooms.map(
+    (room): AirtableRoomRow => {
+      return {
+        submissionId: [submissionId],
+        id: room.id,
+        type: room.type,
+      };
+    }
+  );
 }
 
 function transformHomeDetailsToRow(
