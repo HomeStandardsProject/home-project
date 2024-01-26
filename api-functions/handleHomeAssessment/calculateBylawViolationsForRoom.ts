@@ -69,6 +69,7 @@ const responsesMeetBooleanGuidelines = (
   for (const questionId of questionsIdsForRule) {
     if (responses[questionId]) {
       const questionAnswer = responses[questionId].answer;
+
       if (questionAnswer !== desiredAnswer) {
         // but wait, is the answer unsure?
         if (questionAnswer === "UNSURE") {

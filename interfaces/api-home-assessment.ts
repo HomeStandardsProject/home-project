@@ -1,7 +1,7 @@
 import { HomeDetails, Room } from "./home-assessment";
 
 export type ApiRoomAssessmentQuestionResponse = {
-  answer: "YES" | "NO" | "UNSURE";
+  answer: "YES" | "NO" | "UNSURE" | "NA";
   selectedMultiselect?: string;
   description?: string;
 };
