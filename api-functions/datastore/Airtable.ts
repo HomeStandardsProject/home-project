@@ -34,7 +34,7 @@ type AirtableRoomResponsesRow = {
   submissionId: string[];
   roomId: string;
   questionId: string;
-  answer: "YES" | "NO" | "UNSURE";
+  answer: "YES" | "NO" | "UNSURE" | "NA";
   selectedMultiselect: string;
 };
 

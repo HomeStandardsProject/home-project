@@ -65,6 +65,7 @@ enum QuestionAnswer {
   YES
   NO
   UNSURE
+  NA
 }
 
 enum ViolationStatus {
