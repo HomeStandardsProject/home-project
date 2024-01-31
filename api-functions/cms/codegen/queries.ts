@@ -2459,6 +2459,9 @@ export type GraphQLContentfulAvailableCitiesQuery = {
     __typename?: "CityCollection";
     items: Array<{
       __typename?: "City";
+      sys: {
+        id: string;
+      }
       name?: string;
       biasLat?: number;
       biasLong?: number;
@@ -2479,6 +2482,74 @@ export type GraphQLContentfulAvailableCitiesQuery = {
           | { __typename?: "RichTextOnly" }
           | { __typename?: "Text" }
         >;
+      };
+    }>;
+  };
+};
+
+export type GraphQLContentfulAvailableCountriesQuery = {
+  __typename?: "Query";
+  countryCollection?: {
+    __typename?: "CountryCollection";
+    items: Array<{
+      __typename?: "Country";
+      title?: string;
+      sys: {
+        id: string;
+      }
+      states: {
+        __typename?: "StatesCollection";
+        items: Array<{
+          __typename?: "State";
+          title: string;
+          sys: {
+            id: string;
+          }
+          cities: {
+            __typename?: "CitiesCollection";
+            items: Array<{
+              __typename?: "City";
+              sys: {
+                id: string;
+              }
+              name: string;
+            }>;
+          };
+        }>;
+      };
+      cities: {
+        __typename?: "CitiesCollection";
+        items: Array<{
+          __typename?: "City";
+          sys: {
+            id: string;
+          }
+          name: string;
+        }>;
+      };
+    }>;
+  };
+};
+
+export type GraphQLContentfulAvailableStatesQuery = {
+  __typename?: "Query";
+  stateCollection?: {
+    __typename?: "StateCollection";
+    items: Array<{
+      __typename?: "State";
+      title?: string;
+      sys: {
+        id: string;
+      }
+      cities: {
+        __typename?: "CitiesCollection";
+        items: Array<{
+          __typename?: "City";
+          sys: {
+            id: string;
+          }
+          name: string;
+        }>;
       };
     }>;
   };
