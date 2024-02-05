@@ -31,6 +31,7 @@ async function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
         long: -76.5,
         radius: "50000",
         landlords: ["Mock Landlord"],
+        slug: "kingston-mocked"
       },
     ];
   }
