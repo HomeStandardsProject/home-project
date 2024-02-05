@@ -10,6 +10,9 @@ const resourcesPageQuery = gql`
   query ResourcesPageContent {
     resourcesAndContactsCollection {
       items {
+        sys {
+          id
+        }
         __typename
         name
         nameUrl
@@ -22,6 +25,18 @@ const resourcesPageQuery = gql`
         facebookName
         facebookUrl
         order
+        city {
+          slug
+          name
+        }
+        state {
+          slug
+          title
+        }
+        country {
+          slug
+          title
+        }
       }
     }
   }
@@ -40,10 +55,15 @@ export async function fetchResources() {
       if (!item) continue;
       if (!isResourceAndContact(item)) continue;
 
+      const {
+        sys: { id },
+        ...itemData
+      } = item;
+
       if (content.resourcesAndContacts) {
-        content.resourcesAndContacts.push(item);
+        content.resourcesAndContacts.push({ ...itemData, id });
       } else {
-        content.resourcesAndContacts = [item];
+        content.resourcesAndContacts = [{ ...itemData, id }];
       }
     }
     for (const [key, val] of Object.entries(content)) {

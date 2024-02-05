@@ -11,7 +11,8 @@
     "type": "tsc",
     "lint": "./node_modules/.bin/eslint ./",
     "lint:fix": "./node_modules/.bin/eslint --fix ./",
-    "unit": "./node_modules/.bin/jest ./"
+    "unit": "./node_modules/.bin/jest ./",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.0",

@@ -1,6 +1,7 @@
 import { ContentfulRichText } from "./contentful-generic";
 
 export type ResourcesAndContacts = {
+  id: string;
   name: string;
   nameUrl: string;
   richDescription: ContentfulRichText;
@@ -10,6 +11,18 @@ export type ResourcesAndContacts = {
   facebookName?: string;
   facebookUrl?: string;
   order: number;
+  city?: {
+    slug: string;
+    name: string;
+  };
+  state?: {
+    slug: string;
+    title: string;
+  };
+  country?: {
+    slug: string;
+    title: string;
+  };
 };
 
 export function isResourceAndContact(
