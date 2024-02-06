@@ -60,6 +60,15 @@ const Layout = ({
 }: Props) => {
   const { hasSubmissionId, hasAssessmentResult } = useUserStepState();
 
+  const handleDonate = () => {
+    const container = document.getElementById("paypal-donate-button-container");
+    const image = container?.querySelector("img");
+
+    if (image) {
+      image.click();
+    }
+  };
+
   return (
     <Container>
       <Head>
@@ -170,11 +179,7 @@ const Layout = ({
               </Link>
             </Stack>
             <Stack isInline align="center" width="auto">
-              <ChakraLink
-                href="https://www.paypal.com/donate?hosted_button_id=AGNW37L4YTKTL"
-                isExternal
-                _hover={{ textDecoration: "none" }}
-              >
+              <ChakraLink onClick={handleDonate}>
                 <Text
                   textColor="blue.700"
                   fontWeight="bold"
