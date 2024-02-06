@@ -17,7 +17,10 @@ import { OverrideAlert } from "../../components/start/details/OverrideAlert";
 
 import { useHomeDetailsApi } from "../../components/start/hooks/useHomeDetailsApi";
 import { ContentfulCity } from "../../interfaces/contentful-city";
-import { ContentfulCountry, ContentfulCountryState } from "../../interfaces/contentful-country";
+import {
+  ContentfulCountry,
+  ContentfulCountryState,
+} from "../../interfaces/contentful-country";
 
 import { HomeDetails } from "../../interfaces/home-assessment";
 
@@ -29,12 +32,14 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
   const [selectedCity, setSelectedCity] = React.useState<ContentfulCity | null>(
     null
   );
-  const [selectedCountry, setSelectedCountry] = React.useState<ContentfulCountry | null>(
-    null
-  );
-  const [selectedState, setSelectedState] = React.useState<ContentfulCountryState | null>(
-    null
-  );
+  const [
+    selectedCountry,
+    setSelectedCountry,
+  ] = React.useState<ContentfulCountry | null>(null);
+  const [
+    selectedState,
+    setSelectedState,
+  ] = React.useState<ContentfulCountryState | null>(null);
   const { loading, submitHomeDetails } = useHomeDetailsApi();
   const router = useRouter();
   const toast = useToast();
@@ -44,15 +49,14 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
       return [];
     }
 
-    if(selectedCountry && !selectedCountry.states?.length) {
-      return selectedCountry.cities as ContentfulCity[];    
-    } else {
-      if(!selectedState) {
-        return [];
-      }
-
-      return selectedState.cities as ContentfulCity[];
+    if (selectedCountry && !selectedCountry.states?.length) {
+      return selectedCountry.cities as ContentfulCity[];
     }
+    if (!selectedState) {
+      return [];
+    }
+
+    return selectedState.cities as ContentfulCity[];
   }, [selectedCountry, selectedState]);
 
   const availableStates = React.useMemo(() => {
@@ -60,21 +64,25 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
       return [];
     }
     return selectedCountry.states;
-  }
-  , [selectedCountry]);
+  }, [selectedCountry]);
 
   const handleSelectedCountryChange = React.useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       const {
         target: { value },
       } = event;
-      const matchedCountries = availableCountries.filter((i) => i.title === value);
+
+      if (!value) return null;
+
+      const matchedCountries = availableCountries.filter(
+        (i) => i.title === value
+      );
       if (matchedCountries.length === 0) {
         throw new Error("unknown country type");
       }
       setSelectedCountry(matchedCountries[0]);
-      selectedState && setSelectedState(null);
-      selectedCity && setSelectedCity(null);
+      setSelectedState(null);
+      return setSelectedCity(null);
     },
     [availableCountries]
   );
@@ -84,12 +92,14 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
       const {
         target: { value },
       } = event;
+      if (!value) return null;
       const matchedStates = availableStates.filter((i) => i.title === value);
       if (matchedStates.length === 0) {
         throw new Error("unknown state type");
       }
       setSelectedState(matchedStates[0]);
-      selectedCity && setSelectedCity(null);
+
+      return setSelectedCity(null);
     },
     [availableStates]
   );
@@ -99,11 +109,13 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
       const {
         target: { value },
       } = event;
+      if (!value) return null;
       const matchedCities = availableCities.filter((i) => i.name === value);
       if (matchedCities.length === 0) {
         throw new Error("unknown city type");
       }
-      setSelectedCity(matchedCities[0]);
+
+      return setSelectedCity(matchedCities[0]);
     },
     [availableCities]
   );
@@ -120,6 +132,25 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
         description: error.msg,
       })
     );
+  };
+
+  const sortAlphabetically = (items: any[]) => {
+    if (!items?.length || items.length === 1) return items;
+
+    const sortKey = Object.keys(items[0]).find((key) => key === "name")
+      ? "name"
+      : "title";
+
+    return items.sort((a, b) => {
+      if (a[sortKey] < b[sortKey]) {
+        return -1;
+      }
+      if (a[sortKey] > b[sortKey]) {
+        return 1;
+      }
+
+      return 0;
+    });
   };
 
   return (
@@ -146,7 +177,7 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
               value={selectedCountry?.title ?? ""}
               onChange={handleSelectedCountryChange}
             >
-              {availableCountries.map((country) => (
+              {sortAlphabetically(availableCountries).map((country) => (
                 <option key={country.id} value={country.title}>
                   {country.title}
                 </option>
@@ -154,45 +185,41 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
             </Select>
           </FormControl>
 
-          {
-            availableStates.length ? (
-              <FormControl flexBasis="30%" minW={"265px"} isRequired={true}>
-                <FormLabel fontSize="sm">State</FormLabel>
-                <Select
-                  placeholder="Select state"
-                  size="md"
-                  value={selectedState?.title ?? ""}
-                  onChange={handleSelectedStateChange}
-                >
-                  {availableStates.map((state) => (
-                    <option key={state.id} value={state.title}>
-                      {state.title}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
-            ) : null
-          }
+          {availableStates.length ? (
+            <FormControl flexBasis="30%" minW={"265px"} isRequired={true}>
+              <FormLabel fontSize="sm">State</FormLabel>
+              <Select
+                placeholder="Select state"
+                size="md"
+                value={selectedState?.title ?? ""}
+                onChange={handleSelectedStateChange}
+              >
+                {sortAlphabetically(availableStates).map((state) => (
+                  <option key={state.id} value={state.title}>
+                    {state.title}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          ) : null}
 
-          {
-            availableCities?.length ? (
-              <FormControl flexBasis="30%" minW={"265px"} isRequired={true}>
-                <FormLabel fontSize="sm">City</FormLabel>
-                <Select
-                  placeholder="Select city"
-                  size="md"
-                  value={selectedCity?.name ?? ""}
-                  onChange={handleSelectedCityChange}
-                >
-                  {availableCities.map((city) => (
-                    <option key={city.id} value={city.name}>
-                      {city.name}
-                    </option>
-                  ))}
-                </Select>
-              </FormControl>
-            ) : null
-          }
+          {availableCities?.length ? (
+            <FormControl flexBasis="30%" minW={"265px"} isRequired={true}>
+              <FormLabel fontSize="sm">City</FormLabel>
+              <Select
+                placeholder="Select city"
+                size="md"
+                value={selectedCity?.name ?? ""}
+                onChange={handleSelectedCityChange}
+              >
+                {sortAlphabetically(availableCities).map((city) => (
+                  <option key={city.id} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+          ) : null}
 
           {selectedCity ? (
             <HomeAssessmentDetails

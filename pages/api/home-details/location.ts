@@ -25,12 +25,13 @@ async function curriedHandler(req: NextApiRequest, res: NextApiResponse) {
     console.log("Contentful key not specified, defaulting to mock value");
     availableCities = [
       {
-        id: 'mock-id',
+        id: "mock-id",
         name: "Kingston (mocked)",
         lat: 44.23334,
         long: -76.5,
         radius: "50000",
         landlords: ["Mock Landlord"],
+        slug: "kingston-mocked",
       },
     ];
   }

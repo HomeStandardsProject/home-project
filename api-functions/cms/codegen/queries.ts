@@ -2406,7 +2406,19 @@ export type GraphQLContentfulBlogPostPageQuery = {
       seoDescription?: string;
       image?: { __typename?: "Asset"; url?: string; description?: string };
       richDescription?: { __typename?: "BlogPostDescription"; json: any };
-      sys: { __typename?: "Sys"; firstPublishedAt?: any };
+      sys: { __typename?: "Sys"; firstPublishedAt?: any; id: string };
+      country?: {
+        title: string;
+        slug: string;
+      };
+      state?: {
+        title: string;
+        slug: string;
+      };
+      city?: {
+        name: string;
+        slug: string;
+      };
     }>;
   };
   recentPosts?: {
@@ -2421,7 +2433,19 @@ export type GraphQLContentfulBlogPostPageQuery = {
       seoDescription?: string;
       image?: { __typename?: "Asset"; url?: string; description?: string };
       richDescription?: { __typename?: "BlogPostDescription"; json: any };
-      sys: { __typename?: "Sys"; firstPublishedAt?: any };
+      sys: { __typename?: "Sys"; firstPublishedAt?: any; id: string };
+      country?: {
+        title: string;
+        slug: string;
+      };
+      state?: {
+        title: string;
+        slug: string;
+      };
+      city?: {
+        name: string;
+        slug: string;
+      };
     }>;
   };
 };
@@ -2443,7 +2467,7 @@ export type GraphQLContentfulBlogPostFromPathQuery = {
       externalUrl?: string;
       seoDescription?: string;
       image?: { __typename?: "Asset"; url?: string; description?: string };
-      richDescription?: { __typename?: "BlogPostDescription"; json: any };
+      richDescription?: { __typename?: "BlogPostDescription"; json?: any };
       sys: { __typename?: "Sys"; firstPublishedAt?: any };
     }>;
   };
@@ -2461,11 +2485,12 @@ export type GraphQLContentfulAvailableCitiesQuery = {
       __typename?: "City";
       sys: {
         id: string;
-      }
+      };
       name?: string;
       biasLat?: number;
       biasLong?: number;
       biasRadius?: number;
+      slug: string;
       landlords?: {
         __typename?: "CityLandlordsCollection";
         items: Array<
@@ -2496,7 +2521,8 @@ export type GraphQLContentfulAvailableCountriesQuery = {
       title?: string;
       sys: {
         id: string;
-      }
+      };
+      slug: string;
       states: {
         __typename?: "StatesCollection";
         items: Array<{
@@ -2504,15 +2530,17 @@ export type GraphQLContentfulAvailableCountriesQuery = {
           title: string;
           sys: {
             id: string;
-          }
+          };
+          slug: string;
           cities: {
             __typename?: "CitiesCollection";
             items: Array<{
               __typename?: "City";
               sys: {
                 id: string;
-              }
+              };
               name: string;
+              slug: string;
             }>;
           };
         }>;
@@ -2523,8 +2551,9 @@ export type GraphQLContentfulAvailableCountriesQuery = {
           __typename?: "City";
           sys: {
             id: string;
-          }
+          };
           name: string;
+          slug: string;
         }>;
       };
     }>;
@@ -2540,15 +2569,17 @@ export type GraphQLContentfulAvailableStatesQuery = {
       title?: string;
       sys: {
         id: string;
-      }
+      };
+      slug: string;
       cities: {
         __typename?: "CitiesCollection";
         items: Array<{
           __typename?: "City";
           sys: {
             id: string;
-          }
+          };
           name: string;
+          slug: string;
         }>;
       };
     }>;
@@ -2667,6 +2698,12 @@ export type GraphQLContentfulResourcesPageContentQuery = {
       richDescription?: {
         __typename?: "ResourcesAndContactsDescription";
         json: any;
+      };
+      city?: { __typename?: "City"; name?: string; slug: string };
+      state?: { __typename?: "State"; title?: string; slug: string };
+      country?: { __typename?: "Country"; title?: string; slug: string };
+      sys: {
+        id: string;
       };
     }>;
   };

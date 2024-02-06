@@ -9,11 +9,7 @@ import {
   GraphQLContentfulBlogPostFromPathQuery,
   GraphQLContentfulBlogPostPageQuery,
 } from "./codegen/queries";
-import {
-  checkIfEachPropertyIsDefined,
-  client,
-  CMS_ERRORS,
-} from "./ContentfulUtils";
+import { client, CMS_ERRORS } from "./ContentfulUtils";
 
 const allBlogPostPagesQuery = gql`
   query AllBlogPosts {
@@ -67,7 +63,20 @@ const blogPostPageQuery = gql`
         externalUrl
         seoDescription
         sys {
+          id
           firstPublishedAt
+        }
+        country {
+          title
+          slug
+        }
+        state {
+          title
+          slug
+        }
+        city {
+          name
+          slug
         }
       }
     }
@@ -90,7 +99,20 @@ const blogPostPageQuery = gql`
         externalUrl
         seoDescription
         sys {
+          id
           firstPublishedAt
+        }
+        country {
+          title
+          slug
+        }
+        state {
+          title
+          slug
+        }
+        city {
+          name
+          slug
         }
       }
     }
@@ -110,6 +132,7 @@ export const fetchBlogPosts = async () => {
       if (!item) continue;
       const newItem: Partial<BlogItem> & { __typename: string } = {
         __typename: "BlogPost",
+        id: item.sys.id,
         title: item.title,
         image: item.image?.url
           ? {
@@ -126,16 +149,22 @@ export const fetchBlogPosts = async () => {
             }
           : {
               path: item.path,
-              richDescription: item.richDescription,
+              richDescription: item?.richDescription,
               seoDescription: item.seoDescription,
             }),
+        ...(item?.city && {
+          city: item?.city,
+        }),
+        ...(item?.state && {
+          state: item?.state,
+        }),
+        ...(item?.country && {
+          country: item?.country,
+        }),
       };
 
-      if (!checkIfEachPropertyIsDefined(newItem))
-        throw CMS_ERRORS.itemsUndefined;
-
       if (content.pinnedPosts) {
-        content.pinnedPosts.push(newItem as BlogItem);
+        content.pinnedPosts.push({ ...newItem, isPinned: true } as BlogItem);
       } else {
         content.pinnedPosts = [newItem as BlogItem];
       }
@@ -145,6 +174,7 @@ export const fetchBlogPosts = async () => {
       if (!item) continue;
       const newItem: Partial<BlogItem> & { __typename: string } = {
         __typename: "BlogPost",
+        id: item.sys.id,
         title: item.title,
         image: item.image?.url
           ? {
@@ -164,10 +194,16 @@ export const fetchBlogPosts = async () => {
               richDescription: item.richDescription,
               seoDescription: item.seoDescription,
             }),
+        ...(item?.city && {
+          city: item?.city,
+        }),
+        ...(item?.state && {
+          state: item?.state,
+        }),
+        ...(item?.country && {
+          country: item?.country,
+        }),
       };
-
-      if (!checkIfEachPropertyIsDefined(newItem))
-        throw CMS_ERRORS.itemsUndefined;
 
       if (content.recentPosts) {
         content.recentPosts.push(newItem as BlogItem);
@@ -234,13 +270,11 @@ export async function fetchBlogPageFromPath(path: string): Promise<BlogPost> {
         : undefined,
       path: item.path,
       author: item.author,
-      richDescription: item.richDescription,
+      richDescription: item?.richDescription,
       tags: item.tags,
       seoDescription: item.seoDescription,
       date: item.sys.firstPublishedAt,
     };
-    if (!checkIfEachPropertyIsDefined(partialPost))
-      throw CMS_ERRORS.itemsUndefined;
 
     return partialPost as BlogPost;
   } catch (error) {

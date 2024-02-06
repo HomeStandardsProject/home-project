@@ -4,7 +4,7 @@ export type ContentfulCity = {
   lat: number;
   long: number;
   radius: string;
-
+  slug: string;
   landlords: string[];
 };
 

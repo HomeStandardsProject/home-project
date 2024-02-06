@@ -9,7 +9,7 @@ import {
 import { ContentfulRichText } from "../interfaces/contentful-generic";
 
 type Props = {
-  content: ContentfulRichText;
+  content?: ContentfulRichText;
 };
 
 const options: Options = {
@@ -35,11 +35,11 @@ const options: Options = {
         {children}
       </Heading>
     ),
-    [BLOCKS.HEADING_3]: (_, children) => (
-      <Heading as="h4" size="sm" textDecoration="underline">
-        {children}
-      </Heading>
-    ),
+    // [BLOCKS.HEADING_3]: (_, children) => (
+    //   <Heading as="h4" size="sm" textDecoration="underline">
+    //     {children}
+    //   </Heading>
+    // ),
     [BLOCKS.HEADING_4]: (_, children) => (
       <Heading as="h4" size="xs">
         {children}
@@ -78,5 +78,7 @@ const options: Options = {
 };
 
 export function RichContentfulContent({ content }: Props) {
-  return <>{documentToReactComponents(content.json, options)}</>;
+  if (!content?.json) return null;
+
+  return <>{documentToReactComponents(content?.json, options)}</>;
 }

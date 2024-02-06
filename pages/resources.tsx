@@ -11,13 +11,29 @@ import {
   ResourcesAndContacts,
   ResourcesAndContactsContent,
 } from "../interfaces/contentful-resources";
+import { LocationFilter } from "../components/shared";
+import { fetchAvailableCountries } from "../api-functions/cms/ContentfulCountries";
+import { ContentfulCountry } from "../interfaces/contentful-country";
 
 type Props = {
   resourcesAndContactsContent: ResourcesAndContactsContent;
+  availableCountries: ContentfulCountry[];
 };
 
-function Resources({ resourcesAndContactsContent }: Props) {
+function Resources({ resourcesAndContactsContent, availableCountries }: Props) {
   const { resourcesAndContacts } = resourcesAndContactsContent;
+  const [filteredItems, setFilteredItems] = React.useState(null as any);
+
+  const filterItems = (items: any[]) => {
+    if (!items?.length) return items;
+    if (filteredItems === null) return items;
+    if (filteredItems.length === 0) return items;
+
+    return items.filter(({ id }) => filteredItems?.includes(id));
+  };
+
+  const items = filterItems(resourcesAndContacts);
+
   return (
     <Layout
       title="Resources"
@@ -28,10 +44,30 @@ function Resources({ resourcesAndContactsContent }: Props) {
         <Heading as="h1" size="lg">
           Resources and Contacts
         </Heading>
+
+        <LocationFilter
+          {...{
+            filterParams: availableCountries,
+            items: resourcesAndContacts.map(({ id, country, state, city }) => ({
+              id,
+              country: country && country,
+              state: state && state,
+              city: city && { slug: city.slug, title: city.name },
+            })),
+            onFilterChange: setFilteredItems,
+          }}
+        />
+
         <Stack spacing={4}>
-          {resourcesAndContacts.map((props) => (
-            <ResourcePanel key={props.name} {...props} />
-          ))}
+          {items?.length ? (
+            <>
+              {items.map((props) => (
+                <ResourcePanel key={props.name} {...props} />
+              ))}
+            </>
+          ) : (
+            <>Nothing found</>
+          )}
         </Stack>
         <Box>
           <NextLink href="/next-steps">
@@ -106,8 +142,12 @@ function ResourcePanel({
 
 export const getStaticProps: GetStaticProps = async () => {
   const resourcesAndContactsContent = await fetchResources();
+  const availableCountries = await fetchAvailableCountries();
 
-  return { props: { resourcesAndContactsContent }, revalidate: 60 };
+  return {
+    props: { resourcesAndContactsContent, availableCountries },
+    revalidate: 60,
+  };
 };
 
 export default Resources;
