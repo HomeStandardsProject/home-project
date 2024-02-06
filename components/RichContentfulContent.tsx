@@ -78,7 +78,7 @@ const options: Options = {
 };
 
 export function RichContentfulContent({ content }: Props) {
-  if(!content?.json) return null;
+  if (!content?.json) return null;
 
   return <>{documentToReactComponents(content?.json, options)}</>;
 }
