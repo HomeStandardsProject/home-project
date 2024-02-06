@@ -23,16 +23,18 @@ const DynamicPost = ({ post }: Props) => {
         <meta name="author" content={post.author} />
       </Head>
       <Box maxWidth="800px" margin="0 auto" marginTop={10} as="article">
-        <Stack isInline align="center">
-          <Image
-            borderRadius="lg"
-            src={post.image.url}
-            alt={post.image.alt}
-            width="100%"
-            objectFit="cover"
-            height="200px"
-          />
-        </Stack>
+        {post?.image ? (
+          <Stack isInline align="center">
+            <Image
+              borderRadius="lg"
+              src={post.image.url}
+              alt={post.image.alt}
+              width="100%"
+              objectFit="cover"
+              height="200px"
+            />
+          </Stack>
+        ) : null}
         <Stack mt={5}>
           <Stack isInline>
             {post.tags.map((tag, i) => (

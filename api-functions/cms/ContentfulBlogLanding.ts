@@ -134,12 +134,12 @@ export const fetchBlogPosts = async () => {
         __typename: "BlogPost",
         id: item.sys.id,
         title: item.title,
-        image: item.image?.url
-          ? {
-              url: item.image.url,
-              alt: item.image.description ?? "",
-            }
-          : undefined,
+        ...(item.image?.url && {
+          image: {
+            url: item.image.url,
+            alt: item.image.description ?? "",
+          },
+        }),
         author: item.author,
         tags: item.tags,
         date: item.sys.firstPublishedAt,
@@ -176,12 +176,12 @@ export const fetchBlogPosts = async () => {
         __typename: "BlogPost",
         id: item.sys.id,
         title: item.title,
-        image: item.image?.url
-          ? {
-              url: item.image.url,
-              alt: item.image.description ?? "",
-            }
-          : undefined,
+        ...(item.image?.url && {
+          image: {
+            url: item.image.url,
+            alt: item.image.description ?? "",
+          },
+        }),
         author: item.author,
         tags: item.tags,
         date: item.sys.firstPublishedAt,
@@ -262,12 +262,12 @@ export async function fetchBlogPageFromPath(path: string): Promise<BlogPost> {
     const partialPost: Partial<BlogPost> & { __typename: string } = {
       __typename: "BlogPost",
       title: item.title,
-      image: item.image?.url
-        ? {
-            url: item.image.url,
-            alt: item.image.description ?? "",
-          }
-        : undefined,
+      ...(item.image?.url && {
+        image: {
+          url: item.image.url,
+          alt: item.image.description ?? "",
+        },
+      }),
       path: item.path,
       author: item.author,
       richDescription: item?.richDescription,
