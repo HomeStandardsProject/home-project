@@ -139,14 +139,16 @@ function Post({ post }: { post: BlogItem; isPinned: boolean }) {
                 </WrapItem>
               ))}
             </Wrap>
-            <Image
-              borderRadius="lg"
-              src={post.image.url}
-              alt={post.image.alt}
-              width="md"
-              objectFit="cover"
-              height="400px"
-            />
+            {post?.image ? (
+              <Image
+                borderRadius="lg"
+                src={post.image.url}
+                alt={post.image.alt}
+                width="md"
+                objectFit="cover"
+                height="400px"
+              />
+            ) : null}
           </Box>
           <Stack w="100%" spacing={0} py={3}>
             <Heading as="h1" size="md">

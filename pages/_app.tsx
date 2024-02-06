@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { AppProps } from "next/app";
 import { css, Global } from "@emotion/react";
@@ -15,9 +15,34 @@ const globalStyles = css`
   }
 `;
 
+declare global {
+  interface Window {
+    PayPal: any;
+  }
+}
+
 Router.events.on("routeChangeComplete", (url) => Analytics.pageview(url));
 
 function App({ Component, pageProps }: AppProps): React.ReactNode {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://www.paypalobjects.com/donate/sdk/donate-sdk.js`;
+
+    script.addEventListener("load", () => {
+      window.PayPal.Donation.Button({
+        env: "production",
+        hosted_button_id:
+          process.env.PAYPAL_HOSTED_BUTTON_ID || "AGNW37L4YTKTL",
+        image: {
+          src: "https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif",
+          title: "PayPal - The safer, easier way to pay online!",
+          alt: "Donate with PayPal button",
+        },
+      }).render("#paypal-donate-button-container");
+    });
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <ChakraProvider>
       <Head>
@@ -45,6 +70,10 @@ function App({ Component, pageProps }: AppProps): React.ReactNode {
       </Head>
       <Global styles={globalStyles} />
       <Component {...pageProps} />
+      <div
+        id="paypal-donate-button-container"
+        style={{ position: "absolute", left: "-9999em", visibility: "hidden" }}
+      />
     </ChakraProvider>
   );
 }
