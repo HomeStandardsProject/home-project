@@ -2406,7 +2406,19 @@ export type GraphQLContentfulBlogPostPageQuery = {
       seoDescription?: string;
       image?: { __typename?: "Asset"; url?: string; description?: string };
       richDescription?: { __typename?: "BlogPostDescription"; json: any };
-      sys: { __typename?: "Sys"; firstPublishedAt?: any };
+      sys: { __typename?: "Sys"; firstPublishedAt?: any; id: string };
+      country?: {
+        title: string;
+        slug: string;
+      };
+      state?: {
+        title: string;
+        slug: string;
+      };
+      city?: {
+        name: string;
+        slug: string;
+      };
     }>;
   };
   recentPosts?: {
@@ -2421,7 +2433,19 @@ export type GraphQLContentfulBlogPostPageQuery = {
       seoDescription?: string;
       image?: { __typename?: "Asset"; url?: string; description?: string };
       richDescription?: { __typename?: "BlogPostDescription"; json: any };
-      sys: { __typename?: "Sys"; firstPublishedAt?: any };
+      sys: { __typename?: "Sys"; firstPublishedAt?: any; id: string };
+      country?: {
+        title: string;
+        slug: string;
+      };
+      state?: {
+        title: string;
+        slug: string;
+      };
+      city?: {
+        name: string;
+        slug: string;
+      };
     }>;
   };
 };

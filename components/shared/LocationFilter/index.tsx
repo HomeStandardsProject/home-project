@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { CheckIcon } from "@chakra-ui/icons";
-import { Box, Button, ButtonGroup, Flex, Heading } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading } from "@chakra-ui/react";
 import {
   ContentfulCountry,
   ContentfulCountryState,
@@ -29,6 +29,7 @@ interface LocationFilterProps {
 
 export default function LocationFilter(props: LocationFilterProps) {
   const { filterParams, items, onFilterChange } = props;
+
   const [selectedParams, setSelectedParams] = useState({
     country: "ALL",
     state: "ALL",
@@ -39,14 +40,37 @@ export default function LocationFilter(props: LocationFilterProps) {
     if (!city) {
       return acc;
     }
+
     return {
       ...acc,
       [city.slug]: city,
     };
   }, {}) as { [key: string]: ContentfulCity };
 
+  const groupedStates = items.reduce((acc, { state }) => {
+    if (!state) {
+      return acc;
+    }
+
+    return {
+      ...acc,
+      [state.slug]: state,
+    };
+  }, {}) as { [key: string]: ContentfulCountryState };
+
+  const groupedCountries = items.reduce((acc, { country }) => {
+    if (!country) {
+      return acc;
+    }
+
+    return {
+      ...acc,
+      [country.slug]: country,
+    };
+  }, {}) as { [key: string]: ContentfulCountry };
+
   const filteredCountries = filterParams.filter((country) => {
-    return Object.values(groupedCities).some((city) => {
+    const countriesFromCities = Object.values(groupedCities).some((city) => {
       if (
         country?.cities?.length &&
         country?.cities.find(({ slug }) => slug === city.slug)
@@ -64,6 +88,10 @@ export default function LocationFilter(props: LocationFilterProps) {
 
       return false;
     });
+
+    const countriesFromItems = groupedCountries[country.slug] !== undefined;
+
+    return countriesFromCities || countriesFromItems;
   });
 
   const filteredStates =
@@ -75,6 +103,15 @@ export default function LocationFilter(props: LocationFilterProps) {
             state.cities.find(({ slug }) => slug === city.slug) !== undefined
           );
         });
+
+        if (
+          Object.values(groupedStates)
+            .map((state) => state.slug)
+            .includes(state.slug) &&
+          acc.find(({ slug }) => slug === state.slug) === undefined
+        ) {
+          return [...acc, state];
+        }
 
         if (cities.length) {
           return [...acc, state];
@@ -146,7 +183,15 @@ export default function LocationFilter(props: LocationFilterProps) {
           return false;
         }
 
-        if (params.city !== "ALL" && city?.slug !== params.city) {
+        if (
+          params.city !== "ALL" &&
+          params.city !== "NONE" &&
+          city?.slug !== params.city
+        ) {
+          return false;
+        }
+
+        if (params.city === "NONE" && state && city) {
           return false;
         }
 
@@ -189,6 +234,7 @@ export default function LocationFilter(props: LocationFilterProps) {
       const upd = {
         ...params,
         city: citySlug,
+        ...(citySlug === "NONE" && { state: "ALL" }),
       };
 
       return upd;
@@ -222,15 +268,16 @@ export default function LocationFilter(props: LocationFilterProps) {
   return (
     <Box bg="white" p={2}>
       {filteredCountries?.length ? (
-        <Flex wrap="wrap" align="center" m={2}>
-          <Heading as="h4" size="sm" mr={2}>
+        <Flex ml={2}>
+          <Heading as="h4" size="sm" mr={2} mt={2}>
             Country:
           </Heading>
-          <ButtonGroup spacing={2}>
+          <Flex wrap="wrap">
             <Button
               color="blue.700"
               fontWeight="400"
               size="sm"
+              margin={1}
               {...{
                 ...(selectedParams.country === "ALL"
                   ? {
@@ -251,6 +298,7 @@ export default function LocationFilter(props: LocationFilterProps) {
                   color="blue.700"
                   fontWeight="400"
                   size="sm"
+                  margin={1}
                   {...{
                     ...(selectedParams.country === slug
                       ? {
@@ -265,20 +313,21 @@ export default function LocationFilter(props: LocationFilterProps) {
                 </Button>
               )
             )}
-          </ButtonGroup>
+          </Flex>
         </Flex>
       ) : null}
 
       {filteredStates?.length ? (
-        <Flex wrap="wrap" align="center" m={2}>
-          <Heading as="h4" size="sm" mr={2}>
-            State:
+        <Flex ml={2}>
+          <Heading as="h4" size="sm" mr={2} mt={2}>
+            State/Province:
           </Heading>
-          <ButtonGroup spacing={2}>
+          <Flex wrap="wrap">
             <Button
               color="blue.700"
               fontWeight="400"
               size="sm"
+              margin={1}
               {...{
                 ...(selectedParams.state === "ALL"
                   ? {
@@ -298,6 +347,7 @@ export default function LocationFilter(props: LocationFilterProps) {
                 color="blue.700"
                 fontWeight="400"
                 size="sm"
+                margin={1}
                 {...{
                   ...(selectedParams.state === slug
                     ? {
@@ -311,20 +361,21 @@ export default function LocationFilter(props: LocationFilterProps) {
                 {title}
               </Button>
             ))}
-          </ButtonGroup>
+          </Flex>
         </Flex>
       ) : null}
 
       {filteredCities?.length ? (
-        <Flex wrap="wrap" align="center" m={2}>
-          <Heading as="h4" size="sm" mr={2}>
+        <Flex ml={2}>
+          <Heading as="h4" size="sm" mr={2} mt={2}>
             City
           </Heading>
-          <ButtonGroup spacing={2}>
+          <Flex wrap="wrap">
             <Button
               color="blue.700"
               fontWeight="400"
               size="sm"
+              margin={1}
               {...{
                 ...(selectedParams.city === "ALL"
                   ? {
@@ -338,12 +389,31 @@ export default function LocationFilter(props: LocationFilterProps) {
               All
             </Button>
 
+            <Button
+              color="blue.700"
+              fontWeight="400"
+              size="sm"
+              margin={1}
+              {...{
+                ...(selectedParams.city === "NONE"
+                  ? {
+                      leftIcon: <CheckIcon />,
+                    }
+                  : {
+                      onClick: () => handleSelectCity("NONE"),
+                    }),
+              }}
+            >
+              State/Province wide
+            </Button>
+
             {sortAlphabetically(filteredCities).map(({ id, name, slug }) => (
               <Button
                 key={id}
                 color="blue.700"
                 fontWeight="400"
                 size="sm"
+                margin={1}
                 {...{
                   ...(selectedParams.city === slug
                     ? {
@@ -357,7 +427,7 @@ export default function LocationFilter(props: LocationFilterProps) {
                 {name}
               </Button>
             ))}
-          </ButtonGroup>
+          </Flex>
         </Flex>
       ) : null}
     </Box>
