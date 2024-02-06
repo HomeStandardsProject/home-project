@@ -37,6 +37,19 @@ const DownloadButton: React.FC<{
 }> = ({ loading, error }) => {
   const toast = useToast();
 
+  const handleDonate = () => {
+    setTimeout(() => {
+      const container = document.getElementById(
+        "paypal-donate-button-container"
+      );
+      const image = container?.querySelector("img");
+
+      if (image) {
+        image.click();
+      }
+    }, 500);
+  };
+
   React.useEffect(() => {
     if (error) {
       console.error(error);
@@ -53,7 +66,10 @@ const DownloadButton: React.FC<{
       isLoading={loading}
       size="sm"
       colorScheme="blue"
-      onClick={logDownloadButtonClick}
+      onClick={() => {
+        logDownloadButtonClick();
+        handleDonate();
+      }}
     >
       {loading ? "Rendering document..." : "Download PDF"}
     </Button>
