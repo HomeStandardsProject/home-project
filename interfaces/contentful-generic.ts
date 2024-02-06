@@ -8,5 +8,5 @@ export type ContentfulRichTextNode = {
 };
 
 export type ContentfulRichText = {
-  json: Document;
+  json?: Document;
 };

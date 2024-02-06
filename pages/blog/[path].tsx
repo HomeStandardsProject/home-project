@@ -46,7 +46,7 @@ const DynamicPost = ({ post }: Props) => {
           </Heading>
         </Stack>
         <Box mt={5}>
-          <RichContentfulContent content={post.richDescription} />
+          <RichContentfulContent content={post?.richDescription} />
         </Box>
         <Stack mt={5}>
           <Text as="b" size="md" color="green.700">

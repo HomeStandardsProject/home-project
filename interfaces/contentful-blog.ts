@@ -26,7 +26,7 @@ export type BlogItem = BlogPost | BlogExternalLink;
 
 export type BlogPost = BlogItemBase & {
   path: string;
-  richDescription: ContentfulRichText;
+  richDescription?: ContentfulRichText;
   seoDescription: string;
 };
 

@@ -2467,7 +2467,7 @@ export type GraphQLContentfulBlogPostFromPathQuery = {
       externalUrl?: string;
       seoDescription?: string;
       image?: { __typename?: "Asset"; url?: string; description?: string };
-      richDescription?: { __typename?: "BlogPostDescription"; json: any };
+      richDescription?: { __typename?: "BlogPostDescription"; json?: any };
       sys: { __typename?: "Sys"; firstPublishedAt?: any };
     }>;
   };
