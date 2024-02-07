@@ -13,7 +13,39 @@ type Props = {
 };
 
 const options: Options = {
-  renderText: (text) => <Text as="span">{text}</Text>,
+  renderText: (text) => {
+    const iframeRegex = /<iframe\s+.*?<\/iframe>/gi;
+    const foundIframe = text.match(iframeRegex);
+
+    if (foundIframe) {
+      const iframeString = foundIframe[0];
+      const matchResult = iframeString.match(/<iframe\s+(.*?)>/);
+      const attributesString = matchResult ? matchResult[1] : "";
+      const attributes = attributesString
+        .split(/\s+/)
+        .reduce((acc: any, attr) => {
+          const [key, value] = attr.split("=") as any;
+          acc[key] = value.replace(/"/g, ""); // Remove quotes around attribute values
+          return acc;
+        }, {});
+
+      const iframeElement = React.createElement("iframe", {
+        ...attributes,
+        key: "iframeKey",
+      });
+
+      const newText = text.replace(iframeRegex, "");
+
+      return (
+        <div>
+          <span dangerouslySetInnerHTML={{ __html: newText }} />
+          {iframeElement}
+        </div>
+      );
+    }
+
+    return <span>{text}</span>;
+  },
   renderMark: {
     [MARKS.BOLD]: (text) => <Text as="b">{text}</Text>,
     [MARKS.ITALIC]: (text) => <Text as="i">{text}</Text>,
@@ -65,15 +97,17 @@ const options: Options = {
         </Box>
       );
     },
-    [INLINES.HYPERLINK]: (node, children) => (
-      <Link
-        href={node.data.url ?? node.data.uri}
-        isExternal
-        color="rgba(52, 151, 55, 1.000)"
-      >
-        {children}
-      </Link>
-    ),
+    [INLINES.HYPERLINK]: (node, children) => {
+      return (
+        <Link
+          href={node.data.url ?? node.data.uri}
+          isExternal
+          color="rgba(52, 151, 55, 1.000)"
+        >
+          {children}
+        </Link>
+      );
+    },
   },
 };
 

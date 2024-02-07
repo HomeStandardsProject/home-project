@@ -120,8 +120,9 @@ export default function LocationFilter(props: LocationFilterProps) {
         return acc;
       }, [] as ContentfulCountryState[]) || [];
 
-  const filteredCities = filteredStates?.reduce(
-    (acc: ContentfulCity[], state) => {
+  const filteredCities = filteredStates
+    .filter(({ slug }) => slug === selectedParams.state)
+    ?.reduce((acc: ContentfulCity[], state) => {
       const cities = state.cities.filter(({ slug }) =>
         Object.keys(groupedCities).includes(slug)
       );
@@ -131,9 +132,7 @@ export default function LocationFilter(props: LocationFilterProps) {
       }
 
       return [...acc, ...cities];
-    },
-    [] as ContentfulCity[]
-  );
+    }, [] as ContentfulCity[]);
 
   const handleOnFilter = (params: {
     country: string;
