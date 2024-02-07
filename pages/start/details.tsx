@@ -187,9 +187,9 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
 
           {availableStates.length ? (
             <FormControl flexBasis="30%" minW={"265px"} isRequired={true}>
-              <FormLabel fontSize="sm">State</FormLabel>
+              <FormLabel fontSize="sm">State/Province</FormLabel>
               <Select
-                placeholder="Select state"
+                placeholder="Select State/Province"
                 size="md"
                 value={selectedState?.title ?? ""}
                 onChange={handleSelectedStateChange}
@@ -205,9 +205,9 @@ function AssessmentDetails({ availableCountries }: AssessmentDetailsProps) {
 
           {availableCities?.length ? (
             <FormControl flexBasis="30%" minW={"265px"} isRequired={true}>
-              <FormLabel fontSize="sm">City</FormLabel>
+              <FormLabel fontSize="sm">City/Law Jurisdiction</FormLabel>
               <Select
-                placeholder="Select city"
+                placeholder="Select City/Law Jurisdiction"
                 size="md"
                 value={selectedCity?.name ?? ""}
                 onChange={handleSelectedCityChange}
