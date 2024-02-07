@@ -233,7 +233,6 @@ export default function LocationFilter(props: LocationFilterProps) {
       const upd = {
         ...params,
         city: citySlug,
-        ...(citySlug === "NONE" && { state: "ALL" }),
       };
 
       return upd;

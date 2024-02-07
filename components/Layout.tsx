@@ -125,7 +125,7 @@ const Layout = ({
                   cursor="pointer"
                   whiteSpace="nowrap"
                 >
-                  Who We Are
+                  How to Use / About Us
                 </Text>
               </Link>
               <Link href="/blog">
@@ -138,7 +138,7 @@ const Layout = ({
                   cursor="pointer"
                   whiteSpace="nowrap"
                 >
-                  Blog
+                  Blog and Research
                 </Text>
               </Link>
               <Link href="/resources">
