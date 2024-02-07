@@ -2419,6 +2419,13 @@ export type GraphQLContentfulBlogPostPageQuery = {
         name: string;
         slug: string;
       };
+      postType?: {
+        title: string;
+        slug: string;
+        sys: {
+          id: string;
+        };
+      };
     }>;
   };
   recentPosts?: {
@@ -2445,6 +2452,13 @@ export type GraphQLContentfulBlogPostPageQuery = {
       city?: {
         name: string;
         slug: string;
+      };
+      postType?: {
+        title: string;
+        slug: string;
+        sys: {
+          id: string;
+        };
       };
     }>;
   };

@@ -25,10 +25,11 @@ interface LocationFilterProps {
     };
   }[];
   onFilterChange?: (items: string[]) => void;
+  styleBox?: boolean;
 }
 
 export default function LocationFilter(props: LocationFilterProps) {
-  const { filterParams, items, onFilterChange } = props;
+  const { filterParams, items, onFilterChange, styleBox = true } = props;
 
   const [selectedParams, setSelectedParams] = useState({
     country: "ALL",
@@ -263,34 +264,84 @@ export default function LocationFilter(props: LocationFilterProps) {
 
   if (!items?.length) return null;
 
-  return (
-    <Box bg="white" p={2}>
-      {filteredCountries?.length ? (
-        <Flex ml={2}>
-          <Heading as="h4" size="sm" mr={2} mt={2}>
-            Country:
-          </Heading>
-          <Flex wrap="wrap">
-            <Button
-              color="blue.700"
-              fontWeight="400"
-              size="sm"
-              margin={1}
-              {...{
-                ...(selectedParams.country === "ALL"
-                  ? {
-                      leftIcon: <CheckIcon />,
-                    }
-                  : {
-                      onClick: () => handleSelectCountry("ALL"),
-                    }),
-              }}
-            >
-              All
-            </Button>
+  const filterContent = () => {
+    return (
+      <>
+        {filteredCountries?.length ? (
+          <Flex ml={2}>
+            <Heading as="h4" size="sm" mr={2} mt={2}>
+              Country:
+            </Heading>
+            <Flex wrap="wrap">
+              <Button
+                color="blue.700"
+                fontWeight="400"
+                size="sm"
+                margin={1}
+                {...{
+                  ...(selectedParams.country === "ALL"
+                    ? {
+                        leftIcon: <CheckIcon />,
+                      }
+                    : {
+                        onClick: () => handleSelectCountry("ALL"),
+                      }),
+                }}
+              >
+                All
+              </Button>
 
-            {sortAlphabetically(filteredCountries).map(
-              ({ id, title, slug }) => (
+              {sortAlphabetically(filteredCountries).map(
+                ({ id, title, slug }) => (
+                  <Button
+                    key={id}
+                    color="blue.700"
+                    fontWeight="400"
+                    size="sm"
+                    margin={1}
+                    {...{
+                      ...(selectedParams.country === slug
+                        ? {
+                            leftIcon: <CheckIcon />,
+                          }
+                        : {
+                            onClick: () => handleSelectCountry(slug),
+                          }),
+                    }}
+                  >
+                    {title}
+                  </Button>
+                )
+              )}
+            </Flex>
+          </Flex>
+        ) : null}
+
+        {filteredStates?.length ? (
+          <Flex ml={2}>
+            <Heading as="h4" size="sm" mr={2} mt={2}>
+              State/Province:
+            </Heading>
+            <Flex wrap="wrap">
+              <Button
+                color="blue.700"
+                fontWeight="400"
+                size="sm"
+                margin={1}
+                {...{
+                  ...(selectedParams.state === "ALL"
+                    ? {
+                        leftIcon: <CheckIcon />,
+                      }
+                    : {
+                        onClick: () => handleSelectState("ALL"),
+                      }),
+                }}
+              >
+                All
+              </Button>
+
+              {sortAlphabetically(filteredStates).map(({ id, title, slug }) => (
                 <Button
                   key={id}
                   color="blue.700"
@@ -298,136 +349,96 @@ export default function LocationFilter(props: LocationFilterProps) {
                   size="sm"
                   margin={1}
                   {...{
-                    ...(selectedParams.country === slug
+                    ...(selectedParams.state === slug
                       ? {
                           leftIcon: <CheckIcon />,
                         }
                       : {
-                          onClick: () => handleSelectCountry(slug),
+                          onClick: () => handleSelectState(slug),
                         }),
                   }}
                 >
                   {title}
                 </Button>
-              )
-            )}
+              ))}
+            </Flex>
           </Flex>
-        </Flex>
-      ) : null}
+        ) : null}
 
-      {filteredStates?.length ? (
-        <Flex ml={2}>
-          <Heading as="h4" size="sm" mr={2} mt={2}>
-            State/Province:
-          </Heading>
-          <Flex wrap="wrap">
-            <Button
-              color="blue.700"
-              fontWeight="400"
-              size="sm"
-              margin={1}
-              {...{
-                ...(selectedParams.state === "ALL"
-                  ? {
-                      leftIcon: <CheckIcon />,
-                    }
-                  : {
-                      onClick: () => handleSelectState("ALL"),
-                    }),
-              }}
-            >
-              All
-            </Button>
-
-            {sortAlphabetically(filteredStates).map(({ id, title, slug }) => (
+        {filteredCities?.length ? (
+          <Flex ml={2}>
+            <Heading as="h4" size="sm" mr={2} mt={2}>
+              City
+            </Heading>
+            <Flex wrap="wrap">
               <Button
-                key={id}
                 color="blue.700"
                 fontWeight="400"
                 size="sm"
                 margin={1}
                 {...{
-                  ...(selectedParams.state === slug
+                  ...(selectedParams.city === "ALL"
                     ? {
                         leftIcon: <CheckIcon />,
                       }
                     : {
-                        onClick: () => handleSelectState(slug),
+                        onClick: () => handleSelectCity("ALL"),
                       }),
                 }}
               >
-                {title}
+                All
               </Button>
-            ))}
-          </Flex>
-        </Flex>
-      ) : null}
 
-      {filteredCities?.length ? (
-        <Flex ml={2}>
-          <Heading as="h4" size="sm" mr={2} mt={2}>
-            City
-          </Heading>
-          <Flex wrap="wrap">
-            <Button
-              color="blue.700"
-              fontWeight="400"
-              size="sm"
-              margin={1}
-              {...{
-                ...(selectedParams.city === "ALL"
-                  ? {
-                      leftIcon: <CheckIcon />,
-                    }
-                  : {
-                      onClick: () => handleSelectCity("ALL"),
-                    }),
-              }}
-            >
-              All
-            </Button>
-
-            <Button
-              color="blue.700"
-              fontWeight="400"
-              size="sm"
-              margin={1}
-              {...{
-                ...(selectedParams.city === "NONE"
-                  ? {
-                      leftIcon: <CheckIcon />,
-                    }
-                  : {
-                      onClick: () => handleSelectCity("NONE"),
-                    }),
-              }}
-            >
-              State/Province wide
-            </Button>
-
-            {sortAlphabetically(filteredCities).map(({ id, name, slug }) => (
               <Button
-                key={id}
                 color="blue.700"
                 fontWeight="400"
                 size="sm"
                 margin={1}
                 {...{
-                  ...(selectedParams.city === slug
+                  ...(selectedParams.city === "NONE"
                     ? {
                         leftIcon: <CheckIcon />,
                       }
                     : {
-                        onClick: () => handleSelectCity(slug),
+                        onClick: () => handleSelectCity("NONE"),
                       }),
                 }}
               >
-                {name}
+                State/Province wide
               </Button>
-            ))}
+
+              {sortAlphabetically(filteredCities).map(({ id, name, slug }) => (
+                <Button
+                  key={id}
+                  color="blue.700"
+                  fontWeight="400"
+                  size="sm"
+                  margin={1}
+                  {...{
+                    ...(selectedParams.city === slug
+                      ? {
+                          leftIcon: <CheckIcon />,
+                        }
+                      : {
+                          onClick: () => handleSelectCity(slug),
+                        }),
+                  }}
+                >
+                  {name}
+                </Button>
+              ))}
+            </Flex>
           </Flex>
-        </Flex>
-      ) : null}
+        ) : null}
+      </>
+    );
+  };
+
+  return styleBox ? (
+    <Box bg="white" p={2}>
+      {filterContent()}
     </Box>
+  ) : (
+    filterContent()
   );
 }

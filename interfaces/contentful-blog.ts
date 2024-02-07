@@ -20,6 +20,11 @@ type BlogItemBase = {
     title: string;
     slug: string;
   };
+  postType?: {
+    id: string;
+    title: string;
+    slug: string;
+  };
 };
 
 export type BlogItem = BlogPost | BlogExternalLink;

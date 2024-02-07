@@ -78,6 +78,13 @@ const blogPostPageQuery = gql`
           name
           slug
         }
+        postType: type {
+          title
+          slug
+          sys {
+            id
+          }
+        }
       }
     }
     recentPosts: blogPostCollection(
@@ -113,6 +120,13 @@ const blogPostPageQuery = gql`
         city {
           name
           slug
+        }
+        postType: type {
+          title
+          slug
+          sys {
+            id
+          }
         }
       }
     }
@@ -161,6 +175,13 @@ export const fetchBlogPosts = async () => {
         ...(item?.country && {
           country: item?.country,
         }),
+        ...(item?.postType && {
+          postType: {
+            title: item.postType.title,
+            slug: item.postType.slug,
+            id: item.postType.sys.id,
+          },
+        }),
       };
 
       if (content.pinnedPosts) {
@@ -202,6 +223,13 @@ export const fetchBlogPosts = async () => {
         }),
         ...(item?.country && {
           country: item?.country,
+        }),
+        ...(item?.postType && {
+          postType: {
+            title: item.postType.title,
+            slug: item.postType.slug,
+            id: item.postType.sys.id,
+          },
         }),
       };
 

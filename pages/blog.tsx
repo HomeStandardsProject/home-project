@@ -1,4 +1,4 @@
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { CheckIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Stack,
   Text,
@@ -11,6 +11,8 @@ import {
   Link,
   Wrap,
   WrapItem,
+  Flex,
+  Button,
 } from "@chakra-ui/react";
 import { GetStaticProps } from "next";
 import Head from "next/head";
@@ -33,19 +35,62 @@ type Props = {
 
 function Blog({ blogContent, availableCountries }: Props) {
   const [filteredItems, setFilteredItems] = React.useState(null as any);
+  const [selectedParams, setSelectedParams] = React.useState({
+    postType: "ALL",
+  });
+
+  const filteredTypes = [
+    ...blogContent.pinnedPosts,
+    ...blogContent.recentPosts,
+  ].reduce((acc: any[], { postType }) => {
+    if (postType && !acc.find(({ slug }) => slug === postType.slug)) {
+      acc.push(postType);
+    }
+
+    return acc;
+  }, []);
 
   const filterItems = (items: any[]) => {
     if (!items?.length) return items;
     if (filteredItems === null) return items;
     if (filteredItems.length === 0) return items;
 
-    return items.filter(({ id }) => filteredItems?.includes(id));
+    return items
+      .filter(({ id }) => filteredItems?.includes(id))
+      .filter(({ postType }) => {
+        if (selectedParams.postType === "ALL") return true;
+        if (selectedParams.postType === "NONE" && !postType) return true;
+
+        return postType?.slug === selectedParams.postType;
+      });
   };
 
   const items = filterItems([
     ...blogContent.pinnedPosts,
     ...blogContent.recentPosts,
   ]);
+
+  const sortAlphabetically = (items: any[]) => {
+    if (!items?.length || items?.length === 1) return items;
+
+    const sortKey = Object.keys(items[0]).find((key) => key === "name")
+      ? "name"
+      : "title";
+
+    return items.sort((a, b) => {
+      if (a[sortKey] < b[sortKey]) {
+        return -1;
+      }
+      if (a[sortKey] > b[sortKey]) {
+        return 1;
+      }
+      return 0;
+    });
+  };
+
+  const handleSelectPostType = (postType: string) => {
+    setSelectedParams({ ...selectedParams, postType });
+  };
 
   return (
     <Layout
@@ -66,23 +111,92 @@ function Blog({ blogContent, availableCountries }: Props) {
         fontSize="1.6rem"
         fontWeight="500"
       >
-        Blog
+        Blog and Research
       </Heading>
 
-      <LocationFilter
-        {...{
-          filterParams: availableCountries,
-          items: [...blogContent.pinnedPosts, ...blogContent.recentPosts].map(
-            ({ id, country, state, city }) => ({
-              id,
-              country: country && country,
-              state: state && state,
-              city: city && { slug: city.slug, title: city.name },
-            })
-          ),
-          onFilterChange: setFilteredItems,
-        }}
-      />
+      <Box bg="white" p={2}>
+        <LocationFilter
+          {...{
+            filterParams: availableCountries,
+            items: [...blogContent.pinnedPosts, ...blogContent.recentPosts].map(
+              ({ id, country, state, city }) => ({
+                id,
+                country: country && country,
+                state: state && state,
+                city: city && { slug: city.slug, title: city.name },
+              })
+            ),
+            onFilterChange: setFilteredItems,
+            styleBox: false,
+          }}
+        />
+
+        {filteredTypes?.length ? (
+          <Flex ml={2}>
+            <Heading as="h4" size="sm" mr={2} mt={2}>
+              Post Types
+            </Heading>
+            <Flex wrap="wrap">
+              <Button
+                color="blue.700"
+                fontWeight="400"
+                size="sm"
+                margin={1}
+                {...{
+                  ...(selectedParams.postType === "ALL"
+                    ? {
+                        leftIcon: <CheckIcon />,
+                      }
+                    : {
+                        onClick: () => handleSelectPostType("ALL"),
+                      }),
+                }}
+              >
+                All
+              </Button>
+
+              <Button
+                color="blue.700"
+                fontWeight="400"
+                size="sm"
+                margin={1}
+                {...{
+                  ...(selectedParams.postType === "NONE"
+                    ? {
+                        leftIcon: <CheckIcon />,
+                      }
+                    : {
+                        onClick: () => handleSelectPostType("NONE"),
+                      }),
+                }}
+              >
+                None
+              </Button>
+
+              {sortAlphabetically(filteredTypes).map(({ id, title, slug }) => (
+                <Button
+                  key={id}
+                  color="blue.700"
+                  fontWeight="400"
+                  size="sm"
+                  margin={1}
+                  {...{
+                    ...(selectedParams.postType === slug
+                      ? {
+                          leftIcon: <CheckIcon />,
+                        }
+                      : {
+                          onClick: () => handleSelectPostType(slug),
+                        }),
+                  }}
+                >
+                  {title}
+                </Button>
+              ))}
+            </Flex>
+          </Flex>
+        ) : null}
+      </Box>
 
       <SimpleGrid
         columns={{ sm: 1, md: 3 }}
