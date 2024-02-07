@@ -155,7 +155,7 @@ function Blog({ blogContent, availableCountries }: Props) {
                 All
               </Button>
 
-              <Button
+              {/* <Button
                 color="blue.700"
                 fontWeight="400"
                 size="sm"
@@ -171,7 +171,7 @@ function Blog({ blogContent, availableCountries }: Props) {
                 }}
               >
                 None
-              </Button>
+              </Button> */}
 
               {sortAlphabetically(filteredTypes).map(({ id, title, slug }) => (
                 <Button
@@ -207,9 +207,6 @@ function Blog({ blogContent, availableCountries }: Props) {
         {items.map((post) => (
           <Post key={post.title} post={post} isPinned={post.isPinned} />
         ))}
-        {/* {blogContent.recentPosts.map((post) => (
-          <Post key={post.title} post={post} isPinned={false} />
-        ))} */}
       </SimpleGrid>
     </Layout>
   );
