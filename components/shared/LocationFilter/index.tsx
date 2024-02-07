@@ -175,27 +175,49 @@ export default function LocationFilter(props: LocationFilterProps) {
 
     const filteredItems = itemsWithStateAndCountry.filter(
       ({ country, state, city }) => {
-        if (params.country !== "ALL" && country?.slug !== params.country) {
-          return false;
-        }
+        switch (true) {
+          case params.country === country?.slug &&
+            params.state === state?.slug &&
+            params.city === city?.slug: {
+            return true;
+          }
 
-        if (params.state !== "ALL" && state?.slug !== params.state) {
-          return false;
-        }
+          case params.country === country?.slug &&
+            params.state === state?.slug &&
+            params.city === "ALL": {
+            return true;
+          }
 
-        if (
-          params.city !== "ALL" &&
-          params.city !== "NONE" &&
-          city?.slug !== params.city
-        ) {
-          return false;
-        }
+          case params.country === country?.slug &&
+            params.state === state?.slug &&
+            params.city === "NONE" &&
+            !city?.slug: {
+            return true;
+          }
 
-        if (params.city === "NONE" && state && city) {
-          return false;
-        }
+          case params.country === country?.slug &&
+            params.state === "ALL" &&
+            params.city === "ALL": {
+            return true;
+          }
 
-        return true;
+          case params.country === country?.slug &&
+            params.state === "ALL" &&
+            params.city === "NONE" &&
+            !city?.slug: {
+            return true;
+          }
+
+          case params.country === "ALL" &&
+            params.state === "ALL" &&
+            params.city === "ALL": {
+            return true;
+          }
+
+          default: {
+            return false;
+          }
+        }
       }
     );
 

@@ -27,7 +27,7 @@ function Resources({ resourcesAndContactsContent, availableCountries }: Props) {
   const filterItems = (items: any[]) => {
     if (!items?.length) return items;
     if (filteredItems === null) return items;
-    if (filteredItems.length === 0) return items;
+    if (filteredItems.length === 0) return [];
 
     return items.filter(({ id }) => filteredItems?.includes(id));
   };
