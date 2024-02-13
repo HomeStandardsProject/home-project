@@ -1,6 +1,3 @@
--- AlterEnum
-ALTER TYPE "QuestionAnswer" ADD VALUE 'NA';
-
 -- DropForeignKey
 ALTER TABLE "RawRoom" DROP CONSTRAINT "RawRoom_rawSubmissionId_fkey";
 
